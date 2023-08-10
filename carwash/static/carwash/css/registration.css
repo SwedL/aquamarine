@@ -1,0 +1,189 @@
+* {
+    box-sizing: border-box;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+body {
+    background-color: #7abccc;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+ul.mainmenu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 60px;
+	color: #fdc073;
+	font-size: 20px;
+	overflow: hidden;
+}
+ul.mainmenu li {
+	float: left;
+	margin: 18px 40px 0 30px;
+}
+ul.mainmenu li.logo {margin: 0;}
+ul.mainmenu li.last {float: right;}
+
+ul.mainmenu li a {
+	color: #000000;
+	text-decoration: none;
+}
+ul.mainmenu li a:hover {
+	color: #8d520a;
+}
+
+.panelitems {
+	text-align: center;
+}
+
+
+/* Главный заголовок страницы */
+.main-title__text {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 40px;
+}
+
+/* Блок формы регистрации */
+.form-registration {
+    text-align: center;
+}
+
+/* Блок выбора услуг */
+.box-services {
+    display: inline-block;
+    height: 570px;
+    width: 678px;
+    background-color: #f4a15d;
+    text-align: left;
+    margin-right: 100px;
+    padding-top: 30px;
+    box-shadow: 12px -12px 8px 2px rgba(73, 119, 154, 0.25);
+    vertical-align: top;
+}
+
+/* Заголовок услуг */
+.services-title__text {
+    text-align: center;
+    font-size: 25px;
+    height: 35px;
+}
+
+/* Рамка и все услуги */
+.services-choice {
+    height: 470px;
+    width: 640px;
+    border: solid 1px;
+    margin: 0 auto;
+    padding: 17px 0 0 17px;
+}
+
+/* Текст в услугах */
+/* .form-label {} */
+
+/* Отодвигаем друг от друг кнопки выбора услуг */
+.services-choice input {
+    margin-bottom: 8px;
+}
+
+/* Блок выбора времени */
+.box-time-choice {
+    display: inline-block;
+}
+
+/* Блок отдельного дня */
+.day {
+    display: inline-block;
+    border-width: 100px;
+    height: 655px;
+    width: 100px;
+    background-color: #7acca0;
+    margin-right: 10px;
+    box-shadow: 12px -12px 8px 2px rgba(73, 119, 154, 0.25);
+}
+
+/* Рамка и контент в блоке day */
+.day-content {      
+	display: inline-block;
+    height: 635px;
+    width: 90px;
+    border: solid 1px;
+    border-color: #9242b8;
+    position: relative;
+    top: 10px;
+    
+}
+
+/* дата в блоке day */
+.date {
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 18px;
+    width: 80px;
+}
+
+/* type input */
+.day-content input[type=radio] {
+	display: none;
+}
+
+/* Отображение всех времён дней */
+.day-content label {
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 15px;
+	line-height: 21px;
+	border: 1px solid #777777;
+	border-radius: 6px;
+	user-select: none;
+    margin-bottom: 2px; /* отодвигаем кнопки время вниз друг от друга */
+}
+
+/* Отображение выбранного времени */
+.day-content input[type=radio]:checked + label {
+	background: #ffe0a6;
+    color: #777777;
+}
+
+/* Hover / Отображение выбранного времени при наведении */
+.day-content label:hover {
+	color: #ececec;
+}
+
+/* Disabled форма занятой записи*/
+.day-content input[type=radio]:disabled + label {
+	background: #c5c5c5;
+	color: #666;
+}
+
+/* Кнопка записи */
+.registration {
+    display: block;
+}
+
+.form-input {
+    width: 300px;
+    font-size: 16px;
+}
+
+.form-label {
+    display: inline-block;
+    min-width: 150px;
+    vertical-align: top;
+}
+
+.form-error ul {
+    list-style: none;
+    padding: 0;
+    color: #CC0000;
+}
+
+table {
+    margin-bottom: 5px;
+}

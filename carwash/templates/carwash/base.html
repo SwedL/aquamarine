@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'carwash/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'carwash/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'carwash/css/index.css' %}" xmlns="http://www.w3.org/1999/html">
+<!--        <script src="{% static 'cw_registration/js/script.js' %}"></script>-->
+    <meta name="description" content="Лучшая автомойка в Серове">
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+</head>
+<body>
+    <div class="main-section">
+        <div class="container main-section__nav-container">
+            <header class="main-section__header">
+                <a href="#"><img class="main-section__logo" src="{% static 'carwash/icons/logo.svg' %}" alt=""></a>
+            </header>
+        </div>
+    </div>
+    {% block content %} {% endblock %}
+</body>
+</html>
