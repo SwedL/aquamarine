@@ -2,25 +2,55 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'carwash/css/reset.css' %}">
-    <link rel="stylesheet" href="{% static 'carwash/css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'carwash/css/index.css' %}" xmlns="http://www.w3.org/1999/html">
-<!--        <script src="{% static 'cw_registration/js/script.js' %}"></script>-->
     <meta name="description" content="Лучшая автомойка в Серове">
-    <title>
-        {% block title %} {% endblock %}
-    </title>
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href="{% static 'carwash/css/base.css' %}" xmlns="http://www.w3.org/1999/html">
+    <script src="https://kit.fontawesome.com/2eaffb5472.js" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    {% block css %} {% endblock %}
+
+    <!--        <script src="{% static 'cw_registration/js/script.js' %}"></script>-->
+
+    <title>{{ title }}</title>
 </head>
+
+
 <body>
-    <div class="main-section">
-        <div class="container main-section__nav-container">
-            <header class="main-section__header">
-                <a href="#"><img class="main-section__logo" src="{% static 'carwash/icons/logo.svg' %}" alt=""></a>
-            </header>
-        </div>
-    </div>
-    {% block content %} {% endblock %}
+
+<!-- Navigation -->
+<nav class="main-menu">
+    <div class="container main-menu__container">
+        <header class="main-menu__left-container">
+            <a href="#"><img class="main-menu__logo" src="{% static 'carwash/icons/logo.svg' %}" alt=""></a>
+        </header>
+        <div class="main-menu__right-container">
+            <div class="main-menu__adress text-menu">
+                <div class="text-menu__item"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="text-menu__item_adress ">г.Серов
+                    <br>ул.Металистов 33</div>
+                <div class="text-menu__item"><i class="fa-solid fa-phone"></i></div>
+                <div class="text-menu__item_telephone">+79043841020</div>
+            </div>
+            <div class="main-menu__nav nav-menu">
+                <ul class="nav-menu__list">
+                    <li class="nav-menu__list-item text-menu">Записаться</li>
+                    <li class="nav-menu__list-item text-menu">Услуги и цены</li>
+                    <li class="nav-menu__list-item text-menu">Адрес</li>
+                    <li class="nav-menu__list-item text-menu">Войти</li>
+                </ul>
+            </div>
+        </div>            
+    </div>  
+</nav>
+    <!-- Page Content -->
+{% block content %} {% endblock %}
+
+{% block footer %} {% endblock %}
+
 </body>
 </html>

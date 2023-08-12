@@ -1,0 +1,54 @@
+@import "normalizez.scss"
+@import "resets.scss"
+
+
+    
+*
+    box-sizing: 0
+
+.container
+    max-width: 1140px
+    margin: 0 auto  //где находится контейнер (по середине)
+
+.main-menu
+    min-height: 800px
+    background: #0056A9
+    padding-top: 20px
+    &__left-container
+        margin-left: 30px
+        margin-right: 58px
+    &__right-container        
+    &__container
+        display: flex
+        flex-direction: row
+        align-items: center       
+    &__adress
+        display: flex
+        flex-direction: row
+
+.text-menu
+    color: white
+    &__adress
+        margin-bottom: 18px
+    &__item
+        margin-right: 15px
+        &_adress
+            font-size: 16px
+            margin-right: 52px
+        &_telephone
+            font-size: 20px
+
+.nav-menu
+    display: flex
+    align-items: center
+    width: 677px
+    height: 44px
+    border-radius: 9px
+    background: #4CBB51
+    filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 0.25))
+    &__list
+        display: flex
+        flex-direction: row
+        align-items: stretch       
+        font-size: 18px
+        
