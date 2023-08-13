@@ -12,23 +12,27 @@
 
 {% block content %}
     <main>
-        <section class="section-one section">
-            <div class="section-one__content">
-                <p class="section-one__title">
+        <section class="first-section section">
+            <div class="first-section__content">
+                <p class="first-section__title">
                     Aquamarine - салон красоты вашего
                     <br>автомобиля</p>
-                <div class="section-one__image image">
+                <div class="first-section__image image">
                     <img src="{% static 'carwash/images/Auto image.png' %}" alt="">
                 </div>
             </div>
         </section>
-        <section class="section-excellence section">
-            <div class="section-excellence__list">
-                <div class="section-excellence__list-item">eee</div>
-                <div class="section-excellence__list-item">ddd</div>
-                <div class="section-excellence__list-item">fff</div>
+        <section class="second-section section">
+            <div class="second-section__cards-box">
+                <div class="second-section__cards-item cards-item cards-item_red">
+                    <div class="cards-item__bolts bolts">
+                        <div></div>
+                    </div>
+                </div>
+                <div class="second-section__cards-item cards-item cards-item_green"></div>
+                <div class="second-section__cards-item cards-item cards-item_blue"></div>
             </div>
-            <hr class="section-excellence__hr">
+            <hr class="second-section__hr">
         </section>
     </main>
 {% endblock %}
