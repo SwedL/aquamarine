@@ -1,7 +1,10 @@
 $color-blue: #0056A9
 $color-red: #C23349
+$color-red2: #C53B50
 $color-green: #4CBB51
+$color-green2: #5CAB5F
 $color-dark-blue: #1731B9
+$color-dark-blue2: #32449F
     
 .section
     
@@ -31,6 +34,9 @@ $color-dark-blue: #1731B9
 
 .cards-item
     position: relative
+    display: flex
+    justify-content: center
+    align-items: center
     height: 360px
     width: 360px
     border-radius: 20px   
@@ -39,15 +45,40 @@ $color-dark-blue: #1731B9
     box-shadow: 8px 4px 4px 0px rgba(0, 0, 0, 0.25)
     &:last-child
         margin-right: 0
+    &__bolts-box
+        width: 322px
+        height: 322px
+    &__bolts_y        
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        margin-bottom: 289px
+    &__content
+        width: 290px
+        position: absolute
+        top: 30px
+        text-align: center        
+    &__title        
+        font-size: 36px
+        margin-bottom: 20px
+    &__description
+        font-size: 24px
+        text-align: left
+
+
+    
 
 .cards-item_red
     background: $color-red
+    // background: $color-red2
 
 .cards-item_green
-    background: $color-green
+    // background: $color-green
+    background: $color-green2
 
 .cards-item_blue
-    background: $color-dark-blue
+    // background: $color-dark-blue
+    background: $color-dark-blue2
 
         
         

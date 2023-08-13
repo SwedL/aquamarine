@@ -18,19 +18,75 @@
                     Aquamarine - салон красоты вашего
                     <br>автомобиля</p>
                 <div class="first-section__image image">
-                    <img src="{% static 'carwash/images/Auto image.png' %}" alt="">
+                    <img src="{% static 'carwash/images/Auto image2.png' %}" alt="">
                 </div>
             </div>
         </section>
         <section class="second-section section">
+            <!-- 3 карточки с приемуществами компании -->
             <div class="second-section__cards-box">
                 <div class="second-section__cards-item cards-item cards-item_red">
-                    <div class="cards-item__bolts bolts">
-                        <div></div>
+                    <!-- 4 болта внутри карточки -->
+                    <div class="cards-item__bolts-box">
+                        <div class="cards-item__bolts_y">
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                        </div>
+                        <div class="cards-item__bolts_y">
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                        </div>
+                    </div>
+                    <!-- title и description внутри карточки -->
+                    <div class="cards-item__content">
+                        <img class="cards-item__logo" src="{% static 'carwash/icons/logo sertificate.svg' %}" alt="sertificat">
+                        <p class="cards-item__title text">Гарантия качества</p>
+                        <p class="cards-item__description text">В нашей работе мы используем только
+                             самые качественные материалы и химию от производителей из Европы и Америки</p>
+                    </div>                    
+                </div>
+
+                <div class="second-section__cards-item cards-item cards-item_green">
+                    <!-- 4 болта внутри карточки -->
+                    <div class="cards-item__bolts-box">
+                        <div class="cards-item__bolts_y">
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                        </div>
+                        <div class="cards-item__bolts_y">
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                        </div>
+                    </div>
+                    <!-- title и description внутри карточки -->
+                    <div class="cards-item__content">
+                        <img class="cards-item__logo" src="{% static 'carwash/icons/logo profi.svg' %}" alt="sertificat">
+                        <p class="cards-item__title text">Опытные мастера</p>
+                        <p class="cards-item__description text">Специалисты автокомплекса 
+                            имеют богатый опыт и знают все тонкости своего дела</p>
                     </div>
                 </div>
-                <div class="second-section__cards-item cards-item cards-item_green"></div>
-                <div class="second-section__cards-item cards-item cards-item_blue"></div>
+
+                <div class="second-section__cards-item cards-item cards-item_blue">
+                    <!-- 4 болта внутри карточки -->
+                    <div class="cards-item__bolts-box">
+                        <div class="cards-item__bolts_y">
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                        </div>
+                        <div class="cards-item__bolts_y">
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
+                        </div>
+                    </div>
+                    <!-- title и description внутри карточки -->
+                    <div class="cards-item__content">
+                        <img class="cards-item__logo" src="{% static 'carwash/icons/logo restroom.svg' %}" alt="sertificat">
+                        <p class="cards-item__title text">Комната отдыха</p>
+                        <p class="cards-item__description text">Специалисты автокомплекса 
+                            имеют богатый опыт и знают все тонкости своего дела</p>
+                    </div>
+                </div>
             </div>
             <hr class="second-section__hr">
         </section>
