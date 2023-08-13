@@ -1,0 +1,28 @@
+@charset "UTF-8";
+/* line 5, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.section-one {
+  min-height: 705px;
+  background: #0056A9;
+}
+
+/* line 8, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.section-one__content {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* line 11, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.section-one__title {
+  font-size: 55px;
+  color: white;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+/* line 17, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.section-excellence {
+  min-height: 490px;
+  background: #0056A9;
+}
+
+/*# sourceMappingURL=index.css.map */

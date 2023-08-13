@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "index.css",
+	"sources": [
+		"../sass/index.sass"
+	],
+	"sourcesContent": [
+		"$color-blue: #0056A9;\n\n.section {}\n\n.section-one {\n    min-height: 705px;\n    background: $color-blue;\n    &__content {\n        max-width: 1140px;\n        margin: 0 auto; }\n    &__title {\n        font-size: 55px;\n        color: white;\n        text-align: center;\n        margin-bottom: 35px; } }\n\n.section-excellence {\n    min-height: 490px;\n    background: $color-blue; }\n\n\n\n"
+	],
+	"names": [],
+	"mappings": ";;AAIA,AAAA,YAAY,CAAC;EACT,UAAU,EAAE,KAAK;EACjB,UAAU,EAND,OAAO;CAcY;;;AAP3B,AAAD,qBAAU,CAAC;EACP,SAAS,EAAE,MAAM;EACjB,MAAM,EAAE,MAAM;CAAG;;;AACpB,AAAD,mBAAQ,CAAC;EACL,SAAS,EAAE,IAAI;EACf,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,MAAM;EAClB,aAAa,EAAE,IAAI;CAAG;;;AAE9B,AAAA,mBAAmB,CAAC;EAChB,UAAU,EAAE,KAAK;EACjB,UAAU,EAlBD,OAAO;CAkBU"
+}
