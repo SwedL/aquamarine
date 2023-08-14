@@ -6,7 +6,6 @@ $color-green2: #5CAB5F
 $color-dark-blue: #1731B9
 $color-dark-blue2: #32449F
     
-.section
     
 .first-section
     min-height: 705px
@@ -29,8 +28,8 @@ $color-dark-blue2: #32449F
         display: flex
         flex-direction: row
         margin-bottom: 60px
-    &__hr
-        width: 506px
+.hr
+    width: 506px
 
 .cards-item
     position: relative
@@ -60,9 +59,9 @@ $color-dark-blue2: #32449F
         text-align: center        
     &__title        
         font-size: 36px
-        margin-bottom: 20px
+        margin-bottom: 10px
     &__description
-        font-size: 24px
+        font-size: 22px
         text-align: left
 
 
@@ -80,7 +79,27 @@ $color-dark-blue2: #32449F
     // background: $color-dark-blue
     background: $color-dark-blue2
 
+.service-section
+    position: relative        
+    min-height: 1120px
+    background: $color-blue    
+    &__image
+        height: 1000px
+        margin: 0 auto
+        background: url("/static/carwash/images/car-service.png"), $color-blue 50% 
+        background-repeat: no-repeat
+        background-blend-mode: screen
+        margin-bottom: 60px
+    &__freepik
+        position: absolute
+        color: #3304dd
+        text-align: right
+        margin-right: 20px
+        top: 965px
+        right: 18px
+          
         
+
         
         
         

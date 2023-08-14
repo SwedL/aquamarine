@@ -18,12 +18,13 @@
                     Aquamarine - салон красоты вашего
                     <br>автомобиля</p>
                 <div class="first-section__image image">
-                    <img src="{% static 'carwash/images/Auto image2.png' %}" alt="">
+                    <img src="{% static 'carwash/images/auto.png' %}" alt="">
                 </div>
             </div>
         </section>
-        <section class="second-section section">
-            <!-- 3 карточки с приемуществами компании -->
+
+        <!-- 3 карточки с преимуществами компании -->
+        <section class="second-section section">            
             <div class="second-section__cards-box">
                 <div class="second-section__cards-item cards-item cards-item_red">
                     <!-- 4 болта внутри карточки -->
@@ -83,12 +84,20 @@
                     <div class="cards-item__content">
                         <img class="cards-item__logo" src="{% static 'carwash/icons/logo restroom.svg' %}" alt="sertificat">
                         <p class="cards-item__title text">Комната отдыха</p>
-                        <p class="cards-item__description text">Специалисты автокомплекса 
-                            имеют богатый опыт и знают все тонкости своего дела</p>
+                        <p class="cards-item__description text">Для комфортного ожидания готовности автомобиля, предусмотрена комната отдыха для клиентов
+                            <br>Также будут предложены чай или кофе</p>
                     </div>
                 </div>
             </div>
-            <hr class="second-section__hr">
+            <hr class="second-section__hr hr">
+        </section>
+
+        <!-- услуги и цены -->
+        <section class="service-section section">            
+            <div class="service-section__image image">
+                <a class="service-section__freepik" href="https://ru.freepik.com/free-photo/beautiful-car-at-interior-clean-up-service_21139153.htm#page=4&query=%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B9%D0%BA%D0%B0&position=1&from_view=search&track=sph">www.Freepik.com</a>
+            </div>
+            <hr class="service-section__hr hr">
         </section>
     </main>
 {% endblock %}
