@@ -139,7 +139,7 @@
 /* line 101, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .services-section__price {
   position: absolute;
-  top: 413px;
+  top: 119px;
   left: 370px;
   min-height: 158px;
   display: flex;
@@ -155,6 +155,7 @@
   min-height: 72px;
   width: 1140px;
   background: #5CAB5F;
+  border-radius: 16px 16px 0px 0px;
   border: 3px solid #FFF;
   border-bottom: none;
   color: white;
@@ -181,8 +182,8 @@
   min-height: 36px;
   margin: 0 auto;
   width: 1080px;
-  background: #0a6b3f;
-  border: 3px solid #FFF;
+  background: #1D7636;
+  border: 1px solid #FFF;
   border-left: none;
   border-right: none;
 }
@@ -193,6 +194,7 @@
   min-height: 50px;
   width: 1140px;
   background: #5CAB5F;
+  border-radius: 0px 0px 16px 16px;
   border: 3px solid #FFF;
   border-top: none;
   box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
