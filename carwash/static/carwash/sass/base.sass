@@ -6,50 +6,49 @@
     box-sizing: 0
 
 .container
+    display: flex
+    flex-direction: row
     max-width: 1140px
+    align-items: center
     margin: 0 auto  //где находится контейнер (по середине)
+    
+.text
+    color: white
 
-.main-menu
+.header
     min-height: 150px
     background: #0056A9
     padding-top: 20px
     &__logo-box
-        margin-left: 30px
+        margin-left: 30px        
         margin-right: 68px
-    &__container
-        display: flex
-        flex-direction: row
-        align-items: center
-        margin-bottom: 20px       
-    &__adress-box
-        display: flex
-        flex-direction: row
-        align-items: center
-        margin-bottom: 18px
+    &__container        
+        margin-bottom: 20px              
     &__hr
         width: 1140px
         bottom: 0px
         border: none
         border-top: 1px solid white
-    
-
-.text
-    color: white
-    
-.text-menu
-    &__adress
+    &__contacts-box
+        display: flex
+        flex-direction: row
+        align-items: center       
         margin-bottom: 18px
-    &__item
-        margin-right: 10px
+        &__item
+            margin-right: 10px
         &:first-child
             margin-left: 20px
-        &_adress
+        &__adress
             font-size: 18px
             margin-right: 52px
-        &_telephone
+        &__telephone
             font-size: 20px
         i
             font-size: 18px
+
+        
+    
+    
 
 .nav-menu
     display: flex
@@ -69,4 +68,33 @@
         font-size: 18px
         &:last-child
             margin-right: 20px
+
+.footer
+    background: black 
+    &__text 
+        color: #e3e3e3  
+    &__container
+        min-height: 124px        
+    &__logo-box
+        margin-right: 110px
+        margin-left: 50px
+    &__contacts-box
+        display: flex
+        flex-direction: row
+        align-items: center       
+        margin-bottom: 18px
+        &__item
+            margin-right: 10px
+        &__adress
+            font-size: 18px
+            margin-right: 45px
+        &__telephone
+            font-size: 20px
+            margin-right: 45px
+        &__email
+            font-size: 18px
+        i
+            font-size: 18px
+
+        
         

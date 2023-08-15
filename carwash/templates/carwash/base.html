@@ -19,49 +19,72 @@
     {% block title %} {% endblock %}
 </head>
 
-
 <body>
 
-<!-- Navigation -->
-<nav class="main-menu">
-    <div class="main-menu__container container">
-        
-        <!-- Логотип Aquamarine-->
-                   <a href="#"><img class="main-menu__logo-box logo" src="{% static 'carwash/icons/logo.svg' %}" alt=""></a>
-                
-        <!-- Адрес, телефон и навигационное меню -->
-        <div class="main-menu__nav">
-            <!-- блок адрес и телефон -->
-            <div class="main-menu__adress-box text-menu text">
-                <div class="text-menu__item"><i class="fa-solid fa-location-dot"></i></div>
-                <div class="text-menu__item_adress ">г.Серов
-                    <br>ул.Металистов 33</div>
-                <div class="text-menu__item"><i class="fa-solid fa-phone"></i></div>
-                <div class="text-menu__item_telephone">+79043841020</div>
-            </div>
-            <!-- блок навигации -->
-            <div class="main-menu__nav-box nav-menu">
-                <div class="nav-menu__left">
-                    <ul class="nav-menu__list">
-                        <li class="nav-menu__list-item text">Записаться</li>
-                        <li class="nav-menu__list-item text">Услуги и цены</li>
-                        <li class="nav-menu__list-item text">Адрес</li>
-                    </ul>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header__container">
+            
+            <!-- Логотип Aquamarine-->
+                <a href="#"><img class="header__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
+                    
+            <!-- Блок контактов и навигационного меню -->
+            <div class="header__nav">
+
+                <!-- Блок контактов -->
+                <div class="header__contacts-box text">
+                    <div class="header__contacts-box__item"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="header__contacts-box__adress ">г.Серов
+                        <br>ул.Металистов 33</div>
+                    <div class="header__contacts-box__item"><i class="fa-solid fa-phone"></i></div>
+                    <div class="header__contacts-box__telephone">+79043841020</div>
                 </div>
-                <div class="nav-menu__right">
-                    <ul>
-                        <li class="nav-menu__list-item text">Войти</li>
-                    </ul>
+
+                <!-- Блок навигации -->
+                <div class="header__nav-box nav-menu">
+                    <div class="nav-menu__left">
+                        <ul class="nav-menu__list">
+                            <li class="nav-menu__list-item text">Записаться</li>
+                            <li class="nav-menu__list-item text">Услуги и цены</li>
+                            <li class="nav-menu__list-item text">Адрес</li>
+                        </ul>
+                    </div>
+                    <div class="nav-menu__right">
+                        <ul>
+                            <li class="nav-menu__list-item text">Войти</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </div>            
-    </div>
-    <hr class="main-menu__hr">  
-</nav>
-    <!-- Page Content -->
+            </div>            
+        </div>
+        <hr class="header__hr">  
+    </header>
+
+
+    <!-- Контент страницы -->
 {% block content %} {% endblock %}
 
-{% block footer %} {% endblock %}
+
+    <footer class="footer">
+        <div class="container footer__container">
+           
+            <!-- Логотип Aquamarine-->
+            <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
+            
+            <!-- Блок контактов -->
+            <div class="footer__contacts-box">
+                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="footer__contacts-box__adress footer__text">г.Серов
+                    <br>ул.Металистов 33</div>
+                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-phone"></i></div>
+                <div class="footer__contacts-box__telephone footer__text">+79043841020</div>
+                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-envelope"></i></div>
+                <div class="footer__contacts-box__email footer__text">aquamarine@mail.ru</div>
+                
+            </div>
+            
+        </div>
+    </footer>
 
 </body>
 </html>
