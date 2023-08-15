@@ -1,45 +1,56 @@
 @charset "UTF-8";
-/* line 10, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 10, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .first-section {
-  min-height: 705px;
+  min-height: 766px;
   background: #0056A9;
 }
 
-/* line 13, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 13, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .first-section__content {
   max-width: 1140px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
-/* line 16, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 18, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .first-section__title {
   font-size: 55px;
   color: white;
   text-align: center;
+  margin-top: 35px;
   margin-bottom: 35px;
 }
 
-/* line 22, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 25, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .second-section {
-  min-height: 490px;
+  min-height: 480px;
   background: #0056A9;
 }
 
-/* line 25, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 28, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .second-section__cards-box {
   max-width: 1140px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  margin-bottom: 60px;
+  margin-bottom: 56px;
 }
 
-/* line 31, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
-.hr {
+/* line 34, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.second-section__hr {
   width: 506px;
+  margin: 0 auto;
 }
 
-/* line 34, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 39, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.hr2 {
+  width: 506px;
+  margin: 0 auto;
+  margin-top: -6px;
+}
+
+/* line 44, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item {
   position: relative;
   display: flex;
@@ -53,18 +64,18 @@
   box-shadow: 8px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-/* line 45, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 55, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item:last-child {
   margin-right: 0;
 }
 
-/* line 47, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 57, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item__bolts-box {
   width: 322px;
   height: 322px;
 }
 
-/* line 50, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 60, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item__bolts_y {
   display: flex;
   flex-direction: row;
@@ -72,7 +83,7 @@
   margin-bottom: 289px;
 }
 
-/* line 55, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 65, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item__content {
   width: 290px;
   position: absolute;
@@ -80,42 +91,43 @@
   text-align: center;
 }
 
-/* line 60, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 70, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item__title {
   font-size: 36px;
   margin-bottom: 10px;
 }
 
-/* line 63, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 73, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item__description {
   font-size: 22px;
   text-align: left;
 }
 
-/* line 67, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 77, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item_red {
   background: #C23349;
 }
 
-/* line 71, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 81, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item_green {
   background: #5CAB5F;
 }
 
-/* line 75, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 85, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .cards-item_blue {
   background: #32449F;
 }
 
-/* line 79, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
-.service-section {
+/* line 89, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section {
   position: relative;
   min-height: 1120px;
   background: #0056A9;
 }
 
-/* line 83, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
-.service-section__image {
+/* line 93, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__image {
+  position: relative;
   height: 1000px;
   margin: 0 auto;
   background: url("/static/carwash/images/car-service.png"), #0056A9 50%;
@@ -124,8 +136,70 @@
   margin-bottom: 60px;
 }
 
-/* line 90, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
-.service-section__link-freepik {
+/* line 101, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__price {
+  position: absolute;
+  top: 413px;
+  left: 370px;
+  min-height: 158px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* line 108, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__price-top {
+  margin: 0 auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 72px;
+  width: 1140px;
+  background: #5CAB5F;
+  border: 3px solid #FFF;
+  border-bottom: none;
+  color: white;
+  box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* line 121, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__title-h1 {
+  font-size: 40px;
+  margin-right: 300px;
+}
+
+/* line 125, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__service {
+  background: #5CAB5F;
+  border: 3px solid #FFF;
+  border-top: none;
+  border-bottom: none;
+  box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* line 131, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__s {
+  min-height: 36px;
+  margin: 0 auto;
+  width: 1080px;
+  background: #0a6b3f;
+  border: 3px solid #FFF;
+  border-left: none;
+  border-right: none;
+}
+
+/* line 139, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__price-bottom {
+  margin: 0 auto;
+  min-height: 50px;
+  width: 1140px;
+  background: #5CAB5F;
+  border: 3px solid #FFF;
+  border-top: none;
+  box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* line 149, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__link-freepik {
   position: absolute;
   color: #3304dd;
   text-align: right;
@@ -134,7 +208,13 @@
   right: 18px;
 }
 
-/* line 98, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+/* line 156, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
+.services-section__hr {
+  width: 506px;
+  margin: 0 auto;
+}
+
+/* line 160, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
 .third-section {
   min-height: 600px;
   background: #0056A9;

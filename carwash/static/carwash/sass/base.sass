@@ -5,6 +5,15 @@
 *
     box-sizing: 0
 
+
+html
+    // font-family: "MontserratT"
+    // font-weight: regular
+    scroll-behavior: smooth
+
+
+$color-main: #0056A9
+
 .container
     display: flex
     flex-direction: row
@@ -16,19 +25,24 @@
     color: white
 
 .header
-    min-height: 150px
-    background: #0056A9
+    position: sticky
+    top: 0
+    min-height: 120px
+    background: #043b6f
     padding-top: 20px
+    z-index: 5
     &__logo-box
         margin-left: 30px        
         margin-right: 68px
     &__container        
         margin-bottom: 20px              
     &__hr
-        width: 1140px
-        bottom: 0px
+        margin: 0        
         border: none
         border-top: 1px solid white
+    a
+        text-decoration: none
+        color: white
     &__contacts-box
         display: flex
         flex-direction: row
@@ -45,6 +59,7 @@
             font-size: 20px
         i
             font-size: 18px
+        
 
         
     
