@@ -16,14 +16,14 @@ menu = [{'title': 'Главная', 'url_name': 'home'},
         ]
 
 
-class IndexView(ListView):
+class IndexListView(ListView):
     template_name = 'carwash/index.html'
     model = CarWashService
     context_object_name = 'services'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['list_s'] = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+        context = super(IndexListView, self).get_context_data()
+        context['list_s'] = [i for i in range(0, 100, 2)]
         return context
 
 

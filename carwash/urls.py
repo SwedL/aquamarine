@@ -6,7 +6,7 @@ from carwash.views import *
 app_name = 'carwash'
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='home'),
+    path('', IndexListView.as_view(), name='home'),
     path('registration/', RegistrationAuto.as_view(), name='registration'),
     # path('profile/', Profile.as_view(), name='profile'),
     # path('login/', LoginUser.as_view(), name='login'),
