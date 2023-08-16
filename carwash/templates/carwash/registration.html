@@ -1,0 +1,40 @@
+{% extends 'carwash/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+<!--{% block css_additional %}-->
+<!--    <link rel="stylesheet" href="{% static 'cw_registration/css/reset.css' %}">-->
+<!--    <link rel="stylesheet" href="{% static 'cw_registration/css/normalize.css' %}">-->
+<!--    <link rel="stylesheet" href="{% static 'cw_registration/css/index.css' %}" xmlns="http://www.w3.org/1999/html">-->
+<!--    <script src="{% static 'cw_registration/js/script.js' %}"></script>-->
+<!--{% endblock %}-->
+
+{% block content %}
+    <header></header>
+    <main>
+        <h2 class="main-title__text">Запись авто на мойку</h2>
+            <form class="form-registration" method="post">
+                {% csrf_token %}
+                <div class="box-services">                
+                    <h2 class="services-title__text">Выберите услуги:</h2>
+                    {% if user.car_type == 'price_standart' %}
+                        {% include 'carwash/serv-choice-price-standart.html' %}
+                    {% elif user.car_type == 'price_crossover' %}
+                        {% include 'carwash/serv-choice-price-crossover.html' %}
+                    {% else %}
+                        {% include 'carwash/serv-choice-price-offroad.html' %}
+                    {% endif %}
+                </div>
+                <div class="box-time-choice">
+                    {% include 'carwash/time-choice.html' %}
+                </div>
+                <div class="registration">
+                    <button id="registration" type="submit" disabled>Записаться</button>
+                </div>
+            </form>
+    </main>
+{% endblock %}

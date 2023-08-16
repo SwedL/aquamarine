@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class CarwashConfig(AppConfig):
+class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'carwash'
+    name = 'users'
     verbose_name = 'Data base'

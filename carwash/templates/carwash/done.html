@@ -1,0 +1,23 @@
+{% extends 'cw_registration/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Done
+{% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="done">
+        <h2>Спасибо вы записаны на {{ normal_format_choicen_date }} на время {{ choice_time }}</h2>
+
+        <h2>Выбраные работы:</h2>
+        {% for service in choice_services %}
+            {{ service.name }}<br>
+        {% endfor %}
+        <h2>Общее время: {{ overal_time }}</h2>
+        <h2>Общая стоимость: {{ total_cost }}</h2>
+    </div>
+{% endblock %}
