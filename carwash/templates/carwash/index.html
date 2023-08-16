@@ -89,21 +89,32 @@
                     </div>
                 </div>
             </div>
+            <div id="services_price"></div>
         </section>
 
         <!-- услуги и цены -->
-        <section id="services_price"  class="services-section section">            
+        <section class="services-section section">            
             <div class="services-section__image">
 
                 <div class="services-section__price">
                     <div class="services-section__price-top">
                         <div class="services-section__title-h1">Услуги и цены</div>
-                        <div class="services-section__title-h3">Седан, хэтчбек     Кроссовер     Внедорожник</div>
+                        <div class="services-section__title-h3">Седан, хэтчбек</div>
+                        <div class="services-section__title-h3">Кроссовер</div>
+                        <div class="services-section__title-h3">Внедорожник</div>
                     </div>
                     <div class="services-section__service">
-                        <div class="services-section__s">
-
-                        </div>
+                        {% for s in services %}
+                            {% if forloop.counter0 in list_s %}
+                                <div class="services-section__color-dark service-row">
+                                    <span>{{s}}</span> 
+                                </div>
+                            {% else %}
+                                <div class="services-section__color-light service-row">
+                                    <span>{{s}}</span> 
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="services-section__price-bottom"></div>
                 </div>

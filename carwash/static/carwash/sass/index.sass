@@ -1,15 +1,28 @@
-$color-blue: #0056A9
+$color-main: #0056A9
 $color-red: #C23349
-$color-red2: #C53B50
-$color-green: #4CBB51
-$color-green2: #5CAB5F
-$color-dark-blue: #1731B9
-$color-dark-blue2: #32449F
-    
+$color-green: #5CAB5F
+$color-dark-blue: #32449F
+
+
+.service-row           
+    min-height: 36px
+    margin: 0 auto
+    width: 1080px
+    border: 1px solid #FFF
+    border-left: none
+    border-right: none
+    border-bottom: none
+    display: flex
+    align-items: center
+    font-size: 18px
+    color: white
+    span
+        margin-left: 20px
+        
    
 .first-section
     min-height: 766px
-    background: $color-blue    
+    background: $color-main    
     &__content        
         max-width: 1140px
         margin: 0 auto
@@ -24,13 +37,13 @@ $color-dark-blue2: #32449F
 
 .second-section
     min-height: 480px
-    background: $color-blue
+    background: $color-main
     &__cards-box
         max-width: 1140px
         margin: 0 auto
         display: flex
         flex-direction: row
-        margin-bottom: 56px
+        margin-bottom: 80px
    
 .cards-item
     position: relative
@@ -67,25 +80,22 @@ $color-dark-blue2: #32449F
 
 .cards-item_red
     background: $color-red
-    // background: $color-red2
 
 .cards-item_green
-    // background: $color-green
-    background: $color-green2
+    background: $color-green
 
 .cards-item_blue
-    // background: $color-dark-blue
-    background: $color-dark-blue2
+    background: $color-dark-blue
 
 .services-section
     position: relative        
     min-height: 1120px
-    background: $color-blue    
+    background: $color-main    
     &__image
         position: relative
         height: 1000px
         margin: 0 auto
-        background: url("/static/carwash/images/car-service.png"), $color-blue 50% 
+        background: url("/static/carwash/images/car-service.png"), $color-main 50% 
         background-repeat: no-repeat
         background-blend-mode: screen
         margin-bottom: 60px
@@ -99,11 +109,10 @@ $color-dark-blue2: #32449F
     &__price-top
         margin: 0 auto
         display: inline-flex
-        justify-content: center
         align-items: center
         min-height: 72px
         width: 1140px
-        background: $color-green2
+        background: $color-green
         border-radius: 16px 16px 0px 0px
         border: 3px solid #FFF
         border-bottom: none
@@ -111,27 +120,31 @@ $color-dark-blue2: #32449F
         box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)
     &__title-h1
         font-size: 40px
-        margin-right: 300px
+        margin-left: 190px
+        margin-right: 258px
+    &__title-h3
+        font-size: 18px
+        margin-right: 44px
+        &:last-child
+            margin-right: 0
 
     &__service
-        background: $color-green2
+        background: $color-green
         border: 3px solid #FFF
         border-top: none
         border-bottom: none
         box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)
-    &__s        
-        min-height: 36px
-        margin: 0 auto
-        width: 1080px
-        background: #1D7636
-        border: 1px solid #FFF
-        border-left: none
-        border-right: none
+    &__color-dark
+        background: #22843e
+        &:last-child
+            border-bottom: 1px solid #FFF
+    &__color-light
+        background: $color-green
     &__price-bottom
         margin: 0 auto
         min-height: 50px
         width: 1140px
-        background: $color-green2
+        background: $color-green
         border-radius: 0px 0px 16px 16px
         border: 3px solid #FFF
         border-top: none
@@ -147,6 +160,6 @@ $color-dark-blue2: #32449F
         
 .third-section
     min-height: 600px
-    background: $color-blue
+    background: $color-main
 
         

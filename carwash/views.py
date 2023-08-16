@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from itertools import dropwhile
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from carwash.models import *
 import locale
@@ -16,8 +16,15 @@ menu = [{'title': 'Главная', 'url_name': 'home'},
         ]
 
 
-class IndexView(TemplateView):
+class IndexView(ListView):
     template_name = 'carwash/index.html'
+    model = CarWashService
+    context_object_name = 'services'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['list_s'] = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+        return context
 
 
 class RegistrationAuto(View):
