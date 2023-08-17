@@ -103,19 +103,7 @@
                         <div class="services-section__title-h3">Кроссовер</div>
                         <div class="services-section__title-h3">Внедорожник</div>
                     </div>
-                    <div class="services-section__service">
-                        {% for s in services %}
-                            {% if forloop.counter0 in list_s %}
-                                <div class="services-section__color-dark service-row">
-                                    <span>{{s}}</span> 
-                                </div>
-                            {% else %}
-                                <div class="services-section__color-light service-row">
-                                    <span>{{s}}</span> 
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                    {% include 'carwash/index-services.html' %}
                     <div class="services-section__price-bottom"></div>
                 </div>
 

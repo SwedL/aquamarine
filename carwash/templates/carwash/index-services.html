@@ -1,0 +1,21 @@
+<div class="services-section__service">
+    <table style="width:100%">
+        {% for s in services %}
+            {% if forloop.counter0 in list_s %}
+            <tr class="services-section__color-dark service-row">
+                <td><span>{{s}}</span></td>
+                <td>{{s.price_standart}}</td>
+                <td>{{s.price_crossover}}</td>
+                <td>{{s.price_offroad}}</td>
+            </tr>
+            {% else %}
+            <tr class="services-section__color-light service-row">
+                <td><span>{{s}}</span></td>
+                <td>{{s.price_standart}}</td>
+                <td>{{s.price_crossover}}</td>
+                <td>{{s.price_offroad}}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+</div>
