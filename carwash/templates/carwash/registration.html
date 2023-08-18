@@ -3,23 +3,21 @@
 {% load static %}
 
 {% block title %}
-    {{title}}
+    <title>Запись автомобиля на мойку</title>
 {% endblock %}
 
-<!--{% block css_additional %}-->
-<!--    <link rel="stylesheet" href="{% static 'cw_registration/css/reset.css' %}">-->
-<!--    <link rel="stylesheet" href="{% static 'cw_registration/css/normalize.css' %}">-->
-<!--    <link rel="stylesheet" href="{% static 'cw_registration/css/index.css' %}" xmlns="http://www.w3.org/1999/html">-->
-<!--    <script src="{% static 'cw_registration/js/script.js' %}"></script>-->
-<!--{% endblock %}-->
+{% block css %}
+    <link rel="stylesheet" href="{% static 'carwash/css/registration.css' %}">
+    <script src="{% static 'carwash/js/script.js' %}"></script>
+{% endblock %}
 
-{% block content %}
-    <header></header>
+{% block content %}    
     <main>
-        <h2 class="main-title__text">Запись авто на мойку</h2>
-            <form class="form-registration" method="post">
+        <div class="registration">
+            <!-- <div class="registration__title">Запись авто на мойку</div> -->
+            <form class="registration__form" method="post">
                 {% csrf_token %}
-                <div class="box-services">                
+                <div class="registration__box-services">                
                     <h2 class="services-title__text">Выберите услуги:</h2>
                     {% if user.car_type == 'price_standart' %}
                         {% include 'carwash/serv-choice-price-standart.html' %}
@@ -29,12 +27,13 @@
                         {% include 'carwash/serv-choice-price-offroad.html' %}
                     {% endif %}
                 </div>
-                <div class="box-time-choice">
+                <div class="registration__box-time-choice">
                     {% include 'carwash/time-choice.html' %}
                 </div>
-                <div class="registration">
+                <div class="registration__button">
                     <button id="registration" type="submit" disabled>Записаться</button>
                 </div>
             </form>
+        </div>
     </main>
 {% endblock %}

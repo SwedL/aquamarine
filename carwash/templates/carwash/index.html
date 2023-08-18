@@ -95,16 +95,25 @@
         <!-- услуги и цены -->
         <section class="services-section section">            
             <div class="services-section__image">
-
+                
+                <!-- Таблица цен и услуг -->
                 <div class="services-section__price">
-                    <div class="services-section__price-top">
-                        <div class="services-section__title-h1">Услуги и цены</div>
-                        <div class="services-section__title-h3">Седан, хэтчбек</div>
-                        <div class="services-section__title-h3">Кроссовер</div>
-                        <div class="services-section__title-h3">Внедорожник</div>
-                    </div>
-                    {% include 'carwash/index-services.html' %}
-                    <div class="services-section__price-bottom"></div>
+                    <table style="width:95%">
+                        <tr>
+                            <th class="services-section__th1">Услуги и цены</th>
+                            <th>Седан / хэтч</th>
+                            <th>Кроссовер</th>
+                            <th>Внедорожник</th>
+                        </tr>
+                        {% for s in services %}            
+                            <tr>
+                                <td class="services-section__description"><span>{{s}}</span></td>
+                                <td>{{s.price_standart}}</td>
+                                <td>{{s.price_crossover}}</td>
+                                <td>{{s.price_offroad}}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
 
                 <a class="services-section__link-freepik" href="https://ru.freepik.com/free-photo/beautiful-car-at-interior-clean-up-service_21139153.htm#page=4&query=%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B9%D0%BA%D0%B0&position=1&from_view=search&track=sph" target="_blank">www.Freepik.com</a>

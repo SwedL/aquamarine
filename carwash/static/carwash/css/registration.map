@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "registration.css",
+	"sources": [
+		"../sass/registration.sass"
+	],
+	"sourcesContent": [
+		"$color-main: #0056A9;\n$color-red: #C23349;\n$color-green: #5CAB5F;\n$color-dark-blue: #32449F;\n$color-white: #ddd;\n\nmain {\n    background: #7af8ff; }\n\n\n\n.registration {\n    position: relative;\n    min-height: 667px;\n    margin: 0 auto;\n    // background: #B2C2CF\n    background: url(\"../images/car-service2.png\"), $color-main 100%;\n    background-repeat: no-repeat;\n    background-blend-mode: screen;\n    &__box-services {\n        height: 570px;\n        width: 678px;\n        background-color: #676767;\n        color: #ffffff; }\n    &__box-time-choice {}\n    &__form {\n        display: flex;\n        flex-direction: row; } }\n\n.day {\n    display: inline-flex;\n    border-width: 100px;\n    height: 655px;\n    width: 100px;\n    background-color: #8d8d8d;\n    // background-color: $color-green\n    // color: white\n    margin-right: 10px;\n    box-shadow: 12px -12px 8px 2px rgba(73, 119, 154, 0.25);\n    &__content {\n        height: 635px;\n        width: 90px;\n        border: solid 1px;\n        border-color: #ddd;\n        position: relative;\n        top: 10px; } }\n\n\n\n\n\n"
+	],
+	"names": [],
+	"mappings": ";;AAMA,AAAA,IAAI,CAAC;EACD,UAAU,EAAE,OAAO;CAAG;;;AAI1B,AAAA,aAAa,CAAC;EACV,QAAQ,EAAE,QAAQ;EAClB,UAAU,EAAE,KAAK;EACjB,MAAM,EAAE,MAAM;EAEd,UAAU,EAAE,iCAAiC,EAhBpC,OAAO,CAgB2C,IAAI;EAC/D,iBAAiB,EAAE,SAAS;EAC5B,qBAAqB,EAAE,MAAM;CASD;;;AAR3B,AAAD,2BAAe,CAAC;EACZ,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,OAAO;EACzB,KAAK,EAAE,OAAO;CAAG;;;AAEpB,AAAD,mBAAO,CAAC;EACJ,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;CAAG;;;AAE9B,AAAA,IAAI,CAAC;EACD,OAAO,EAAE,WAAW;EACpB,YAAY,EAAE,KAAK;EACnB,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,OAAO;EAGzB,YAAY,EAAE,IAAI;EAClB,UAAU,EAAE,IAAI,CAAE,KAAI,CAAC,GAAG,CAAC,GAAG,CAAC,wBAAwB;CAOrC;;;AANjB,AAAD,aAAU,CAAC;EACP,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,SAAS;EACjB,YAAY,EAAE,IAAI;EAClB,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAE,IAAI;CAAG"
+}

@@ -1,18 +1,28 @@
 @import "normalizez.scss"
 @import "resets.scss"
-
+ 
+$color-menu: #656565
+// $color-menu: #5CAB5F
     
 *
-    box-sizing: 0
+    box-sizing: border-box
 
+@font-face 
+    font-family: "Robotoo"
+    src: url("../fonts/Roboto-Regular.ttf")
+    font-weight: regular
+    font-style: normal
+
+@font-face 
+    font-family: "Robotoo"
+    src: url("../fonts/Roboto-Bold.ttf")
+    font-weight: bold
+    font-style: normal
 
 html
-    // font-family: "MontserratT"
-    // font-weight: regular
+    font-family: "Robotoo"
+    font-weight: regular
     scroll-behavior: smooth
-
-
-$color-main: #0056A9
 
 .container
     display: flex
@@ -27,7 +37,7 @@ $color-main: #0056A9
 .header
     position: sticky
     top: 0
-    min-height: 120px
+    min-height: 140px
     background: #043b6f
     padding-top: 20px
     z-index: 5
@@ -50,20 +60,14 @@ $color-main: #0056A9
         margin-bottom: 18px
         &__item
             margin-right: 10px
-        &:first-child
-            margin-left: 20px
+            text-indent: 20px
         &__adress
             font-size: 18px
             margin-right: 52px
         &__telephone
             font-size: 20px
         i
-            font-size: 18px
-        
-
-        
-    
-    
+            font-size: 18px    
 
 .nav-menu
     display: flex
@@ -72,14 +76,14 @@ $color-main: #0056A9
     width: 677px
     height: 44px
     border-radius: 9px
-    background: #5CAB5F
+    background: $color-menu
     filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 0.25))
     &__list
         display: flex
         flex-direction: row
         margin-left: 20px
     &__list-item
-        margin-right: 40px
+        margin-right: 30px
         font-size: 18px
         &:last-child
             margin-right: 20px

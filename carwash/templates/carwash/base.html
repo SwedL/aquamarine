@@ -21,7 +21,6 @@
 </head>
 
 <body>
-
     <!-- Header -->
     <header class="header">
         <div class="container header__container">
@@ -45,8 +44,8 @@
                 <div class="header__nav-box nav-menu">
                     <div class="nav-menu__left">
                         <ul class="nav-menu__list">
-                            <li class="nav-menu__list-item text"><a href="#">Главная</a></li>
-                            <li class="nav-menu__list-item text"><a href="#">Записаться</a></li>
+                            <li class="nav-menu__list-item text"><a href="{% url 'carwash:home' %}">Главная</a></li>
+                            <li class="nav-menu__list-item text"><a href="{% url 'carwash:registration' %}">Записаться</a></li>
                             <li class="nav-menu__list-item text"><a href="#services_price">Услуги и цены</a></li>
                             <li class="nav-menu__list-item text"><a href="#footer">Контакты и адрес</a></li>
                         </ul>
