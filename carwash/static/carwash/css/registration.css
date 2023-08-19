@@ -1,20 +1,20 @@
 @charset "UTF-8";
-/* line 7, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 7, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 main {
   background: #7af8ff;
 }
 
-/* line 12, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 12, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .registration {
   position: relative;
-  min-height: 667px;
+  min-height: 709px;
   margin: 0 auto;
   background: url("../images/car-service2.png"), #0056A9 100%;
   background-repeat: no-repeat;
   background-blend-mode: screen;
 }
 
-/* line 20, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 19, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .registration__box-services {
   height: 570px;
   width: 678px;
@@ -22,13 +22,13 @@ main {
   color: #ffffff;
 }
 
-/* line 26, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 25, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .registration__form {
   display: flex;
   flex-direction: row;
 }
 
-/* line 30, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 29, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .day {
   display: inline-flex;
   border-width: 100px;
@@ -39,7 +39,7 @@ main {
   box-shadow: 12px -12px 8px 2px rgba(73, 119, 154, 0.25);
 }
 
-/* line 40, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 37, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .day__content {
   height: 635px;
   width: 90px;
