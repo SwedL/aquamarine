@@ -1,6 +1,6 @@
 {% for dict in list_day_dictionaries %}
     <div class="day">
-        <div class="day__content">
+        <div class="day__border">
             <div class="day__date">{{ dict.date|date:"D d M Y" }}</div>
             {% for time, value in dict.items %}
                 {% if not forloop.first %}

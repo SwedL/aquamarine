@@ -18,7 +18,8 @@ $color-white: #ececec
     &__form
         display: flex
         flex-direction: column
-        align-items: center        
+        align-items: center
+            
     &__without-button
         height: 670px
         width: 1420px
@@ -29,10 +30,10 @@ $color-white: #ececec
         align-items: center
         justify-content: space-between        
     &__box-services
-        height: 580px
+        height: 605px
         width: 640px
         background-color: #525252
-        
+        border-radius: 6px
     &__box-time-choice
     &__without-button
         
@@ -48,9 +49,10 @@ $color-white: #ececec
     &__border
         margin: 0 auto
         margin-top: 5px
-        height: 570px
+        height: 595px
         width: 630px
         border: 1px solid $color-white
+        border-radius: 6px
     &__p
         text-indent: 20px
 
@@ -68,18 +70,49 @@ tr:hover
 
 .day
     display: inline-flex
-    border-width: 100px
-    min-height: 500px
+    height: 605px
     width: 100px
     background-color: #525252
-    margin-right: 5px
-    // &__content
-    //     height: 635px
-    //     width: 90px
-    //     border: solid 1px
-    //     border-color: #ddd
-    //     position: relative
-    //     top: 10px
+    margin-right: 3px
+    border-radius: 6px
+    &__date
+        margin: 0 auto
+        text-align: center
+        padding: 10px
+        font-size: 16px
+        width: 70px
+    &__border
+        display: flex
+        flex-direction: column
+        margin: 0 auto
+        margin-top: 5px
+        height: 570px
+        width: 90px
+        // border: 1px solid $color-white
+        input
+            type: radio
+            display: none
+        input:checked + label
+            background: #ffe0a6
+            color: #2058ad
+        input:disabled + label
+            background: #c5c5c5
+            color: #666
+        label            
+            // cursor: pointer
+            text-align: center
+            height: 22px
+            
+            line-height: 22px
+            border: 1px solid #e1e1e1
+            border-radius: 6px
+            user-select: none
+            margin-bottom: 2px /* отодвигаем кнопки время вниз друг от друга */
+        label:hover
+            color: #a20d0d
+
+
+        
 
 
 
