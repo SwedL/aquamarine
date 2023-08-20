@@ -1,5 +1,6 @@
-@import "normalizez.scss"
 @import "resets.scss"
+@import "normalizez.scss"
+
  
 $color-menu: #656565
 // $color-menu: #5CAB5F
@@ -37,47 +38,37 @@ html
 .header
     position: sticky
     top: 0
-    min-height: 140px
+    min-height: 115px
     background: #043b6f
-    padding-top: 20px
+    padding-top: 25px
     z-index: 5
     &__logo-box
         margin-left: 30px        
-        margin-right: 68px
-    &__container        
-        margin-bottom: 20px              
-    &__hr
-        margin: 0        
-        border: none
-        border-top: 1px solid white
+        margin-right: 68px 
+        filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 1))            
     a
         text-decoration: none
         color: white
-    &__contacts-box
-        display: flex
-        flex-direction: row
-        align-items: center       
-        margin-bottom: 18px
-        &__item
-            margin-right: 10px
-            text-indent: 20px
-        &__adress
-            font-size: 18px
-            margin-right: 52px
-        &__telephone
-            font-size: 20px
-        i
-            font-size: 18px    
-
+    // &__contacts-box
+    //     display: flex
+    //     flex-direction: row
+    //     align-items: center       
+    //     margin-bottom: 18px
+    //     font-size: 18px
+    //     &__item
+    //         margin-right: 10px
+    //         text-indent: 20px
+    //     &__adress
+    //         margin-right: 52px
+    
 .nav-menu
     display: flex
     align-items: center
-    justify-content: space-between
+    justify-content: space-between  //расстояние между основными кнопками меню и Войти
     width: 677px
-    height: 44px
-    border-radius: 9px
-    background: $color-menu
-    filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 0.25))
+    height: 35px
+    // background: $color-menu
+    // filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 0.25))
     &__list
         display: flex
         flex-direction: row
@@ -86,7 +77,7 @@ html
         margin-right: 30px
         font-size: 18px
         &:last-child
-            margin-right: 20px
+            margin-right: 20px // margin Войти
 
 .footer
     background: black 

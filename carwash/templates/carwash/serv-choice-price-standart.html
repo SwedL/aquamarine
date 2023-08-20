@@ -1,65 +1,64 @@
-<div class="services-choice">
-    <table style="width:98%">
-        <tr>
-            <td>
-                <input id="id_service_1" type="checkbox" name="service_1" value="1" data-price="{{services.1.price_standart}}" data-process-time="{{services.1.process_time}}" onclick="WashDis(1, 6)">
-                <label for="id_service_1">{{services.1}} {{services.1.process_time}}</label>
-            </td>
-            <td>{{services.1.price_standart}}</td>
-        </tr>
-        <tr>
-            <td>
-                <input id="id_service_2" type="checkbox" name="service_2" value="2" data-price="{{services.2.price_standart}}" data-process-time="{{services.2.process_time}}" onclick="WashDis(2, 9)">
-                <label for="id_service_2">{{services.2}}</label>
-            </td>
-            <td>{{services.2.price_standart}}</td>
-        </tr>
-        <tr>
-            <td>
-                <input id="id_service_3" type="checkbox" name="service_3" value="3" data-price="{{services.3.price_standart}}" data-process-time="{{services.3.process_time}}" onclick="WashDis(3, 0)">
-                <label for="id_service_3">{{services.3}} {{services.3.process_time}}</label>
-            </td>
-            <td>{{services.3.price_standart}}</td>
-        </tr>
-        <tr>
-            <td>
-                <input id="id_service_4" type="checkbox" name="service_4" value="4" data-price="{{services.4.price_standart}}" data-process-time="{{services.4.process_time}}" onclick="WashDis(4, 0)">
-                <label for="id_service_4">{{services.4}} {{services.4.process_time}}</label>
-                <br><br>
-            </td>
-            <td>{{services.4.price_standart}}</td>
-        </tr>
-        {% for s, value in services.items %}
-            {% if s > 4 and s < 16  %}
-        <tr>
-            <td>
-                <input id="id_service_{{s}}" type="checkbox" name="service_{{s}}" value="{{s}}" data-price="{{value.price_standart}}" data-process-time="{{value.process_time}}" onclick="Calculate()">
-                <label for="id_service_{{s}}">{{value}} {{value.process_time}}</label>
-                {% if s == 12 or s == 15 %}
-                    <br><br>
-                {% endif %}
-            </td>
-            <td>{{value.price_standart}}</td>
-            {% endif %}
-        </tr>
-        {% endfor %}
 
-        <tr>
-            <td>
-                <input id="id_service_16" type="checkbox" name="service_16" value="16" data-price="{{services.16.price_standart}}" data-process-time="{{services.16.process_time}}" onclick="WashEngine(16)">
-                <label for="id_service_16">{{services.16}} {{services.16.process_time}}</label>
-            </td>
-            <td>{{services.16.price_standart}}</td>
-        </tr>
-        <tr>
-            <td>
-                <input id="id_service_17" type="checkbox" name="service_17" value="17" data-price="{{services.17.price_standart}}" data-process-time="{{services.17.process_time}}" onclick="WashEngine(17)">
-                <label for="id_service_17">{{services.17}} {{services.17.process_time}}</label>
-            </td>
-            <td>{{services.17.price_standart}}</td>
-        </tr>
-    </table>
-    <!--                        <button id="calculate" onclick="calculate(); this.onclick=null">Показать доступное время</button>-->
-    <p id="overal-time">Общее время работ: 0 мин.</p>
-    <p id="total-cost">Общая стоимость услуг: 0 р.</p>
-</div>
+<table style="width: 95%">
+    <tr>
+        <td>
+            <input id="id_service_1" type="checkbox" name="service_1" value="1" data-price="{{services.1.price_standart}}" data-process-time="{{services.1.process_time}}" onclick="WashDis(1, 6)">
+            <label for="id_service_1">{{services.1}} {{services.1.process_time}}</label>
+        </td>
+        <td>{{services.1.price_standart}}</td>
+    </tr>
+    <tr>
+        <td>
+            <input id="id_service_2" type="checkbox" name="service_2" value="2" data-price="{{services.2.price_standart}}" data-process-time="{{services.2.process_time}}" onclick="WashDis(2, 9)">
+            <label for="id_service_2">{{services.2}}</label>
+        </td>
+        <td>{{services.2.price_standart}}</td>
+    </tr>
+    <tr>
+        <td>
+            <input id="id_service_3" type="checkbox" name="service_3" value="3" data-price="{{services.3.price_standart}}" data-process-time="{{services.3.process_time}}" onclick="WashDis(3, 0)">
+            <label for="id_service_3">{{services.3}} {{services.3.process_time}}</label>
+        </td>
+        <td>{{services.3.price_standart}}</td>
+    </tr>
+    <tr>
+        <td>
+            <input id="id_service_4" type="checkbox" name="service_4" value="4" data-price="{{services.4.price_standart}}" data-process-time="{{services.4.process_time}}" onclick="WashDis(4, 0)">
+            <label for="id_service_4">{{services.4}} {{services.4.process_time}}</label>
+            <br><br>
+        </td>
+        <td>{{services.4.price_standart}}</td>
+    </tr>
+    {% for s, value in services.items %}
+        {% if s > 4 and s < 16  %}
+    <tr>
+        <td>
+            <input id="id_service_{{s}}" type="checkbox" name="service_{{s}}" value="{{s}}" data-price="{{value.price_standart}}" data-process-time="{{value.process_time}}" onclick="Calculate()">
+            <label for="id_service_{{s}}">{{value}} {{value.process_time}}</label>
+            {% if s == 12 or s == 15 %}
+                <br><br>
+            {% endif %}
+        </td>
+        <td>{{value.price_standart}}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+    <tr>
+        <td>
+            <input id="id_service_16" type="checkbox" name="service_16" value="16" data-price="{{services.16.price_standart}}" data-process-time="{{services.16.process_time}}" onclick="WashEngine(16)">
+            <label for="id_service_16">{{services.16}} {{services.16.process_time}}</label>
+        </td>
+        <td>{{services.16.price_standart}}</td>
+    </tr>
+    <tr>
+        <td>
+            <input id="id_service_17" type="checkbox" name="service_17" value="17" data-price="{{services.17.price_standart}}" data-process-time="{{services.17.process_time}}" onclick="WashEngine(17)">
+            <label for="id_service_17">{{services.17}} {{services.17.process_time}}</label>
+        </td>
+        <td>{{services.17.price_standart}}</td>
+    </tr>
+</table>
+<!--                        <button id="calculate" onclick="calculate(); this.onclick=null">Показать доступное время</button>-->
+<p class="services__p" id="overal-time">Общее время работ: 0 мин.</p>
+<p class="services__p" id="total-cost">Общая стоимость услуг: 0 р.</p>

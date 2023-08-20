@@ -1,52 +1,88 @@
 @charset "UTF-8";
-/* line 7, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
-main {
-  background: #7af8ff;
-}
-
-/* line 12, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 12, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .registration {
-  position: relative;
   min-height: 709px;
   margin: 0 auto;
-  background: url("../images/car-service2.png"), #0056A9 100%;
+  background: url("../images/car-service2.png"), #0056A9 50%;
   background-repeat: no-repeat;
   background-blend-mode: screen;
 }
 
-/* line 19, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
-.registration__box-services {
-  height: 570px;
-  width: 678px;
-  background-color: #676767;
-  color: #ffffff;
-}
-
-/* line 25, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 18, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .registration__form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* line 29, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+/* line 22, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+.registration__without-button {
+  height: 670px;
+  width: 1420px;
+  margin: 0 auto;
+  color: #ececec;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* line 31, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+.registration__box-services {
+  height: 580px;
+  width: 640px;
+  background-color: #525252;
+}
+
+/* line 42, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+.services__title {
+  margin-top: 20px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 25px;
+  height: 35px;
+}
+
+/* line 48, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+.services__border {
+  margin: 0 auto;
+  margin-top: 5px;
+  height: 570px;
+  width: 630px;
+  border: 1px solid #ececec;
+}
+
+/* line 54, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+.services__p {
+  text-indent: 20px;
+}
+
+/* line 57, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+table {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* line 62, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+td {
+  padding: 3px;
+  font-size: 16px;
+}
+
+/* line 66, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
+tr:hover {
+  background-color: #494949;
+}
+
+/* line 69, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .day {
   display: inline-flex;
   border-width: 100px;
-  height: 655px;
+  min-height: 500px;
   width: 100px;
-  background-color: #8d8d8d;
-  margin-right: 10px;
-  box-shadow: 12px -12px 8px 2px rgba(73, 119, 154, 0.25);
-}
-
-/* line 37, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
-.day__content {
-  height: 635px;
-  width: 90px;
-  border: solid 1px;
-  border-color: #ddd;
-  position: relative;
-  top: 10px;
+  background-color: #525252;
+  margin-right: 5px;
 }
 
 /*# sourceMappingURL=registration.css.map */
