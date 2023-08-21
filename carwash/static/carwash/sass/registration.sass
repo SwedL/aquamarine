@@ -19,12 +19,13 @@ body
     &__form
         display: flex
         flex-direction: column
-        align-items: center
-            
+        align-items: center            
     &__without-button
-        height: 670px
+        height: 605px
         width: 1420px
         margin: 0 auto
+        margin-top: 20px
+        margin-bottom: 20px
         color: $color-white
         display: flex
         flex-direction: row
@@ -35,9 +36,17 @@ body
         width: 640px
         background-color: #525252
         border-radius: 6px
-    &__box-time-choice
-    &__without-button
-        
+    button
+        padding: 10px 32px
+        color: $color-white
+        background: #0129df
+        border-radius: 5px
+        cursor: pointer
+    button:disabled
+        background: #6a7ed4
+
+
+                
 
 
 .services
@@ -98,7 +107,7 @@ tr:hover
             color: #2058ad
         input:disabled + label
             background: #c5c5c5
-            color: #4a4a4a
+            color: #373636
         label            
             // cursor: pointer
             text-align: center
