@@ -2,6 +2,7 @@ $color-main: #0056A9
 $color-red: #C23349
 $color-green: #5CAB5F
 $color-dark-blue: #32449F
+
 // $color-white: #ddd
 $color-white: #ececec
 
@@ -12,7 +13,6 @@ body
 
 .registration
     min-height: 710px
-    margin: 0 auto
     background: url("../images/car-service2.png"), $color-main 50% 
     background-repeat: no-repeat
     background-blend-mode: screen
@@ -21,9 +21,9 @@ body
         flex-direction: column
         align-items: center            
     &__without-button
-        height: 605px
+        height: 612px
         width: 1420px
-        margin: 0 auto
+        // margin: 0 auto
         margin-top: 20px
         margin-bottom: 20px
         color: $color-white
@@ -32,14 +32,20 @@ body
         align-items: center
         justify-content: space-between        
     &__box-services
-        height: 605px
-        width: 640px
+        height: 612px
+        width: 645px
         background-color: #525252
+        border-style: solid
+        border-width: 2px
+        border-color: #a2a2a2 #262626 #262626 #a2a2a2
         border-radius: 6px
     button
         padding: 10px 32px
         color: $color-white
         background: #0129df
+        border-style: solid
+        border-width: 2px
+        border-color: #a2a2a2 #262626 #262626 #a2a2a2
         border-radius: 5px
         cursor: pointer
     button:disabled
@@ -58,7 +64,7 @@ body
         height: 35px
     &__border
         margin: 0 auto
-        margin-top: 5px
+        margin-top: 6px
         height: 595px
         width: 630px
         border: 1px solid $color-white
@@ -80,11 +86,14 @@ tr:hover
 
 .day
     display: inline-flex
-    height: 605px
+    height: 612px
     width: 100px
     background-color: #525252
     margin-right: 3px
     border-radius: 6px
+    border-style: solid
+    border-width: 2px
+    border-color: #a2a2a2 #262626 #262626 #a2a2a2
     &__date
         margin: 0 auto
         text-align: center

@@ -1,4 +1,4 @@
-{% extends 'cw_registration/base.html' %}
+{% extends 'carwash/base.html' %}
 
 {% load static %}
 
@@ -6,18 +6,29 @@
     Done
 {% endblock %}
 
-{% block content %}
-    <br>
-    <br>
-    <br>
-    <div class="done">
-        <h2>Спасибо вы записаны на {{ normal_format_choicen_date }} на время {{ choice_time }}</h2>
+{% block css %}
+    <link rel="stylesheet" href="{% static 'carwash/css/done.css' %}">
+{% endblock %}
 
-        <h2>Выбраные работы:</h2>
-        {% for service in choice_services %}
-            {{ service.name }}<br>
-        {% endfor %}
-        <h2>Общее время: {{ overal_time }}</h2>
-        <h2>Общая стоимость: {{ total_cost }}</h2>
+
+{% block content %}
+    <div class="main-section">
+        <div class="main-section__container">
+            <div class="main-section__message">
+                <p class="main-section__title">Спасибо за обращение</p>
+                <br>
+                <p class="main-section__data">Вы записаны на {{ normal_format_choicen_date }} 
+                    <br>на время {{ choice_time }}</p>
+                <br>
+                <p class="main-section__services">Выбранные работы:</p>
+                {% for service in choice_services %}
+                    <span>{{ service.name }}<br></span>
+                {% endfor %}                
+                <br>
+                <hr>
+                <p>Общее время: {{ overal_time }}</p>
+                <p>Общая стоимость: {{ total_cost }}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

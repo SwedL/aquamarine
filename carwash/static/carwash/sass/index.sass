@@ -2,8 +2,11 @@ $color-main: #0056A9
 $color-red: #C23349
 $color-green: #5CAB5F
 $color-dark-blue: #32449F
-$color-white: #ddd
+$color-grey: #656565
+$color-dark-grey: #474747
 
+// $color-white: #ddd
+$color-white: #ececec
 
 .first-section
     min-height: 766px
@@ -67,7 +70,7 @@ $color-white: #ddd
     background: $color-red
 
 .cards-item_green
-    background: #656565
+    background: $color-grey
 
 .cards-item_blue
     background: $color-dark-blue
@@ -92,8 +95,12 @@ $color-white: #ddd
         width: 1140px
         border-radius: 16px
         border: 3px solid $color-white
+        border-style: solid
+        border-width: 3px
+        border-color: #a2a2a2 #333333 #333333 #a2a2a2
+        border-radius: 5px
         box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
-        background: #656565 
+        background: $color-grey 
     &__link-freepik
         position: absolute
         color: #3304dd
@@ -131,7 +138,7 @@ td
     border-bottom: 1px solid #ddd
     
 tr:nth-child(even)
-    background-color: #474747
+    background-color: $color-dark-grey
 
     
 
