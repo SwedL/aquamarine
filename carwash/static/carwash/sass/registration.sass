@@ -12,7 +12,7 @@ body
 
 
 .registration
-    min-height: 710px
+    min-height: 770px
     background: url("../images/car-service2.png"), $color-main 50% 
     background-repeat: no-repeat
     background-blend-mode: screen
@@ -106,25 +106,27 @@ tr:hover
         margin: 0 auto
         margin-top: 5px
         height: 570px
-        width: 90px
-        // border: 1px solid $color-white
+        width: 80px
         input
             type: radio
             display: none
         input:checked + label
-            background: #ffe0a6
-            color: #2058ad
+            background: #ffb11f
+            color: #09172b
+            box-shadow: 1px 1px 3px #000000 inset
         input:disabled + label
-            background: #c5c5c5
-            color: #373636
+            background: #434343
+            color: #7b7b7b
+            box-shadow: 2px 2px 4px #000000 inset
         label            
-            // cursor: pointer
+            //cursor: pointer
             text-align: center
             height: 22px
-            
+            background: #c5c5c5
+            color: #000000
             line-height: 22px
-            border: 1px solid #e1e1e1
-            border-radius: 6px
+            border: 1px solid #8a8a8a
+            border-radius: 5px
             user-select: none
             margin-bottom: 2px /* отодвигаем кнопки время вниз друг от друга */
         label:hover
