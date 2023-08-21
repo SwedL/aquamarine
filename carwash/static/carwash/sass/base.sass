@@ -49,6 +49,9 @@ html
     a
         text-decoration: none
         color: white
+    a:hover
+        color: #ff1616
+        // color: #e10404
     
 .nav-menu
     display: flex
@@ -60,6 +63,8 @@ html
         display: flex
         flex-direction: row
         margin-left: 20px
+        a
+            cursor: default
     &__list-item
         margin-right: 30px
         font-size: 18px
@@ -69,6 +74,7 @@ html
 .footer
     background: black 
     &__text 
+        // color: #b5b5b5
         color: #e3e3e3  
     &__container
         min-height: 110px        
@@ -80,18 +86,15 @@ html
         flex-direction: row
         align-items: center       
         margin-bottom: 18px
+        font-size: 18px
         &__item
             margin-right: 10px
         &__adress
             font-size: 18px
             margin-right: 45px
         &__telephone
-            font-size: 20px
             margin-right: 45px
-        &__email
-            font-size: 18px
-        i
-            font-size: 18px
+        
 
         
         
