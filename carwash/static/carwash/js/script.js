@@ -32,8 +32,8 @@ function WashEngine(el) {
 
 /* Проверка что выбраны хотя бы 1 услуга и время, иначе кнопка записаться - неактивна */
 function CheckChoice() {
-    let list_services = document.querySelectorAll("div.services-choice > table > tbody > tr > td > input"); /* получаем список всех choice-input */
-    let list_times = document.querySelectorAll("div.day-content > input"); /* список всех времен */
+    let list_services = document.querySelectorAll("div.services__border > table > tbody > tr > td > input"); /* получаем список всех choice-input */
+    let list_times = document.querySelectorAll("div.day__border > input"); /* список всех времен */
 
     function CheckList(iterable_list) {
         for (let item of iterable_list) {
@@ -51,7 +51,7 @@ function CheckChoice() {
 /* функция подсчёта общего времени для работ с авто и отображение подходящих времён */
 function Calculate() {
     
-    let list_services = document.querySelectorAll("div.services-choice > table > tbody > tr > td > input"); /* получаем список всех choice-input */
+    let list_services = document.querySelectorAll("div.services__border > table > tbody > tr > td > input"); /* получаем список всех choice-input */
     let overal_time = 0; /* общее время работ с автомобилем */
     let flag = true;  /* флаг для определения выбраны ли уже услуги 7,8,9 */
 
@@ -71,7 +71,7 @@ function Calculate() {
     });
 
     /* Определяем свободные времена */
-    let dict_div = document.querySelectorAll("div.day-content > input"); /* список всех времен */
+    let dict_div = document.querySelectorAll("div.day__border > input"); /* список всех времен */
 
     /* Каждый раз включаем все кнокпки времён которые выключились от выбора услуг */
     for(let h of dict_div) {
@@ -118,7 +118,7 @@ function Calculate() {
 
     /* Выключаем кнопки времён которые не подходят под общее время услуг */
     for(let k in res_dict) {
-//        console.log(k, res_dict[k], overal_time);
+    //    console.log(k, res_dict[k], overal_time);
         let [r, g] = res_dict[k];
         if(g < overal_time) {
             r.checked = false;
@@ -140,8 +140,6 @@ function TotalCost(list_services, overal_time) {
             total_cost += Number(item.dataset.price);
         }
     });
-    let div = document.getElementById("comm")
-    let ct = div.dataset.carType
 
     document.getElementById("overal-time").innerHTML = "Общее время работ: " + overal_time + " мин.";
     document.getElementById("total-cost").innerHTML = "Общая стоимость услуг: " + total_cost + " р.";
