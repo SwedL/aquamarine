@@ -1,4 +1,5 @@
 from django.http import HttpResponseNotFound
+from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date, time, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -9,10 +10,10 @@ from django.views.generic import TemplateView, ListView
 from carwash.models import *
 import locale
 
-menu = [{'title': 'Главная', 'url_name': 'home'},
-        {'title': 'Записаться на услуги', 'url_name': 'registration'},
-        {'title': 'Наш адрес', 'url_name': 'home'},
-        {'title': 'Личный кабинет', 'url_name': 'profile'},
+menu = [{'title': 'Главная', 'url_name': 'carwash:home'},
+        {'title': 'Записаться', 'url_name': 'carwash:registration'},
+        {'title': 'Услуги и цены', 'anchor': '#services_price'},
+        {'title': 'Контакты и адрес', 'anchor': '#footer'},
         ]
 
 
@@ -23,15 +24,23 @@ class IndexListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(IndexListView, self).get_context_data()
+
+        user_menu = menu.copy()
+        if not self.request.user.is_authenticated:
+            user_menu.pop(1)
+
+        context['menu'] = user_menu
         context['list_s'] = [i for i in range(0, 100, 2)]
         return context
 
 
-class RegistrationAuto(View):
+class RegistrationAuto(LoginRequiredMixin, View):
     FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                      '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
                      ]
+
+    login_url = reverse_lazy('carwash:home')
 
     def formatted_dict(self, date):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
@@ -42,7 +51,7 @@ class RegistrationAuto(View):
         # создаём и заменяем не занятые времена, сегодняшнего дня время которых прошло, на значения "disabled"
         for num, k in enumerate(self.FORMATTED_KEY):
             if lst_day[0] == date.today() and num != 0 and not lst_day[num] and time(*map(int, k.split(':'))) < datetime.now().time():
-                res_dict[k] = "disable"
+                res_dict[k] = 'disable'
             else:
                 res_dict[k] = lst_day[num]
         return res_dict

@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="{% static 'carwash/css/base.css' %}" xmlns="http://www.w3.org/1999/html">
     <script src="https://kit.fontawesome.com/2eaffb5472.js" crossorigin="anonymous"></script>
-    
+
     <!-- Custom styles for this template -->
     {% block css %} {% endblock %}
 
@@ -23,62 +23,64 @@
 </head>
 
 
-
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container header__container">
-            
-            <!-- Логотип Aquamarine-->
-            <a href="{% url 'carwash:home' %}"><img class="header__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
-                    
-            <!-- Блок контактов и навигационного меню -->
-            <div class="header__contacts-nav">
-        
-                <!-- Блок навигации -->
-                <div class="header__nav-box nav-menu">
-                    <div class="nav-menu__left">
-                        <ul class="nav-menu__list">
-                            <li class="nav-menu__list-item text"><a href="{% url 'carwash:home' %}">Главная</a></li>
-                            <li class="nav-menu__list-item text"><a href="{% url 'carwash:registration' %}">Записаться</a></li>
-                            <li class="nav-menu__list-item text"><a href="#services_price">Услуги и цены</a></li>
-                            <li class="nav-menu__list-item text"><a href="#footer">Контакты и адрес</a></li>
-                        </ul>
-                    </div>
-                    <div class="nav-menu__right">
-                        <ul>
-                            <li class="nav-menu__list-item text"><a href="#">Войти</a></li>
-                        </ul>
-                    </div>
+<!-- Header -->
+<header class="header">
+    <div class="container header__container">
+
+        <!-- Логотип Aquamarine-->
+        <a href="{% url 'carwash:home' %}"><img class="header__logo-box" src="{% static 'carwash/icons/logo.svg' %}"
+                                                alt="logo"></a>
+
+        <!-- Блок контактов и навигационного меню -->
+        <div class="header__contacts-nav">
+
+            <!-- Блок навигации -->
+            <div class="header__nav-box nav-menu">
+                <div class="nav-menu__left">
+                    <ul class="nav-menu__list">
+                        {% for m in menu %}
+                        <li class="nav-menu__list-item text"><a
+                                href="{% if m.url_name %} {% url m.url_name %} {% else %} {{ m.anchor }} {% endif %}">{{m.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
-            </div>            
+                <div class="nav-menu__right">
+                    <ul>
+                        <li class="nav-menu__list-item text"><a href="#">Войти</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+</header>
 
 
-    <!-- Контент страницы -->
+<!-- Контент страницы -->
 {% block content %} {% endblock %}
 
 
-    <footer id="footer"  class="footer">
-        <div class="container footer__container">
-           
-            <!-- Логотип Aquamarine-->
-            <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
-            
-            <!-- Блок контактов -->
-            <div class="footer__contacts-box">
-                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-location-dot"></i></div>
-                <div class="footer__contacts-box__adress footer__text">г.Серов
-                    <br>ул.Металистов 33</div>
-                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-phone"></i></div>
-                <div class="footer__contacts-box__telephone footer__text">+79043841020</div>
-                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-envelope"></i></div>
-                <div class="footer__contacts-box__email footer__text">aquamarine@mail.ru</div>
+<footer id="footer" class="footer">
+    <div class="container footer__container">
+
+        <!-- Логотип Aquamarine-->
+        <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
+
+        <!-- Блок контактов -->
+        <div class="footer__contacts-box">
+            <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="footer__contacts-box__adress footer__text">г.Серов
+                <br>ул.Металистов 33
             </div>
-            
+            <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-phone"></i></div>
+            <div class="footer__contacts-box__telephone footer__text">+79043841020</div>
+            <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-envelope"></i></div>
+            <div class="footer__contacts-box__email footer__text">aquamarine@mail.ru</div>
         </div>
-    </footer>
+
+    </div>
+</footer>
 
 </body>
 </html>
