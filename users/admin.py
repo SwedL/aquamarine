@@ -4,6 +4,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import Group
+
 
 from carwash.admin import CarWashRegistrationAdmin
 from .models import User
@@ -13,9 +15,9 @@ class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
 
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput)
     password2 = forms.CharField(
-        label="Password confirmation", widget=forms.PasswordInput
+        label="Подтверждение пароля", widget=forms.PasswordInput
     )
 
     class Meta:
@@ -57,9 +59,6 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference specific fields on auth.User.
     list_display = ["email", "fio", "car_type", "tel", "is_admin"]
     list_filter = ["is_admin"]
     readonly_fields = ["user_creation_date", "last_login"]
@@ -67,12 +66,11 @@ class UserAdmin(BaseUserAdmin):
         (None, {"fields": ["email", "password"]}),
         (_("Personal info"),
          {"fields": ["fio", "car_type", "car_model", "tel", "discount", "user_creation_date", "last_login", ]}),
-        (_("Permissions"), {"fields": ["is_admin", "is_active", "user_permissions"]}),
+        (_("Permissions"), {"fields": ["is_admin", "is_active", "groups"]}),
         # (_("Important dates"), {"fields": ("last_login",)}),
     ]
     inlines = (CarWashRegistrationAdmin,)
-    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
-    # overrides get_fieldsets to use this attribute when creating a user.
+
     add_fieldsets = [
         (None, {
             "classes": ["wide"],
@@ -88,8 +86,5 @@ class UserAdmin(BaseUserAdmin):
     )
 
 
-# Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
-# ... and, since we're not using Django's built-in permissions,
-# unregister the Group model from admin.
 # admin.site.unregister(Group)

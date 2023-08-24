@@ -58,11 +58,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-    # REQUIRED_FIELDS = ["tel", "car_type"]
+    REQUIRED_FIELDS = []    # field required to createsuperuser
 
     def __str__(self):
         return self.email
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
     # def has_perm(self, perm, obj=None):
     #     "Does the user have a specific permission?"
