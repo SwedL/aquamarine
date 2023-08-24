@@ -4,106 +4,123 @@
 <html lang="en">
 
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Лучшая автомойка в Серове">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{% static 'carwash/css/base.css' %}" xmlns="http://www.w3.org/1999/html">
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/2eaffb5472.js" crossorigin="anonymous"></script>
-
-    <!-- Custom styles for this template -->
-    {% block css %} {% endblock %}
-
-    <title>
-        {% block title %} {% endblock %}
-    </title>
-
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Лучшая автомойка в Серове">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<body>
-<!-- Header -->
-<header class="header">
-    <div class="container header__container">
+        <!-- Bootstrap core CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
-        <!-- Логотип Aquamarine-->
-        <a href="{% url 'carwash:home' %}"><img class="header__logo-box" src="{% static 'carwash/icons/logo.svg' %}"
-                                                alt="logo"></a>
+        <!-- Icons from fontawesome -->
+        <script src="https://kit.fontawesome.com/2eaffb5472.js" crossorigin="anonymous"></script>
 
-        <!-- Блок контактов и навигационного меню -->
-        <div class="header__contacts-nav">
+        <!-- Base CSS -->
+        <link rel="stylesheet" href="{% static 'carwash/css/base.css' %}" xmlns="http://www.w3.org/1999/html">
 
-            <!-- Блок навигации -->
-            <div class="header__nav-box nav-menu">
-                <div class="nav-menu__left">
-                    <ul class="nav-menu__list">
-                        {% for m in menu %}
-                        <li class="nav-menu__list-item text"><a
-                                href="{% if m.url_name %} {% url m.url_name %} {% else %} {{ m.anchor }} {% endif %}">{{m.title}}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="nav-menu__right">
-                    {% if user.is_authenticated %}
-                    <ul class="nav-menu__list">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-circle"></i>
-                            </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Профиль</a></li>
-                            <li><a class="dropdown-item" href="#">Заказы</a></li>
-                            {% if user.is_superuser or user.is_staff %}
-                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
-                            {% endif %}
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Выйти</a></li>
+        <!-- Custom styles for this template -->
+        {% block css %} {% endblock %}
+
+        <title>
+            {% block title %} {% endblock %}
+        </title>
+
+    </head>
+
+    <body>
+        <!-- Header -->
+        <header class="header">
+        <div class="container header__container">
+
+            <!-- Логотип Aquamarine-->
+            <a href="{% url 'carwash:home' %}"><img class="header__logo-box" src="{% static 'carwash/icons/logo.svg' %}"
+                                                    alt="logo"></a>
+
+            <!-- Блок контактов и навигационного меню -->
+            <div class="header__contacts-nav">
+
+                <!-- Блок навигации -->
+                <div class="header__nav-box nav-menu">
+                    <div class="nav-menu__left">
+                        <ul class="nav-menu__list">
+                            {% for m in menu %}
+                            <li class="nav-menu__list-item text"><a class="nav-menu__text"
+                                    href="{% if m.url_name %} {% url m.url_name %} {% else %} {{ m.anchor }} {% endif %}">{{m.title}}</a>
+                            </li>
+                            {% endfor %}
                         </ul>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Войти <i class="fas fa-sign-in-alt"></i></a>
-                        </li>
-                    {% endif %}
-                    </ul>
-<!--                    <ul><li class="nav-menu__list-item text"><a href="#">Войти</a></li></ul>-->
+                    </div>
+                    <div class="nav-menu__right">
+                        <ul class="nav-menu__list">
+                        {% if user.is_authenticated %}
+                            <div class="dropdown">
+                              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                              </a>
+
+                              <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Действие</a></li>
+                                <li><a class="dropdown-item" href="#">Другое действие</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                              </ul>
+                            </div>
+<!--                            <li class="nav-item dropdown">-->
+<!--                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
+<!--                                   data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                                    <i class="fas fa-user-circle"></i>-->
+<!--                                </a>-->
+<!--                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                                <li><a class="dropdown-item" href="#">Профиль</a></li>-->
+<!--                                <li><a class="dropdown-item" href="#">Заказы</a></li>-->
+<!--                                {% if user.is_superuser or user.is_staff %}-->
+<!--                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>-->
+<!--                                {% endif %}-->
+<!--                                <li><hr class="dropdown-divider"></li>-->
+<!--                                <li><a class="dropdown-item" href="#">Выйти</a></li>-->
+<!--                            </ul>-->
+<!--                            </li>-->
+                        {% else %}
+                            <li class="nav-menu__list-item text">
+                                <a class="nav-menu__text" href="#">Войти<i class="fas fa-sign-in-alt"></i></a>
+                            </li>
+                        {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 
 
-<!-- Контент страницы -->
-{% block content %} {% endblock %}
+        <!-- Контент страницы -->
+        {% block content %} {% endblock %}
 
 
-<footer id="footer" class="footer">
-    <div class="container footer__container">
+        <footer id="footer" class="footer">
+        <div class="container footer__container">
 
-        <!-- Логотип Aquamarine-->
-        <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
+            <!-- Логотип Aquamarine-->
+            <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
 
-        <!-- Блок контактов -->
-        <div class="footer__contacts-box">
-            <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-location-dot"></i></div>
-            <div class="footer__contacts-box__adress footer__text">г.Серов
-                <br>ул.Металистов 33
+            <!-- Блок контактов -->
+            <div class="footer__contacts-box">
+                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="footer__contacts-box__adress footer__text">г.Серов
+                    <br>ул.Металистов 33
+                </div>
+                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-phone"></i></div>
+                <div class="footer__contacts-box__telephone footer__text">+79043841020</div>
+                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-envelope"></i></div>
+                <div class="footer__contacts-box__email footer__text">aquamarine@mail.ru</div>
             </div>
-            <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-phone"></i></div>
-            <div class="footer__contacts-box__telephone footer__text">+79043841020</div>
-            <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-envelope"></i></div>
-            <div class="footer__contacts-box__email footer__text">aquamarine@mail.ru</div>
+
         </div>
+    </footer>
 
-    </div>
-</footer>
 
-</body>
+    </body>
 </html>

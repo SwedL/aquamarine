@@ -3,6 +3,9 @@
 
  
 $color-menu: #656565
+$color-menu-blue: #043b6f
+$color-red: #ff5151
+$color-menu-hover: #ff5151
 
     
 *
@@ -28,6 +31,7 @@ html
 .container
     display: flex
     flex-direction: row
+    justify-content: space-between
     max-width: 1140px
     align-items: center
     margin: 0 auto  //где находится контейнер (по середине)
@@ -41,28 +45,22 @@ html
     min-height: 100px
     background: #043b6f
     padding-top: 25px
-    z-index: 5
+    z-index: 5        
     &__logo-box
         margin-left: 30px        
-        margin-right: 68px 
+        // margin-right: 200px 
         filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 1))            
-    a
-        text-decoration: none
-        color: white
-    a:hover
-        color: #ff1616
-        // color: #e10404
-    
+      
 .nav-menu
     display: flex
     align-items: center
     justify-content: space-between  //расстояние между основными кнопками меню и Войти
-    width: 677px
+    width: 550px
     height: 35px
     &__list
         display: flex
         flex-direction: row
-        margin-left: 20px
+        margin-left: 0px
         a
             cursor: default
     &__list-item
@@ -70,6 +68,38 @@ html
         font-size: 18px
         &:last-child
             margin-right: 20px // margin Войти
+    &__text
+        text-decoration: none
+        color: white
+    &__text:hover
+        color: $color-menu-hover
+
+
+.dropdown-menu
+    background: #e7e7e7
+    
+
+.dropdown-item
+    color: #000000
+
+
+.btn-secondary 
+    --bs-btn-color: #fff
+    --bs-btn-bg: $color-menu-blue
+    --bs-btn-border-color: $color-menu-blue
+    --bs-btn-hover-color: #ff5151
+    --bs-btn-hover-bg: $color-menu-blue
+    --bs-btn-hover-border-color: $color-menu-blue
+    --bs-btn-focus-shadow-rgb: 130,138,145
+    --bs-btn-active-color: #ff5151
+    --bs-btn-active-bg: $color-menu-blue
+    --bs-btn-active-border-color: $color-menu-blue
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125)
+    --bs-btn-disabled-color: #fff
+    --bs-btn-disabled-bg: $color-menu-blue
+    --bs-btn-disabled-border-color: $color-menu-blue
+
+
 
 .footer
     background: black 

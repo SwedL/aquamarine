@@ -26,8 +26,9 @@ class IndexListView(ListView):
         context = super(IndexListView, self).get_context_data()
 
         user_menu = menu.copy()
+        user_menu.pop(0)
         if not self.request.user.is_authenticated:
-            user_menu.pop(1)
+            user_menu.pop(0)
 
         context['menu'] = user_menu
         context['list_s'] = [i for i in range(0, 100, 2)]
@@ -41,6 +42,7 @@ class RegistrationAuto(LoginRequiredMixin, View):
                      ]
 
     login_url = reverse_lazy('carwash:home')
+    user_menu = menu.copy()
 
     def formatted_dict(self, date):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
@@ -71,9 +73,9 @@ class RegistrationAuto(LoginRequiredMixin, View):
 
         context = {
             'title': 'Запись автомобиля',
+            'menu': [self.user_menu[0]],
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
-            'menu': menu,
         }
 
         return render(request, 'carwash/registration.html', context=context)
@@ -117,8 +119,10 @@ class RegistrationAuto(LoginRequiredMixin, View):
         else:
             context = {
                 'title': 'Ошибка записи',
-                'menu': menu,
+                'menu': [self.user_menu[0]],
             }
+
+
             return render(request, 'carwash/registration-error.html', context=context)
 
         normal_format_choicen_date = choicen_date.split()
@@ -128,7 +132,7 @@ class RegistrationAuto(LoginRequiredMixin, View):
 
         context = {
             'title': 'done',
-            'menu': menu,
+            'menu': [self.user_menu[0]],
             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
             'choice_time': choicen_time,
             'choice_services': choicen_services,
