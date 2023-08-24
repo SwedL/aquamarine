@@ -29,7 +29,7 @@ class CarWashRegistration(models.Model):
 
     def __str__(self):
         lst_services = ', '.join([str(s) for s in self.services.all()])
-        return f'{self.client} || {lst_services}'
+        return f'{lst_services}'
 
 
 class WorkDay(models.Model):
@@ -60,3 +60,6 @@ class WorkDay(models.Model):
     class Meta:
         verbose_name = "Рабочий день"
         verbose_name_plural = "Рабочие дни"
+
+    def __str__(self):
+        return f'{self.date}'
