@@ -35,7 +35,7 @@ body {
 /* line 34, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .registration__box-services {
   height: 612px;
-  width: 645px;
+  width: 640px;
   background-color: #525252;
   border-style: solid;
   border-width: 2px;
@@ -63,7 +63,7 @@ body {
 /* line 59, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
 .services__title {
   margin-top: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   text-align: center;
   font-size: 25px;
   height: 35px;
@@ -74,8 +74,8 @@ body {
   margin: 0 auto;
   margin-top: 6px;
   height: 595px;
-  width: 630px;
-  border: 1px solid #ececec;
+  width: 626px;
+  border: 1px solid #c69910;
   border-radius: 6px;
 }
 
