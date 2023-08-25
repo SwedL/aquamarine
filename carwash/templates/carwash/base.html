@@ -56,7 +56,7 @@
                     <div class="nav-menu__right">
                         <ul class="nav-menu__list">
                         {% if user.is_authenticated %}
-                            <div class="dropdown">
+                            <div class="dropdown-center">
                               <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i>
                               </a>
@@ -65,7 +65,7 @@
                                 <li><a class="dropdown-item" href="#">Действие</a></li>
                                 <li><a class="dropdown-item" href="#">Другое действие</a></li>
                                   <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
                               </ul>
                             </div>
 <!--                            <li class="nav-item dropdown">-->
@@ -85,7 +85,7 @@
 <!--                            </li>-->
                         {% else %}
                             <li class="nav-menu__list-item text">
-                                <a class="nav-menu__text" href="#">Войти<i class="fas fa-sign-in-alt"></i></a>
+                                <a class="nav-menu__text" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
                             </li>
                         {% endif %}
                         </ul>

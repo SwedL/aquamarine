@@ -20,7 +20,8 @@ from carwash.views import pageNotFound
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('carwash.urls')),
+    path('', include('carwash.urls', namespace='carwash')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 
 handler404 = pageNotFound
