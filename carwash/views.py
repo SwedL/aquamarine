@@ -30,8 +30,11 @@ class IndexListView(ListView):
         if not self.request.user.is_authenticated:
             user_menu.pop(0)
 
-        context['menu'] = user_menu
-        context['list_s'] = [i for i in range(0, 100, 2)]
+        context = {
+            'menu': user_menu,
+            'staff': self.request.user.has_perm('carwash.view_workday'),
+        }
+
         return context
 
 
@@ -74,6 +77,7 @@ class RegistrationAuto(LoginRequiredMixin, View):
         context = {
             'title': 'Запись автомобиля',
             'menu': [self.user_menu[0]],
+            'staff': request.user.has_perm('carwas.view_workday'),
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
         }
@@ -119,6 +123,7 @@ class RegistrationAuto(LoginRequiredMixin, View):
         else:
             context = {
                 'title': 'Ошибка записи',
+                'staff': request.user.has_perm('carwash.view_workday'),
                 'menu': [self.user_menu[0]],
             }
 
