@@ -530,7 +530,7 @@ html {
 
 /* line 74, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
 .nav-menu__text:hover {
-  color: #ff5151;
+  color: #9ae7ff;
 }
 
 /* line 78, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
@@ -548,11 +548,11 @@ html {
   --bs-btn-color: #fff;
   --bs-btn-bg: $color-menu-blue;
   --bs-btn-border-color: $color-menu-blue;
-  --bs-btn-hover-color: #ff5151;
+  --bs-btn-hover-color: #9ae7ff;
   --bs-btn-hover-bg: $color-menu-blue;
   --bs-btn-hover-border-color: $color-menu-blue;
   --bs-btn-focus-shadow-rgb: 130,138,145;
-  --bs-btn-active-color: #ff5151;
+  --bs-btn-active-color: #9ae7ff;
   --bs-btn-active-bg: $color-menu-blue;
   --bs-btn-active-border-color: $color-menu-blue;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
