@@ -122,7 +122,7 @@ class RegistrationAuto(LoginRequiredMixin, View):
             context = {
                 'title': 'Ошибка записи',
                 'staff': request.user.has_perm('carwash.view_workday'),
-                'menu': [self.user_menu[0]],
+                'menu': [self.user_menu[0], self.user_menu[1]],
             }
 
 

@@ -17,7 +17,7 @@ body {
 
 /* line 23, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/done.sass */
 .main-section__container {
-  min-height: 300px;
+  min-height: 200px;
   width: 500px;
   margin: 0 auto;
   background: #525252;

@@ -1,4 +1,4 @@
-{% extends 'cw_registration/base.html' %}
+{% extends 'carwash/base.html' %}
 
 {% load static %}
 
@@ -6,12 +6,18 @@
     Ошибка записи
 {% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'carwash/css/done.css' %}">
+{% endblock %}
+
+
 {% block content %}
-    <br>
-    <br>
-    <br>
-    <div class="done">
-        <h2>К сожалению, время которые вы выбрали уже занято.</h2>
-        <h2>Пожалуйста, выберите другое время</h2>
+    <div class="main-section">
+        <div class="main-section__container">
+            <div class="main-section__message">
+                <p class="main-section__title">К сожалению, время которые вы выбрали уже занято
+                    <br><br>Попробуйте выбрать другое время</p>
+            </div>
+        </div>
     </div>
 {% endblock %}
