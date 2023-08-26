@@ -74,21 +74,6 @@
                                 <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
                               </ul>
                             </div>
-<!--                            <li class="nav-item dropdown">-->
-<!--                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
-<!--                                   data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--                                    <i class="fas fa-user-circle"></i>-->
-<!--                                </a>-->
-<!--                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                                <li><a class="dropdown-item" href="#">Профиль</a></li>-->
-<!--                                <li><a class="dropdown-item" href="#">Заказы</a></li>-->
-<!--                                {% if user.is_superuser or user.is_staff %}-->
-<!--                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>-->
-<!--                                {% endif %}-->
-<!--                                <li><hr class="dropdown-divider"></li>-->
-<!--                                <li><a class="dropdown-item" href="#">Выйти</a></li>-->
-<!--                            </ul>-->
-<!--                            </li>-->
                         {% else %}
                             <li class="nav-menu__list-item text">
                                 <a class="nav-menu__text" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
@@ -101,27 +86,32 @@
         </div>
     </header>
 
-
         <!-- Контент страницы -->
         {% block content %} {% endblock %}
-
 
         <footer id="footer" class="footer">
         <div class="container footer__container">
 
             <!-- Логотип Aquamarine-->
-            <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logo.svg' %}" alt="logo"></a>
+            <a href="#"><img class="footer__logo-box" src="{% static 'carwash/icons/logoF.svg' %}" alt="logo"></a>
 
             <!-- Блок контактов -->
-            <div class="footer__contacts-box">
-                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-location-dot"></i></div>
-                <div class="footer__contacts-box__adress footer__text">г.Серов
-                    <br>ул.Металистов 33
+            <div class="footer__contacts-box contacts">
+                <div class="contacts__item">
+                    <div class="contacts__title footer__text">Адрес:</div>
+                    <div class="contacts__text footer__text">Свердловская область
+                        <br>г.Серов ул.Металистов 33
+                    </div>
                 </div>
-                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-phone"></i></div>
-                <div class="footer__contacts-box__telephone footer__text">+79043841020</div>
-                <div class="footer__contacts-box__item footer__text"><i class="fa-solid fa-envelope"></i></div>
-                <div class="footer__contacts-box__email footer__text">aquamarine@mail.ru</div>
+                <div class="contacts__item">
+                    <div class="contacts__title footer__text">Контакты:</div>
+                    <div class="contacts__text footer__text">+79292225848</div>
+                    <div class="contacts__text footer__text">+79043841020</div>
+                </div>
+                <div class="contacts__item">
+                    <div class="contacts__title footer__text">Часы работы:</div>
+                    <div class="contacts__text footer__text">Пн - Вс: 9:00 - 20:00</div>
+                </div>
             </div>
 
         </div>

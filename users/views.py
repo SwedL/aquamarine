@@ -12,7 +12,7 @@ menu = [{'title': 'Главная', 'url_name': 'carwash:home'},
 
 class UserLoginView(LoginView):
     template_name = 'users/login.html'
-    form_class = AuthenticationForm #UserLoginForm
+    form_class = UserLoginForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(UserLoginView, self).get_context_data()

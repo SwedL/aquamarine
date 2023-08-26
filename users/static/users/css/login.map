@@ -1,0 +1,12 @@
+{
+	"version": 3,
+	"file": "login.css",
+	"sources": [
+		"../sass/login.sass"
+	],
+	"sourcesContent": [
+		"$color-main: #0056A9;\n\nbody {\n    background: black; }\n\n.login-section {\n    min-height: 740px;\n    background: url(\"../images/192.png\"), $color-main 50%;\n    background-repeat: no-repeat;\n    background-blend-mode: screen; }\n\n.col-lg-5 {\n    flex: 0 0 auto;\n    width: 54.666667%; }\n\n.login-container {\n    &__content {\n        width: 810px;\n        margin: 0 auto;\n        margin-top: 100px; } }\n\n\n.card-header {\n    font-size: 28px;\n    background-color: #dddddd; }\n\n.form-error {\n    color: #d52e2e; }\n\n.py-4 {\n    padding-top: 1rem!important;\n    padding-bottom: 1rem!important; }\n\n"
+	],
+	"names": [],
+	"mappings": ";;AAEA,AAAA,IAAI,CAAC;EACD,UAAU,EAAE,KAAK;CAAG;;;AAExB,AAAA,cAAc,CAAC;EACX,UAAU,EAAE,KAAK;EACjB,UAAU,EAAE,wBAAwB,EAP3B,OAAO,CAOkC,GAAG;EACrD,iBAAiB,EAAE,SAAS;EAC5B,qBAAqB,EAAE,MAAM;CAAG;;;AAEpC,AAAA,SAAS,CAAC;EACN,IAAI,EAAE,QAAQ;EACd,KAAK,EAAE,UAAU;CAAG;;;AAGnB,AAAD,yBAAU,CAAC;EACP,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,MAAM;EACd,UAAU,EAAE,KAAK;CAAG;;;AAG5B,AAAA,YAAY,CAAC;EACT,SAAS,EAAE,IAAI;EACf,gBAAgB,EAAE,OAAO;CAAG;;;AAEhC,AAAA,WAAW,CAAC;EACR,KAAK,EAAE,OAAO;CAAG;;;AAErB,AAAA,KAAK,CAAC;EACF,WAAW,EAAE,IAAI,CAAA,UAAU;EAC3B,cAAc,EAAE,IAAI,CAAA,UAAU;CAAG"
+}

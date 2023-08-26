@@ -30,10 +30,8 @@ class IndexListView(ListView):
         if not self.request.user.is_authenticated:
             user_menu.pop(0)
 
-        context = {
-            'menu': user_menu,
-            'staff': self.request.user.has_perm('carwash.view_workday'),
-        }
+        context['menu'] = user_menu
+        context['staff'] = self.request.user.has_perm('carwash.view_workday')
 
         return context
 

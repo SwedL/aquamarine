@@ -578,33 +578,19 @@ html {
 
 /* line 111, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
 .footer__logo-box {
-  margin-right: 110px;
   margin-left: 50px;
 }
 
-/* line 114, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
+/* line 113, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
 .footer__contacts-box {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  margin-bottom: 18px;
   font-size: 18px;
 }
 
 /* line 120, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
-.footer__contacts-box__item {
-  margin-right: 10px;
-}
-
-/* line 122, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
-.footer__contacts-box__adress {
-  font-size: 18px;
-  margin-right: 45px;
-}
-
-/* line 125, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/base.sass */
-.footer__contacts-box__telephone {
-  margin-right: 45px;
+.contacts__item {
+  margin-right: 50px;
 }
 
 /*# sourceMappingURL=base.css.map */
