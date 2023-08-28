@@ -4,6 +4,7 @@ menu = [{'title': 'Главная', 'url_name': 'carwash:home'},
         {'title': 'Контакты и адрес', 'anchor': '#footer'},
         ]
 
+
 class Common:
     title = None
 

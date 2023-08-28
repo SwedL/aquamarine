@@ -25,7 +25,7 @@ class IndexListView(Common, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(IndexListView, self).get_context_data()
-        context['menu'] = self.menu(1, 2, 3)
+        context['menu'] = self.menu(1, 2, 3) if self.request.user.is_authenticated else self.menu(2, 3)
         context['detail'] = WorkDay.objects.all().filter(date=date.today())[0].pk
         context['staff'] = self.request.user.has_perm('carwash.view_workday')
 
