@@ -73,7 +73,8 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         context = {
             'title': 'Запись автомобиля',
             'menu': self.menu(0),
-            'staff': request.user.has_perm('carwas.view_workday'),
+            'detail': WorkDay.objects.all().filter(date=date.today())[0].pk,
+            'staff': request.user.has_perm('carwash.view_workday'),
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
         }
@@ -119,6 +120,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         else:
             context = {
                 'title': 'Ошибка записи',
+                'detail': WorkDay.objects.all().filter(date=date.today())[0].pk,
                 'staff': request.user.has_perm('carwash.view_workday'),
                 'menu': self.menu(0, 1),
             }
@@ -133,6 +135,8 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         context = {
             'title': 'done',
             'menu': self.menu(0),
+            'detail': WorkDay.objects.all().filter(date=date.today())[0].pk,
+            'staff': request.user.has_perm('carwash.view_workday'),
             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
             'choice_time': choicen_time,
             'choice_services': choicen_services,
