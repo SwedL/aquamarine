@@ -7,7 +7,8 @@ app_name = 'carwash'
 
 urlpatterns = [
     path('', IndexListView.as_view(), name='home'),
-    path('registration/', RegistrationAuto.as_view(), name='registration'),
+    path('registration/', RegistrationAutoView.as_view(), name='registration'),
+    path('detail/<int:pk>', StaffDetailView.as_view(), name='detail'),
     # path('profile/', Profile.as_view(), name='profile'),
     # path('login/', LoginUser.as_view(), name='login'),
     # path('logout/', logout_user, name='logout'),

@@ -65,7 +65,7 @@
                                 <li><a class="dropdown-item" href="#">Профиль</a></li>
                                 <li><a class="dropdown-item" href="#">Мои записи</a></li>
                                   {% if staff %}
-                                    <li><a class="dropdown-item" href="#">Сотрудник</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'carwash:detail' detail %}">Сотрудник</a></li>
                                   {% endif %}
                                   {% if user.is_superuser or user.is_staff %}
                                     <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>

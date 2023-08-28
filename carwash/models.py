@@ -29,7 +29,7 @@ class CarWashRegistration(models.Model):
 
     def __str__(self):
         lst_services = ', '.join([str(s) for s in self.services.all()])
-        return f'{lst_services}'
+        return f'{self.client} || {self.client.car_model} || {lst_services}'
 
 
 class WorkDay(models.Model):

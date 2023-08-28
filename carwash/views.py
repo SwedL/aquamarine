@@ -5,9 +5,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from itertools import dropwhile
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
 from carwash.models import *
+from common.views import Common
 import locale
 
 menu = [{'title': 'Главная', 'url_name': 'carwash:home'},
@@ -17,33 +18,27 @@ menu = [{'title': 'Главная', 'url_name': 'carwash:home'},
         ]
 
 
-class IndexListView(ListView):
+class IndexListView(Common, ListView):
     template_name = 'carwash/index.html'
     model = CarWashService
     context_object_name = 'services'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(IndexListView, self).get_context_data()
-
-        user_menu = menu.copy()
-        user_menu.pop(0)
-        if not self.request.user.is_authenticated:
-            user_menu.pop(0)
-
-        context['menu'] = user_menu
+        context['menu'] = self.menu(1, 2, 3)
+        context['detail'] = WorkDay.objects.all().filter(date=date.today())[0].pk
         context['staff'] = self.request.user.has_perm('carwash.view_workday')
 
         return context
 
 
-class RegistrationAuto(LoginRequiredMixin, View):
+class RegistrationAutoView(Common, LoginRequiredMixin, View):
     FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                      '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
                      ]
 
     login_url = reverse_lazy('carwash:home')
-    user_menu = menu.copy()
 
     def formatted_dict(self, date):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
@@ -52,11 +47,14 @@ class RegistrationAuto(LoginRequiredMixin, View):
         res_dict = {}
 
         # создаём и заменяем не занятые времена, сегодняшнего дня время которых прошло, на значения "disabled"
-        for num, k in enumerate(self.FORMATTED_KEY):
-            if lst_day[0] == date.today() and num != 0 and not lst_day[num] and time(*map(int, k.split(':'))) < datetime.now().time():
-                res_dict[k] = 'disable'
-            else:
-                res_dict[k] = lst_day[num]
+        if lst_day[0] == date.today():
+            for num, k in enumerate(self.FORMATTED_KEY):
+                if num != 0 and not lst_day[num] and time(*map(int, k.split(':'))) < datetime.now().time():
+                    res_dict[k] = 'disable'
+                else:
+                    res_dict[k] = lst_day[num]
+        else:
+            return dict((time, value) for time, value in zip(self.FORMATTED_KEY, lst_day))
         return res_dict
 
     def get(self, request):
@@ -74,7 +72,7 @@ class RegistrationAuto(LoginRequiredMixin, View):
 
         context = {
             'title': 'Запись автомобиля',
-            'menu': [self.user_menu[0]],
+            'menu': self.menu(0),
             'staff': request.user.has_perm('carwas.view_workday'),
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
@@ -122,9 +120,8 @@ class RegistrationAuto(LoginRequiredMixin, View):
             context = {
                 'title': 'Ошибка записи',
                 'staff': request.user.has_perm('carwash.view_workday'),
-                'menu': [self.user_menu[0], self.user_menu[1]],
+                'menu': self.menu(0, 1),
             }
-
 
             return render(request, 'carwash/registration-error.html', context=context)
 
@@ -135,16 +132,26 @@ class RegistrationAuto(LoginRequiredMixin, View):
 
         context = {
             'title': 'done',
-            'menu': [self.user_menu[0]],
+            'menu': self.menu(0),
             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
             'choice_time': choicen_time,
             'choice_services': choicen_services,
             'overal_time': normal_overal_time,
             'total_cost': f'{total_cost} р.',
-
         }
 
         return render(request, 'carwash/done.html', context=context)
+
+
+class StaffDetailView(Common, DetailView):
+    template_name = 'carwash/staff.html'
+    model = WorkDay
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(StaffDetailView, self).get_context_data()
+        context['menu'] = self.menu(0, 1)
+
+        return context
 
 
 def pageNotFound(request, exception):
