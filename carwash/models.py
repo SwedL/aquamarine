@@ -23,6 +23,12 @@ class CarWashRegistration(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="клиент")
     services = models.ManyToManyField(CarWashService, verbose_name="услуги")
 
+    def total_time_reg(self):
+        "Возвращает суммарное время работ регистрации"
+        return sum(s.process_time for s in self.services.all())
+
+    total_time = property(total_time_reg)
+
     class Meta:
         verbose_name = "Запись"
         verbose_name_plural = "Записи"

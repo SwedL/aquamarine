@@ -27,7 +27,7 @@ class CarWashRegistrationAdmin(admin.StackedInline):
 class WorkDayAdmin(admin.ModelAdmin):
 
     readonly_fields = ('date',)
-    list_display = ('date',)
+    list_display = ('date', 'pk')
     search_fields = ('date',)
     ordering = ('-date',)
 

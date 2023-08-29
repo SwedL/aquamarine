@@ -14,30 +14,9 @@
 {% block content %}    
     <main>
         <div class="registration">
-            <!-- <div class="registration__title">Запись авто на мойку</div> -->
-            <p>{{workday.date}}</p>
-            <p>{{workday.time_1000}}</p>
-            <p>{{workday.time_1030}}</p>
-            <p>{{workday.time_1100}}</p>
-            <p>{{workday.time_1130}}</p>
-            <p>{{workday.time_1200}}</p>
-            <p>{{workday.time_1230}}</p>
-            <p>{{workday.time_1300}}</p>
-            <p>{{workday.time_1330}}</p>
-            <p>{{workday.time_1400}}</p>
-            <p>{{workday.time_1430}}</p>
-            <p>{{workday.time_1500}}</p>
-            <p>{{workday.time_1530}}</p>
-            <p>{{workday.time_1600}}</p>
-            <p>{{workday.time_1630}}</p>
-            <p>{{workday.time_1700}}</p>
-            <p>{{workday.time_1730}}</p>
-            <p>{{workday.time_1800}}</p>
-            <p>{{workday.time_1830}}</p>
-            <p>{{workday.time_1900}}</p>
-            <p>{{workday.time_1930}}</p>
-            <p>{{workday.time_2000}}</p>
-            <p>{{workday.time_2030}}</p>
+            {% for reg in reg_workday %}
+                <p>{{reg}} {{reg.total_time}}</p>
+            {% endfor %}
         </div>
     </main>
 {% endblock %}
