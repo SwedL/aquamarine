@@ -154,7 +154,8 @@ class StaffDetailView(Common, DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(StaffDetailView, self).get_context_data()
         context['menu'] = self.menu(0, 1)
-
+        context['detail'] = WorkDay.objects.all().filter(date=date.today())[0].pk
+        context['staff'] = True
         return context
 
 
