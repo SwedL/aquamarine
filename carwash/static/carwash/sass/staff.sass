@@ -1,0 +1,59 @@
+$color-main: #0056A9
+$color-red: #C23349
+$color-green: #5CAB5F
+$color-dark-blue: #32449F
+
+// $color-white: #ddd
+$color-white: #ececec
+    
+body
+    background: black
+
+
+.section-staff
+    min-height: 750px
+    background: url("../images/193.png"), $color-main 50% 
+    background-repeat: no-repeat
+    background-blend-mode: screen
+    display: flex
+
+.data-box
+    margin: 0 auto
+    margin-top: 20px
+    padding: 15px
+    height: 700px
+    width: 1500px
+    background-color: #757575
+    border-style: solid
+    border-width: 2px
+    border-color: #a2a2a2 #262626 #262626 #a2a2a2
+    border-radius: 6px
+    &__time-workday
+        display: flex
+        flex-direction: row
+    &__item
+        margin-right: 10px
+        height: 22px
+        background: #c5c5c5
+        color: #000000
+        line-height: 22px
+        border: 1px solid #8a8a8a
+        border-radius: 5px
+        user-select: none
+        margin-bottom: 2px /* отодвигаем кнопки время вниз друг от друга */
+    &__time-reg
+        width: 55px
+        text-align: center
+    &__client-reg
+        width: 150px
+        text-indent: 5px
+    &__services-reg_big
+        padding-left: 5px
+        height: 45px
+        width: 1100px
+    &__services-reg
+        padding-left: 5px
+        height: 22px
+        width: 1100px
+    &__text
+        color: #ddd

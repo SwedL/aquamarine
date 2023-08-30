@@ -77,7 +77,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
             map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST)))
         choicen_services = [CarWashService.objects.get(pk=s) for s in choicen_services_list_pk]
         time789 = sum([x for x in choicen_services_list_pk if x in [7, 8, 9]]) // 10   # если выбраны улуги, то время берётся как за одну
-        # overal_time = sum([t.process_time for t in choicen_services]) - time789 * 30   # общее время работ
+        overal_time = sum([t.process_time for t in choicen_services]) - time789 * 30   # общее время работ
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
 
@@ -93,7 +93,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
             new_reg.save()
             [new_reg.services.add(s) for s in choicen_services]    # добавляем в "Запись" выбранные услуги
 
-        overal_time = new_reg.total_time
+        # overal_time = new_reg.total_time
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата по которой будем искать экземпляр WorkDay
         wd = WorkDay.objects.get(date=for_workday_date)  # получаем по дате экземпляр WorkDay
@@ -138,27 +138,41 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
 
 class StaffDetailView(Common, View):
     def get(self, request):
-        workday_detail = WorkDay.objects.filter(date=date.today())[0]
+        current_workday = WorkDay.objects.filter(date=date.today())[0]
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
-        reg_workday = [getattr(workday_detail, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)]
-        formatted_reg_workday = []
+        registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)]
 
-        time_reg = [t.total_time if t else None for t in reg_workday]
-        # for time_workday in reg_workday:
-        #     if time_workday:
-        #         overal_time_reg = time_workday.
-        #
-        #     for _ in range(0, overal_time, 30):
-        #         setattr(wd, 'time_' + formatted_key1.pop(0).replace(':', ''), new_reg)  # в поле соотвеств. времени сохраняем "Запись"
-        #     wd.save()
+        # создаём список записей рабочего дня [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
+        list_workday = []
+        for t, r in zip(self.FORMATTED_KEY[1:], registrations_workday):
+            if r:
+                res = {'time': t, 'registration': r, 'services': ', '.join([str(s) for s in r.services.all()])}
+            else:
+                res = {'time': t, 'free_busy': 'Свободно'}
 
+            list_workday.append(res)
 
+        list_workday_iterator = iter(list_workday)
+        result_list_workday = []
 
+        while list_workday_iterator:
+            temp_time = next(list_workday_iterator, 0)
+            if temp_time == 0:
+                break
+            result_list_workday.append(temp_time)
+            if 'registration' in temp_time:
+                if len(temp_time['services']) > 150:
+                    temp_time['big'] = True
+                overal_time = temp_time['registration'].total_time - 30
+                for i in range(0, overal_time, 30):
+                    temp_time = next(list_workday_iterator)
+                    registration_busy = {'time': temp_time['time'], 'free_busy': temp_time['registration'].client}
+                    result_list_workday.append(registration_busy)
 
         context = {
             'menu': self.menu(0, 1),
-            'reg_workday': reg_workday,
+            'list_workday': result_list_workday,
             'staff': True,
         }
 

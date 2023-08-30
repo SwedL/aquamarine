@@ -7,16 +7,27 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'carwash/css/registration.css' %}">
+    <link rel="stylesheet" href="{% static 'carwash/css/staff.css' %}">
     <script src="{% static 'carwash/js/script.js' %}"></script>
 {% endblock %}
 
 {% block content %}    
     <main>
-        <div class="registration">
-            {% for reg in reg_workday %}
-                <p>{{reg}} {{reg.total_time}}</p>
+        <div class="section-staff">
+            <div class="data-box">
+            {% for reg in list_workday %}
+                <div class="data-box__time-workday">
+                    <div class="data-box__item data-box__time-reg">{{reg.time}}</div>
+                    {% if reg.services %}
+                        <div class="data-box__item data-box__client-reg">{{reg.registration.client}}</div>
+                        <div class="data-box__item {% if reg.big %} data-box__services-reg_big {% else %} data-box__services-reg {% endif %}">{{reg.services}}</div>
+                    {% else %}
+                        <div class="data-box__item data-box__client-reg">{{reg.free_busy}}</div>
+                    {% endif %}
+                    
+                </div>               
             {% endfor %}
+            </div>
         </div>
     </main>
 {% endblock %}
