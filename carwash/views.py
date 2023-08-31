@@ -93,7 +93,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
             new_reg.save()
             [new_reg.services.add(s) for s in choicen_services]    # добавляем в "Запись" выбранные услуги
 
-        overal_time = new_reg.total_time    # вычисляем общее время работ в "Записи" (7,8,9 считается как за одно время 30 мин.)
+        total_time = new_reg.total_time    # вычисляем общее время работ в "Записи" (7,8,9 считается как за одно время 30 мин.)
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата по которой будем искать экземпляр WorkDay
         wd = WorkDay.objects.get(date=for_workday_date)  # получаем по дате экземпляр WorkDay
@@ -103,9 +103,9 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         formatted_key2 = formatted_key1.copy()
 
         # Если время уже занято пока проходило оформление, то ОШИБКА ЗАПИСИ
-        check_free_times = [getattr(wd, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in range(0, overal_time, 30)]
+        check_free_times = [getattr(wd, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in range(0, total_time, 30)]
         if all([x is None for x in check_free_times]):
-            for _ in range(0, overal_time, 30):
+            for _ in range(0, total_time, 30):
                 setattr(wd, 'time_' + formatted_key1.pop(0).replace(':', ''), new_reg)  # в поле соотвеств. времени сохраняем "Запись"
             wd.save()
         else:
@@ -120,7 +120,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         normal_format_choicen_date = choicen_date.split()
         normal_format_choicen_date.reverse()
 
-        normal_overal_time = f'{overal_time//60} ч.  {overal_time - overal_time // 60 * 60} мин.'
+        normal_total_time = f'{total_time//60} ч.  {total_time - total_time // 60 * 60} мин.'
 
         context = {
             'title': 'Запись зарегистрирована',
@@ -129,7 +129,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
             'choice_time': choicen_time,
             'choice_services': choicen_services,
-            'overal_time': normal_overal_time,
+            'total_time': normal_total_time,
             'total_cost': f'{total_cost} р.',
         }
 
@@ -138,7 +138,8 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
 
 class StaffDetailView(Common, View):
     def get(self, request):
-        current_workday = WorkDay.objects.filter(date=date.today())[0]
+        days_delta = 0 #request.days_delta
+        current_workday = WorkDay.objects.filter(date=date.today() + timedelta(days=days_delta))[0]
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
         registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)]
@@ -147,9 +148,9 @@ class StaffDetailView(Common, View):
         list_workday = []
         for t, r in zip(self.FORMATTED_KEY[1:], registrations_workday):
             if r:
-                res = {'time': t, 'registration': r, 'services': ', '.join([str(s) for s in r.services.all()])}
+                res = {'time': t, 'registration': r, 'services': ' // '.join([str(s) for s in r.services.all()])}
             else:
-                res = {'time': t, 'free_busy': 'Свободно'}
+                res = {'time': t, 'client': 'Свободно', 'free': True}
 
             list_workday.append(res)
 
@@ -157,17 +158,17 @@ class StaffDetailView(Common, View):
         result_list_workday = []
 
         while list_workday_iterator:
-            temp_time = next(list_workday_iterator, 0)
-            if temp_time == 0:
+            another_time = next(list_workday_iterator, 0)
+            if another_time == 0:
                 break
-            result_list_workday.append(temp_time)
-            if 'registration' in temp_time:
-                if len(temp_time['services']) > 150:
-                    temp_time['big'] = True
-                overal_time = temp_time['registration'].total_time - 30
-                for i in range(0, overal_time, 30):
-                    temp_time = next(list_workday_iterator)
-                    registration_busy = {'time': temp_time['time'], 'free_busy': temp_time['registration'].client}
+            result_list_workday.append(another_time)
+            if 'registration' in another_time:
+                if len(another_time['services']) > 150:
+                    another_time['big'] = True
+                total_time = another_time['registration'].total_time - 30
+                for i in range(0, total_time, 30):
+                    another_time = next(list_workday_iterator)
+                    registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     result_list_workday.append(registration_busy)
 
         context = {

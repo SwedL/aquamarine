@@ -2,6 +2,7 @@ $color-main: #0056A9
 $color-red: #C23349
 $color-green: #5CAB5F
 $color-dark-blue: #32449F
+$color-menu-hover: #9ae7ff
 
 // $color-white: #ddd
 $color-white: #ececec
@@ -16,44 +17,92 @@ body
     background-repeat: no-repeat
     background-blend-mode: screen
     display: flex
+    flex-direction: column
+
+.workday-page
+    margin: 0 auto
+    margin-top: 20px
+    display: flex
+    flex-direction: row
+    margin-bottom: 20px
+    &__button
+        margin-right: 130px
+        &:last-child
+            margin-right: 0    
+    button
+        width: 200px
+
+        padding: 5px 5px
+        color: $color-white
+        background: #0129df
+        border-style: solid
+        border-width: 2px
+        border-color: #a2a2a2 #262626 #262626 #a2a2a2
+        border-radius: 5px
+        cursor: pointer
+    button:hover
+        color: $color-menu-hover
+    button:disabled
+        background: #6a7ed4
 
 .data-box
     margin: 0 auto
-    margin-top: 20px
+    margin-bottom: 20px
     padding: 15px
-    height: 700px
+    min-height: 50px
     width: 1500px
     background-color: #757575
     border-style: solid
     border-width: 2px
     border-color: #a2a2a2 #262626 #262626 #a2a2a2
-    border-radius: 6px
-    &__time-workday
-        display: flex
-        flex-direction: row
+    border-radius: 6px        
     &__item
         margin-right: 10px
-        height: 22px
-        background: #c5c5c5
-        color: #000000
-        line-height: 22px
+        height: 24px
+        margin-bottom: 3px //* отодвигаем кнопки время вниз друг от друга */
         border: 1px solid #8a8a8a
-        border-radius: 5px
+        border-radius: 3px
         user-select: none
-        margin-bottom: 2px /* отодвигаем кнопки время вниз друг от друга */
-    &__time-reg
+
+.free
+    background: #c5c5c5
+    color: #000000
+    padding: 0 auto
+    line-height: 19px
+    border-style: solid
+    border-width: 2px
+    border-color: #e6e6e6 #3a3a3a #3a3a3a #e7e7e7
+.busy
+    background: #434343
+    color: #c0c0c0
+    box-shadow: 2px 2px 4px #000000 inset
+    line-height: 22px
+
+.time-workday
+    display: flex
+    flex-direction: row
+    &__time
         width: 55px
         text-align: center
-    &__client-reg
+    &__time-free
+    &__time-busy
+        line-height: 24px
+    &__client-busy
         width: 150px
-        text-indent: 5px
-    &__services-reg_big
-        padding-left: 5px
+        text-indent: 7px  
+    &__client-free
+        width: 150px
+        text-align: center
+    &__services
+        width: 1100px
+        padding-left: 7px
+    &__services_big
+        width: 1100px
+        padding-left: 7px
         height: 45px
-        width: 1100px
-    &__services-reg
-        padding-left: 5px
-        height: 22px
-        width: 1100px
-    &__text
-        color: #ddd
+
+        
+
+
+ 
+    

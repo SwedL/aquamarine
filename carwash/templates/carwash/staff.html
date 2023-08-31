@@ -14,15 +14,26 @@
 {% block content %}    
     <main>
         <div class="section-staff">
+            <div class="workday-page">
+                <div class="workday-page__button">
+                    <a href="{% url 'carwash:staff' %}"><button id="page1" type="submit">Сегодня</button></a>
+                </div>
+                <div class="workday-page__button">
+                    <a href="{% url 'carwash:staff' %}"><button id="page2" type="submit">Завтра</button></a>
+                </div>
+                <div class="workday-page__button">
+                    <a href="{% url 'carwash:staff' %}"><button id="page3" type="submit">Послезавтра</button></a>
+                </div>
+            </div>
             <div class="data-box">
             {% for reg in list_workday %}
-                <div class="data-box__time-workday">
-                    <div class="data-box__item data-box__time-reg">{{reg.time}}</div>
+                <div class="time-workday">
+                    <div class="data-box__item time-workday__time {% if reg.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{reg.time}}</div>
                     {% if reg.services %}
-                        <div class="data-box__item data-box__client-reg">{{reg.registration.client}}</div>
-                        <div class="data-box__item {% if reg.big %} data-box__services-reg_big {% else %} data-box__services-reg {% endif %}">{{reg.services}}</div>
+                        <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
+                        <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
                     {% else %}
-                        <div class="data-box__item data-box__client-reg">{{reg.free_busy}}</div>
+                        <div class="data-box__item client {% if reg.free %} free time-workday__client-free {% else %} busy client time-workday__client-busy {% endif %}">{{reg.client}}</div>
                     {% endif %}
                     
                 </div>               
