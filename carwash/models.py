@@ -25,7 +25,11 @@ class CarWashRegistration(models.Model):
 
     def total_time_reg(self):
         "Возвращает суммарное время работ регистрации"
-        return sum(s.process_time for s in self.services.all())
+        choice_services = self.services.all()
+        time789 = sum([x.pk for x in choice_services if x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну
+        overal_time = sum([t.process_time for t in choice_services]) - time789 * 30  # общее время работ
+
+        return overal_time
 
     total_time = property(total_time_reg)
 

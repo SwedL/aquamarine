@@ -76,8 +76,8 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         choicen_services_list_pk = list(
             map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST)))
         choicen_services = [CarWashService.objects.get(pk=s) for s in choicen_services_list_pk]
-        time789 = sum([x for x in choicen_services_list_pk if x in [7, 8, 9]]) // 10   # если выбраны улуги, то время берётся как за одну
-        overal_time = sum([t.process_time for t in choicen_services]) - time789 * 30   # общее время работ
+        # time789 = sum([x for x in choicen_services_list_pk if x in [7, 8, 9]]) // 10   # если выбраны улуги, то время берётся как за одну
+        # overal_time = sum([t.process_time for t in choicen_services]) - time789 * 30   # общее время работ
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
 
@@ -93,7 +93,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
             new_reg.save()
             [new_reg.services.add(s) for s in choicen_services]    # добавляем в "Запись" выбранные услуги
 
-        # overal_time = new_reg.total_time
+        overal_time = new_reg.total_time    # вычисляем общее время работ в "Записи" (7,8,9 считается как за одно время 30 мин.)
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата по которой будем искать экземпляр WorkDay
         wd = WorkDay.objects.get(date=for_workday_date)  # получаем по дате экземпляр WorkDay
