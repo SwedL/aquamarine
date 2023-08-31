@@ -28,20 +28,20 @@ body
     &__button
         margin-right: 130px
         &:last-child
-            margin-right: 0    
+            margin-right: 0
+     
     button
         width: 200px
-
         padding: 5px 5px
         color: $color-white
         background: #0129df
         border-style: solid
         border-width: 2px
-        border-color: #a2a2a2 #262626 #262626 #a2a2a2
+        border-color: #536cd8 #262626 #262626 #536cd8
         border-radius: 5px
-        cursor: pointer
-    button:hover
-        color: $color-menu-hover
+
+    button:active
+        background: #0020ad
     button:disabled
         background: #6a7ed4
 
@@ -50,7 +50,7 @@ body
     margin-bottom: 20px
     padding: 15px
     min-height: 50px
-    width: 1500px
+    width: 1460px
     background-color: #757575
     border-style: solid
     border-width: 2px
@@ -100,6 +100,20 @@ body
         width: 1100px
         padding-left: 7px
         height: 45px
+    &__cancel-button
+        width: 90px
+        height: 24px
+        padding: 2px 2px
+        color: $color-white
+        background: #9b2900 //$color-dark-blue
+        border-style: solid
+        border-width: 2px
+        border-color: #956757 #262626 #262626 #956757
+        border-radius: 5px
+    &__cancel-button:active
+        background: #6a1c00
+        
+
 
         
 

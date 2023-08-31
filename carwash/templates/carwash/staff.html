@@ -16,13 +16,13 @@
         <div class="section-staff">
             <div class="workday-page">
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' days_delta=0 %}"><button id="page1" type="submit">Сегодня</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=0 %}"><button id="page1" type="submit" style="cursor:default">Сегодня</button></a>
                 </div>
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' days_delta=1 %}"><button id="page2" type="submit">Завтра</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=1 %}"><button id="page2" type="submit" style="cursor:default">Завтра</button></a>
                 </div>
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' days_delta=2 %}"><button id="page3" type="submit">Послезавтра</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=2 %}"><button id="page3" type="submit" style="cursor:default">Послезавтра</button></a>
                 </div>
             </div>
             <div class="data-box">
@@ -32,10 +32,13 @@
                     {% if reg.services %}
                         <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
                         <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
+                        <div class="time-workday__button">
+                            <a href="#"><button class="time-workday__cancel-button" type="submit" style="cursor:default">Отменить</button></a>
+                        </div>
                     {% else %}
                         <div class="data-box__item client {% if reg.free %} free time-workday__client-free {% else %} busy client time-workday__client-busy {% endif %}">{{reg.client}}</div>
-                    {% endif %}
-                    
+                        <div class="data-box__item time-workday__services {% if reg.free %} free {% else %} busy {% endif %}"></div>
+                    {% endif %}                    
                 </div>               
             {% endfor %}
             </div>
