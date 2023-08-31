@@ -137,8 +137,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
 
 
 class StaffDetailView(Common, View):
-    def get(self, request):
-        days_delta = 0 #request.days_delta
+    def get(self, request, days_delta):
         current_workday = WorkDay.objects.filter(date=date.today() + timedelta(days=days_delta))[0]
         formatted_key = self.FORMATTED_KEY[1:].copy()
 

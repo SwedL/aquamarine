@@ -16,13 +16,13 @@
         <div class="section-staff">
             <div class="workday-page">
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' %}"><button id="page1" type="submit">Сегодня</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=0 %}"><button id="page1" type="submit">Сегодня</button></a>
                 </div>
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' %}"><button id="page2" type="submit">Завтра</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=1 %}"><button id="page2" type="submit">Завтра</button></a>
                 </div>
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' %}"><button id="page3" type="submit">Послезавтра</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=2 %}"><button id="page3" type="submit">Послезавтра</button></a>
                 </div>
             </div>
             <div class="data-box">
