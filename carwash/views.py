@@ -174,10 +174,14 @@ class StaffDetailView(Common, View):
             'menu': self.menu(0, 1),
             'list_workday': result_list_workday,
             'staff': True,
-            'disable': days_delta,
+            'days_delta': days_delta,
         }
 
         return render(request, 'carwash/staff.html', context=context)
+
+
+class CancelRegistrationView(View):
+    pass
 
 
 def pageNotFound(request, exception):
