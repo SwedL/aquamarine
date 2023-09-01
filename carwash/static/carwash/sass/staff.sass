@@ -34,16 +34,18 @@ body
         width: 200px
         padding: 5px 5px
         color: $color-white
-        background: #0129df
+        background: #002cf2
         border-style: solid
         border-width: 2px
         border-color: #536cd8 #262626 #262626 #536cd8
         border-radius: 5px
-
+    button:hover
+        background: #0028db
     button:active
-        background: #0020ad
+        background: #0025c8
     button:disabled
-        background: #6a7ed4
+        color: #000 // #cbcaca
+        background: #21b9ff
 
 .data-box
     margin: 0 auto
@@ -68,14 +70,12 @@ body
     background: #c5c5c5
     color: #000000
     padding: 0 auto
-    line-height: 19px
-    border-style: solid
-    border-width: 2px
-    border-color: #e6e6e6 #3a3a3a #3a3a3a #e7e7e7
+    line-height: 25px
+    box-shadow: 1px 1px 2px #000000 inset
 .busy
     background: #434343
     color: #c0c0c0
-    box-shadow: 2px 2px 4px #000000 inset
+    box-shadow: 1px 1px 2px #000000 inset
     line-height: 22px
 
 .time-workday
@@ -110,6 +110,8 @@ body
         border-width: 2px
         border-color: #956757 #262626 #262626 #956757
         border-radius: 5px
+    &__cancel-button:hover
+        background: #7c2201
     &__cancel-button:active
         background: #6a1c00
         

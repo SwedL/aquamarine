@@ -43,15 +43,25 @@ body
     button
         padding: 10px 52px
         color: $color-white
-        background: #0129df
+        background: #002cf2
         border-style: solid
         border-width: 2px
         border-color: #536cd8 #262626 #262626 #536cd8
         border-radius: 5px
+    button:hover
+        background: #0028db
     button:active
         background: #0020ad
     button:disabled
-        background: #6a7ed4
+        color: #adadad
+        background: #0020ad
+        border-width: 2px
+        border-color: #0020ad
+        border-radius: 5px
+    
+    // button:disabled
+    //     color: #000 // #cbcaca
+    //     background: #21b9ff
 
               
 
@@ -123,7 +133,7 @@ tr:hover
         input:disabled + label
             background: #434343
             color: #7b7b7b
-            box-shadow: 2px 2px 4px #000000 inset
+            box-shadow: 1px 1px 2px #000000 inset
         label            
             text-align: center
             height: 22px
