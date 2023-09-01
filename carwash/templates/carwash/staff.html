@@ -33,7 +33,7 @@
                         <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
                         <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
                         <div class="time-workday__button">
-                            <a href="#"><button class="time-workday__cancel-button" type="submit" style="cursor:default" value="{{days_delta}}, {{reg.r}}, {{reg.time}}">Отменить</button></a>
+                            <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration_pk registration_time=reg.time %}"><button class="time-workday__cancel-button" type="submit" style="cursor:default">Отменить</button></a>
                         </div>
                     {% else %}
                         <div class="data-box__item client {% if reg.free %} free time-workday__client-free {% else %} busy client time-workday__client-busy {% endif %}">{{reg.client}}</div>

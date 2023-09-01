@@ -1,8 +1,8 @@
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date, time, datetime, timedelta
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from itertools import dropwhile
 from django.views.generic import TemplateView, ListView, DetailView
@@ -96,18 +96,18 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         total_time = new_reg.total_time    # вычисляем общее время работ в "Записи" (7,8,9 считается как за одно время 30 мин.)
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата по которой будем искать экземпляр WorkDay
-        wd = WorkDay.objects.get(date=for_workday_date)  # получаем по дате экземпляр WorkDay
+        current_workday = WorkDay.objects.get(date=for_workday_date)  # получаем по дате экземпляр WorkDay
 
         # записываем столько времён под авто, сколько необходимо под услуги.
         formatted_key1 = list(dropwhile(lambda el: el != choicen_time, self.FORMATTED_KEY.copy())) # из списка времен выбираем от choicen_time и далее
         formatted_key2 = formatted_key1.copy()
 
         # Если время уже занято пока проходило оформление, то ОШИБКА ЗАПИСИ
-        check_free_times = [getattr(wd, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in range(0, total_time, 30)]
+        check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in range(0, total_time, 30)]
         if all([x is None for x in check_free_times]):
             for _ in range(0, total_time, 30):
-                setattr(wd, 'time_' + formatted_key1.pop(0).replace(':', ''), new_reg)  # в поле соотвеств. времени сохраняем "Запись"
-            wd.save()
+                setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''), new_reg)  # в поле соотвеств. времени сохраняем "Запись"
+            current_workday.save()
         else:
             context = {
                 'title': 'Ошибка записи',
@@ -138,16 +138,16 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
 
 class StaffDetailView(Common, View):
     def get(self, request, days_delta):
-        current_workday = WorkDay.objects.filter(date=date.today() + timedelta(days=days_delta))[0]
+        current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
         registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)]
 
         # создаём список записей рабочего дня [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
         list_workday = []
-        for t, r in zip(self.FORMATTED_KEY[1:], registrations_workday):
-            if r:
-                res = {'time': t, 'registration': r, 'services': ' // '.join([str(s) for s in r.services.all()])}
+        for t, registration in zip(self.FORMATTED_KEY[1:], registrations_workday):
+            if registration:
+                res = {'time': t, 'registration': registration, 'registration_pk': registration.pk, 'services': ' // '.join([str(s) for s in registration.services.all()])}
             else:
                 res = {'time': t, 'client': 'Свободно', 'free': True}
 
@@ -164,8 +164,8 @@ class StaffDetailView(Common, View):
             if 'registration' in another_time:
                 if len(another_time['services']) > 150:
                     another_time['big'] = True
-                total_time = another_time['registration'].total_time - 30
-                for i in range(0, total_time, 30):
+                total_time_without30 = another_time['registration'].total_time - 30
+                for i in range(0, total_time_without30, 30):
                     another_time = next(list_workday_iterator)
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     result_list_workday.append(registration_busy)
@@ -180,8 +180,23 @@ class StaffDetailView(Common, View):
         return render(request, 'carwash/staff.html', context=context)
 
 
-class CancelRegistrationView(View):
-    pass
+class CancelRegistrationView(Common, View):
+    def get(self, request, days_delta, registration_pk, registration_time):
+        current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
+        registration = CarWashRegistration.objects.get(pk=registration_pk)
+        total_time = registration.total_time
+
+        # создаём список времён от времени регистрации и все времена после неё
+        formatted_key1 = list(dropwhile(lambda el: el != registration_time, self.FORMATTED_KEY.copy()))  # из списка времен выбираем от wd_time и далее
+
+        # удаляем записи выбранной регистрации в полях времени, сколько она занимает
+        for _ in range(0, total_time, 30):
+            setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''), None)  # в поле соотвеств. времени сохраняем "Запись"
+        current_workday.save()
+
+        redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})  #HttpResponse('<script>history.back();</script>')
+
+        return HttpResponseRedirect(redirect_url)
 
 
 def pageNotFound(request, exception):
