@@ -168,8 +168,20 @@ body {
 }
 
 /* line 118, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.modal {
+  --bs-modal-width: 350px;
+}
+
+/* line 121, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal-content {
   background-color: #4a4a4a;
+}
+
+/* line 123, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.modal-content__body-text {
+  color: #ececec;
+  font-size: 22px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=staff.css.map */
