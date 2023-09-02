@@ -26,45 +26,42 @@
                 </div>
             </div>
             <div class="data-box">
-            {% for reg in list_workday %}
-                <div class="time-workday">
-                    <div class="data-box__item time-workday__time {% if reg.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{reg.time}}</div>
-                    {% if reg.services %}
-                        <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
-                        <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
-                        <div class="time-workday__button">
-                            <!-- Кнопка-триггер модального окна -->
-<!--                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-<!--                              Запустите демо модального окна</button>-->
-                            <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration_pk registration_time=reg.time %}"><button class="time-workday__cancel-button" type="submit" style="cursor:default">Отменить</button></a>
-                        </div>
-                    {% else %}
-                        <div class="data-box__item client {% if reg.free %} free time-workday__client-free {% else %} busy client time-workday__client-busy {% endif %}">{{reg.client}}</div>
-                        <div class="data-box__item time-workday__services {% if reg.free %} free {% else %} busy {% endif %}"></div>
-                    {% endif %}                    
-                </div>               
-            {% endfor %}
-            </div>
-
-
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-primary">Сохранить изменения</button>
-                  </div>
+                {% for reg in list_workday %}
+                    <div class="time-workday">
+                        <div class="data-box__item time-workday__time {% if reg.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{reg.time}}</div>
+                        {% if reg.services %}
+                            <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
+                            <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
+                            <div class="time-workday__button">
+                                <!-- Кнопка-триггер модального окна -->
+                                <button type="button" class="litime-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  Отменить</button>
+<!--                                <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration_pk registration_time=reg.time %}"><button class="time-workday__cancel-button" type="submit" style="cursor:default">Отменить</button></a>-->
+                                <!-- Модальное окно -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        ...
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                        <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration_pk registration_time=reg.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                                      </div>
+                                        </div>
+                                  </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="data-box__item client {% if reg.free %} free time-workday__client-free {% else %} busy client time-workday__client-busy {% endif %}">{{reg.client}}</div>
+                            <div class="data-box__item time-workday__services {% if reg.free %} free {% else %} busy {% endif %}"></div>
+                        {% endif %}
                     </div>
-              </div>
+                {% endfor %}
             </div>
         </div>
     </main>
