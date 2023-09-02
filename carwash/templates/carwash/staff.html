@@ -33,12 +33,13 @@
                             <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
                             <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
                             <div class="time-workday__button">
+
                                 <!-- Кнопка-триггер модального окна -->
-                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.registration_pk}}{{reg.time}}">
                                   Отменить</button>
-<!--                                <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration_pk registration_time=reg.time %}"><button class="time-workday__cancel-button" type="submit" style="cursor:default">Отменить</button></a>-->
+
                                 <!-- Модальное окно -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="{{reg.registration_pk}}{{reg.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -46,7 +47,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                       </div>
                                       <div class="modal-body">
-                                        <p class="modal-content__body-text" id="exampleModalLabel">Подвердите удаление записи</p>
+                                        <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>

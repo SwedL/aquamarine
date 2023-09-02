@@ -1,3 +1,10 @@
 from django.test import TestCase
+from django.urls import reverse
 
-# Create your tests here.
+class IndexListViewTestCase(TestCase):
+
+    def test_view(self):
+        pass
+
+
+
