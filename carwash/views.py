@@ -16,6 +16,7 @@ menu = ['Главная', 'Записаться', 'Услуги и цены', '�
 
 class IndexListView(Common, ListView):
     template_name = 'carwash/index.html'
+    title = 'Aquamarine'
     model = CarWashService
     context_object_name = 'services'
 
@@ -23,12 +24,13 @@ class IndexListView(Common, ListView):
         context = super(IndexListView, self).get_context_data()
         context['menu'] = self.menu(1, 2, 3) if self.request.user.is_authenticated else self.menu(2, 3)
         context['staff'] = self.request.user.has_perm('carwash.view_workday')
+        context['title'] = self.title
 
         return context
 
 
 class RegistrationAutoView(Common, LoginRequiredMixin, View):
-
+    title = 'Запись автомобиля'
     login_url = reverse_lazy('carwash:home')
 
     def formatted_dict(self, date):
@@ -62,7 +64,7 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
         list_day_dictionaries = [self.formatted_dict(d) for d in days_list]
 
         context = {
-            'title': 'Запись автомобиля',
+            'title': self.title,
             'menu': self.menu(0),
             'staff': request.user.has_perm('carwash.view_workday'),
             'services': services,
@@ -137,6 +139,8 @@ class RegistrationAutoView(Common, LoginRequiredMixin, View):
 
 
 class StaffDetailView(Common, View):
+    title = 'Сотрудник'
+
     def get(self, request, days_delta):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         formatted_key = self.FORMATTED_KEY[1:].copy()
@@ -171,6 +175,7 @@ class StaffDetailView(Common, View):
                     result_list_workday.append(registration_busy)
 
         context = {
+            'title': self.title,
             'menu': self.menu(0, 1),
             'list_workday': result_list_workday,
             'staff': True,
