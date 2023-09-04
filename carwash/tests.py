@@ -131,6 +131,8 @@ class UserModelTestCase(TestCase):
 
 
 class CarWashRegistrationModelTestCase(TestCase):
+    fixtures = {'services.json'}
+
     @staticmethod
     def print_info(message):
         count = CarWashRegistration.objects.count()
@@ -142,32 +144,20 @@ class CarWashRegistrationModelTestCase(TestCase):
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
                                         tel='+79445555555', car_model='Kia Sportage')
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
-        self.service1 = CarWashService.objects.create(name='Мойка (верх, ковры, сушка)', process_time=60,
-                                                      price_standart=450, price_crossover=550, price_offroad=650)
-        self.service2 = CarWashService.objects.create(name='Пылесос салона', process_time=30, price_standart=100,
-                                                      price_crossover=100,
-                                                      price_offroad=150)
-        self.service3 = CarWashService.objects.create(name='Экспресс-мойка с шампунем', process_time=30,
-                                                      price_standart=250,
-                                                      price_crossover=250, price_offroad=300)
-        self.service4 = CarWashService.objects.create(name='Экспресс-мойка2', process_time=30)
-        self.service5 = CarWashService.objects.create(name='Экспресс-мойка3', process_time=30),
-        self.service6 = CarWashService.objects.create(name='Экспресс-мойка4', process_time=30)
-        self.service7 = CarWashService.objects.create(name='Экспресс-мойка7', process_time=30)
-        self.service8 = CarWashService.objects.create(name='Экспресс-мойка8', process_time=30)
-        self.service9 = CarWashService.objects.create(name='Экспресс-мойка9', process_time=30)
+
+        self.services = CarWashService.objects.all()
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
-        [self.registration1.services.add(s) for s in (self.service1, self.service2)]
+        [self.registration1.services.add(s) for s in (self.services[0], self.services[6])]
 
         self.registration2 = CarWashRegistration.objects.create(client=self.user1)
-        [self.registration2.services.add(s) for s in (self.service3, self.service2)]
+        [self.registration2.services.add(s) for s in (self.services[2], self.services[6])]
 
         self.registration3 = CarWashRegistration.objects.create(client=self.user2)
-        self.registration3.services.add(self.service1, self.service2, self.service3)
+        self.registration3.services.add(self.services[1], self.services[2], self.services[3])
 
         self.registration789 = CarWashRegistration.objects.create(client=self.user2)
-        [self.registration789.services.add(s) for s in (self.service1, self.service7, self.service8, self.service9)]
+        [self.registration789.services.add(s) for s in (self.services[3], self.services[6], self.services[7], self.services[8])]
         self.print_info('Finish setUp')
 
     def test_registration_creation(self):
@@ -185,10 +175,11 @@ class CarWashRegistrationModelTestCase(TestCase):
         self.print_info('Finish test_registration_get_all_records')
 
     def test_registration_get_total_time(self):
+        # Проверка правильного подсчёта полного времени выбранных услуг Записи (услуги 7,8,9 считаются как за одну)
         self.print_info('Start test_registration_get_total_time')
         registrations = CarWashRegistration.objects.filter(client=self.user2)
-        self.assertEqual(registrations[0].total_time, 120)
-        self.assertEqual(registrations[1].total_time, 90)
+        self.assertEqual(registrations[0].total_time, 150)
+        self.assertEqual(registrations[1].total_time, 60)
         self.print_info('Finish test_registration_get_total_time')
 
     def test_registration_get_record(self):
@@ -209,6 +200,7 @@ class CarWashRegistrationModelTestCase(TestCase):
 
 
 class WorkDayModelTestCase(TestCase):
+    fixtures = {'services.json'}
 
     @staticmethod
     def print_info(message):
@@ -218,19 +210,17 @@ class WorkDayModelTestCase(TestCase):
     def setUp(self):
         print('-' * 20)
         self.print_info('Start setUp')
+        self.services = CarWashService.objects.all()
+
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
                                         tel='+79445555555', car_model='Kia Sportage')
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
-        self.service1 = CarWashService.objects.create(name='Мойка (верх, ковры, сушка)', process_time=60, price_standart=450, price_crossover=550, price_offroad=650)
-        self.service2 = CarWashService.objects.create(name='Пылесос салона', process_time=30, price_standart=100, price_crossover=100, price_offroad=150)
-        self.service3 = CarWashService.objects.create(name='Экспресс-мойка с шампунем', process_time=30, price_standart=250, price_crossover=250, price_offroad=300)
-        self.service4 = CarWashService.objects.create(name='Экспресс-мойка2', process_time=30)
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
-        [self.registration1.services.add(s) for s in (self.service1, self.service2)]
+        [self.registration1.services.add(s) for s in (self.services[0], self.services[1])]
 
         self.registration2 = CarWashRegistration.objects.create(client=self.user2)
-        [self.registration2.services.add(s) for s in (self.service3, self.service2)]
+        [self.registration2.services.add(s) for s in (self.services[2], self.services[1])]
 
         self.workday1 = WorkDay.objects.create(date=date.today())
         self.workday1.time_1000 = self.registration1
@@ -241,7 +231,7 @@ class WorkDayModelTestCase(TestCase):
         self.print_info('Finish setUp')
 
     def test_workday_creation(self):
-        # Проверка создания объекта CarWashRegistration
+        # Проверка создания объекта WorkDay
         self.print_info('Start test_workday_creation')
         self.assertEqual(self.workday1.date, date.today())
         self.assertEqual(self.workday1.time_1000, self.registration1)
@@ -258,12 +248,19 @@ class WorkDayModelTestCase(TestCase):
     def test_workday_str(self):
         # Проверка метода __str__()
         self.print_info('Start test_workday_str')
-        expected_str = str(date.today())
-        self.assertEqual(str(self.workday1), expected_str)
+        expected_str1 = str(date.today())
+        expected_str2 = str(date.today()+timedelta(days=1))
+        self.assertEqual(str(self.workday1), expected_str1)
+        self.assertEqual(str(self.workday2), expected_str2)
         self.print_info('Finish test_workday_str')
 
 
 class IndexListViewTestCase(TestCase):
+    fixtures = {'services.json'}
+
+    def setUp(self):
+        self.services = CarWashService.objects.all()
+
     def test_view(self):
         path = ''
         response = self.client.get(path)
@@ -271,12 +268,36 @@ class IndexListViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Aquamarine')
         self.assertTemplateUsed(response, 'carwash/index.html')
+        self.assertEqual(list(response.context_data['object_list']), list(self.services))
 
 
 class RegistrationAutoViewTestCase(TestCase):
+    fixtures = {'services.json'}
+
+    def setUp(self):
+        self.services = dict([(k, v) for k, v in enumerate(CarWashService.objects.all(), start=1)])
+
     def test_view(self):
         path = reverse('carwash:registration')
         response = self.client.get(path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.context_data['title'], 'Запись автомобиля')
+        self.assertEqual(response.context['title'], 'Запись автомобиля')
+        self.assertTemplateUsed(response, 'carwash/registration.html')
+        self.assertEqual(list(response.context['services']), list(self.services))
+
+
+class StaffDetailViewTestCase(TestCase):
+
+    def setUp(self):
+        self.workday1 = WorkDay.objects.create(date=date.today())
+        WorkDay.objects.create(date=date.today()+timedelta(days=1))
+        WorkDay.objects.create(date=date.today()+timedelta(days=2))
+
+    def test_view(self):
+        path = reverse('carwash:staff', kwargs={'days_delta': 0})
+        response = self.client.get(path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context['title'], 'Сотрудник')
+        self.assertTemplateUsed(response, 'carwash/staff.html')

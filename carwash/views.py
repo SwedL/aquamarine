@@ -47,7 +47,7 @@ class RegistrationAutoView(Common, View):
                 else:
                     res_dict[k] = lst_day[num]
         else:
-            return dict((time, value) for time, value in zip(self.FORMATTED_KEY, lst_day))
+            return dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, lst_day))
         return res_dict
 
     def get(self, request):
@@ -78,8 +78,6 @@ class RegistrationAutoView(Common, View):
         choicen_services_list_pk = list(
             map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST)))
         choicen_services = [CarWashService.objects.get(pk=s) for s in choicen_services_list_pk]
-        # time789 = sum([x for x in choicen_services_list_pk if x in [7, 8, 9]]) // 10   # если выбраны улуги, то время берётся как за одну
-        # overal_time = sum([t.process_time for t in choicen_services]) - time789 * 30   # общее время работ
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
 
