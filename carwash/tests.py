@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 from django.test import TestCase
 from django.urls import reverse
+from datetime import date, timedelta
 from carwash.models import *
 from users.models import User
 
@@ -129,7 +130,7 @@ class UserModelTestCase(TestCase):
         self.print_info('Finish test_user_default_value')
 
 
-class CarWashRegistrationModel(TestCase):
+class CarWashRegistrationModelTestCase(TestCase):
     @staticmethod
     def print_info(message):
         count = CarWashRegistration.objects.count()
@@ -206,18 +207,60 @@ class CarWashRegistrationModel(TestCase):
         self.assertEqual(str(self.registration1), expected_str)
         self.print_info('Finish test_registration_str')
 
-    # def test_user_default_value(self):
-    #     # Проверка значения по умолчанию для budget
-    #     self.print_info('Start test_user_default_value')
-    #     user = User.objects.get(email='testuser2@mail.ru')
-    #     self.assertEqual(user.fio, '')
-    #     self.assertEqual(user.tel, '')
-    #     self.assertEqual(user.car_type, 'price_standart')
-    #     self.assertEqual(user.car_model, '')
-    #     self.assertEqual(user.discount, 0)
-    #     self.assertEqual(user.is_active, True)
-    #     self.assertEqual(user.is_admin, False)
-    #     self.print_info('Finish test_user_default_value')
+
+class WorkDayModelTestCase(TestCase):
+
+    @staticmethod
+    def print_info(message):
+        count = WorkDay.objects.count()
+        print(f"{message}: #all_workdays={count}")
+
+    def setUp(self):
+        print('-' * 20)
+        self.print_info('Start setUp')
+        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
+                                        tel='+79445555555', car_model='Kia Sportage')
+        self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
+        self.service1 = CarWashService.objects.create(name='Мойка (верх, ковры, сушка)', process_time=60, price_standart=450, price_crossover=550, price_offroad=650)
+        self.service2 = CarWashService.objects.create(name='Пылесос салона', process_time=30, price_standart=100, price_crossover=100, price_offroad=150)
+        self.service3 = CarWashService.objects.create(name='Экспресс-мойка с шампунем', process_time=30, price_standart=250, price_crossover=250, price_offroad=300)
+        self.service4 = CarWashService.objects.create(name='Экспресс-мойка2', process_time=30)
+
+        self.registration1 = CarWashRegistration.objects.create(client=self.user1)
+        [self.registration1.services.add(s) for s in (self.service1, self.service2)]
+
+        self.registration2 = CarWashRegistration.objects.create(client=self.user2)
+        [self.registration2.services.add(s) for s in (self.service3, self.service2)]
+
+        self.workday1 = WorkDay.objects.create(date=date.today())
+        self.workday1.time_1000 = self.registration1
+        self.workday1.time_1300 = self.registration2
+
+        self.workday2 = WorkDay.objects.create(date=date.today()+timedelta(days=1))
+
+        self.print_info('Finish setUp')
+
+    def test_workday_creation(self):
+        # Проверка создания объекта CarWashRegistration
+        self.print_info('Start test_workday_creation')
+        self.assertEqual(self.workday1.date, date.today())
+        self.assertEqual(self.workday1.time_1000, self.registration1)
+        self.assertEqual(self.workday1.time_1300, self.registration2)
+        self.print_info('Finish test_workday_creation')
+
+    def test_workday_get_all_records(self):
+        # Проверка получения всех записей из бд
+        self.print_info('Start test_workday_get_all_records')
+        workdays = WorkDay.objects.all()
+        self.assertEqual(len(workdays), 2)
+        self.print_info('Finish test_workday_get_all_records')
+
+    def test_workday_str(self):
+        # Проверка метода __str__()
+        self.print_info('Start test_workday_str')
+        expected_str = str(date.today())
+        self.assertEqual(str(self.workday1), expected_str)
+        self.print_info('Finish test_workday_str')
 
 
 class IndexListViewTestCase(TestCase):
@@ -228,3 +271,12 @@ class IndexListViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Aquamarine')
         self.assertTemplateUsed(response, 'carwash/index.html')
+
+
+class RegistrationAutoViewTestCase(TestCase):
+    def test_view(self):
+        path = reverse('carwash:registration')
+        response = self.client.get(path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context_data['title'], 'Запись автомобиля')

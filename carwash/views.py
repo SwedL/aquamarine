@@ -29,7 +29,7 @@ class IndexListView(Common, ListView):
         return context
 
 
-class RegistrationAutoView(Common, LoginRequiredMixin, View):
+class RegistrationAutoView(Common, View):
     title = 'Запись автомобиля'
     login_url = reverse_lazy('carwash:home')
 
