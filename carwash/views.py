@@ -53,9 +53,9 @@ class RegistrationAutoView(Common, View):
     def get(self, request):
         days_list = [date.today() + timedelta(days=i) for i in range(7)]
 
-        for day in days_list:  # создаём день (объект WorkDay), если его нет в БД
-            if not WorkDay.objects.filter(date=day):
-                WorkDay.objects.create(date=day)
+        for day_ in days_list:  # создаём день (объект WorkDay), если его нет в БД
+            if not WorkDay.objects.filter(date=day_):
+                WorkDay.objects.create(date=day_)
 
         # удаляем экземпляры WorkDay если они старше 1 года
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
@@ -100,19 +100,22 @@ class RegistrationAutoView(Common, View):
 
         # записываем столько времён под авто, сколько необходимо под услуги
         # из списка времен FORMATTED_KEY выбираем от choicen_time и далее
-        formatted_key1 = list(dropwhile(lambda el: el != choicen_time,
-                                        self.FORMATTED_KEY.copy()))
+        formatted_key1 = list(dropwhile(lambda el: el != choicen_time, self.FORMATTED_KEY))
         formatted_key2 = formatted_key1.copy()
 
         # Если время выбранное всё ещё свободно пока пользователь делал свой выбор, то сохраняем "Запись"
         # уже занято пока проходило оформление, то ОШИБКА ЗАПИСИ
         check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in
                             range(0, total_time, 30)]
+
         if all([x is None for x in check_free_times]):
             for _ in range(0, total_time, 30):
                 setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
                         new_reg)  # в поле соотвеств. времени сохраняем "Запись"
             current_workday.save()
+
+
+
         else:
             context = {
                 'title': 'Ошибка записи',

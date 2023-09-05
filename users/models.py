@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
+from carwash.models import CarWashService
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -44,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (OFFROAD, 'внедорожник'),
     ]
 
-    email = models.EmailField(max_length=255, verbose_name="Логин", unique=True)
+    email = models.EmailField(max_length=255, verbose_name="Логин", unique=True, db_index=True)
     fio = models.CharField(max_length=255, blank=True, verbose_name='ФИО')
     tel = models.CharField(max_length=15, blank=True, verbose_name='телефон')
     car_type = models.CharField(max_length=40, choices=MODEL_CHOICES, default=STANDART, verbose_name='тип автомобиля')
@@ -82,3 +84,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Is the user a member of staff?"""
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+class UserRegistrationCarWash(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
+    date = models.DateField(verbose_name='дата')
+    time = models.TimeField(verbose_name='время')
+    services = models.ManyToManyField(to=CarWashService, verbose_name="услуги")
