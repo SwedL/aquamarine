@@ -23,22 +23,24 @@ class UserLoginView(Common, LoginView):
 
 class UserRegistrationsView(Common, View):
 
-    # def get(self, request):
-    #     actual_days = WorkDay.objects.filter(date__gte=datetime.today())
-    #     user_registrations = []
-    #
-    #     for day in actual_days:
-    #         for regi
-    #
-    #     context = {
-    #         'title': 'Aquamarine',
-    #     }
-    #
-    #     return render(request, 'users/user_registrations.html', context=context)
+    def get(self, request):
+        actual_days = WorkDay.objects.filter(date__gte=datetime.today())
+        user_registrations = []
 
-    pass
+        for current_workday in actual_days:
+            # получаем список значений всех времен выбранного текущего объекта Workday
+            registrations_current_workday = [(current_workday.date, time_, getattr(current_workday, 'time_' + time_.replace(':', ''))) for time_ in self.FORMATTED_KEY[1:]]
 
+            # выбираем в список user_registrations Записи текущего пользователя
+            [user_registrations.append((cwd, time_, reg)) for cwd, time_, reg in registrations_current_workday if reg and reg.client == request.user]
 
+        context = {
+            'title': 'Aquamarine',
+            'user_registrations': user_registrations,
+            'menu': self.menu(0),
+        }
+
+        return render(request, 'users/user_registrations.html', context=context)
 
 # class UserRegistrationsView(Common, ListView):
 #     model = WorkDay
@@ -55,8 +57,3 @@ class UserRegistrationsView(Common, View):
 #         context['categories'] = ProductCategory.objects.all()
 #         return context
 #     pass
-
-
-
-
-

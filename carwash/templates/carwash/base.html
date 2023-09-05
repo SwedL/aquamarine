@@ -63,7 +63,7 @@
 
                               <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Профиль</a></li>
-                                <li><a class="dropdown-item" href="#">Мои записи</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:user_registrations' %}">Мои записи</a></li>
                                   {% if staff %}
                                     <li><a class="dropdown-item" href="{% url 'carwash:staff' days_delta=0 %}">Сотрудник</a></li>
                                   {% endif %}

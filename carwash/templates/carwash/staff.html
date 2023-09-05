@@ -36,7 +36,7 @@
                         <div class="data-box__item time-workday__time {% if reg.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{reg.time}}</div>
                         {% if reg.services %}
                             <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
-                            <div class="data-box__item busy time-workday__services {% if reg.big %} time-workday__services_big {% else %} time-workday__services {% endif %}">{{reg.services}}</div>
+                            <div class="data-box__item busy time-workday__services time-workday__services">{{reg.services}}</div>
                             <div class="time-workday__button">
 
                                 <!-- Кнопка-триггер модального окна -->

@@ -179,8 +179,6 @@ class StaffDetailView(Common, View):
                 break
             result_list_workday.append(another_time)  #
             if 'registration' in another_time:
-                if len(another_time['services']) > 150:  # удваиваем высоту окна в HTML под список услуг
-                    another_time['big'] = True
                 total_time_without30 = another_time['registration'].total_time - 30
                 for i in range(0, total_time_without30, 30):
                     another_time = next(list_workday_iterator)

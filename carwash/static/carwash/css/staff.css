@@ -135,16 +135,10 @@ body {
 .time-workday__services {
   width: 1100px;
   padding-left: 7px;
+  height: auto;
 }
 
-/* line 99, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.time-workday__services_big {
-  width: 1100px;
-  padding-left: 7px;
-  height: 45px;
-}
-
-/* line 103, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 100, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__cancel-button {
   width: 100px;
   height: 24px;
@@ -157,27 +151,27 @@ body {
   border-radius: 5px;
 }
 
-/* line 113, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 110, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__cancel-button:hover {
   background: #7c2201;
 }
 
-/* line 115, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 112, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__cancel-button:active {
   background: #6a1c00;
 }
 
-/* line 118, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 115, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal {
   --bs-modal-width: 350px;
 }
 
-/* line 121, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 118, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal-content {
   background-color: #4a4a4a;
 }
 
-/* line 123, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 120, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal-content__body-text {
   color: #ececec;
   font-size: 22px;

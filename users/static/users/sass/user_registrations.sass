@@ -11,7 +11,7 @@ body
     background: black
 
 
-.section-staff
+.user_registrations
     min-height: 750px
     background: url("../images/193.png"), $color-main 50% 
     background-repeat: no-repeat
@@ -58,44 +58,37 @@ body
     border-width: 2px
     border-color: #a2a2a2 #262626 #262626 #a2a2a2
     border-radius: 6px        
+
+
+.registration
+    display: flex
+    flex-direction: row
     &__item
         margin-right: 10px
-        height: 24px
+        height: 45px
         margin-bottom: 3px //* отодвигаем кнопки время вниз друг от друга */
         border: 1px solid #8a8a8a
         border-radius: 3px
         user-select: none
-
-.free
-    background: #c5c5c5
-    color: #000000
-    padding: 0 auto
-    line-height: 25px
-    box-shadow: 1px 1px 2px #000000 inset
-.busy
-    background: #434343
-    color: #c0c0c0
-    box-shadow: 1px 1px 2px #000000 inset
-    line-height: 22px
-
-.time-workday
-    display: flex
-    flex-direction: row
+        background: #c5c5c5
+        color: #000000
+        padding: 0 auto
+        line-height: 22px
+        box-shadow: 1px 1px 2px #000000 inset
+        // background: #434343
+        // color: #c0c0c0
+        // box-shadow: 1px 1px 2px #000000 inset
+        // line-height: 22px
+    &__date
+        width: 100px
     &__time
         width: 65px
         text-align: center
-    &__time-free
-    &__time-busy
         line-height: 24px
-    &__client-busy
-        width: 150px
-        text-indent: 7px  
-    &__client-free
-        width: 150px
-        text-align: center
-    &__services
+    
+    &__reg
         width: 1100px
-        padding-left: 7px
+        padding-left: 7px    
         height: auto
     &__cancel-button
         width: 100px
@@ -122,9 +115,3 @@ body
         font-size: 22px
         text-align: center
 
-
-        
-
-
- 
-    
