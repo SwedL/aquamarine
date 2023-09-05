@@ -4,12 +4,11 @@ from datetime import date, time, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from itertools import dropwhile
 from django.views.generic import TemplateView, ListView, DetailView
 
+from itertools import dropwhile
 from carwash.models import *
 from common.views import Common
-
 
 menu = ['Главная', 'Записаться', 'Услуги и цены', 'Контакты и адрес']
 
@@ -36,10 +35,11 @@ class RegistrationAutoView(Common, View):
     def formatted_dict(self, date):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
         day_object = WorkDay.objects.get(date=date)  # объект WorkDay
-        lst_day = list(day_object.__dict__.values())[2:]  # получаем список значений словаря WorkDay только дата и часы
+        lst_day = list(day_object.__dict__.values())[
+                  2:]  # получаем список значений словаря WorkDay только дата и времена
         res_dict = {}
 
-        # создаём и заменяем не занятые времена, сегодняшнего дня время которых прошло, на значения "disabled"
+        # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
         if lst_day[0] == date.today():
             for num, k in enumerate(self.FORMATTED_KEY):
                 if num != 0 and not lst_day[num] and time(*map(int, k.split(':'))) < datetime.now().time():
@@ -57,7 +57,7 @@ class RegistrationAutoView(Common, View):
             if not WorkDay.objects.filter(date=day):
                 WorkDay.objects.create(date=day)
 
-        # Удаляем экземпляры WorkDay если они старше 1 года
+        # удаляем экземпляры WorkDay если они старше 1 года
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
         services = dict([(k, v) for k, v in enumerate(CarWashService.objects.all(), start=1)])
@@ -80,8 +80,7 @@ class RegistrationAutoView(Common, View):
         choicen_services = [CarWashService.objects.get(pk=s) for s in choicen_services_list_pk]
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
-
-        # Проверяем если ранее user создавал такую же "Запись" с теми же услугами, то используем её.
+        # проверяем если ранее User создавал такую же "Запись" с теми же услугами, то используем её.
         all_registrations_user = CarWashRegistration.objects.filter(client=request.user)
 
         for reg in all_registrations_user:
@@ -89,24 +88,30 @@ class RegistrationAutoView(Common, View):
                 new_reg = reg
                 break
         else:
-            new_reg = CarWashRegistration(client=request.user)    # создаём "Запись" от пользователя
+            new_reg = CarWashRegistration(client=request.user)  # создаём "Запись" от пользователя
             new_reg.save()
-            [new_reg.services.add(s) for s in choicen_services]    # добавляем в "Запись" выбранные услуги
+            [new_reg.services.add(s) for s in choicen_services]  # добавляем в "Запись" выбранные услуги
 
-        total_time = new_reg.total_time    # вычисляем общее время работ в "Записи" (7,8,9 считается как за одно время 30 мин.)
+        # вычисляем общее время работ total_time в "Записи" (7,8,9 считается как за одно время 30 мин.)
+        total_time = new_reg.total_time
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата по которой будем искать экземпляр WorkDay
-        current_workday = WorkDay.objects.get(date=for_workday_date)  # получаем по дате экземпляр WorkDay
+        current_workday = WorkDay.objects.get(date=for_workday_date)
 
-        # записываем столько времён под авто, сколько необходимо под услуги.
-        formatted_key1 = list(dropwhile(lambda el: el != choicen_time, self.FORMATTED_KEY.copy())) # из списка времен выбираем от choicen_time и далее
+        # записываем столько времён под авто, сколько необходимо под услуги
+        # из списка времен FORMATTED_KEY выбираем от choicen_time и далее
+        formatted_key1 = list(dropwhile(lambda el: el != choicen_time,
+                                        self.FORMATTED_KEY.copy()))
         formatted_key2 = formatted_key1.copy()
 
-        # Если время уже занято пока проходило оформление, то ОШИБКА ЗАПИСИ
-        check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in range(0, total_time, 30)]
+        # Если время выбранное всё ещё свободно пока пользователь делал свой выбор, то сохраняем "Запись"
+        # уже занято пока проходило оформление, то ОШИБКА ЗАПИСИ
+        check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in
+                            range(0, total_time, 30)]
         if all([x is None for x in check_free_times]):
             for _ in range(0, total_time, 30):
-                setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''), new_reg)  # в поле соотвеств. времени сохраняем "Запись"
+                setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
+                        new_reg)  # в поле соотвеств. времени сохраняем "Запись"
             current_workday.save()
         else:
             context = {
@@ -117,10 +122,10 @@ class RegistrationAutoView(Common, View):
 
             return render(request, 'carwash/registration-error.html', context=context)
 
-        normal_format_choicen_date = choicen_date.split()
-        normal_format_choicen_date.reverse()
+        normal_format_choicen_date = choicen_date.split()  # создаём список данных из выбранной даты "2023 09 10"
+        normal_format_choicen_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
 
-        normal_total_time = f'{total_time//60} ч.  {total_time - total_time // 60 * 60} мин.'
+        normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
 
         context = {
             'title': 'Запись зарегистрирована',
@@ -143,28 +148,38 @@ class StaffDetailView(Common, View):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
-        registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)]
+        # получаем список значений всех времен выбранного объекта Workday
+        registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in
+                                 range(22)]
 
-        # создаём список записей рабочего дня [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
+        # создаём список записей рабочего дня list_workday
+        # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
+        # либо [{'time':'10:00', 'client': 'Свободно', 'free': True},]
         list_workday = []
         for t, registration in zip(self.FORMATTED_KEY[1:], registrations_workday):
             if registration:
-                res = {'time': t, 'registration': registration, 'registration_pk': registration.pk, 'services': ' // '.join([str(s) for s in registration.services.all()])}
+                res = {'time': t, 'registration': registration, 'registration_pk': registration.pk,
+                       'services': ' // '.join([str(s) for s in registration.services.all()])}
             else:
                 res = {'time': t, 'client': 'Свободно', 'free': True}
 
             list_workday.append(res)
 
-        list_workday_iterator = iter(list_workday)
+        # создаём список result_list_workday и заполняем времена необходимые клиенту на выбранные услуги
+        # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},
+        #  {'time':'10:30', 'client': CarWashRegistration.client},
+        #  {'time':'11:00', 'client': CarWashRegistration.client},
+        #  {'time':'11:30', 'client': 'Свободно', 'free': True}, ...]
         result_list_workday = []
+        list_workday_iterator = iter(list_workday)
 
         while list_workday_iterator:
             another_time = next(list_workday_iterator, 0)
             if another_time == 0:
                 break
-            result_list_workday.append(another_time)
+            result_list_workday.append(another_time)  #
             if 'registration' in another_time:
-                if len(another_time['services']) > 150:
+                if len(another_time['services']) > 150:  # удваиваем высоту окна в HTML под список услуг
                     another_time['big'] = True
                 total_time_without30 = another_time['registration'].total_time - 30
                 for i in range(0, total_time_without30, 30):
@@ -189,15 +204,17 @@ class CancelRegistrationView(Common, View):
         registration = CarWashRegistration.objects.get(pk=registration_pk)
         total_time = registration.total_time
 
-        # создаём список времён от времени регистрации и все времена после неё
-        formatted_key1 = list(dropwhile(lambda el: el != registration_time, self.FORMATTED_KEY.copy()))  # из списка времен выбираем от wd_time и далее
+        # создаём список времён от времени регистрации registration_time и все времена после
+        formatted_key1 = list(dropwhile(lambda el: el != registration_time,
+                                        self.FORMATTED_KEY.copy()))
 
-        # удаляем записи выбранной регистрации в полях времени, сколько она занимает
+        # удаляем записи выбранной регистрации в полях времени, сколько она занимает времен объекта WorkDay
         for _ in range(0, total_time, 30):
-            setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''), None)  # в поле соотвеств. времени сохраняем "Запись"
+            setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
+                    None)  # поле соотвествующего времени делаем None по умолчанию
         current_workday.save()
 
-        redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})  #HttpResponse('<script>history.back();</script>')
+        redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)
 
