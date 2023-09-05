@@ -8,6 +8,14 @@
     <script src="{% static 'carwash/js/script.js' %}"></script>
 {% endblock %}
 
+{% block staff %}
+    <script>
+        setTimeout(function(){
+        location.reload();
+        }, 60000);
+    </script>
+{% endblock %}
+
 {% block content %}    
     <main>
         <div class="section-staff">
