@@ -13,47 +13,42 @@
 {% block content %}
     <main>
         <div class="user_registrations">
-<!--            <div class="workday-page">-->
-<!--                <div class="workday-page__button">-->
-<!--                    <a href="{% url 'carwash:staff' days_delta=0 %}"><button id="page1" type="submit" style="cursor:default" {% if days_delta == 0 %} disabled {% endif %}>Сегодня</button></a>-->
-<!--                </div>-->
-<!--                <div class="workday-page__button">-->
-<!--                    <a href="{% url 'carwash:staff' days_delta=1 %}"><button id="page2" type="submit" style="cursor:default" {% if days_delta == 1 %} disabled {% endif %}>Завтра</button></a>-->
-<!--                </div>-->
-<!--                <div class="workday-page__button">-->
-<!--                    <a href="{% url 'carwash:staff' days_delta=2 %}"><button id="page3" type="submit" style="cursor:default" {% if days_delta == 2 %} disabled {% endif %}>Послезавтра</button></a>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="data-box">
                 {% for reg in user_registrations %}
                     <div class="data-box__registration registration">
-                        <div class="registration__date registration__item">{{reg.date_reg}}</div>
-                        <div class="registration__time registration__item">{{reg.time_reg}}</div>
-                        <div class="registration__time registration__item">{{reg.client}}</div>
-                        <div class="registration__reg registration__item">{{reg.services}}</div>
+                        <div class="registration__wrapper">
+                            <div class="registration__item registration__date">{{reg.date_reg|date:'d.m.Y'}}
+                                <br>{{reg.time_reg}}</div>
+    <!--                        <div class="registration__time registration__item">{{reg.client}}</div>-->
+                            <div class="registration__item registration__reg">{{reg.services.all_services}}</div>
+                            <div class="registration__item registration__button-cancel">
 
-<!--                        &lt;!&ndash; Кнопка-триггер модального окна &ndash;&gt;-->
-<!--                        <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.registration_pk}}{{reg.time}}">-->
-<!--                              Отменить</button>-->
+                                <!-- Кнопка-триггер модального окна -->
+                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg}}">
+                                    Отменить</button>
+                                <!-- <a class="" data-bs-toggle="modal" data-bs-target="{{reg.date_reg}}{{reg.time_reg}}{{reg.services}}">
+                                    Отменить</a> -->
 
-<!--                        &lt;!&ndash; Модальное окно &ndash;&gt;-->
-<!--                        <div class="modal fade" id="{{reg.registration_pk}}{{reg.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--                                  <div class="modal-dialog">-->
-<!--                                    <div class="modal-content">-->
-<!--                                      <div class="modal-header">-->
-<!--                                        &lt;!&ndash; <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> &ndash;&gt;-->
-<!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>-->
-<!--                                      </div>-->
-<!--                                      <div class="modal-body">-->
-<!--                                        <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>-->
-<!--                                      </div>-->
-<!--                                      <div class="modal-footer">-->
-<!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>-->
-<!--                                        <a href="#"><button type="button" class="btn btn-primary">Подтвердить</button></a>-->
-<!--                                      </div>-->
-<!--                                        </div>-->
-<!--                                  </div>-->
-<!--                                </div>-->
+                                <!-- Модальное окно -->
+                                <div class="modal fade" id="{{reg}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                <a href="#"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

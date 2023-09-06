@@ -30,15 +30,16 @@
                         {% for dict in list_day_dictionaries %}
                             <div class="day">
                                 <div class="day__border">
-                                    <div class="day__date">{{ dict.date|date:"D d M Y" }}</div>
+                                    <div class="day__date">{{dict.date|date:"D"}}
+                                        <br>{{dict.date|date:"d.m.y"}}</div>
                                     {% for time, value in dict.items %}
                                         {% if not forloop.first %}
                                             {% if value %}
                                                 <input id="{{time}}" type="radio" name="dis" disabled>
-                                                <label for="{{time}}">{{ time }}</label>
+                                                <label for="{{time}}">{{time}}</label>
                                             {% else %}
                                                 <input id="{{dict.date}}-{{time}}" type="radio" onclick="CheckChoice()" name="choice_time" value="{{dict.date|date:'Y m d'}},{{time}}">
-                                                <label for="{{dict.date}}-{{time}}">{{ time }}</label>
+                                                <label for="{{dict.date}}-{{time}}">{{time}}</label>
                                             {% endif %}
                                         {% endif %}
                                     {% endfor %}
