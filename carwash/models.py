@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+
 from users.models import User
 
 
@@ -76,6 +77,19 @@ class WorkDay(models.Model):
 
     def __str__(self):
         return f'{self.date}'
+
+
+class CarWashUserRegistration(models.Model):
+    client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
+    date_time = models.DateTimeField(verbose_name='дата и время', unique=True, db_index=True)
+    services = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    class Meta:
+        verbose_name = "Запись пользователя"
+        verbose_name_plural = "Записи пользователей"
+
+    def __str__(self):
+        return ', '.join([str(s) for s in self.services.all()])
 
 
 

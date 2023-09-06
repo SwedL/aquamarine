@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
-from carwash.models import CarWashService
-
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -86,8 +84,5 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
-class UserRegistrationCarWash(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
-    date = models.DateField(verbose_name='дата')
-    time = models.TimeField(verbose_name='время')
-    services = models.ManyToManyField(to=CarWashService, verbose_name="услуги")
+
+

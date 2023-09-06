@@ -32,15 +32,15 @@ class RegistrationAutoView(Common, View):
     title = 'Запись автомобиля'
     login_url = reverse_lazy('carwash:home')
 
-    def formatted_dict(self, date):
+    def formatted_dict(self, day):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
-        day_object = WorkDay.objects.get(date=date)  # объект WorkDay
+        day_object = WorkDay.objects.get(date=day)  # объект WorkDay
         lst_day = list(day_object.__dict__.values())[
                   2:]  # получаем список значений словаря WorkDay только дата и времена
         res_dict = {}
 
         # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
-        if lst_day[0] == date.today():
+        if lst_day[0] == day.today():
             for num, k in enumerate(self.FORMATTED_KEY):
                 if num != 0 and not lst_day[num] and time(*map(int, k.split(':'))) < datetime.now().time():
                     res_dict[k] = 'disable'
@@ -61,7 +61,7 @@ class RegistrationAutoView(Common, View):
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
         services = dict([(k, v) for k, v in enumerate(CarWashService.objects.all(), start=1)])
-        list_day_dictionaries = [self.formatted_dict(d) for d in days_list]
+        list_day_dictionaries = [self.formatted_dict(day) for day in days_list]
 
         context = {
             'title': self.title,
@@ -111,10 +111,14 @@ class RegistrationAutoView(Common, View):
         if all([x is None for x in check_free_times]):
             for _ in range(0, total_time, 30):
                 setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
-                        new_reg)  # в поле соотвеств. времени сохраняем "Запись"
+                        new_reg)  # в поле соответствующего времени сохраняем "Запись"
             current_workday.save()
 
-
+            # создаём запись пользователя для отслеживания в "Мои записи"
+            for_workday_time = time(*map(int, choicen_time.split(':')))
+            CarWashUserRegistration.objects.create(client=request.user,
+                                                   date_time=datetime.combine(for_workday_date, for_workday_time),
+                                                   services=new_reg)
 
         else:
             context = {
@@ -200,7 +204,7 @@ class StaffDetailView(Common, View):
 
 
 class CancelRegistrationView(Common, View):
-    def get(self, request, days_delta, registration_pk, registration_time):
+    def get(self, days_delta, registration_pk, registration_time):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         registration = CarWashRegistration.objects.get(pk=registration_pk)
         total_time = registration.total_time
@@ -218,6 +222,23 @@ class CancelRegistrationView(Common, View):
         redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)
+
+
+class CarwashUserRegistrationsListView(Common, ListView):
+    model = CarWashUserRegistration
+    template_name = 'carwash/user_registrations.html'
+    context_object_name = 'user_registrations'
+
+    def get_queryset(self):
+        queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
+        return queryset.filter(date_time__gte=datetime.today(), client=self.request.user)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CarwashUserRegistrationsListView, self).get_context_data()
+        context['title'] = 'Aquamarine'
+        context['menu'] = self.menu(0, 1)
+        context['staff'] = self.request.user.has_perm('carwash.view_workday')
+        return context
 
 
 def pageNotFound(request, exception):
