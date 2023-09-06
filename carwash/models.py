@@ -81,15 +81,14 @@ class WorkDay(models.Model):
 
 class CarWashUserRegistration(models.Model):
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
-    date_time = models.DateTimeField(verbose_name='дата и время', unique=True, db_index=True)
+    date_reg = models.DateField(verbose_name='дата регистрации')
+    time_reg = models.TimeField(verbose_name='время регистрации')
     services = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True, blank=True)
     
     class Meta:
         verbose_name = "Запись пользователя"
         verbose_name_plural = "Записи пользователей"
 
-    def __str__(self):
-        return ', '.join([str(s) for s in self.services.all()])
 
 
 

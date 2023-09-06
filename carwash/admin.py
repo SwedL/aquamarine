@@ -31,3 +31,11 @@ class WorkDayAdmin(admin.ModelAdmin):
     search_fields = ('date',)
     ordering = ('-date',)
 
+
+@admin.register(CarWashUserRegistration)
+class CarWashUserRegistrationAdmin(admin.ModelAdmin):
+
+    list_display = ('date_reg', 'time_reg', 'client')
+    ordering = ('date_reg', 'time_reg')
+
+# admin.site.register(CarWashUserRegistration)

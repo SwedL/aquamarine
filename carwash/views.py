@@ -117,7 +117,8 @@ class RegistrationAutoView(Common, View):
             # создаём запись пользователя для отслеживания в "Мои записи"
             for_workday_time = time(*map(int, choicen_time.split(':')))
             CarWashUserRegistration.objects.create(client=request.user,
-                                                   date_time=datetime.combine(for_workday_date, for_workday_time),
+                                                   date_reg=for_workday_date,
+                                                   time_reg=for_workday_time,
                                                    services=new_reg)
 
         else:
@@ -204,7 +205,7 @@ class StaffDetailView(Common, View):
 
 
 class CancelRegistrationView(Common, View):
-    def get(self, days_delta, registration_pk, registration_time):
+    def get(self, request, days_delta, registration_pk, registration_time):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         registration = CarWashRegistration.objects.get(pk=registration_pk)
         total_time = registration.total_time
@@ -231,7 +232,7 @@ class CarwashUserRegistrationsListView(Common, ListView):
 
     def get_queryset(self):
         queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
-        return queryset.filter(date_time__gte=datetime.today(), client=self.request.user)
+        return queryset.filter(date_reg__gte=datetime.today(), client=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CarwashUserRegistrationsListView, self).get_context_data()
