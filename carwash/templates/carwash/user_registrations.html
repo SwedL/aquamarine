@@ -38,7 +38,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                <a href="#"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                                                <a href="{% url 'carwash:user_reg_cancel' reg.pk %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
                                             </div>
                                         </div>
                                     </div>
@@ -46,6 +46,12 @@
                             </div>
                         </div>
                         <div class="registration__reg">{{reg.client}} {{reg.services.all_services}}</div>                         
+                    </div>
+                {% empty %}
+                    <div class="data-box__registration registration">
+                        <div class="registration__title">
+                            <div class="registration__item registration__empty">Записей нет</div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

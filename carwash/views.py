@@ -232,7 +232,7 @@ class CarwashUserRegistrationsListView(Common, ListView):
 
     def get_queryset(self):
         queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
-        return queryset.filter(date_reg__gte=date.today(), client=self.request.user)
+        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CarwashUserRegistrationsListView, self).get_context_data()
@@ -240,6 +240,31 @@ class CarwashUserRegistrationsListView(Common, ListView):
         context['menu'] = self.menu(0, 1)
         context['staff'] = self.request.user.has_perm('carwash.view_workday')
         return context
+
+
+class UserRegCancelView(Common, View):
+    def get(self, request, registration_pk):
+        user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
+        
+        needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
+        needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.services.pk)
+        total_time = needed_staff_registration.total_time
+        temp = str(user_registration.time_reg)[:-3]
+
+        # создаём список времён от времени регистрации user_registration.time_reg и все времена после
+        formatted_key1 = list(dropwhile(lambda el: el != temp,
+                                        self.FORMATTED_KEY.copy()))
+
+        # удаляем записи выбранной регистрации в полях времени, сколько она занимает времен объекта WorkDay
+        for _ in range(0, total_time, 30):
+            setattr(needed_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
+                    None)  # поле соотвествующего времени делаем None по умолчанию
+        needed_workday.save()
+        user_registration.delete()
+
+        redirect_url = reverse_lazy('carwash:user_registrations')
+
+        return HttpResponseRedirect(redirect_url)
 
 
 def pageNotFound(request, exception):
