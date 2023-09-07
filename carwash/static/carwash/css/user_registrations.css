@@ -84,17 +84,46 @@ body {
   background: #6a1c00;
 }
 
-/* line 108, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+/* line 126, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+.user_registration__cancel-button {
+  text-decoration: none;
+  cursor: pointer;
+  color: #d30000;
+}
+
+/* line 130, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+.user_registration__cancel-button:hover {
+  color: #9f0000;
+}
+
+/* line 133, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
 .modal {
   --bs-modal-width: 350px;
 }
 
-/* line 111, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+/* line 136, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
 .modal-content {
   background-color: #4a4a4a;
 }
 
-/* line 113, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+/* line 138, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+.modal-content__body-text {
+  color: #ececec;
+  font-size: 22px;
+  text-align: center;
+}
+
+/* line 143, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+.modal {
+  --bs-modal-width: 350px;
+}
+
+/* line 146, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
+.modal-content {
+  background-color: #4a4a4a;
+}
+
+/* line 148, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/user_registrations.sass */
 .modal-content__body-text {
   color: #ececec;
   font-size: 22px;

@@ -20,17 +20,17 @@
                             <div class="registration__item registration__date">{{reg.date_reg|date:'d.m.Y'}}
                                 <br>{{reg.time_reg}}</div>
     <!--                        <div class="registration__time registration__item">{{reg.client}}</div>-->
-                            <div class="registration__item registration__reg">{{reg.services.all_services}}</div>
+                            <div class="registration__item registration__reg">{{reg.client}} {{reg.services.all_services}}</div>
                             <div class="registration__item registration__button-cancel">
 
                                 <!-- Кнопка-триггер модального окна -->
-                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg}}">
-                                    Отменить</button>
-                                <!-- <a class="" data-bs-toggle="modal" data-bs-target="{{reg.date_reg}}{{reg.time_reg}}{{reg.services}}">
-                                    Отменить</a> -->
+                                <!-- <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
+                                    Отменить</button> -->
+                                <a class="user_registration__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
+                                    Отменить</a>
 
                                 <!-- Модальное окно -->
-                                <div class="modal fade" id="{{reg}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="{{reg.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
