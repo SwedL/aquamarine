@@ -16,16 +16,12 @@
             <div class="data-box">
                 {% for reg in user_registrations %}
                     <div class="data-box__registration registration">
-                        <div class="registration__wrapper">
+                        <div class="registration__title">
                             <div class="registration__item registration__date">{{reg.date_reg|date:'d.m.Y'}}
                                 <br>{{reg.time_reg}}</div>
-    <!--                        <div class="registration__time registration__item">{{reg.client}}</div>-->
-                            <div class="registration__item registration__reg">{{reg.client}} {{reg.services.all_services}}</div>
                             <div class="registration__item registration__button-cancel">
 
                                 <!-- Кнопка-триггер модального окна -->
-                                <!-- <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
-                                    Отменить</button> -->
                                 <a class="user_registration__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
                                     Отменить</a>
 
@@ -49,6 +45,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="registration__reg">{{reg.client}} {{reg.services.all_services}}</div>                         
                     </div>
                 {% endfor %}
             </div>

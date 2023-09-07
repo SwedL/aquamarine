@@ -232,7 +232,7 @@ class CarwashUserRegistrationsListView(Common, ListView):
 
     def get_queryset(self):
         queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
-        return queryset.filter(date_reg__gte=datetime.today(), client=self.request.user)
+        return queryset.filter(date_reg__gte=date.today(), client=self.request.user)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CarwashUserRegistrationsListView, self).get_context_data()

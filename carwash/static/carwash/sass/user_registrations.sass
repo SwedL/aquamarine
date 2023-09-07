@@ -3,18 +3,11 @@ $color-red: #C23349
 $color-green: #5CAB5F
 $color-dark-blue: #32449F
 $color-menu-hover: #9ae7ff
-
-// $color-white: #ddd
 $color-white: #ececec
 
 
-
-
-
 body
-    background: black
-
-    
+    background: black    
 
 .user_registrations
     min-height: 750px
@@ -24,34 +17,6 @@ body
     display: flex
     flex-direction: column
 
-// .workday-page
-//     margin: 0 auto
-//     margin-top: 20px
-//     display: flex
-//     flex-direction: row
-//     margin-bottom: 20px
-//     &__button
-//         margin-right: 130px
-//         &:last-child
-//             margin-right: 0
-     
-    // button
-    //     width: 200px
-    //     padding: 5px 5px
-    //     color: $color-white
-    //     background: #002cf2
-    //     border-style: solid
-    //     border-width: 2px
-    //     border-color: #536cd8 #262626 #262626 #536cd8
-    //     border-radius: 5px
-    // button:hover
-    //     background: #0028db
-    // button:active
-    //     background: #0025c8
-    // button:disabled
-    //     color: #000 // #cbcaca
-    //     background: #21b9ff
-
 .data-box
     margin: 0 auto
     margin-top: 50px
@@ -59,86 +24,57 @@ body
     // padding: 15px
     min-height: 50px
     padding: 15px
-    width: 1140px
+    width: auto
     background-color: rgb(246, 246, 246)
     border-radius: 6px        
 
-
 .registration
-    &__wrapper
+    margin-bottom: 10px //* отодвигаем кнопки время вниз друг от друга */
+    //border-radius: 3px
+    border-radius: 5px 5px 5px 5px
+    user-select: none
+    color: #000000
+    background: rgb(255, 255, 255)    
+    box-shadow: 0 1px 2px rgba(0,0,0,.16)        
+    &__title
         display: flex
         flex-direction: row
+        padding: 0px 15px 0px 15px
+        justify-content: space-between        
+        background: #e2e2e2
+        border-radius: 5px 5px 0px 0px
     &__item
-        margin-right: 10px
         height: auto
+        width: auto 
         padding: 10px
-        margin-bottom: 10px //* отодвигаем кнопки время вниз друг от друга */
-        // border: 1px solid #8a8a8a
-        border-radius: 3px
-        user-select: none
-        background: rgb(255, 255, 255)
-        color: #000000
-        box-shadow: 0 1px 2px rgba(0,0,0,.16)        
     &__date
         width: 100px
         font-family: "PTsans"
         font-weight: bold
-        text-align: center    
+        text-align: center
+    &__button-cancel
+        // display: flex
+        // flex-direction: column
+        // align-items: center
+           
     &__reg
         width: 1100px
-        padding-left: 7px    
+        padding: 10px 25px 10px 25px
+        border-radius: 0px 0px 13px 13px
         height: auto
         font-family: "PTsans"
         font-weight: regular
-    &__cancel-button
-        width: 100px
-        height: 24px
-        padding: 2px 2px
-        color: $color-white
-        background: #9b2900 //$color-dark-blue
-        border-style: solid
-        border-width: 2px
-        border-color: #956757 #262626 #262626 #956757
-        border-radius: 5px
-    &__cancel-button:hover
-        background: #7c2201
-    &__cancel-button:active
-        background: #6a1c00
-
-
-.time-workday
-    // &__cancel-button
-    //     width: 100px
-    //     height: 24px
-    //     padding: 2px 2px
-    //     color: $color-white
-    //     background: #9b2900 //$color-dark-blue
-    //     border-style: solid
-    //     border-width: 2px
-    //     border-color: #956757 #262626 #262626 #956757
-    //     border-radius: 5px
-    // &__cancel-button:hover
-    //     background: #7c2201
-    // &__cancel-button:active
-    //     background: #6a1c00
 
 .user_registration
     &__cancel-button
+        line-height: 30px
         text-decoration: none
         cursor: pointer
         color: #d30000
     &__cancel-button:hover
         color: #9f0000
-
-.modal
-    --bs-modal-width: 350px
-
-.modal-content    
-    background-color: #4a4a4a //var(--bs-modal-color)  
-    &__body-text
-        color: $color-white
-        font-size: 22px
-        text-align: center
+    &__cancel-button:active
+        color: #870202
 
 .modal
     --bs-modal-width: 350px
