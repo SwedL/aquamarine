@@ -15,6 +15,9 @@ class Common:
     def menu(cls, *args):
         user_menu = menu.copy()
 
+        for i in args:
+            assert 0 <= i < len(menu)
+
         if args:
             return [user_menu[i] for i in args]
         else:
