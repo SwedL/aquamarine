@@ -14,6 +14,7 @@ menu = ['Главная', 'Записаться', 'Услуги и цены', '�
 
 
 class IndexListView(Common, ListView):
+    """Представление для показа главной страницы компании и прейскуранта цен на оказание услуг автомойки"""
     template_name = 'carwash/index.html'
     title = 'Aquamarine'
     model = CarWashService
@@ -29,6 +30,7 @@ class IndexListView(Common, ListView):
 
 
 class RegistrationAutoView(Common, View):
+    """Представление для просмотра доступного дня и времени, а также записи клиентов на оказание услуг автомойки"""
     title = 'Запись автомобиля'
     login_url = reverse_lazy('carwash:home')
 
@@ -150,6 +152,7 @@ class RegistrationAutoView(Common, View):
 
 
 class StaffDetailView(Common, View):
+    """Представление для показа сотруднику всех записей клиентов на оказание услуг автомойки"""
     title = 'Сотрудник'
 
     def get(self, request, days_delta):
@@ -204,7 +207,8 @@ class StaffDetailView(Common, View):
         return render(request, 'carwash/staff.html', context=context)
 
 
-class CancelRegistrationView(Common, View):
+class StaffCancelRegistrationView(Common, View):
+    """Представление для отмены (удаления) сотрудником выбранной записи клиента"""
     def get(self, request, days_delta, registration_pk, registration_time):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         registration = CarWashRegistration.objects.get(pk=registration_pk)
@@ -226,6 +230,7 @@ class CancelRegistrationView(Common, View):
 
 
 class CarwashUserRegistrationsListView(Common, ListView):
+    """Представление для показа пользователю его записей на оказание услуг автомойки"""
     model = CarWashUserRegistration
     template_name = 'carwash/user_registrations.html'
     context_object_name = 'user_registrations'
@@ -245,6 +250,7 @@ class CarwashUserRegistrationsListView(Common, ListView):
 
 
 class UserRegCancelView(Common, View):
+    """Представление для отмены (удаления) записи пользователя"""
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
         

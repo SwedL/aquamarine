@@ -1,0 +1,94 @@
+$color-main: #0056A9
+$color-red: #C23349
+$color-green: #5CAB5F
+$color-dark-blue: #32449F
+$color-menu-hover: #9ae7ff
+$color-white: #ececec
+
+
+body
+    background: black    
+
+.user_profile
+    min-height: 750px
+    background: url("../images/193.png"), $color-main 50% 
+    background-repeat: no-repeat
+    background-blend-mode: screen
+    display: flex
+    flex-direction: column
+
+.data-box
+    margin: 0 auto
+    margin-top: 50px
+    height: 600px
+    padding: 15px
+    width: 700px
+    background-color: rgb(246, 246, 246)
+    border-radius: 6px
+    box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)        
+
+.profile
+    display: flex
+    flex-direction: column
+
+.profile-item
+        // height: 40px
+        // width: 150px
+        margin-bottom: 15px
+        input:readonly
+            border-color: #a73131
+            background: #ffb11f
+            color: #09172b
+            box-shadow: 1px 1px 3px #000000 inset        
+        &__label
+            font-size: 14px
+            margin-bottom: 4px
+        &__form
+            height: auto
+            
+        //line-height: 0.5
+        // display: flex
+        // flex-direction: column
+
+.form-control
+    display: block
+    width: 100%
+    height: calc(1.5em + 0.75rem + 2px)
+    padding: 1.375rem 0.75rem
+    font-size: 1rem
+    line-height: 2.5
+    color: #495057
+    background-color: #fff
+    background-clip: padding-box
+    border: 1px solid #ced4da
+    border-radius: 0.25rem
+    //transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
+
+.readonly
+    width: 100%
+    height: calc(1.5em + 0.75rem + 2px)
+    padding: 1.375rem 0.75rem
+    font-size: 1rem
+    line-height: 2.5
+    color: #495057
+    background-color: #d9d9d9
+    background-clip: padding-box
+    border: 1px solid #ced4da
+    border-radius: 0.25rem
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
+    
+
+
+
+
+
+.modal
+    --bs-modal-width: 350px
+
+.modal-content    
+    background-color: #4a4a4a
+    &__body-text
+        color: $color-white
+        font-size: 22px
+        text-align: center
+
