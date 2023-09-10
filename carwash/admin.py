@@ -36,6 +36,6 @@ class WorkDayAdmin(admin.ModelAdmin):
 class CarWashUserRegistrationAdmin(admin.ModelAdmin):
 
     list_display = ('date_reg', 'time_reg', 'client')
-    ordering = ('date_reg', 'time_reg')
+    ordering = ('-date_reg', '-time_reg')
 
 # admin.site.register(CarWashUserRegistration)
