@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import UpdateView
-from django.contrib.auth.views import LoginView, LogoutView, AuthenticationForm
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeForm
 from django.urls import reverse_lazy
 
 from users.forms import *
@@ -35,4 +35,20 @@ class UserProfileView(Common, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
+
+
+class MyPasswordChangeView(Common, PasswordChangeView):
+    model = User
+    form_class = MyPasswordChangeForm
+    template_name = 'users/password_change.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(MyPasswordChangeView, self).get_context_data()
+        context['menu'] = self.menu(0, 1)
+        context['title'] = 'Смена пароля'
+        context['staff'] = self.request.user.has_perm('carwash.view_workday')
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=(self.request.user.id,))
 

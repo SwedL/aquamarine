@@ -1,7 +1,8 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm, AdminPasswordChangeForm, password_validation
 from django import forms
 from users.models import User
 
+# gettext_lazy = lazy(gettext, str)
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={
@@ -15,15 +16,49 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserProfileForm(UserChangeForm):
-    email = forms.EmailField(label='Логин', widget=forms.EmailInput(attrs={'class': 'readonly', 'readonly': 'True'}))
-    fio = forms.CharField(label='ФИО', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    tel = forms.CharField(label='Телефон', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # car_type = forms.ChoiceField(label='Тип автомобиля', widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
+    STANDART = 'price_standart'
+    CROSSOVER = 'price_crossover'
+    OFFROAD = 'price_offroad'
+    MODEL_CHOICES = [
+        (STANDART, 'седан, хетчбэк'),
+        (CROSSOVER, 'кроссовер'),
+        (OFFROAD, 'внедорожник'),
+    ]
+
+    email = forms.EmailField(label='Логин', max_length=255, widget=forms.EmailInput(attrs={'class': 'readonly', 'readonly': 'True'}))
+    fio = forms.CharField(label='ФИО', max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    tel = forms.CharField(label='Телефон', max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES, widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     car_model = forms.CharField(label='Марка и модель автомобиля', widget=forms.TextInput(attrs={'class': 'form-control'}))
     discount = forms.IntegerField(label='Дисконт', widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
 
     class Meta:
         model = User
-        fields = ('email', 'fio', 'tel', 'car_type', 'car_model', 'discount', )
+        fields = ('email', 'fio', 'tel', 'car_type', 'car_model', 'discount',)
 
+
+class MyPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="Old password",
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={"autocomplete": "current-password", 'class': 'form-control', "autofocus": True}
+        ),
+    )
+
+    new_password1 = forms.CharField(
+        label="New password",
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", 'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label="New password confirmation",
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", 'class': 'form-control'}),
+    )
+
+    class Meta:
+        model = User
+        fields = ('password1', 'password2',)
 
