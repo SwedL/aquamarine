@@ -155,4 +155,6 @@ EMAIL_HOST_PASSWORD = 'cnzvcnifcqflwggc'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
+DEFAULT_FROM_EMAIL = 'aquamarine.srv@yandex.ru'
+
 SITE_ID = 1
