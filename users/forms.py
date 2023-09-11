@@ -1,10 +1,12 @@
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm, AdminPasswordChangeForm, password_validation
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm, password_validation
 from django import forms
 from users.models import User
 
 # gettext_lazy = lazy(gettext, str)
 
+
 class UserLoginForm(AuthenticationForm):
+    """Авторизация пользователя"""
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={
         'class': 'form-control py-4', 'placeholder': 'Электронная почта'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={
@@ -16,6 +18,8 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserProfileForm(UserChangeForm):
+    """Создание нового пользователя"""
+
     STANDART = 'price_standart'
     CROSSOVER = 'price_crossover'
     OFFROAD = 'price_offroad'
@@ -38,6 +42,7 @@ class UserProfileForm(UserChangeForm):
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
+    """Смена пароля пользователя"""
     old_password = forms.CharField(
         label="Old password",
         strip=False,
@@ -61,4 +66,33 @@ class MyPasswordChangeForm(PasswordChangeForm):
     class Meta:
         model = User
         fields = ('password1', 'password2',)
+
+
+class UserForgotPasswordForm(PasswordResetForm):
+    """Запрос на восстановление пароля"""
+
+    def __init__(self, *args, **kwargs):
+        """Обновление стилей формы"""
+
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })
+
+
+class UserSetNewPasswordForm(SetPasswordForm):
+    """Изменение пароля пользователя после подтверждения"""
+
+    def __init__(self, *args, **kwargs):
+        """Обновление стилей формы"""
+
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })
+
 

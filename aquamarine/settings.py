@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure--=w^i2289$wclooo-l$-%z#rpg2&vyc_07yis@ju8y@2sg(nn!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
+
+# DOMAIN_NAME = ['http://127.0.0.1:8000']
 
 
 # Application definition
@@ -34,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'carwash',
     'users',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,11 +136,23 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# users
+# Users
 
 AUTH_USER_MODEL = "users.User"
-
 LOGIN_URL = "/users/login/"
-
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+# Sending emails
+
+#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'aquamarine.srv@yandex.ru'
+EMAIL_HOST_PASSWORD = 'cnzvcnifcqflwggc'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+SITE_ID = 1

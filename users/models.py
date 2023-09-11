@@ -84,5 +84,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
-
-
