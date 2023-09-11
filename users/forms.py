@@ -1,6 +1,8 @@
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm, password_validation
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm, PasswordResetForm, \
+    SetPasswordForm, password_validation
 from django import forms
 from users.models import User
+
 
 # gettext_lazy = lazy(gettext, str)
 
@@ -29,12 +31,16 @@ class UserProfileForm(UserChangeForm):
         (OFFROAD, 'внедорожник'),
     ]
 
-    email = forms.EmailField(label='Логин', max_length=255, widget=forms.EmailInput(attrs={'class': 'readonly', 'readonly': 'True'}))
+    email = forms.EmailField(label='Логин', max_length=255,
+                             widget=forms.EmailInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     fio = forms.CharField(label='ФИО', max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
     tel = forms.CharField(label='Телефон', max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES, widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
-    car_model = forms.CharField(label='Марка и модель автомобиля', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    discount = forms.IntegerField(label='Дисконт', widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
+    car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES,
+                                 widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
+    car_model = forms.CharField(label='Марка и модель автомобиля',
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    discount = forms.IntegerField(label='Дисконт',
+                                  widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
 
     class Meta:
         model = User
@@ -71,15 +77,11 @@ class MyPasswordChangeForm(PasswordChangeForm):
 class UserForgotPasswordForm(PasswordResetForm):
     """Запрос на восстановление пароля"""
 
-    def __init__(self, *args, **kwargs):
-        """Обновление стилей формы"""
-
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off'
-            })
+    email = forms.EmailField(
+        max_length=254,
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control py-4', 'autocomplete': 'off', 'placeholder': 'Электронная почта'}),
+    )
 
 
 class UserSetNewPasswordForm(SetPasswordForm):
@@ -94,5 +96,3 @@ class UserSetNewPasswordForm(SetPasswordForm):
                 'class': 'form-control',
                 'autocomplete': 'off'
             })
-
-

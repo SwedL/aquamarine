@@ -7,9 +7,9 @@ $color-white: #ececec
 
 
 body
-    background: black    
+    background: black
 
-.user_profile
+.space_background
     min-height: 750px
     background: url("../images/193.png"), $color-main 50% 
     background-repeat: no-repeat
@@ -17,7 +17,9 @@ body
     display: flex
     flex-direction: column
 
-.data-box
+.profile-data
+    display: flex
+    flex-direction: column
     margin: 0 auto
     margin-top: 50px
     height: 610px
@@ -26,13 +28,8 @@ body
     background-color: rgb(246, 246, 246)
     border-radius: 6px
     box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)        
-
-.profile
-    display: flex
-    flex-direction: column
-
-.profile-item
-    margin-bottom: 15px
+    &__item
+        margin-bottom: 15px
     &__d
         margin-bottom: 20px
     &__a
@@ -48,10 +45,9 @@ body
         margin-bottom: 4px
     &__form
         height: auto
-
-.profile-button
-    display: flex
-    flex-direction: column
+    &__button
+        display: flex
+        flex-direction: column
     
 .form-control
     display: block
@@ -65,7 +61,6 @@ body
     background-clip: padding-box
     border: 1px solid #ced4da
     border-radius: 0.25rem
-    //transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
 
 .readonly
     width: 100%

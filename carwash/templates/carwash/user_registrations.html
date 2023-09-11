@@ -12,17 +12,17 @@
 
 {% block content %}
     <main>
-        <div class="user_registrations">
-            <div class="data-box">
+        <div class="space_background">
+            <div class="user-registrations-box">
                 {% for reg in user_registrations %}
-                    <div class="data-box__registration registration">
+                    <div class="registration">
                         <div class="registration__title">
                             <div class="registration__item registration__date">{{reg.date_reg|date:'d.m.Y'}}
                                 <br>{{reg.time_reg}}</div>
                             <div class="registration__item registration__button-cancel">
 
                                 <!-- Кнопка-триггер модального окна -->
-                                <a class="user_registration__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
+                                <a class="registration__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
                                     Отменить</a>
 
                                 <!-- Модальное окно -->
@@ -30,7 +30,6 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                                             </div>
                                             <div class="modal-body">

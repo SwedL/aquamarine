@@ -8,43 +8,43 @@
 
 {% block content %}
     <main>
-        <div class="user_profile">            
-            <div class="data-box profile">
+        <div class="space_background">            
+            <div class="profile-data">
                 <form action="{% url 'users:profile' user.id %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="profile-item">
-                        <label class="profile-item__label" for="{{ form.email.id_for_label }}">Логин</label>
+                    <div class="profile-data__item">
+                        <label class="profile-data__label" for="{{ form.email.id_for_label }}">Логин</label>
             
-                        <div class="profile-item__form">{{ form.email }}</div>
+                        <div class="profile-data__form">{{ form.email }}</div>
                     </div>
 
-                    <div class="profile-item">
-                        <label class="profile-item__label" for="{{ form.fio.id_for_label }}">Фамилия Имя Отчество</label>
-                        <div class="profile-item__form">{{ form.fio }}</div>
+                    <div class="profile-data__item">
+                        <label class="profile-data__label" for="{{ form.fio.id_for_label }}">Фамилия Имя Отчество</label>
+                        <div class="profile-data__form">{{ form.fio }}</div>
                     </div>    
 
-                    <div class="profile-item">                         
-                        <label class="profile-item__label" for="{{ form.tel.id_for_label }}">Телефон</label>
-                        <div class="profile-item__form">{{ form.tel }}</div>
+                    <div class="profile-data__item">                         
+                        <label class="profile-data__label" for="{{ form.tel.id_for_label }}">Телефон</label>
+                        <div class="profile-data__form">{{ form.tel }}</div>
                     </div>
 
-                    <div class="profile-item">
-                        <label class="profile-item__label" for="{{ form.car_type.id_for_label }}">Прайс </label>
-                        <div class="profile-item__form">{{ form.car_type }}</div>
+                    <div class="profile-data__item">
+                        <label class="profile-data__label" for="{{ form.car_type.id_for_label }}">Прайс </label>
+                        <div class="profile-data__form">{{ form.car_type }}</div>
                     </div>
 
-                    <div class="profile-item">                                
-                        <label class="profile-item__label" for="{{ form.car_model.id_for_label }}">Марка и модель автомобиля</label>
-                        <div class="profile-item__form">{{ form.car_model }}</div>
+                    <div class="profile-data__item">                                
+                        <label class="profile-data__label" for="{{ form.car_model.id_for_label }}">Марка и модель автомобиля</label>
+                        <div class="profile-data__form">{{ form.car_model }}</div>
                     </div>
 
-                    <div class="profile-item">
-                        <label class="profile-item__label" for="{{ form.discount.id_for_label }}">Персональная скидка</label>
-                        <div class="profile-item__form profile-item__d">{{ form.discount }}</div>
+                    <div class="profile-data__item">
+                        <label class="profile-data__label" for="{{ form.discount.id_for_label }}">Персональная скидка</label>
+                        <div class="profile-data__form profile-data__d">{{ form.discount }}</div>
                     </div>
                     
-                    <div class="profile-button">
-                        <a class="profile-item profile-item__a" href="{% url 'users:password_change' %}">Сменить пароль</a>
+                    <div class="profile-data__button">
+                        <a class="profile-data__a" href="{% url 'users:password_change' %}">Сменить пароль</a>
                         <input class="btn btn-info btn-block" type="submit" value="Сохранить">
                             
                     </div>
