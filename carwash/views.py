@@ -239,7 +239,7 @@ class CarwashUserRegistrationsListView(Common, ListView):
         queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
         # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
         queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
-        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
+        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('-date_reg', '-time_reg')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CarwashUserRegistrationsListView, self).get_context_data()

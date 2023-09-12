@@ -7,6 +7,8 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmVie
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+
 
 from users.forms import *
 from datetime import date, datetime, timedelta
@@ -71,6 +73,16 @@ class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Запрос на восстановление пароля'
         return context
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        success_message = self.get_success_message(form.cleaned_data)
+        if success_message:
+            messages.success(self.request, success_message)
+        return response
+
+    # def post(self, request, *args, **kwargs):
+    #     pass
 
 
 class UserPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmView):

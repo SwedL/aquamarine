@@ -2,9 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, Passwo
     SetPasswordForm, password_validation
 from django import forms
 from users.models import User
-
-
-# gettext_lazy = lazy(gettext, str)
+from django.utils.translation import gettext_lazy as _
 
 
 class UserLoginForm(AuthenticationForm):
@@ -50,21 +48,20 @@ class UserProfileForm(UserChangeForm):
 class MyPasswordChangeForm(PasswordChangeForm):
     """Смена пароля пользователя"""
     old_password = forms.CharField(
-        label="Old password",
+        label=_("Old password"),
         strip=False,
         widget=forms.PasswordInput(
             attrs={"autocomplete": "current-password", 'class': 'form-control', "autofocus": True}
         ),
     )
-
     new_password1 = forms.CharField(
-        label="New password",
+        label=_("New password"),
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password", 'class': 'form-control'}),
         strip=False,
         help_text=password_validation.password_validators_help_text_html(),
     )
     new_password2 = forms.CharField(
-        label="New password confirmation",
+        label=_("New password confirmation"),
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password", 'class': 'form-control'}),
     )
@@ -87,12 +84,23 @@ class UserForgotPasswordForm(PasswordResetForm):
 class UserSetNewPasswordForm(SetPasswordForm):
     """Изменение пароля пользователя после подтверждения"""
 
-    def __init__(self, *args, **kwargs):
-        """Обновление стилей формы"""
-
-        super().__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off'
-            })
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={'autocomplete': "off", 'class': 'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "off", 'class': 'form-control'}),
+    )
+    # def __init__(self, *args, **kwargs):
+    #     """Обновление стилей формы"""
+    #
+    #     super().__init__(*args, **kwargs)
+    #     for field in self.fields:
+    #         self.fields[field].widget.attrs.update({
+    #             'class': 'form-control password-data__form',
+    #             'autocomplete': 'off'
+    #         })
