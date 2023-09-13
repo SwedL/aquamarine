@@ -34,6 +34,7 @@ class RegistrationAutoView(Common, View):
     title = 'Запись автомобиля'
     login_url = reverse_lazy('carwash:home')
 
+    # TODO вынести создание словаря в Модель
     def formatted_dict(self, day):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
         day_object = WorkDay.objects.get(date=day)  # объект WorkDay
@@ -53,16 +54,19 @@ class RegistrationAutoView(Common, View):
         return res_dict
 
     def get(self, request):
+
+        # TODO вынести проверку созданных WorkDay на неделю в Миксин
         days_list = [date.today() + timedelta(days=i) for i in range(7)]
 
         for day_ in days_list:  # создаём день (объект WorkDay), если его нет в БД
-            if not WorkDay.objects.filter(date=day_):
+            if not WorkDay.objects.filter(date=day_).exists():
                 WorkDay.objects.create(date=day_)
 
         # удаляем экземпляры WorkDay если они старше 1 года
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
-        services = dict([(k, v) for k, v in enumerate(CarWashService.objects.all(), start=1)])
+        # создаём словарь где ключи это номер услуги, а значение, сама услуга
+        services = dict([(service.pk, service) for service in CarWashService.objects.all()])
         list_day_dictionaries = [self.formatted_dict(day) for day in days_list]
 
         context = {
@@ -156,6 +160,7 @@ class StaffDetailView(Common, View):
     title = 'Сотрудник'
 
     def get(self, request, days_delta):
+        # TODO проверить на созданность дней для показа сотруднику
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
@@ -257,7 +262,7 @@ class UserRegCancelView(Common, View):
         needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
         needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.services.pk)
         total_time = needed_staff_registration.total_time
-        temp = str(user_registration.time_reg)[:-3]
+        temp = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
 
         # создаём список времён от времени регистрации user_registration.time_reg и все времена после
         formatted_key1 = list(dropwhile(lambda el: el != temp,
@@ -265,6 +270,7 @@ class UserRegCancelView(Common, View):
 
         # определяем начальный атрибут (time_....) необходимого объекта WorkWay удаляемой "Записи"
         attr_first_time = 'time_' + formatted_key1.pop(0).replace(':', '')
+
         # определяем "Запись" в найденном времени-поля, если она есть
         first_time_registration = getattr(needed_workday, attr_first_time)
 

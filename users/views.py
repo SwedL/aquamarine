@@ -51,8 +51,8 @@ class UserPasswordChangeView(Common, PasswordChangeView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(UserPasswordChangeView, self).get_context_data()
-        context['menu'] = self.menu(0, 1)
         context['title'] = 'Смена пароля'
+        context['menu'] = self.menu(0, 1)
         context['staff'] = self.request.user.has_perm('carwash.view_workday')
         return context
 
@@ -60,7 +60,7 @@ class UserPasswordChangeView(Common, PasswordChangeView):
         return reverse_lazy('users:profile', args=(self.request.user.id,))
 
 
-class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
+class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     """Представление по сбросу пароля по почте"""
     form_class = UserForgotPasswordForm
     template_name = 'users/user_password_reset.html'
@@ -72,20 +72,21 @@ class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Запрос на восстановление пароля'
+        context['menu'] = self.menu(0, 1)
         return context
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        success_message = self.get_success_message(form.cleaned_data)
-        if success_message:
-            messages.success(self.request, success_message)
-        return response
+    # def form_valid(self, form):
+    #     response = super().form_valid(form)
+    #     success_message = self.get_success_message(form.cleaned_data)
+    #     if success_message:
+    #         messages.success(self.request, success_message)
+    #     return response
 
     # def post(self, request, *args, **kwargs):
     #     pass
 
 
-class UserPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmView):
+class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetConfirmView):
     """Представление установки нового пароля"""
     form_class = UserSetNewPasswordForm
     template_name = 'users/user_password_set_new.html'
@@ -95,6 +96,7 @@ class UserPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmView
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Установить новый пароль'
+        context['menu'] = self.menu(0, 1)
         return context
 
 
