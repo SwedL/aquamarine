@@ -16,23 +16,16 @@ menu = ['Главная', 'Записаться', 'Услуги и цены', '�
 class IndexListView(Common, ListView):
     """Представление для показа главной страницы компании и прейскуранта цен на оказание услуг автомойки"""
     template_name = 'carwash/index.html'
-    title = 'Aquamarine'
     model = CarWashService
     context_object_name = 'services'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(IndexListView, self).get_context_data()
-        context['menu'] = self.menu(1, 2, 3) if self.request.user.is_authenticated else self.menu(2, 3)
-        context['staff'] = self.request.user.has_perm('carwash.view_workday')
-        context['title'] = self.title
-
-        return context
+    title = 'Aquamarine'
+    menu = (1, 2, 3)
 
 
 class RegistrationAutoView(Common, View):
     """Представление для просмотра доступного дня и времени, а также записи клиентов на оказание услуг автомойки"""
-    title = 'Запись автомобиля'
     login_url = reverse_lazy('carwash:home')
+    title = 'Запись автомобиля'
 
     # TODO вынести создание словаря в Модель
     def formatted_dict(self, day):
@@ -54,7 +47,6 @@ class RegistrationAutoView(Common, View):
         return res_dict
 
     def get(self, request):
-
         # TODO вынести проверку созданных WorkDay на неделю в Миксин
         days_list = [date.today() + timedelta(days=i) for i in range(7)]
 
@@ -71,7 +63,7 @@ class RegistrationAutoView(Common, View):
 
         context = {
             'title': self.title,
-            'menu': self.menu(0),
+            'menu': self.create_menu((0, )),
             'staff': request.user.has_perm('carwash.view_workday'),
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
@@ -131,7 +123,7 @@ class RegistrationAutoView(Common, View):
             context = {
                 'title': 'Ошибка записи',
                 'staff': request.user.has_perm('carwash.view_workday'),
-                'menu': self.menu(0, 1),
+                'menu': self.create_menu((0, 1)),
             }
 
             return render(request, 'carwash/registration-error.html', context=context)
@@ -143,7 +135,7 @@ class RegistrationAutoView(Common, View):
 
         context = {
             'title': 'Запись зарегистрирована',
-            'menu': self.menu(0),
+            'menu': self.create_menu((0, )),
             'staff': request.user.has_perm('carwash.view_workday'),
             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
             'choice_time': choicen_time,
@@ -203,9 +195,9 @@ class StaffDetailView(Common, View):
 
         context = {
             'title': self.title,
-            'menu': self.menu(0, 1),
+            'menu': self.create_menu((0, 1, )),
             'list_workday': result_list_workday,
-            'staff': True,
+            'staff': request.user.has_perm('carwash.view_workday'),
             'days_delta': days_delta,
         }
 
@@ -214,6 +206,7 @@ class StaffDetailView(Common, View):
 
 class StaffCancelRegistrationView(Common, View):
     """Представление для отмены (удаления) сотрудником выбранной записи клиента"""
+
     def get(self, request, days_delta, registration_pk, registration_time):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
         registration = CarWashRegistration.objects.get(pk=registration_pk)
@@ -239,23 +232,20 @@ class CarwashUserRegistrationsListView(Common, ListView):
     model = CarWashUserRegistration
     template_name = 'carwash/user_registrations.html'
     context_object_name = 'user_registrations'
+    title = 'Мои записи'
+    menu = (0, 1, )
 
     def get_queryset(self):
         queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
+
         # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
         queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
         return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('-date_reg', '-time_reg')
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(CarwashUserRegistrationsListView, self).get_context_data()
-        context['title'] = 'Aquamarine'
-        context['menu'] = self.menu(0, 1)
-        context['staff'] = self.request.user.has_perm('carwash.view_workday')
-        return context
-
 
 class UserRegCancelView(Common, View):
     """Представление для отмены (удаления) записи пользователя"""
+
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
         

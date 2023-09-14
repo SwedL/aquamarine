@@ -19,26 +19,16 @@ from users.models import User
 class UserLoginView(Common, LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(UserLoginView, self).get_context_data()
-        context['menu'] = self.menu(0)
-        context['title'] = 'Авторизация'
-
-        return context
+    title = 'Авторизация'
+    menu = (0, )
 
 
 class UserProfileView(Common, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = 'users/profile.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(UserProfileView, self).get_context_data()
-        context['menu'] = self.menu(0, 1)
-        context['title'] = 'Настройка профиля'
-        context['staff'] = self.request.user.has_perm('carwash.view_workday')
-        return context
+    title = 'Настройка профиля'
+    menu = (0, 1, )
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
@@ -48,13 +38,8 @@ class UserPasswordChangeView(Common, PasswordChangeView):
     model = User
     form_class = MyPasswordChangeForm
     template_name = 'users/password_change.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(UserPasswordChangeView, self).get_context_data()
-        context['title'] = 'Смена пароля'
-        context['menu'] = self.menu(0, 1)
-        context['staff'] = self.request.user.has_perm('carwash.view_workday')
-        return context
+    title = 'Смена пароля'
+    menu = (0, 1)
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.request.user.id,))
@@ -68,22 +53,8 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     success_message = 'Письмо с инструкцией по восстановлению пароля отправлена на ваш email'
     subject_template_name = 'users/password_subject_reset_mail.txt'
     email_template_name = 'users/password_reset_mail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Запрос на восстановление пароля'
-        context['menu'] = self.menu(0, 1)
-        return context
-
-    # def form_valid(self, form):
-    #     response = super().form_valid(form)
-    #     success_message = self.get_success_message(form.cleaned_data)
-    #     if success_message:
-    #         messages.success(self.request, success_message)
-    #     return response
-
-    # def post(self, request, *args, **kwargs):
-    #     pass
+    title = 'Запрос на восстановление пароля'
+    menu = (0, 1, )
 
 
 class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetConfirmView):
@@ -92,24 +63,6 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     template_name = 'users/user_password_set_new.html'
     success_url = reverse_lazy('carwash:home')
     success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Установить новый пароль'
-        context['menu'] = self.menu(0, 1)
-        return context
-
-
-# def email(request):
-#     send_mail(
-#         subject="Subject here",
-#         message="Here is the message.",
-#         from_email='aquamarine.srv@yandex.ru',
-#         recipient_list=["supersega@mail.ru"],
-#         fail_silently=False,
-#     )
-#
-#     redirect_url = reverse_lazy('carwash:home')
-#
-#     return HttpResponseRedirect(redirect_url)
+    title = 'Установить новый пароль'
+    menu = (0, 1, )
 

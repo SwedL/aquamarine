@@ -1,4 +1,4 @@
-menu = [{'title': 'Главная', 'url_name': 'carwash:home'},
+menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
         {'title': 'Записаться', 'url_name': 'carwash:registration'},
         {'title': 'Услуги и цены', 'anchor': '#services_price'},
         {'title': 'Контакты и адрес', 'anchor': '#footer'},
@@ -11,24 +11,25 @@ class Common:
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
                      ]
 
+    title = 'Aquamarine'
+    menu = range(3)
+    staff = False
+
     @classmethod
-    def menu(cls, *args):
-        user_menu = menu.copy()
+    def create_menu(cls, menu):
+        for i in menu:
+            assert 0 <= i < len(menu_navigation)
 
-        for i in args:
-            assert 0 <= i < len(menu)
-
-        if args:
-            return [user_menu[i] for i in args]
+        if menu:
+            return [menu_navigation[i] for i in menu]
         else:
-            return user_menu
+            return menu_navigation.copy()
 
-    # def get_context_data(self, *, object_list=None, **kwargs):
-    #     context = super(Common, self).get_context_data(**kwargs)
-    #
-    #     context['menu'] = [user_menu[0]]
-    #     context['title'] = self.title
-    #     context['menu'] = user_menu
-    #
-    #     return context
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(Common, self).get_context_data(**kwargs)
+        context['title'] = self.title
+        context['menu'] = self.create_menu(self.menu)
+        context['staff'] = self.request.user.has_perm('carwash.view_workday')
+
+        return context
 
