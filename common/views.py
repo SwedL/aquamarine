@@ -1,8 +1,8 @@
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
-        {'title': 'Записаться', 'url_name': 'carwash:registration'},
-        {'title': 'Услуги и цены', 'anchor': '#services_price'},
-        {'title': 'Контакты и адрес', 'anchor': '#footer'},
-        ]
+                   {'title': 'Записаться', 'url_name': 'carwash:registration'},
+                   {'title': 'Услуги и цены', 'anchor': '#services_price'},
+                   {'title': 'Контакты и адрес', 'anchor': '#footer'},
+                   ]
 
 
 class Common:
@@ -32,4 +32,3 @@ class Common:
         context['staff'] = self.request.user.has_perm('carwash.view_workday')
 
         return context
-

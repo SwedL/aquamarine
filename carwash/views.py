@@ -31,23 +31,24 @@ class RegistrationAutoView(Common, View):
     def formatted_dict(self, day):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
         day_object = WorkDay.objects.get(date=day)  # объект WorkDay
-        lst_day = list(day_object.__dict__.values())[
-                  2:]  # получаем список значений словаря WorkDay только дата и времена
+        
+        # получаем список значений словаря WorkDay только дата и времена
+        workday_values = list(day_object.__dict__.values())[2:]
         res_dict = {}
 
         # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
-        if lst_day[0] == day.today():
+        if workday_values[0] == day.today():
             for num, k in enumerate(self.FORMATTED_KEY):
-                if num != 0 and not lst_day[num] and time(*map(int, k.split(':'))) < datetime.now().time():
+                if num != 0 and not workday_values[num] and time(*map(int, k.split(':'))) < datetime.now().time():
                     res_dict[k] = 'disable'
                 else:
-                    res_dict[k] = lst_day[num]
+                    res_dict[k] = workday_values[num]
         else:
-            return dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, lst_day))
+            return dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, workday_values))
         return res_dict
 
     def get(self, request):
-        # TODO вынести проверку созданных WorkDay на неделю в Миксин
+        # TODO вынести создание WorkDay на неделю в Миксин
         days_list = [date.today() + timedelta(days=i) for i in range(7)]
 
         for day_ in days_list:  # создаём день (объект WorkDay), если его нет в БД
@@ -122,8 +123,8 @@ class RegistrationAutoView(Common, View):
         else:
             context = {
                 'title': 'Ошибка записи',
-                'staff': request.user.has_perm('carwash.view_workday'),
                 'menu': self.create_menu((0, 1)),
+                'staff': request.user.has_perm('carwash.view_workday'),
             }
 
             return render(request, 'carwash/registration-error.html', context=context)
