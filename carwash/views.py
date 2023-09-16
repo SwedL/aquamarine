@@ -31,7 +31,7 @@ class RegistrationAutoView(Common, View):
     def formatted_dict(self, day):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
         day_object = WorkDay.objects.get(date=day)  # объект WorkDay
-        
+
         # получаем список значений словаря WorkDay только дата и времена
         workday_values = list(day_object.__dict__.values())[2:]
         res_dict = {}
@@ -49,9 +49,10 @@ class RegistrationAutoView(Common, View):
 
     def get(self, request):
         # TODO вынести создание WorkDay на неделю в Миксин
-        days_list = [date.today() + timedelta(days=i) for i in range(7)]
+        # создаём список дат на неделю вперёд
+        dates_week = [date.today() + timedelta(days=i) for i in range(7)]
 
-        for day_ in days_list:  # создаём день (объект WorkDay), если его нет в БД
+        for day_ in dates_week:  # создаём день (объект WorkDay), если его нет в БД
             if not WorkDay.objects.filter(date=day_).exists():
                 WorkDay.objects.create(date=day_)
 
@@ -60,11 +61,11 @@ class RegistrationAutoView(Common, View):
 
         # создаём словарь где ключи это номер услуги, а значение, сама услуга
         services = dict([(service.pk, service) for service in CarWashService.objects.all()])
-        list_day_dictionaries = [self.formatted_dict(day) for day in days_list]
+        list_day_dictionaries = [self.formatted_dict(day) for day in dates_week]
 
         context = {
             'title': self.title,
-            'menu': self.create_menu((0, )),
+            'menu': self.create_menu((0,)),
             'staff': request.user.has_perm('carwash.view_workday'),
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
@@ -136,7 +137,7 @@ class RegistrationAutoView(Common, View):
 
         context = {
             'title': 'Запись зарегистрирована',
-            'menu': self.create_menu((0, )),
+            'menu': self.create_menu((0,)),
             'staff': request.user.has_perm('carwash.view_workday'),
             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
             'choice_time': choicen_time,
@@ -152,9 +153,11 @@ class StaffDetailView(Common, View):
     """Представление для показа сотруднику всех записей клиентов на оказание услуг автомойки"""
     title = 'Сотрудник'
 
-    def get(self, request, days_delta):
+    def get(self, request, days_delta=0):
         # TODO проверить на созданность дней для показа сотруднику
-        current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
+        # создаём список WorkDay (today, tomorrow, after_tomorrow)
+        workday_for_button = [WorkDay.objects.get(date=date.today() + timedelta(days=i)) for i in range(3)]
+        current_workday = workday_for_button[days_delta]  # текущий WorkDay
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
         # получаем список значений всех времен выбранного объекта Workday
@@ -164,41 +167,44 @@ class StaffDetailView(Common, View):
         # создаём список записей рабочего дня list_workday
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
         # либо [{'time':'10:00', 'client': 'Свободно', 'free': True},]
-        list_workday = []
+        list_registrations_workday = []
         for t, registration in zip(self.FORMATTED_KEY[1:], registrations_workday):
             if registration:
-                res = {'time': t, 'registration': registration, 'registration_pk': registration.pk,
-                       'services': ' // '.join([str(s) for s in registration.services.all()])}
+                res = {'time': t, 'registration': registration}
             else:
                 res = {'time': t, 'client': 'Свободно', 'free': True}
 
-            list_workday.append(res)
+            list_registrations_workday.append(res)
 
-        # создаём список result_list_workday и заполняем времена необходимые клиенту на выбранные услуги
+        # создаём список full_list_registrations_workday и заполняем времена необходимые клиенту на выбранные услуги
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},
         #  {'time':'10:30', 'client': CarWashRegistration.client},
         #  {'time':'11:00', 'client': CarWashRegistration.client},
         #  {'time':'11:30', 'client': 'Свободно', 'free': True}, ...]
-        result_list_workday = []
-        list_workday_iterator = iter(list_workday)
+        iterator_list_registrations_workday = iter(list_registrations_workday)
+        full_list_registrations_workday = []
 
-        while list_workday_iterator:
-            another_time = next(list_workday_iterator, 0)
+        while iterator_list_registrations_workday:
+            another_time = next(iterator_list_registrations_workday, 0)
             if another_time == 0:
                 break
-            result_list_workday.append(another_time)  #
+            full_list_registrations_workday.append(another_time)  # добаваляем в список значение времени WorkDay
             if 'registration' in another_time:
                 total_time_without30 = another_time['registration'].total_time - 30
                 for i in range(0, total_time_without30, 30):
-                    another_time = next(list_workday_iterator)
+                    another_time = next(iterator_list_registrations_workday)
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
-                    result_list_workday.append(registration_busy)
+                    full_list_registrations_workday.append(registration_busy)
 
         context = {
             'title': self.title,
-            'menu': self.create_menu((0, 1, )),
-            'list_workday': result_list_workday,
+            'menu': self.create_menu((0, 1,)),
+            'full_list_registrations_workday': full_list_registrations_workday,
             'staff': request.user.has_perm('carwash.view_workday'),
+            'button_date': {'today': workday_for_button[0].date,
+                            'tomorrow': workday_for_button[1].date,
+                            'after_tomorrow': workday_for_button[2].date,
+                            },
             'days_delta': days_delta,
         }
 
@@ -234,7 +240,7 @@ class CarwashUserRegistrationsListView(Common, ListView):
     template_name = 'carwash/user_registrations.html'
     context_object_name = 'user_registrations'
     title = 'Мои записи'
-    menu = (0, 1, )
+    menu = (0, 1,)
 
     def get_queryset(self):
         queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
@@ -249,7 +255,7 @@ class UserRegCancelView(Common, View):
 
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
-        
+
         needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
         needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.services.pk)
         total_time = needed_staff_registration.total_time

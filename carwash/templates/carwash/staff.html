@@ -16,35 +16,47 @@
     </script>
 {% endblock %}
 
-{% block content %}    
+{% block content %}
     <main>
         <div class="section-staff">
             <div class="workday-page">
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' days_delta=0 %}"><button id="page1" type="submit" style="cursor:default" {% if days_delta == 0 %} disabled {% endif %}>Сегодня</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=0 %}">
+                        <button id="page1" type="submit" style="cursor:default" {% if days_delta == 0 %} disabled {% endif %}>
+                            Сегодня<br>{{button_date.today}}
+                        </button>
+                    </a>
                 </div>
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' days_delta=1 %}"><button id="page2" type="submit" style="cursor:default" {% if days_delta == 1 %} disabled {% endif %}>Завтра</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=1 %}">
+                        <button id="page2" type="submit" style="cursor:default" {% if days_delta == 1 %} disabled {% endif %}>
+                            Завтра<br>{{button_date.tomorrow}}
+                        </button>
+                    </a>
                 </div>
                 <div class="workday-page__button">
-                    <a href="{% url 'carwash:staff' days_delta=2 %}"><button id="page3" type="submit" style="cursor:default" {% if days_delta == 2 %} disabled {% endif %}>Послезавтра</button></a>
+                    <a href="{% url 'carwash:staff' days_delta=2 %}">
+                        <button id="page3" type="submit" style="cursor:default" {% if days_delta == 2 %} disabled {% endif %}>
+                            Послезавтра<br>{{button_date.after_tomorrow}}
+                        </button>
+                    </a>
                 </div>
             </div>
             <div class="data-box">
-                {% for reg in list_workday %}
+                {% for reg in full_list_registrations_workday %}
                     <div class="time-workday">
                         <div class="data-box__item time-workday__time {% if reg.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{reg.time}}</div>
-                        {% if reg.services %}
+                        {% if reg.registration %}
                             <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
-                            <div class="data-box__item busy time-workday__services time-workday__services">{{reg.services}}</div>
+                            <div class="data-box__item busy time-workday__services time-workday__services">{{reg.registration.all_services}}</div>
                             <div class="time-workday__button">
 
                                 <!-- Кнопка-триггер модального окна -->
-                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.registration_pk}}{{reg.time}}">
+                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.registration.pk}}{{reg.time}}">
                                   Отменить</button>
 
                                 <!-- Модальное окно -->
-                                <div class="modal fade" id="{{reg.registration_pk}}{{reg.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="{{reg.registration.pk}}{{reg.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -56,7 +68,7 @@
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                        <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration_pk registration_time=reg.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                                        <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration.pk registration_time=reg.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
                                       </div>
                                         </div>
                                   </div>

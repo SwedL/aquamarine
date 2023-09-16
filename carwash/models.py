@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date, time, datetime, timedelta
 from django.conf import settings
 
 from users.models import User
@@ -47,6 +48,11 @@ class CarWashRegistration(models.Model):
 
 
 class WorkDay(models.Model):
+    FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
+                     '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
+                     '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
+                     ]
+
     date = models.DateField(verbose_name='дата', unique=True, db_index=True)
     time_1000 = models.ForeignKey(to=CarWashRegistration, related_name='example1', on_delete=models.SET_NULL, null=True, blank=True)
     time_1030 = models.ForeignKey(to=CarWashRegistration, related_name='example2', on_delete=models.SET_NULL, null=True, blank=True)
@@ -78,6 +84,25 @@ class WorkDay(models.Model):
     def __str__(self):
         return f'{self.date}'
 
+    def formatted_dict(self, day):
+        """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
+        day_object = WorkDay.objects.get(date=day)  # объект WorkDay
+
+        # получаем список значений словаря WorkDay только дата и времена
+        workday_values = list(day_object.__dict__.values())[2:]
+        res_dict = {}
+
+        # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
+        if workday_values[0] == day.today():
+            for num, k in enumerate(self.FORMATTED_KEY):
+                if num != 0 and not workday_values[num] and time(*map(int, k.split(':'))) < datetime.now().time():
+                    res_dict[k] = 'disable'
+                else:
+                    res_dict[k] = workday_values[num]
+        else:
+            return dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, workday_values))
+        return res_dict
+
 
 class CarWashUserRegistration(models.Model):
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
@@ -90,5 +115,6 @@ class CarWashUserRegistration(models.Model):
         verbose_name_plural = "Записи пользователей"
 
 
+# manage.py shell
 
 
