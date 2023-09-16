@@ -1,8 +1,21 @@
+from carwash.models import WorkDay
+from datetime import date, time, datetime, timedelta
+
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Записаться', 'url_name': 'carwash:registration'},
                    {'title': 'Услуги и цены', 'anchor': '#services_price'},
                    {'title': 'Контакты и адрес', 'anchor': '#footer'},
                    ]
+
+
+def create_week_workday():
+    dates_week = [date.today() + timedelta(days=i) for i in range(7)]
+
+    for day_ in dates_week:  # создаём день (объект WorkDay), если его нет в БД
+        if not WorkDay.objects.filter(date=day_).exists():
+            WorkDay.objects.create(date=day_)
+
+    return dates_week
 
 
 class Common:
@@ -20,10 +33,7 @@ class Common:
         for i in menu:
             assert 0 <= i < len(menu_navigation)
 
-        if menu:
-            return [menu_navigation[i] for i in menu]
-        else:
-            return menu_navigation.copy()
+        return [menu_navigation[i] for i in menu]
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(Common, self).get_context_data(**kwargs)

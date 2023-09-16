@@ -1,6 +1,6 @@
 from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from datetime import date, time, datetime, timedelta
+## from datetime import date, time, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -8,9 +8,9 @@ from django.views.generic import TemplateView, ListView, DetailView
 
 from itertools import dropwhile
 from carwash.models import *
-from common.views import Common
+from common.views import Common, create_week_workday
 
-menu = ['Главная', 'Записаться', 'Услуги и цены', 'Контакты и адрес']
+# menu = ['Главная', 'Записаться', 'Услуги и цены', 'Контакты и адрес']
 
 
 class IndexListView(Common, ListView):
@@ -23,45 +23,22 @@ class IndexListView(Common, ListView):
 
 
 class RegistrationAutoView(Common, View):
-    """Представление для просмотра доступного дня и времени, а также записи клиентов на оказание услуг автомойки"""
+    """Представление для просмотра доступного дня и времени,
+    а также записи клиентов на оказание услуг автомойки"""
+
     login_url = reverse_lazy('carwash:home')
     title = 'Запись автомобиля'
 
-    # TODO вынести создание словаря в Модель
-    def formatted_dict(self, day):
-        """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
-        day_object = WorkDay.objects.get(date=day)  # объект WorkDay
-
-        # получаем список значений словаря WorkDay только дата и времена
-        workday_values = list(day_object.__dict__.values())[2:]
-        res_dict = {}
-
-        # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
-        if workday_values[0] == day.today():
-            for num, k in enumerate(self.FORMATTED_KEY):
-                if num != 0 and not workday_values[num] and time(*map(int, k.split(':'))) < datetime.now().time():
-                    res_dict[k] = 'disable'
-                else:
-                    res_dict[k] = workday_values[num]
-        else:
-            return dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, workday_values))
-        return res_dict
-
     def get(self, request):
-        # TODO вынести создание WorkDay на неделю в Миксин
-        # создаём список дат на неделю вперёд
-        dates_week = [date.today() + timedelta(days=i) for i in range(7)]
-
-        for day_ in dates_week:  # создаём день (объект WorkDay), если его нет в БД
-            if not WorkDay.objects.filter(date=day_).exists():
-                WorkDay.objects.create(date=day_)
+        # создаём список дат на неделю вперёд и проверяем наличие объектов WorkDay на неделю вперёд
+        dates_week = create_week_workday()
 
         # удаляем экземпляры WorkDay если они старше 1 года
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
         # создаём словарь где ключи это номер услуги, а значение, сама услуга
         services = dict([(service.pk, service) for service in CarWashService.objects.all()])
-        list_day_dictionaries = [self.formatted_dict(day) for day in dates_week]
+        list_day_dictionaries = [WorkDay.objects.get(date=day).formatted_dict() for day in dates_week]
 
         context = {
             'title': self.title,
@@ -154,7 +131,9 @@ class StaffDetailView(Common, View):
     title = 'Сотрудник'
 
     def get(self, request, days_delta=0):
-        # TODO проверить на созданность дней для показа сотруднику
+        # создаём список дат на неделю вперёд и проверяем наличие объектов WorkDay на неделю вперёд
+        create_week_workday()
+
         # создаём список WorkDay (today, tomorrow, after_tomorrow)
         workday_for_button = [WorkDay.objects.get(date=date.today() + timedelta(days=i)) for i in range(3)]
         current_workday = workday_for_button[days_delta]  # текущий WorkDay

@@ -84,16 +84,14 @@ class WorkDay(models.Model):
     def __str__(self):
         return f'{self.date}'
 
-    def formatted_dict(self, day):
+    def formatted_dict(self):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
-        day_object = WorkDay.objects.get(date=day)  # объект WorkDay
-
         # получаем список значений словаря WorkDay только дата и времена
-        workday_values = list(day_object.__dict__.values())[2:]
+        workday_values = list(self.__dict__.values())[2:]
         res_dict = {}
 
         # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
-        if workday_values[0] == day.today():
+        if workday_values[0] == date.today():
             for num, k in enumerate(self.FORMATTED_KEY):
                 if num != 0 and not workday_values[num] and time(*map(int, k.split(':'))) < datetime.now().time():
                     res_dict[k] = 'disable'
