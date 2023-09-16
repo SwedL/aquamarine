@@ -39,7 +39,7 @@ class UserPasswordChangeView(Common, PasswordChangeView):
     form_class = MyPasswordChangeForm
     template_name = 'users/password_change.html'
     title = 'Смена пароля'
-    menu = (0, 1)
+    menu = (0, 1, )
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.request.user.id,))
@@ -50,7 +50,7 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     form_class = UserForgotPasswordForm
     template_name = 'users/user_password_reset.html'
     success_url = reverse_lazy('carwash:home')
-    success_message = 'Письмо с инструкцией по восстановлению пароля отправлена на ваш email'
+    #success_message = 'Письмо с инструкцией по восстановлению пароля отправлена на ваш email'
     subject_template_name = 'users/password_subject_reset_mail.txt'
     email_template_name = 'users/password_reset_mail.html'
     title = 'Запрос на восстановление пароля'
@@ -61,7 +61,7 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     """Представление установки нового пароля"""
     form_class = UserSetNewPasswordForm
     template_name = 'users/user_password_set_new.html'
-    success_url = reverse_lazy('carwash:home')
+    success_url = reverse_lazy('users:login')
     success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
     title = 'Установить новый пароль'
     menu = (0, 1, )
