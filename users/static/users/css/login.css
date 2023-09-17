@@ -53,13 +53,14 @@ body {
   padding-bottom: 1rem !important;
 }
 
-/* line 37, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
-.alert-success {
-  --bs-alert-border-color: var(--bs-success-border-subtle);
+/* line 38, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+.message-box__text {
+  font-size: 24px;
 }
 
-/* line 40, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+/* line 41, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
 .alert {
+  text-align: center;
   --bs-alert-margin-bottom: 0;
   border-radius: 0;
 }

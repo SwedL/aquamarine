@@ -14,7 +14,7 @@
                     <div class="col-lg-5">
                         <div class="card">
                             <div class="message-box">
-                                {% if messages or form.non_field_errors %}
+                                {% if messages %}
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         {% for message in messages %}
                                             {{ message|linebreaksbr }}

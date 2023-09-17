@@ -10,6 +10,16 @@
     <main>
         <div class="space_background">            
             <div class="profile-data">
+                <div class="message-box">
+                    {% if messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {% for message in messages %}
+                                {{ message|linebreaksbr }}
+                            {% endfor %}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+                        </div>
+                    {% endif %}
+                </div>
                 <form action="{% url 'users:profile' user.id %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="profile-data__item">

@@ -1,7 +1,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, TemplateView
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
@@ -42,7 +42,7 @@ class UserPasswordChangeView(Common, PasswordChangeView):
     menu = (0, 1, )
 
     def get_success_url(self):
-        return reverse_lazy('users:profile', args=(self.request.user.id,))
+        return reverse_lazy('users:password_change_done')
 
 
 class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
@@ -50,7 +50,6 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     form_class = UserForgotPasswordForm
     template_name = 'users/user_password_reset.html'
     success_url = reverse_lazy('carwash:home')
-    #success_message = 'Письмо с инструкцией по восстановлению пароля отправлена на ваш email'
     subject_template_name = 'users/password_subject_reset_mail.txt'
     email_template_name = 'users/password_reset_mail.html'
     title = 'Запрос на восстановление пароля'
@@ -65,4 +64,9 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     success_message = 'Пароль успешно изменен.\nМожете авторизоваться на сайте.'
     title = 'Установить новый пароль'
     menu = (0, 1, )
+
+
+class PasswordChangeDoneTemplateView(Common, TemplateView):
+    template_name = 'users/password_change_done.html'
+    menu = (0, 1,)
 
