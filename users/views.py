@@ -62,7 +62,7 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     form_class = UserSetNewPasswordForm
     template_name = 'users/user_password_set_new.html'
     success_url = reverse_lazy('users:login')
-    success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
+    success_message = 'Пароль успешно изменен.\nМожете авторизоваться на сайте.'
     title = 'Установить новый пароль'
     menu = (0, 1, )
 

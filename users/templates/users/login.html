@@ -8,27 +8,18 @@
 
 {% block content %}
     <main>
-        <div class="data-box">
+        <div class="space_background">
             <div class="login-data">
                 <div class="login-data__content row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card">
-                            <div>
+                            <div class="message-box">
                                 {% if messages or form.non_field_errors %}
-                                    <div class="alert
-                                        {% if messages %} alert-success {% else %} alert-warning {% endif %}
-                                        alert-dismissible fade show" role="alert">
-                                        {% if messages %}
-                                            {% for message in messages %}
-                                                {{ message }}
-                                        <br>
-                                            {% endfor %}
-                                        {% else %}
-                                            {{ form.non_field_errors }}
-                                        {% endif %}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        {% for message in messages %}
+                                            {{ message|linebreaksbr }}
+                                        {% endfor %}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
                                     </div>
                                 {% endif %}
                             </div>
