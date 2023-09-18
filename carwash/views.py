@@ -10,7 +10,7 @@ from itertools import dropwhile
 from carwash.models import *
 from common.views import Common, create_week_workday
 
-# menu = ['Главная', 'Записаться', 'Услуги и цены', 'Контакты и адрес']
+# menu = ['Главная', 'Посмотреть доступное время', 'Услуги и цены', 'Контакты и адрес']
 
 
 class IndexListView(Common, ListView):

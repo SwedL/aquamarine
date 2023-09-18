@@ -40,7 +40,7 @@
 
                     <div class="profile-data__item">
                         <label class="profile-data__label" for="{{ form.car_type.id_for_label }}">Прайс </label>
-                        <div class="profile-data__form">{{ form.car_type }}</div>
+                        <div class="profile-data__form car_type">{{ user.get_car_type_display }}</div>
                     </div>
 
                     <div class="profile-data__item">                                

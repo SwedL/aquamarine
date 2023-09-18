@@ -2,7 +2,7 @@ from carwash.models import WorkDay
 from datetime import date, time, datetime, timedelta
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
-                   {'title': 'Записаться', 'url_name': 'carwash:registration'},
+                   {'title': 'Посмотреть\nдоступное время', 'url_name': 'carwash:registration'},
                    {'title': 'Услуги и цены', 'anchor': '#services_price'},
                    {'title': 'Контакты и адрес', 'anchor': '#footer'},
                    ]

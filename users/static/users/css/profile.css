@@ -45,31 +45,38 @@ body {
 }
 
 /* line 38, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
-.profile-data input:readonly {
-  border-color: #a73131;
-  background: #ffb11f;
-  color: #09172b;
-  box-shadow: 1px 1px 3px #000000 inset;
-}
-
-/* line 43, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__label {
   font-size: 14px;
   margin-bottom: 4px;
 }
 
-/* line 46, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 41, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__form {
   height: auto;
 }
 
-/* line 48, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 43, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__button {
   display: flex;
   flex-direction: column;
 }
 
-/* line 52, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 47, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+.car_type {
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 10px);
+  text-indent: 10px;
+  font-size: 1rem;
+  line-height: 2.5;
+  color: #495057;
+  background-color: #d9d9d9;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* line 60, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .form-control {
   display: block;
   width: 100%;
@@ -84,7 +91,7 @@ body {
   border-radius: 0.25rem;
 }
 
-/* line 65, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 73, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .readonly {
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -99,17 +106,17 @@ body {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-/* line 83, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 86, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .modal {
   --bs-modal-width: 350px;
 }
 
-/* line 86, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 89, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .modal-content {
   background-color: #4a4a4a;
 }
 
-/* line 88, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 91, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .modal-content__body-text {
   color: #ececec;
   font-size: 22px;
