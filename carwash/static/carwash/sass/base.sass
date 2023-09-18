@@ -50,7 +50,7 @@ html
     display: flex
     flex-direction: row
     justify-content: space-between
-    max-width: 1140px
+    width: 1140px
     align-items: center
     margin: 0 auto  //где находится контейнер (по середине)
     
@@ -65,16 +65,17 @@ html
     padding-top: 25px
     z-index: 5        
     &__logo-box
-        margin-left: 30px        
-        // margin-right: 200px 
+        margin-left: 30px         
         filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 1))            
+    &__contacts-nav
+        justify-content: space-between
       
 .nav-menu
     display: flex
     align-items: center
     justify-content: space-between  //расстояние между основными кнопками меню и Войти
-    width: 550px
-    height: 35px
+    width: 600px
+    height: 35px 
     &__list
         display: flex
         flex-direction: row

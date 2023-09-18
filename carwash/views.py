@@ -213,7 +213,7 @@ class StaffCancelRegistrationView(Common, View):
         return HttpResponseRedirect(redirect_url)
 
 
-class CarwashUserRegistrationsListView(Common, ListView):
+class UserRegistrationsListView(Common, ListView):
     """Представление для показа пользователю его записей на оказание услуг автомойки"""
     model = CarWashUserRegistration
     template_name = 'carwash/user_registrations.html'
@@ -222,14 +222,14 @@ class CarwashUserRegistrationsListView(Common, ListView):
     menu = (0, 1,)
 
     def get_queryset(self):
-        queryset = super(CarwashUserRegistrationsListView, self).get_queryset()
+        queryset = super(UserRegistrationsListView, self).get_queryset()
 
         # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
         queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
         return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('-date_reg', '-time_reg')
 
 
-class UserRegCancelView(Common, View):
+class UserRegistrationsCancelView(Common, View):
     """Представление для отмены (удаления) записи пользователя"""
 
     def get(self, request, registration_pk):
@@ -268,6 +268,21 @@ class UserRegCancelView(Common, View):
         redirect_url = reverse_lazy('carwash:user_registrations')
 
         return HttpResponseRedirect(redirect_url)
+
+
+class CallMeView(Common, TemplateView):
+    template_name = 'carwash/call_me_done.html'
+    menu = (0, 1)
+    #
+    # def post(self, request):
+    #     context = {
+    #         'title': 'Запись зарегистрирована',
+    #         'menu': self.create_menu((0,)),
+    #         'staff': request.user.has_perm('carwash.view_workday'),
+    #         'phone_number': request.POST['phone_number'],
+    #     }
+    #
+    #     return render(request, 'carwash/call_me_done.html', context=context)
 
 
 def pageNotFound(request, exception):

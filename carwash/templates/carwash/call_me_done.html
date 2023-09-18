@@ -1,0 +1,29 @@
+{% extends 'carwash/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users/css/login.css' %}" xmlns="http://www.w3.org/1999/html">
+{% endblock %}
+
+{% block content %}
+    <div class="space_background">
+        <div class="login-data">
+            <div class="login-data__content row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card">
+                        <div class="message-box">
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <div class="message-box__text">Спасибо за обращение.
+                                    <br>Администратор свяжется с вами в ближайшее время
+                                    <br>{{phone_number}}</div>
+                                <br>
+                                <a href="{% url 'carwash:registration' %}">вернуться назад</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

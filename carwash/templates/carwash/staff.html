@@ -57,21 +57,21 @@
 
                                 <!-- Модальное окно -->
                                 <div class="modal fade" id="{{reg.registration.pk}}{{reg.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                        <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration.pk registration_time=reg.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
-                                      </div>
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration.pk registration_time=reg.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                                          </div>
                                         </div>
-                                  </div>
+                                    </div>
                                 </div>
                             </div>
                         {% else %}

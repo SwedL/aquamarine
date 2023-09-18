@@ -50,8 +50,8 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     form_class = UserForgotPasswordForm
     template_name = 'users/user_password_reset.html'
     success_url = reverse_lazy('carwash:home')
-    subject_template_name = 'users/password_subject_reset_mail.txt'
-    email_template_name = 'users/password_reset_mail.html'
+    subject_template_name = 'email/password_subject_reset_mail.txt'
+    email_template_name = 'email/password_reset_mail.html'
     title = 'Запрос на восстановление пароля'
     menu = (0, 1, )
 

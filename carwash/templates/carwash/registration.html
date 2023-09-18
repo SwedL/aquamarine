@@ -17,12 +17,12 @@
                     <div class="registration__box-services services">
                         <div class="services__border">
                         <h2 class="services__title">Выберите услуги:</h2>
-                        {% if user.car_type == 'price_standart' %}
-                            {% include 'carwash/serv-choice-price-standart.html' %}
-                        {% elif user.car_type == 'price_crossover' %}
+                        {% if user.car_type == 'price_crossover' %}
                             {% include 'carwash/serv-choice-price-crossover.html' %}
-                        {% else %}
+                        {% elif user.car_type == 'price_offroad' %}
                             {% include 'carwash/serv-choice-price-offroad.html' %}
+                        {% else %}
+                            {% include 'carwash/serv-choice-price-standart.html' %}
                         {% endif %}
                         </div>
                     </div>
@@ -48,9 +48,15 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="registration__button">
-                    <button class="btn btn-primary" id="registration" type="submit" disabled style="cursor:default">Записаться</button>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="registration__button">
+                        <button class="btn btn-primary" id="registration" type="submit" disabled style="cursor:default">Записаться</button>
+                    </div>
+                {% else %}
+                    <div class="call-me__button">
+                        <a href="{% url 'carwash:call_me' %}"><button type="button" class="btn btn-primary">Заказать звонок</button></a>
+                    </div>
+                {% endif %}
             </form>
         </div>
     </main>

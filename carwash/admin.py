@@ -5,7 +5,7 @@ from .models import *
 
 @admin.register(CarWashService)
 class CarWashServiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad')
+    list_display = ('id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad',)
     list_display_links = ('name',)
 
 
@@ -27,7 +27,7 @@ class CarWashRegistrationAdmin(admin.StackedInline):
 class WorkDayAdmin(admin.ModelAdmin):
 
     readonly_fields = ('date',)
-    list_display = ('date', 'pk')
+    list_display = ('date', 'pk',)
     search_fields = ('date',)
     ordering = ('-date',)
 
@@ -35,7 +35,14 @@ class WorkDayAdmin(admin.ModelAdmin):
 @admin.register(CarWashUserRegistration)
 class CarWashUserRegistrationAdmin(admin.ModelAdmin):
 
-    list_display = ('date_reg', 'time_reg', 'client')
-    ordering = ('-date_reg', '-time_reg')
+    list_display = ('date_reg', 'time_reg', 'client',)
+    ordering = ('-date_reg', '-time_reg',)
+
+
+@admin.register(CarWashCallMe)
+class CarWashCallMeAdmin(admin.ModelAdmin):
+
+    list_display = ('phone_number', 'created',)
+    ordering = ('-created',)
 
 # admin.site.register(CarWashUserRegistration)

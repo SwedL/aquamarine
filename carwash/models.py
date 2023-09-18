@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from datetime import date, time, datetime, timedelta
 from django.conf import settings
@@ -113,6 +114,16 @@ class CarWashUserRegistration(models.Model):
         verbose_name_plural = "Записи пользователей"
 
 
-# manage.py shell
+class CarWashCallMe(models.Model):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$',
+                                 message="Номер телефона должен быть в формате: '89999999999' или '+79999999999'")
+    phone_number = models.CharField(validators=[phone_regex], max_length=12, verbose_name='номер телефона')  # Validators should be a list
+    created = models.DateTimeField(auto_now_add=True, verbose_name='создан')
 
+    class Meta:
+        verbose_name = "Call Me"
+        verbose_name_plural = "Call Me"
+
+
+# manage.py shell
 
