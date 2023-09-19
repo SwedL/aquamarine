@@ -60,7 +60,6 @@ body {
 
 /* line 41, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
 .alert {
-  text-align: center;
   --bs-alert-margin-bottom: 0;
   border-radius: 0;
 }

@@ -216,7 +216,7 @@ class StaffCancelRegistrationView(Common, View):
 class UserRegistrationsListView(Common, ListView):
     """Представление для показа пользователю его записей на оказание услуг автомойки"""
     model = CarWashUserRegistration
-    template_name = 'carwash/user_registrations.html'
+    template_name = 'carwash/user-registrations.html'
     context_object_name = 'user_registrations'
     title = 'Мои записи'
     menu = (0, 1,)
@@ -271,7 +271,7 @@ class UserRegistrationsCancelView(Common, View):
 
 
 class CallMeView(Common, TemplateView):
-    template_name = 'carwash/call_me_done.html'
+    template_name = 'carwash/request-call-done.html'
     menu = (0, 1)
     #
     # def post(self, request):
@@ -282,7 +282,7 @@ class CallMeView(Common, TemplateView):
     #         'phone_number': request.POST['phone_number'],
     #     }
     #
-    #     return render(request, 'carwash/call_me_done.html', context=context)
+    #     return render(request, 'carwash/request-call-done.html', context=context)
 
 
 def pageNotFound(request, exception):

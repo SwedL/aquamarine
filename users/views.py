@@ -37,7 +37,7 @@ class UserProfileView(Common, UpdateView):
 class UserPasswordChangeView(Common, PasswordChangeView):
     model = User
     form_class = MyPasswordChangeForm
-    template_name = 'users/password_change.html'
+    template_name = 'users/password-change.html'
     title = 'Смена пароля'
     menu = (0, 1, )
 
@@ -48,7 +48,7 @@ class UserPasswordChangeView(Common, PasswordChangeView):
 class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     """Представление по сбросу пароля по почте"""
     form_class = UserForgotPasswordForm
-    template_name = 'users/user_password_reset.html'
+    template_name = 'users/user-password-reset.html'
     success_url = reverse_lazy('carwash:home')
     subject_template_name = 'email/password_subject_reset_mail.txt'
     email_template_name = 'email/password_reset_mail.html'
@@ -59,7 +59,7 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
 class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetConfirmView):
     """Представление установки нового пароля"""
     form_class = UserSetNewPasswordForm
-    template_name = 'users/user_password_set_new.html'
+    template_name = 'users/user-password-set-new.html'
     success_url = reverse_lazy('users:login')
     success_message = 'Пароль успешно изменен.\nМожете авторизоваться на сайте.'
     title = 'Установить новый пароль'
@@ -67,6 +67,6 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
 
 
 class PasswordChangeDoneTemplateView(Common, TemplateView):
-    template_name = 'users/password_change_done.html'
+    template_name = 'users/password-change-done.html'
     menu = (0, 1,)
 
