@@ -12,3 +12,4 @@ class CarwashRequestCallForm(forms.Form):
                                        attrs={'class': 'form-control py-4', 'autocomplete': 'off',
                                               'placeholder': 'номер телефона'})
                                    )
+

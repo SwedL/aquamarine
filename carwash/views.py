@@ -274,9 +274,15 @@ class UserRegistrationsCancelView(Common, View):
 class RequestCallFormView(Common, FormView):
     form_class = CarwashRequestCallForm
     template_name = 'carwash/request-call.html'
-    success_url = 'carwash/request-call-done.html'
+    success_url = '/'
     menu = (0, 1)
 
+    def form_valid(self, form):
+        call_me = CarwashRequestCall(phone_number=form.cleaned_data['phone_number'])
+        #CarwashRequestCall.objects.all().delete()
+        call_me.save()
+        return HttpResponseRedirect(self.get_success_url())
+        # return super(RequestCallFormView, self.form_valid(form))
 
 
 def pageNotFound(request, exception):
