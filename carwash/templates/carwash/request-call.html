@@ -1,0 +1,34 @@
+{% extends 'carwash/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users/css/request-call.css' %}" xmlns="http://www.w3.org/1999/html">
+{% endblock %}
+
+{% block content %}
+    <div class="space_background">
+            <div class="login-data">
+                <div class="login-data__content row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="card">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Введите номер телефона</h3>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                     {% for field in form %}
+                                        <div class="form-error__phone">{{ field.errors }}</div>
+                                        <div class="form-group__phone">{{ field }}</div>
+                                    {% endfor %}
+                                    <div class="d-grid gap-2">
+                                        <input class="btn btn-primary" type="submit" value="Заказать Звонок">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

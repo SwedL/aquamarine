@@ -46,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(max_length=255, verbose_name="Логин", unique=True, db_index=True)
     fio = models.CharField(max_length=255, blank=True, verbose_name='ФИО')
-    tel = models.CharField(max_length=15, blank=True, verbose_name='телефон')
+    phone_number = models.CharField(max_length=15, blank=True, verbose_name='телефон')
     car_type = models.CharField(max_length=40, choices=MODEL_CHOICES, default=STANDART, verbose_name='тип автомобиля')
     car_model = models.CharField(max_length=150, blank=True, verbose_name='марка и модель автомобиля')
     discount = models.SmallIntegerField(default=0, verbose_name='дисконт')

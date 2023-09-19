@@ -4,10 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
 from itertools import dropwhile
 from carwash.models import *
+from carwash.forms import CarwashRequestCallForm
 from common.views import Common, create_week_workday
 
 # menu = ['Главная', 'Посмотреть доступное время', 'Услуги и цены', 'Контакты и адрес']
@@ -270,19 +271,12 @@ class UserRegistrationsCancelView(Common, View):
         return HttpResponseRedirect(redirect_url)
 
 
-class CallMeView(Common, TemplateView):
-    template_name = 'carwash/request-call-done.html'
+class RequestCallFormView(Common, FormView):
+    form_class = CarwashRequestCallForm
+    template_name = 'carwash/request-call.html'
+    success_url = 'carwash/request-call-done.html'
     menu = (0, 1)
-    #
-    # def post(self, request):
-    #     context = {
-    #         'title': 'Запись зарегистрирована',
-    #         'menu': self.create_menu((0,)),
-    #         'staff': request.user.has_perm('carwash.view_workday'),
-    #         'phone_number': request.POST['phone_number'],
-    #     }
-    #
-    #     return render(request, 'carwash/request-call-done.html', context=context)
+
 
 
 def pageNotFound(request, exception):

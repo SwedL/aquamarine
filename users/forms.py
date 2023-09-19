@@ -32,7 +32,7 @@ class UserProfileForm(UserChangeForm):
     email = forms.EmailField(label='Логин', max_length=255,
                              widget=forms.EmailInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     fio = forms.CharField(label='ФИО', max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    tel = forms.CharField(label='Телефон', max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    phone_number = forms.CharField(label='Телефон', max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
     car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES,
                                  widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     car_model = forms.CharField(label='Марка и модель автомобиля',
@@ -42,7 +42,7 @@ class UserProfileForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('email', 'fio', 'tel', 'car_type', 'car_model', 'discount',)
+        fields = ('email', 'fio', 'phone_number', 'car_type', 'car_model', 'discount',)
 
 
 class MyPasswordChangeForm(PasswordChangeForm):

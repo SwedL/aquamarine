@@ -77,7 +77,7 @@ class UserModelTestCase(TestCase):
         print('-' * 20)
         self.print_info('Start setUp')
         self.user = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                        tel='+79445555555', car_model='Kia Sportage')
+                                        phone_number='+79445555555', car_model='Kia Sportage')
         User.objects.create(email='testuser2@mail.ru', password='12345qwerty')
         User.objects.create(email='testuser3@mail.ru', password='12345qwerty')
         User.objects.create(email='testuser4@mail.ru', password='12345qwerty')
@@ -88,7 +88,7 @@ class UserModelTestCase(TestCase):
         self.print_info('Start test_user_creation')
         self.assertEqual(self.user.email, 'testuser@mail.ru')
         self.assertEqual(self.user.fio, 'Иванов Пётр Николаевич')
-        self.assertEqual(self.user.tel, '+79445555555')
+        self.assertEqual(self.user.phone_number, '+79445555555')
         self.assertEqual(self.user.car_type, 'price_standart')
         self.assertEqual(self.user.car_model, 'Kia Sportage')
         self.assertEqual(self.user.discount, 0)
@@ -121,7 +121,7 @@ class UserModelTestCase(TestCase):
         self.print_info('Start test_user_default_value')
         user = User.objects.get(email='testuser2@mail.ru')
         self.assertEqual(user.fio, '')
-        self.assertEqual(user.tel, '')
+        self.assertEqual(user.phone_number, '')
         self.assertEqual(user.car_type, 'price_standart')
         self.assertEqual(user.car_model, '')
         self.assertEqual(user.discount, 0)
@@ -142,7 +142,7 @@ class CarWashRegistrationModelTestCase(TestCase):
         print('-' * 20)
         self.print_info('Start setUp')
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                        tel='+79445555555', car_model='Kia Sportage')
+                                        phone_number='+79445555555', car_model='Kia Sportage')
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.services = CarWashService.objects.all()
@@ -213,7 +213,7 @@ class WorkDayModelTestCase(TestCase):
         self.services = CarWashService.objects.all()
 
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                        tel='+79445555555', car_model='Kia Sportage')
+                                        phone_number='+79445555555', car_model='Kia Sportage')
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)

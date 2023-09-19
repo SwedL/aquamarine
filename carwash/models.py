@@ -114,15 +114,15 @@ class CarWashUserRegistration(models.Model):
         verbose_name_plural = "Записи пользователей"
 
 
-class CarWashCallMe(models.Model):
+class CarwashRequestCall(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$',
                                  message="Номер телефона должен быть в формате: '89999999999' или '+79999999999'")
     phone_number = models.CharField(validators=[phone_regex], max_length=12, verbose_name='номер телефона')  # Validators should be a list
     created = models.DateTimeField(auto_now_add=True, verbose_name='создан')
 
     class Meta:
-        verbose_name = "Call Me"
-        verbose_name_plural = "Call Me"
+        verbose_name = "Request Call"
+        verbose_name_plural = "Request Call"
 
 
 # manage.py shell

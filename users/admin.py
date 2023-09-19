@@ -59,13 +59,13 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ["email", "fio", "car_type", "tel", "is_admin"]
+    list_display = ["email", "fio", "car_type", "phone_number", "is_admin", ]
     list_filter = ["is_admin"]
     readonly_fields = ["user_creation_date", "last_login"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
         (_("Personal info"),
-         {"fields": ["fio", "car_type", "car_model", "tel", "discount", "user_creation_date", "last_login", ]}),
+         {"fields": ["fio", "car_type", "car_model", "phone_number", "discount", "user_creation_date", "last_login", ]}),
         (_("Permissions"), {"fields": ["is_admin", "is_active", "groups"]}),
         # (_("Important dates"), {"fields": ("last_login",)}),
     ]
