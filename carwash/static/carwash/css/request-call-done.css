@@ -1,0 +1,40 @@
+@charset "UTF-8";
+/* line 3, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/request-call-done.sass */
+body {
+  background: black;
+}
+
+/* line 6, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/request-call-done.sass */
+.space_background {
+  min-height: 740px;
+  background: url("../images/193.png"), #0056A9 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: screen;
+  position: relative;
+}
+
+/* line 14, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/request-call-done.sass */
+.messages-container {
+  position: absolute;
+  min-height: 140px;
+  margin-top: 15%;
+  margin-left: 39%;
+  padding: 15px;
+  background-color: #d1e7dd;
+  border-radius: 6px;
+  box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* line 23, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/request-call-done.sass */
+.messages-container__text {
+  font-size: 24px;
+  max-width: 400px;
+  margin-bottom: 15px;
+}
+
+/* line 27, ../../Users/пользователь/PycharmProjects/myDjangoProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/request-call-done.sass */
+.messages-container__a {
+  font-size: 16px;
+}
+
+/*# sourceMappingURL=request-call-done.css.map */
