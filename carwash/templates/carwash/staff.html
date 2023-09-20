@@ -18,7 +18,7 @@
 
 {% block content %}
     <main>
-        <div class="section-staff">
+        <div class="space_background">
             <div class="workday-page">
                 <div class="workday-page__button">
                     <a href="{% url 'carwash:staff' days_delta=0 %}">
@@ -43,43 +43,43 @@
                 </div>
             </div>
             <div class="data-box">
-                {% for reg in full_list_registrations_workday %}
-                    <div class="time-workday">
-                        <div class="data-box__item time-workday__time {% if reg.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{reg.time}}</div>
-                        {% if reg.registration %}
-                            <div class="data-box__item busy client time-workday__client-busy">{{reg.registration.client}}</div>
-                            <div class="data-box__item busy time-workday__services time-workday__services">{{reg.registration.all_services}}</div>
-                            <div class="time-workday__button">
+            {% for time_workday in full_list_registrations_workday %}
+            <div class="time-workday">
+                <div class="data-box__item time-workday__time {% if time_workday.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{time_workday.time}}</div>
+                {% if time_workday.registration %}
+                <div class="data-box__item busy client-busy">{{time_workday.registration.client}}</div>
+                <div class="data-box__item busy time-workday__services">{{time_workday.registration.all_services}}</div>
+                <div class="time-workday__button">
 
-                                <!-- Кнопка-триггер модального окна -->
-                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.registration.pk}}{{reg.time}}">
-                                  Отменить</button>
+                <!-- Кнопка-триггер модального окна -->
+                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.registration.pk}}{{time_workday.time}}">
+                    Отменить</button>
 
-                                <!-- Модальное окно -->
-                                <div class="modal fade" id="{{reg.registration.pk}}{{reg.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                <a href="{% url 'carwash:cancel' days_delta=days_delta registration_pk=reg.registration.pk registration_time=reg.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
-                                          </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="data-box__item client {% if reg.free %} free time-workday__client-free {% else %} busy client time-workday__client-busy {% endif %}">{{reg.client}}</div>
-                            <div class="data-box__item time-workday__services {% if reg.free %} free {% else %} busy {% endif %}"></div>
-                        {% endif %}
+                    <!-- Модальное окно -->
+                <div class="modal fade" id="{{time_workday.registration.pk}}{{time_workday.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                        <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                        </div>
+                        <div class="modal-body">
+                        <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <a href="{% url 'carwash:cancel' days_delta time_workday.registration.pk time_workday.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                        </div>
+                        </div>
                     </div>
-                {% endfor %}
+                </div>
+                </div>
+                {% else %}
+                <div class="data-box__item {% if time_workday.free %} free client-free {% else %} busy client-busy {% endif %}">{{time_workday.client}}</div>
+                <div class="data-box__item time-workday__services {% if time_workday.free %} free {% else %} busy {% endif %}"></div>
+                {% endif %}
+            </div>
+            {% endfor %}
             </div>
         </div>
     </main>

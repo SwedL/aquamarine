@@ -11,7 +11,7 @@ body
     background: black
 
 
-.section-staff
+.space_background
     min-height: 750px
     background: url("../images/193.png"), $color-main 50% 
     background-repeat: no-repeat
@@ -28,8 +28,7 @@ body
     &__button
         margin-right: 130px
         &:last-child
-            margin-right: 0
-     
+            margin-right: 0     
     button
         width: 200px
         padding: 5px 5px
@@ -37,7 +36,7 @@ body
         background: #002cf2
         border-style: solid
         border-width: 2px
-        border-color: #536cd8 #262626 #262626 #536cd8
+        border-color: #4b6af5 #545454 #545454 #4b6af5
         border-radius: 5px
     button:hover
         background: #0028db
@@ -46,6 +45,7 @@ body
     button:disabled
         color: #000 // #cbcaca
         background: #21b9ff
+        border-color: #56caff #545454 #545454 #56caff
 
 .data-box
     margin: 0 auto
@@ -53,7 +53,7 @@ body
     padding: 15px
     min-height: 50px
     width: 1480px
-    background-color: #757575
+    background-color: #8e8e8e
     border-style: solid
     border-width: 2px
     border-color: #a2a2a2 #262626 #262626 #a2a2a2
@@ -61,22 +61,29 @@ body
     &__item
         margin-right: 10px
         height: 24px
-        margin-bottom: 3px //* отодвигаем кнопки время вниз друг от друга */
+        margin-bottom: 3px //* отодвигаем строки вниз друг от друга */
         border: 1px solid #8a8a8a
         border-radius: 3px
         user-select: none
 
 .free
-    background: #c5c5c5
+    background: #e1e1e1
     color: #000000
     padding: 0 auto
     line-height: 25px
-    box-shadow: 1px 1px 2px #000000 inset
+    box-shadow: 1px 1px 2px #272727 inset
 .busy
-    background: #434343
-    color: #c0c0c0
-    box-shadow: 1px 1px 2px #000000 inset
+    background: #646464
+    color: #fefefe
+    box-shadow: 1px 1px 2px #272727 inset
     line-height: 22px
+
+.client-free
+    width: 150px
+    text-align: center
+.client-busy
+    width: 150px
+    text-indent: 7px 
 
 .time-workday
     display: flex
@@ -88,12 +95,6 @@ body
         line-height: 22px
     &__time-busy
         line-height: 22px
-    &__client-busy
-        width: 150px
-        text-indent: 7px  
-    &__client-free
-        width: 150px
-        text-align: center
     &__services
         width: 1100px
         padding-left: 7px
@@ -102,15 +103,15 @@ body
         width: 100px
         height: 24px
         color: $color-white
-        background: #9b2900 //$color-dark-blue
+        background: #bd3402 //$color-dark-blue
         border-style: solid
         border-width: 2px
-        border-color: #956757 #262626 #262626 #956757
+        border-color: #b66c51 #505050 #505050 #b66c51
         border-radius: 5px
     &__cancel-button:hover
         background: #7c2201
     &__cancel-button:active
-        background: #6a1c00
+        background: #b02f00
 
 .modal
     --bs-modal-width: 350px
