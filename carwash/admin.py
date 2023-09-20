@@ -42,7 +42,7 @@ class CarWashUserRegistrationAdmin(admin.ModelAdmin):
 @admin.register(CarwashRequestCall)
 class CarWashCallMeAdmin(admin.ModelAdmin):
 
-    list_display = ('phone_number', 'created',)
+    list_display = ('phone_number', 'processed', 'created',)
     ordering = ('-created',)
 
 # admin.site.register(CarWashUserRegistration)

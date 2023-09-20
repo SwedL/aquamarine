@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'captcha',
     'carwash',
     'users',
 ]
@@ -143,6 +143,9 @@ LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# Captcha
+
+CAPTCHA_FONT_SIZE = 26
 
 # Sending emails
 
@@ -158,3 +161,4 @@ EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'aquamarine.srv@yandex.ru'
 
 SITE_ID = 1
+

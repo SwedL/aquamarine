@@ -1,5 +1,6 @@
 from django import forms
 from django.core.validators import RegexValidator
+from captcha.fields import CaptchaField
 
 
 class CarwashRequestCallForm(forms.Form):
@@ -12,4 +13,5 @@ class CarwashRequestCallForm(forms.Form):
                                        attrs={'class': 'form-control py-4', 'autocomplete': 'on',
                                               'placeholder': 'номер телефона'})
                                    )
+    captcha = CaptchaField()
 

@@ -20,6 +20,7 @@ from carwash.views import pageNotFound
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('captcha/', include('captcha.urls')),
     path('', include('carwash.urls', namespace='carwash')),
     path('users/', include('users.urls', namespace='users')),
 ]
