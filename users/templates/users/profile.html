@@ -33,14 +33,15 @@
                         <div class="profile-data__form">{{ form.fio }}</div>
                     </div>    
 
-                    <div class="profile-data__item">                         
+                    <div class="profile-data__item">
+                        <div class="profile-data__form-error">{{ form.phone_number.errors }}</div>
                         <label class="profile-data__label" for="{{ form.phone_number.id_for_label }}">Телефон</label>
                         <div class="profile-data__form">{{ form.phone_number }}</div>
                     </div>
 
                     <div class="profile-data__item">
                         <label class="profile-data__label" for="{{ form.car_type.id_for_label }}">Прайс </label>
-                        <div class="profile-data__form car_type">{{ user.get_car_type_display }}</div>
+                        <div class="profile-data__form">{{ form.car_type }}</div>
                     </div>
 
                     <div class="profile-data__item">                                

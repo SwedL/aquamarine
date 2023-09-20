@@ -176,6 +176,8 @@ class StaffDetailView(Common, View):
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     full_list_registrations_workday.append(registration_busy)
 
+        requests_calls = CarwashRequestCall.objects.filter(processed=False)
+
         context = {
             'title': self.title,
             'menu': self.create_menu((0, 1,)),
@@ -186,6 +188,7 @@ class StaffDetailView(Common, View):
                             'after_tomorrow': workday_for_button[2].date,
                             },
             'days_delta': days_delta,
+            'request_calls': requests_calls,
         }
 
         return render(request, 'carwash/staff.html', context=context)

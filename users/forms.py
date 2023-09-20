@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm, PasswordResetForm, \
     SetPasswordForm, password_validation
 from django import forms
+from django.core.validators import RegexValidator
+
 from users.models import User
 from django.utils.translation import gettext_lazy as _
 
@@ -28,11 +30,17 @@ class UserProfileForm(UserChangeForm):
         (CROSSOVER, 'кроссовер'),
         (OFFROAD, 'внедорожник'),
     ]
+    phone_regex = RegexValidator(regex=r'8\d{10}',
+                                 message="Номер телефона должен быть в формате: '89999999999'")
 
     email = forms.EmailField(label='Логин', max_length=255,
                              widget=forms.EmailInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     fio = forms.CharField(label='ФИО', max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    phone_number = forms.CharField(label='Телефон', max_length=15, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    phone_number = forms.CharField(validators=[phone_regex], max_length=11,
+                                   widget=forms.TextInput(
+                                       attrs={'class': 'form-control py-4', 'autocomplete': 'on',
+                                              'placeholder': 'номер телефона'})
+                                   )
     car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES,
                                  widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     car_model = forms.CharField(label='Марка и модель автомобиля',

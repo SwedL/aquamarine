@@ -43,43 +43,59 @@
                 </div>
             </div>
             <div class="data-box">
-            {% for time_workday in full_list_registrations_workday %}
-            <div class="time-workday">
-                <div class="data-box__item time-workday__time {% if time_workday.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{time_workday.time}}</div>
-                {% if time_workday.registration %}
-                <div class="data-box__item busy client-busy">{{time_workday.registration.client}}</div>
-                <div class="data-box__item busy time-workday__services">{{time_workday.registration.all_services}}</div>
-                <div class="time-workday__button">
+                <div class="request-call-box dropdown-center">
+                    <botton class="btn btn-secondary request-call-box__dropdown-button" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        запросы звонка
+                    </botton>
+                    <ul class="dropdown-menu">
+                        {% for call in request_calls %}
+                            <li class="dropdown-item" href="#">{{call}}
+                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.registration.pk}}{{time_workday.time}}">
+                                    обработан</button>
+                            </li>
+                            {% if not forloop.last %}
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% for time_workday in full_list_registrations_workday %}
+                <div class="time-workday">
+                    <div class="data-box__item time-workday__time {% if time_workday.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{time_workday.time}}</div>
+                    {% if time_workday.registration %}
+                    <div class="data-box__item busy client-busy">{{time_workday.registration.client}}</div>
+                    <div class="data-box__item busy time-workday__services">{{time_workday.registration.all_services}}</div>
+                    <div class="time-workday__button">
 
-                <!-- Кнопка-триггер модального окна -->
-                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.registration.pk}}{{time_workday.time}}">
-                    Отменить</button>
+                    <!-- Кнопка-триггер модального окна -->
+                    <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.registration.pk}}{{time_workday.time}}">
+                        Отменить</button>
 
-                    <!-- Модальное окно -->
-                <div class="modal fade" id="{{time_workday.registration.pk}}{{time_workday.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                        <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                        </div>
-                        <div class="modal-body">
-                        <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <a href="{% url 'carwash:cancel' days_delta time_workday.registration.pk time_workday.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
-                        </div>
+                        <!-- Модальное окно -->
+                    <div class="modal fade" id="{{time_workday.registration.pk}}{{time_workday.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1> -->
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                            <p class="modal-content__body-text" id="exampleModalLabel">Подтвердите удаление записи</p>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <a href="{% url 'carwash:cancel' days_delta time_workday.registration.pk time_workday.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                            </div>
+                            </div>
                         </div>
                     </div>
+                    </div>
+                    {% else %}
+                    <div class="data-box__item {% if time_workday.free %} free client-free {% else %} busy client-busy {% endif %}">{{time_workday.client}}</div>
+                    <div class="data-box__item time-workday__services {% if time_workday.free %} free {% else %} busy {% endif %}"></div>
+                    {% endif %}
                 </div>
-                </div>
-                {% else %}
-                <div class="data-box__item {% if time_workday.free %} free client-free {% else %} busy client-busy {% endif %}">{{time_workday.client}}</div>
-                <div class="data-box__item time-workday__services {% if time_workday.free %} free {% else %} busy {% endif %}"></div>
-                {% endif %}
-            </div>
-            {% endfor %}
+                {% endfor %}
             </div>
         </div>
     </main>
