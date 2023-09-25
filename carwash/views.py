@@ -1,5 +1,5 @@
 from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 ## from datetime import date, time, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -21,6 +21,7 @@ class IndexListView(Common, ListView):
     context_object_name = 'services'
     title = 'Aquamarine'
     menu = (1, 2, 3)
+
 
 
 class RegistrationAutoView(Common, View):
@@ -127,9 +128,10 @@ class RegistrationAutoView(Common, View):
         return render(request, 'carwash/done.html', context=context)
 
 
-class StaffDetailView(Common, View):
+class StaffDetailView(Common, PermissionRequiredMixin, View):
     """Представление для показа сотруднику всех записей клиентов на оказание услуг автомойки"""
     title = 'Сотрудник'
+    permission_required = "carwash.view_workday"
 
     def get(self, request, days_delta=0):
         # создаём список дат на неделю вперёд и проверяем наличие объектов WorkDay на неделю вперёд
@@ -194,8 +196,10 @@ class StaffDetailView(Common, View):
         return render(request, 'carwash/staff.html', context=context)
 
 
-class StaffCancelRegistrationView(Common, View):
+class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
     """Представление для отмены (удаления) сотрудником выбранной записи клиента"""
+
+    permission_required = "carwash.view_workday"
 
     def get(self, request, days_delta, registration_pk, registration_time):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
@@ -266,8 +270,8 @@ class UserRegistrationsCancelView(Common, View):
                         None)  # поле соотвествующего времени делаем None по умолчанию
             needed_workday.save()
 
-        # удаляем "Запись пользователя"
-        user_registration.delete()
+            # удаляем "Запись пользователя"
+            user_registration.delete()
 
         redirect_url = reverse_lazy('carwash:user_registrations')
 
