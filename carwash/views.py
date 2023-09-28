@@ -15,7 +15,11 @@ from common.views import Common, create_week_workday
 
 
 class IndexListView(Common, ListView):
-    """Представление для показа главной страницы компании и прейскуранта цен на оказание услуг автомойки"""
+    """
+    Представление для показа главной страницы компании
+    и прейскуранта цен на оказание услуг автомойки
+    """
+
     template_name = 'carwash/index.html'
     model = CarWashService
     context_object_name = 'services'
@@ -24,8 +28,10 @@ class IndexListView(Common, ListView):
 
 
 class RegistrationAutoView(Common, View):
-    """Представление для просмотра доступного дня и времени,
-    а также записи клиентов на оказание услуг автомойки"""
+    """
+    Представление для просмотра доступного времени необходимого дня,
+    а также записи клиентов на оказание услуг автомойки
+    """
 
     login_url = reverse_lazy('carwash:home')
     title = 'Запись автомобиля'
@@ -81,8 +87,9 @@ class RegistrationAutoView(Common, View):
         formatted_key1 = list(dropwhile(lambda el: el != choicen_time, self.FORMATTED_KEY))
         formatted_key2 = formatted_key1.copy()
 
-        # Если время выбранное всё ещё свободно пока пользователь делал свой выбор, то сохраняем "Запись"
-        # уже занято пока проходило оформление, то ОШИБКА ЗАПИСИ
+        # Если время выбранное всё ещё свободно пока пользователь делал свой выбор,
+        # то сохраняем "Запись", если занято пока проходило оформление,
+        # то сообщаем "К сожалению, время которые вы выбрали уже занято"
         check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in
                             range(0, total_time, 30)]
 
@@ -177,7 +184,8 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     full_list_registrations_workday.append(registration_busy)
 
-        requests_calls = CarwashRequestCall.objects.all()   # filter(processed=False)
+        requests_calls = CarwashRequestCall.objects.filter(created=date.today())
+        attention = requests_calls.filter(processed=False)
 
         context = {
             'title': self.title,
@@ -190,13 +198,14 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                             },
             'days_delta': days_delta,
             'request_calls': requests_calls,
+            'attention': attention,
         }
 
         return render(request, 'carwash/staff.html', context=context)
 
 
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
-    """Представление для отмены (удаления) сотрудником выбранной записи клиента"""
+    """Представление - обработчик события 'отмена (удаление) сотрудником записи клиента'"""
 
     permission_required = "carwash.view_workday"
 
@@ -221,6 +230,7 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 
 
 class RequestCallProcessingView(View):
+    """Представление - обработчик события 'обработка звонка'"""
     permission_required = "carwash.view_workday"
 
     def get(self, request, days_delta, call_pk):

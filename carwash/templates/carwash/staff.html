@@ -12,7 +12,7 @@
     <script>
         setTimeout(function(){
         location.reload();
-        }, 60000);
+        }, 300000);
     </script>
 {% endblock %}
 
@@ -44,7 +44,7 @@
             </div>
             <div class="data-box">
                 <div class="request-call-box dropdown-center">
-                    <botton class="btn btn-secondary request-call-box__dropdown-button" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <botton class="btn request-call-box__button" {% if attention %} style="animation:myfirst 1s infinite;" {% endif %} role="button" id="dropdownMenuLink" {% if request_calls %} data-bs-toggle="dropdown" {% endif %}>
                         запросы звонка
                     </botton>
                     <ul class="dropdown-menu">
@@ -53,7 +53,7 @@
 
                                 {% if not call.processed %}
                                 <a class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.pk %}">
-                                    обработан</a>
+                                    обработать</a>
                                 {% endif %}
                             </li>
                             {% if not forloop.last %}

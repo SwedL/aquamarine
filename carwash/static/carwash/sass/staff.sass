@@ -70,21 +70,33 @@ body
     width: 500px
     margin: 0 auto
     margin-bottom: 10px
-    &__dropdown-button
-        //margin: 0 auto
+    &__button
         width: 500px
+        padding: 1px
         height: auto
         color: $color-white
-        background: #bd3402 
+        background: #7a2000 
         border-style: solid
         border-width: 2px
         border-color: #b66c51 #505050 #505050 #b66c51
         border-radius: 5px
-    &__dropdown-button:hover
+    &__button:hover
+        color: $color-white
         background: #7c2201
-    &__dropdown-button:active
-        background: #b02f00
+        border-color: #b66c51 #505050 #505050 #b66c51
+    &__button.show
+        color: $color-white
+        background: #7c2201
+        border-color: #b66c51 #505050 #505050 #b66c51
 
+@keyframes myfirst
+    50%   
+        background: red
+
+.dropdown-menu
+    --bs-dropdown-link-active-color: black
+    --bs-dropdown-link-active-bg: $color-white
+    
 .free
     background: #e1e1e1
     color: #000000
