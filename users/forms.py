@@ -41,8 +41,8 @@ class UserProfileForm(UserChangeForm):
                                        attrs={'class': 'form-control py-4', 'autocomplete': 'on',
                                               'placeholder': 'номер телефона'})
                                    )
-    car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES,
-                                 widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
+    # car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES,
+    #                              widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     car_model = forms.CharField(label='Марка и модель автомобиля',
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
     discount = forms.IntegerField(label='Дисконт',
@@ -50,7 +50,7 @@ class UserProfileForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('email', 'fio', 'phone_number', 'car_type', 'car_model', 'discount',)
+        fields = ('email', 'fio', 'phone_number', 'car_model', 'discount',)
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
