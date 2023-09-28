@@ -49,9 +49,12 @@
                     </botton>
                     <ul class="dropdown-menu">
                         {% for call in request_calls %}
-                            <li class="dropdown-item" href="#">{{call}}
-                                <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.registration.pk}}{{time_workday.time}}">
-                                    обработан</button>
+                            <li class="dropdown-item">{{call}}
+
+                                {% if not call.processed %}
+                                <a class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.pk %}">
+                                    обработан</a>
+                                {% endif %}
                             </li>
                             {% if not forloop.last %}
                                 <li><hr class="dropdown-divider"></li>

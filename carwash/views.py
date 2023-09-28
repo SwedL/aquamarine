@@ -1,6 +1,6 @@
 from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-## from datetime import date, time, datetime, timedelta
+# from datetime import date, time, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -21,7 +21,6 @@ class IndexListView(Common, ListView):
     context_object_name = 'services'
     title = 'Aquamarine'
     menu = (1, 2, 3)
-
 
 
 class RegistrationAutoView(Common, View):
@@ -178,7 +177,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     full_list_registrations_workday.append(registration_busy)
 
-        requests_calls = CarwashRequestCall.objects.filter(processed=False)
+        requests_calls = CarwashRequestCall.objects.all()   # filter(processed=False)
 
         context = {
             'title': self.title,
@@ -221,6 +220,19 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
         return HttpResponseRedirect(redirect_url)
 
 
+class RequestCallProcessingView(View):
+    permission_required = "carwash.view_workday"
+
+    def get(self, request, days_delta, call_pk):
+        processed_call = CarwashRequestCall.objects.get(pk=call_pk)
+        processed_call.processed = True
+        processed_call.save()
+
+        redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})
+
+        return HttpResponseRedirect(redirect_url)
+
+
 class UserRegistrationsListView(Common, ListView):
     """Представление для показа пользователю его записей на оказание услуг автомойки"""
     model = CarWashUserRegistration
@@ -238,7 +250,7 @@ class UserRegistrationsListView(Common, ListView):
 
 
 class UserRegistrationsCancelView(Common, View):
-    """Представление для отмены (удаления) записи пользователя"""
+    """Представление для отмены (удаления) пользователем своей записи"""
 
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
@@ -279,6 +291,7 @@ class UserRegistrationsCancelView(Common, View):
 
 
 class RequestCallFormView(Common, FormView):
+    """Представление для запроса звонка клиенту"""
     form_class = CarwashRequestCallForm
     template_name = 'carwash/request-call.html'
     menu = (0, 1)
@@ -291,6 +304,7 @@ class RequestCallFormView(Common, FormView):
 
 
 class RequestCallDoneTemplateView(Common, TemplateView):
+    """Представление информирование клиенту о принятии его запроса звонка"""
     template_name = 'carwash/request-call-done.html'
     menu = (0, 1)
 
