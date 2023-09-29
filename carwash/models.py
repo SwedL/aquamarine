@@ -1,6 +1,7 @@
 from django.core.validators import RegexValidator
 from django.db import models
 from datetime import date, time, datetime, timedelta
+from django.utils import timezone
 from django.conf import settings
 
 from users.models import User
@@ -119,7 +120,7 @@ class CarwashRequestCall(models.Model):
                                  message="Номер телефона должен быть в формате: '89999999999'")
     phone_number = models.CharField(validators=[phone_regex], max_length=11, verbose_name='номер телефона')  # Validators should be a list
     processed = models.BooleanField(default=False)
-    created = models.DateField(auto_now_add=True, verbose_name='создан')
+    created = models.DateTimeField(default=timezone.now, verbose_name='создан')
 
     class Meta:
         verbose_name = "Request Call"

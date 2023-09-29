@@ -1,6 +1,8 @@
 from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-# from datetime import date, time, datetime, timedelta
+from datetime import date, time, datetime, timedelta
+from django.utils import timezone
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import View
@@ -10,6 +12,7 @@ from itertools import dropwhile
 from carwash.models import *
 from carwash.forms import CarwashRequestCallForm
 from common.views import Common, create_week_workday
+
 
 # menu = ['Главная', 'Посмотреть доступное время', 'Услуги и цены', 'Контакты и адрес']
 
@@ -184,8 +187,11 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     full_list_registrations_workday.append(registration_busy)
 
-        requests_calls = CarwashRequestCall.objects.filter(created=date.today())
-        attention = requests_calls.filter(processed=False)
+        # показываем звонки заказанные в течении 24 часов
+        datetime_now = timezone.now()
+        time_1_day_ago = datetime_now - timedelta(days=1)
+        requests_calls = CarwashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
+        attention = requests_calls.filter(processed=False)  # переменная указывающая на необработанные звонки
 
         context = {
             'title': self.title,
@@ -308,7 +314,7 @@ class RequestCallFormView(Common, FormView):
 
     def form_valid(self, form):
         call_me = CarwashRequestCall(phone_number=form.cleaned_data['phone_number'])
-        #CarwashRequestCall.objects.all().delete()
+        # CarwashRequestCall.objects.all().delete()
         call_me.save()
         return HttpResponseRedirect(reverse('carwash:request_call_done'))
 
