@@ -187,7 +187,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                     registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
                     full_list_registrations_workday.append(registration_busy)
 
-        # показываем звонки заказанные в течении 24 часов
+        # показываем звонки, заказанные в течении 24 часов
         datetime_now = timezone.now()
         time_1_day_ago = datetime_now - timedelta(days=1)
         requests_calls = CarwashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))

@@ -49,10 +49,10 @@
                     </botton>
                     <ul class="dropdown-menu">
                         {% for call in request_calls %}
-                            <li class="dropdown-item">{{call}}
+                            <li class="dropdown-item"><span>{{call}}</span>
 
                                 {% if not call.processed %}
-                                <a class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.pk %}">
+                                <a type="button" class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.pk %}">
                                     обработать</a>
                                 {% endif %}
                             </li>

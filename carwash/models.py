@@ -127,7 +127,7 @@ class CarwashRequestCall(models.Model):
         verbose_name_plural = "Request Call"
 
     def __str__(self):
-        return f'{self.phone_number}'
+        return f'{str(self.created.time())[0:5]} --- {self.phone_number}'
 
 
 # manage.py shell
