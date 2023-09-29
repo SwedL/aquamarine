@@ -1,4 +1,7 @@
-x = float(input())
-y = x % int(x) * 100 > 50
+data = 'mississippi'
+counter = {}
 
-print(x, y)
+for letter in data:
+    counter[letter] = counter.get(letter, 0) + 1
+
+print(counter)
