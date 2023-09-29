@@ -2,6 +2,7 @@ from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from datetime import date, time, datetime, timedelta
 from django.utils import timezone
+from django.utils.timezone import now
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -189,6 +190,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 
         # показываем звонки, заказанные в течении 24 часов
         datetime_now = timezone.now()
+        ttt = datetime.today()
         time_1_day_ago = datetime_now - timedelta(days=1)
         requests_calls = CarwashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
         attention = requests_calls.filter(processed=False)  # переменная указывающая на необработанные звонки
