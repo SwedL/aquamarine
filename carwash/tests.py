@@ -2,6 +2,8 @@ from http import HTTPStatus
 
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
 from datetime import date, timedelta
 from carwash.models import *
 from users.models import User
@@ -290,6 +292,16 @@ class RegistrationAutoViewTestCase(TestCase):
 class StaffDetailViewTestCase(TestCase):
 
     def setUp(self):
+        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
+                                         phone_number='+79445555555', car_model='Kia Venga')
+        self.user1.is_admin = True
+
+        # content_type = ContentType.objects.get(app_label='users', model='User')
+        permission = Permission.objects.get(codename='view_workday')
+
+        self.user1.user_permissions.clear()
+        self.user1.user_permissions.add(permission)
+
         self.workday1 = WorkDay.objects.create(date=date.today())
         WorkDay.objects.create(date=date.today()+timedelta(days=1))
         WorkDay.objects.create(date=date.today()+timedelta(days=2))
