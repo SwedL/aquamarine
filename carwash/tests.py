@@ -299,7 +299,6 @@ class StaffDetailViewTestCase(TestCase):
         # content_type = ContentType.objects.get(app_label='users', model='User')
         permission = Permission.objects.get(codename='view_workday')
 
-        self.user1.user_permissions.clear()
         self.user1.user_permissions.add(permission)
 
         self.workday1 = WorkDay.objects.create(date=date.today())

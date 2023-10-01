@@ -78,7 +78,7 @@ class RegistrationAutoView(Common, View):
         else:
             new_reg = CarWashRegistration(client=request.user)  # создаём "Запись" от пользователя
             new_reg.save()
-            [new_reg.services.add(s) for s in choicen_services]  # добавляем в "Запись" выбранные услуги
+            new_reg.services.set(choicen_services)  # добавляем в "Запись" выбранные услуги
 
         # вычисляем общее время работ total_time в "Записи" (7,8,9 считается как за одно время 30 мин.)
         total_time = new_reg.total_time
