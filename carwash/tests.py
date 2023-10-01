@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from datetime import date, timedelta
 from carwash.models import *
 from users.models import User
+from django.test import Client
 
 
 class CarWashServiceModelTestCase(TestCase):
@@ -292,23 +293,28 @@ class RegistrationAutoViewTestCase(TestCase):
 class StaffDetailViewTestCase(TestCase):
 
     def setUp(self):
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Venga')
-        # self.user1.is_admin = True
+        self.user = User.objects.create(email='test', password='test') #, fio='Иванов Пётр Николаевич',
+                                        # phone_number='+79445555555', car_model='Kia Sportage')
+        self.permission = Permission.objects.get(codename='view_workday')
+        self.client = Client()
 
-        permission = Permission.objects.get(codename='view_workday')
-        print(self.user1.user_permissions)
-        print(self.user1.__dict__)
-        self.user1.user_permissions.add(permission)
-
-        self.workday1 = WorkDay.objects.create(date=date.today())
-        WorkDay.objects.create(date=date.today()+timedelta(days=1))
-        WorkDay.objects.create(date=date.today()+timedelta(days=2))
+    # def tearDown(self):
+    #     self.user.delete()
 
     def test_view(self):
-        path = reverse('carwash:staff', kwargs={'days_delta': 0})
-        response = self.client.get(path)
+        self.user.user_permissions.add(self.permission)
+        g = self.user.has_perm('carwash.view_workday')
+        self.user.save()
+        data = {
+            "username": "test",
+            "password": "test"
+        }
+        # self.client.login(username='test', password='test')
+        r = self.user.has_perm('carwash.view_workday')
+        # cl = self.client.session['username']
+        # path = reverse('carwash:staff', kwargs={'days_delta': 0})
+        response = self.client.get('/staff/0/', data=data)
 
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        # self.assertEqual(response.context['title'], 'Сотрудник')
-        # self.assertTemplateUsed(response, 'carwash/staff.html')
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context['title'], 'Сотрудник')
+        self.assertTemplateUsed(response, 'carwash/staff.html')
