@@ -293,27 +293,19 @@ class RegistrationAutoViewTestCase(TestCase):
 class StaffDetailViewTestCase(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create(email='test', password='test') #, fio='Иванов Пётр Николаевич',
-                                        # phone_number='+79445555555', car_model='Kia Sportage')
+        self.user = User.objects.create(email='test@mail.ru', password='test', fio='Иванов Пётр Николаевич',
+                                        phone_number='+79445555555', car_model='Kia Sportage')
         self.permission = Permission.objects.get(codename='view_workday')
         self.client = Client()
 
-    # def tearDown(self):
-    #     self.user.delete()
+    def tearDown(self):
+        self.user.delete()
 
     def test_view(self):
         self.user.user_permissions.add(self.permission)
-        g = self.user.has_perm('carwash.view_workday')
-        self.user.save()
-        data = {
-            "username": "test",
-            "password": "test"
-        }
-        # self.client.login(username='test', password='test')
-        r = self.user.has_perm('carwash.view_workday')
-        # cl = self.client.session['username']
-        # path = reverse('carwash:staff', kwargs={'days_delta': 0})
-        response = self.client.get('/staff/0/', data=data)
+        self.client.force_login(self.user)
+        path = reverse('carwash:staff', kwargs={'days_delta': 0})
+        response = self.client.get(path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context['title'], 'Сотрудник')
