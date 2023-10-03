@@ -11,7 +11,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView, C
 
 from itertools import dropwhile
 from carwash.models import *
-from carwash.forms import CarwashRequestCallForm
+from carwash.forms import CarWashRequestCallForm
 from common.views import Common, create_week_workday
 
 
@@ -192,7 +192,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         datetime_now = timezone.now()
         ttt = datetime.today()
         time_1_day_ago = datetime_now - timedelta(days=1)
-        requests_calls = CarwashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
+        requests_calls = CarWashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
         attention = requests_calls.filter(processed=False)  # переменная указывающая на необработанные звонки
 
         context = {
@@ -242,7 +242,7 @@ class RequestCallProcessingView(View):
     permission_required = "carwash.view_workday"
 
     def get(self, request, days_delta, call_pk):
-        processed_call = CarwashRequestCall.objects.get(pk=call_pk)
+        processed_call = CarWashRequestCall.objects.get(pk=call_pk)
         processed_call.processed = True
         processed_call.save()
 
@@ -310,13 +310,13 @@ class UserRegistrationsCancelView(Common, View):
 
 class RequestCallFormView(Common, FormView):
     """Представление для запроса звонка клиенту"""
-    form_class = CarwashRequestCallForm
+    form_class = CarWashRequestCallForm
     template_name = 'carwash/request-call.html'
     menu = (0, 1)
 
     def form_valid(self, form):
-        call_me = CarwashRequestCall(phone_number=form.cleaned_data['phone_number'])
-        # CarwashRequestCall.objects.all().delete()
+        call_me = CarWashRequestCall(phone_number=form.cleaned_data['phone_number'])
+        # CarWashRequestCall.objects.all().delete()
         call_me.save()
         return HttpResponseRedirect(reverse('carwash:request_call_done'))
 

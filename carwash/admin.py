@@ -39,7 +39,7 @@ class CarWashUserRegistrationAdmin(admin.ModelAdmin):
     ordering = ('-date_reg', '-time_reg',)
 
 
-@admin.register(CarwashRequestCall)
+@admin.register(CarWashRequestCall)
 class CarWashCallMeAdmin(admin.ModelAdmin):
 
     list_display = ('phone_number', 'processed', 'created',)

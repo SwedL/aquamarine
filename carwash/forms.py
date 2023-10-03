@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from captcha.fields import CaptchaField
 
 
-class CarwashRequestCallForm(forms.Form):
+class CarWashRequestCallForm(forms.Form):
     """Создание объекта модели RequestCall (заказать звонок)"""
 
     phone_regex = RegexValidator(regex=r'8\d{10}',
