@@ -56,28 +56,28 @@ class WorkDay(models.Model):
                      ]
 
     date = models.DateField(verbose_name='дата', unique=True, db_index=True)
-    time_1000 = models.ForeignKey(to=CarWashRegistration, related_name='example1', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1030 = models.ForeignKey(to=CarWashRegistration, related_name='example2', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1100 = models.ForeignKey(to=CarWashRegistration, related_name='example3', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1130 = models.ForeignKey(to=CarWashRegistration, related_name='example4', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1200 = models.ForeignKey(to=CarWashRegistration, related_name='example5', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1230 = models.ForeignKey(to=CarWashRegistration, related_name='example6', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1300 = models.ForeignKey(to=CarWashRegistration, related_name='example7', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1330 = models.ForeignKey(to=CarWashRegistration, related_name='example8', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1400 = models.ForeignKey(to=CarWashRegistration, related_name='example9', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1430 = models.ForeignKey(to=CarWashRegistration, related_name='example10', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1500 = models.ForeignKey(to=CarWashRegistration, related_name='example11', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1530 = models.ForeignKey(to=CarWashRegistration, related_name='example12', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1600 = models.ForeignKey(to=CarWashRegistration, related_name='example13', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1630 = models.ForeignKey(to=CarWashRegistration, related_name='example14', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1700 = models.ForeignKey(to=CarWashRegistration, related_name='example15', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1730 = models.ForeignKey(to=CarWashRegistration, related_name='example16', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1800 = models.ForeignKey(to=CarWashRegistration, related_name='example17', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1830 = models.ForeignKey(to=CarWashRegistration, related_name='example18', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1900 = models.ForeignKey(to=CarWashRegistration, related_name='example19', on_delete=models.SET_NULL, null=True, blank=True)
-    time_1930 = models.ForeignKey(to=CarWashRegistration, related_name='example20', on_delete=models.SET_NULL, null=True, blank=True)
-    time_2000 = models.ForeignKey(to=CarWashRegistration, related_name='example21', on_delete=models.SET_NULL, null=True, blank=True)
-    time_2030 = models.ForeignKey(to=CarWashRegistration, related_name='example22', on_delete=models.SET_NULL, null=True, blank=True)
+    time_1000 = models.ForeignKey(to=CarWashRegistration, related_name='time1', on_delete=models.SET_NULL, null=True)
+    time_1030 = models.ForeignKey(to=CarWashRegistration, related_name='time2', on_delete=models.SET_NULL, null=True)
+    time_1100 = models.ForeignKey(to=CarWashRegistration, related_name='time3', on_delete=models.SET_NULL, null=True)
+    time_1130 = models.ForeignKey(to=CarWashRegistration, related_name='time4', on_delete=models.SET_NULL, null=True)
+    time_1200 = models.ForeignKey(to=CarWashRegistration, related_name='time5', on_delete=models.SET_NULL, null=True)
+    time_1230 = models.ForeignKey(to=CarWashRegistration, related_name='time6', on_delete=models.SET_NULL, null=True)
+    time_1300 = models.ForeignKey(to=CarWashRegistration, related_name='time7', on_delete=models.SET_NULL, null=True)
+    time_1330 = models.ForeignKey(to=CarWashRegistration, related_name='time8', on_delete=models.SET_NULL, null=True)
+    time_1400 = models.ForeignKey(to=CarWashRegistration, related_name='time9', on_delete=models.SET_NULL, null=True)
+    time_1430 = models.ForeignKey(to=CarWashRegistration, related_name='time10', on_delete=models.SET_NULL, null=True)
+    time_1500 = models.ForeignKey(to=CarWashRegistration, related_name='time11', on_delete=models.SET_NULL, null=True)
+    time_1530 = models.ForeignKey(to=CarWashRegistration, related_name='time12', on_delete=models.SET_NULL, null=True)
+    time_1600 = models.ForeignKey(to=CarWashRegistration, related_name='time13', on_delete=models.SET_NULL, null=True)
+    time_1630 = models.ForeignKey(to=CarWashRegistration, related_name='time14', on_delete=models.SET_NULL, null=True)
+    time_1700 = models.ForeignKey(to=CarWashRegistration, related_name='time15', on_delete=models.SET_NULL, null=True)
+    time_1730 = models.ForeignKey(to=CarWashRegistration, related_name='time16', on_delete=models.SET_NULL, null=True)
+    time_1800 = models.ForeignKey(to=CarWashRegistration, related_name='time17', on_delete=models.SET_NULL, null=True)
+    time_1830 = models.ForeignKey(to=CarWashRegistration, related_name='time18', on_delete=models.SET_NULL, null=True)
+    time_1900 = models.ForeignKey(to=CarWashRegistration, related_name='time19', on_delete=models.SET_NULL, null=True)
+    time_1930 = models.ForeignKey(to=CarWashRegistration, related_name='time20', on_delete=models.SET_NULL, null=True)
+    time_2000 = models.ForeignKey(to=CarWashRegistration, related_name='time21', on_delete=models.SET_NULL, null=True)
+    time_2030 = models.ForeignKey(to=CarWashRegistration, related_name='time22', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = "Рабочий день"
@@ -108,7 +108,7 @@ class CarWashUserRegistration(models.Model):
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
     date_reg = models.DateField(verbose_name='дата регистрации')
     time_reg = models.TimeField(verbose_name='время регистрации')
-    services = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True, blank=True)
+    services = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True)
     
     class Meta:
         verbose_name = "Запись пользователя"
@@ -118,7 +118,7 @@ class CarWashUserRegistration(models.Model):
 class CarWashRequestCall(models.Model):
     phone_regex = RegexValidator(regex=r'8\d{10}$',
                                  message="Номер телефона должен быть в формате: '89999999999'")
-    phone_number = models.CharField(validators=[phone_regex], max_length=11, verbose_name='номер телефона')  # Validators should be a list
+    phone_number = models.CharField(validators=[phone_regex], max_length=11, verbose_name='номер телефона')
     processed = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now, verbose_name='создан')
 

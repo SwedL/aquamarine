@@ -8,19 +8,19 @@ from django.utils.translation import gettext_lazy as _
 
 
 class UserLoginForm(AuthenticationForm):
-    """Авторизация пользователя"""
+    """Форма авторизация пользователя"""
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={
         'class': 'form-control py-4', 'placeholder': 'Электронная почта'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={
         'class': 'form-control py-4', 'placeholder': 'Пароль'}))
 
-    # class Meta:
-    #     model = User
-    #     fields = ('username', 'password')
+    class Meta:
+        model = User
+        fields = ('username', 'password')
 
 
 class UserProfileForm(UserChangeForm):
-    """Создание нового пользователя"""
+    """Форма профиля пользователя для изменения данных"""
 
     STANDART = 'price_standart'
     CROSSOVER = 'price_crossover'
@@ -54,7 +54,8 @@ class UserProfileForm(UserChangeForm):
 
 
 class MyPasswordChangeForm(PasswordChangeForm):
-    """Смена пароля пользователя"""
+    """Форма смены пароля пользователя"""
+
     old_password = forms.CharField(
         label=_("Old password"),
         strip=False,
@@ -80,7 +81,7 @@ class MyPasswordChangeForm(PasswordChangeForm):
 
 
 class UserForgotPasswordForm(PasswordResetForm):
-    """Запрос на восстановление пароля"""
+    """Форма запроса на восстановление пароля"""
 
     email = forms.EmailField(
         max_length=254,
@@ -90,7 +91,7 @@ class UserForgotPasswordForm(PasswordResetForm):
 
 
 class UserSetNewPasswordForm(SetPasswordForm):
-    """Изменение пароля пользователя после подтверждения"""
+    """Форма для установки нового пароля пользователя по ссылке на эл.почте"""
 
     new_password1 = forms.CharField(
         label=_("New password"),

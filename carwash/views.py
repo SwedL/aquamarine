@@ -139,7 +139,11 @@ class RegistrationAutoView(Common, View):
 
 
 class StaffDetailView(Common, PermissionRequiredMixin, View):
-    """Представление для показа сотруднику всех записей клиентов на оказание услуг автомойки"""
+    """
+    Представление для показа сотруднику всех записей клиентов
+    на оказание услуг автомойки
+    """
+
     title = 'Сотрудник'
     permission_required = "carwash.view_workday"
 
@@ -232,13 +236,14 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
                     None)  # поле соотвествующего времени делаем None по умолчанию
         current_workday.save()
 
-        redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})
+        redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)
 
 
 class RequestCallProcessingView(View):
     """Представление - обработчик события 'обработка звонка'"""
+
     permission_required = "carwash.view_workday"
 
     def get(self, request, days_delta, call_pk):
@@ -246,13 +251,14 @@ class RequestCallProcessingView(View):
         processed_call.processed = True
         processed_call.save()
 
-        redirect_url = reverse_lazy('carwash:staff', kwargs={'days_delta': days_delta})
+        redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)
 
 
 class UserRegistrationsListView(Common, ListView):
     """Представление для показа пользователю его записей на оказание услуг автомойки"""
+
     model = CarWashUserRegistration
     template_name = 'carwash/user-registrations.html'
     context_object_name = 'user_registrations'
@@ -264,7 +270,7 @@ class UserRegistrationsListView(Common, ListView):
 
         # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
         queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
-        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('-date_reg', '-time_reg')
+        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
 
 
 class UserRegistrationsCancelView(Common, View):
@@ -303,13 +309,14 @@ class UserRegistrationsCancelView(Common, View):
             # удаляем "Запись пользователя"
             user_registration.delete()
 
-        redirect_url = reverse_lazy('carwash:user_registrations')
+        redirect_url = reverse('carwash:user_registrations')
 
         return HttpResponseRedirect(redirect_url)
 
 
 class RequestCallFormView(Common, FormView):
     """Представление для запроса звонка клиенту"""
+
     form_class = CarWashRequestCallForm
     template_name = 'carwash/request-call.html'
     menu = (0, 1)
@@ -323,6 +330,7 @@ class RequestCallFormView(Common, FormView):
 
 class RequestCallDoneTemplateView(Common, TemplateView):
     """Представление информирование клиенту о принятии его запроса звонка"""
+
     template_name = 'carwash/request-call-done.html'
     menu = (0, 1)
 
