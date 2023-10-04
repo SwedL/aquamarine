@@ -83,7 +83,8 @@ class RegistrationAutoView(Common, View):
         # вычисляем общее время работ total_time в "Записи" (7,8,9 считается как за одно время 30 мин.)
         total_time = new_reg.total_time
 
-        for_workday_date = date(*map(int, choicen_date.split()))  # дата по которой будем искать экземпляр WorkDay
+        for_workday_date = date(*map(int, choicen_date.split()))  # дата по которую выбрал клиент
+        for_workday_time = time(*map(int, choicen_time.split(':')))  # время которое выбрал клиент
         current_workday = WorkDay.objects.get(date=for_workday_date)
 
         # записываем столько времён под авто, сколько необходимо под услуги
@@ -104,7 +105,6 @@ class RegistrationAutoView(Common, View):
             current_workday.save()
 
             # создаём запись пользователя для отслеживания в "Мои записи"
-            for_workday_time = time(*map(int, choicen_time.split(':')))
             CarWashUserRegistration.objects.create(client=request.user,
                                                    date_reg=for_workday_date,
                                                    time_reg=for_workday_time,

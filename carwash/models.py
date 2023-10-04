@@ -30,7 +30,8 @@ class CarWashRegistration(models.Model):
     def total_time_reg(self):
         "Возвращает суммарное время работ регистрации"
         choice_services = self.services.all()
-        time789 = sum([x.pk for x in choice_services if x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну
+        time789 = sum([x.pk for x in choice_services if
+                       x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну
         overal_time = sum([t.process_time for t in choice_services]) - time789 * 30  # общее время работ
 
         return overal_time
@@ -41,12 +42,15 @@ class CarWashRegistration(models.Model):
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
 
-    def all_services(self):
-        return ' // '.join([str(s) for s in self.services.all()])
+    # def all_services(self):
+    #     return ' // '.join([str(s) for s in self.services.all()])
 
     def __str__(self):
         lst_services = ', '.join([str(s) for s in self.services.all()])
         return f'{self.client} || {self.client.car_model} || {lst_services}'
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super(CarWashRegistration, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
 
 class WorkDay(models.Model):
@@ -109,7 +113,7 @@ class CarWashUserRegistration(models.Model):
     date_reg = models.DateField(verbose_name='дата регистрации')
     time_reg = models.TimeField(verbose_name='время регистрации')
     services = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True)
-    
+
     class Meta:
         verbose_name = "Запись пользователя"
         verbose_name_plural = "Записи пользователей"
@@ -129,6 +133,4 @@ class CarWashRequestCall(models.Model):
     def __str__(self):
         return f'{str(self.created.time())[0:5]} --- {self.phone_number}'
 
-
 # manage.py shell
-
