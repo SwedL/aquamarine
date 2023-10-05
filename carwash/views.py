@@ -108,7 +108,7 @@ class RegistrationAutoView(Common, View):
             CarWashUserRegistration.objects.create(client=request.user,
                                                    date_reg=for_workday_date,
                                                    time_reg=for_workday_time,
-                                                   services=new_reg)
+                                                   carwash_reg=new_reg)
 
         else:
             context = {
@@ -194,7 +194,6 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 
         # показываем звонки, заказанные в течении 24 часов
         datetime_now = timezone.now()
-        ttt = datetime.today()
         time_1_day_ago = datetime_now - timedelta(days=1)
         requests_calls = CarWashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
         attention = requests_calls.filter(processed=False)  # переменная указывающая на необработанные звонки
@@ -280,7 +279,7 @@ class UserRegistrationsCancelView(Common, View):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
 
         needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
-        needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.services.pk)
+        needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.carwash_reg.pk)
         total_time = needed_staff_registration.total_time
         temp = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
 

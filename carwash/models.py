@@ -46,6 +46,9 @@ class CarWashRegistration(models.Model):
         lst_services = ', '.join([str(s) for s in self.services.all()])
         return f'{self.client} || {self.client.car_model} || {lst_services}'
 
+    def all_services(self):
+        return ', '.join([str(s) for s in self.services.all()])
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         super(CarWashRegistration, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
@@ -109,7 +112,7 @@ class CarWashUserRegistration(models.Model):
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
     date_reg = models.DateField(verbose_name='дата записи')
     time_reg = models.TimeField(verbose_name='время записи')
-    services = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True)
+    carwash_reg = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = "Запись пользователя"

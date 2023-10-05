@@ -58,8 +58,8 @@ class CarWashRegistrationModelTestCase(TestCase):
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
         self.registration1.services.set([self.services[0], self.services[6]])
 
-        self.registration3 = CarWashRegistration.objects.create(client=self.user2)
-        self.registration3.services.set([self.services[1], self.services[2], self.services[3]])
+        self.registration2 = CarWashRegistration.objects.create(client=self.user2)
+        self.registration2.services.set([self.services[1], self.services[2], self.services[3]])
 
         self.registration789 = CarWashRegistration.objects.create(client=self.user2)
         self.registration789.services.set([self.services[3], self.services[6], self.services[7], self.services[8]])
@@ -157,35 +157,33 @@ class CarWashUserRegistrationModelTestCase(TestCase):
                                          phone_number='+79445555555', car_model='Kia Sportage')
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
-    def test_registration_creation(self):
-        # Проверка создания объекта CarWashUserRegistration
-        self.registration1 = CarWashUserRegistration.objects.create(
+        self.registration1 = CarWashRegistration.objects.create(client=self.user1)
+        self.registration1.services.set([self.services[0], self.services[6]])
+
+        self.registration2 = CarWashRegistration.objects.create(client=self.user2)
+        self.registration2.services.set([self.services[1], self.services[2], self.services[3]])
+
+        CarWashUserRegistration.objects.create(
             client=self.user1,
             date_reg=date(2023, 10, 7),
             time_reg=time(12, 00),
-            services=([self.services[0], self.services[1]]),
+            carwash_reg=self.registration1,
         )
-        # self.registration1.services.set([self.services[0], self.services[1]])
 
-        self.registration2 = CarWashUserRegistration.objects.create(
+        CarWashUserRegistration.objects.create(
             client=self.user2,
             date_reg=date(2023, 10, 7),
             time_reg=time(10, 00),
-            services=[self.services[2], self.services[5]],
+            carwash_reg=self.registration2,
         )
-
-        # CarWashUserRegistration.objects.create(client=request.user,
-        #                                        date_reg=for_workday_date,
-        #                                        time_reg=for_workday_time,
-        #                                        services=new_reg)
-        # self.registration2.services.set([self.services[2], self.services[1]])
 
     def test_registration_get_all_records(self):
         # Проверка получения всех записей из бд
         users = User.objects.all()
-        registrations = CarWashUserRegistration.objects.all()
+        registrations = CarWashRegistration.objects.all()
+        user_registrations = CarWashUserRegistration.objects.all()
         self.assertEqual(len(users), 2)
-        self.assertEqual(len(registrations), 2, 'yt eeeee')
-
+        self.assertEqual(len(registrations), 2)
+        self.assertEqual(len(user_registrations), 2)
 
 
