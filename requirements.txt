@@ -5,3 +5,5 @@ django-simple-captcha==0.5.18
 Pillow==10.0.0
 sqlparse==0.4.4
 tzdata==2023.3
+
+beautifulsoup4~=4.12.2

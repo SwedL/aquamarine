@@ -22,7 +22,7 @@ class CarWashServiceModelTestCase(TestCase):
         self.assertEqual(self.service.price_offroad, 650)
 
     def test_service_get_all_records(self):
-        # Проверка получения всех записей из бд
+        # Проверка количества созданных объектов модели CarWashService в бд
         services = CarWashService.objects.all()
         self.assertEqual(len(services), 3)
 
@@ -71,7 +71,7 @@ class CarWashRegistrationModelTestCase(TestCase):
                          'testuser@mail.ru || Kia Sportage || Мойка (верх, ковры, сушка), Пылесос салона')
 
     def test_registration_get_all_records(self):
-        # Проверка получения всех записей из бд
+        # Проверка количества созданных объектов модели CarWashRegistration в бд
         registrations = CarWashRegistration.objects.all()
         self.assertEqual(len(registrations), 3)
 
@@ -127,7 +127,7 @@ class WorkDayModelTestCase(TestCase):
         self.assertEqual(self.workday2.time_1300, self.registration2)
 
     def test_workday_get_all_records(self):
-        # Проверка получения всех записей из бд
+        # Проверка количества созданных объектов модели WorkDay в бд
         workdays = WorkDay.objects.all()
         self.assertEqual(len(workdays), 2)
 
@@ -139,7 +139,7 @@ class WorkDayModelTestCase(TestCase):
         self.assertEqual(str(self.workday2), expected_str2)
 
     def test_workday_get_formatted_dict(self):
-        # Проверка корректной работы метода formatted_dict
+        # Проверка корректной работы метода модели WorkDay: formatted_dict
         workday_values = list(self.workday2.__dict__.values())[2:]
         res_dict = dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, workday_values))
         res_dict['10:00'] = self.registration1.pk
@@ -178,12 +178,25 @@ class CarWashUserRegistrationModelTestCase(TestCase):
         )
 
     def test_registration_get_all_records(self):
-        # Проверка получения всех записей из бд
-        users = User.objects.all()
-        registrations = CarWashRegistration.objects.all()
+        # Проверка количества созданных объектов модели CarWashUserRegistration в бд
         user_registrations = CarWashUserRegistration.objects.all()
-        self.assertEqual(len(users), 2)
-        self.assertEqual(len(registrations), 2)
         self.assertEqual(len(user_registrations), 2)
 
+
+class CarWashRequestCallModelTestCase(TestCase):
+
+    def setUp(self):
+        self.request_call = CarWashRequestCall.objects.create(phone_number='89999999999')
+        CarWashRequestCall.objects.create(phone_number='81111111111')
+        CarWashRequestCall.objects.create(phone_number='82222222222')
+
+    def test_phone_number_max_length(self):
+        # Проверка максимальной длины поля phone_number
+        max_length = self.request_call._meta.get_field('phone_number').max_length
+        self.assertEquals(max_length, 11)
+
+    def test_request_call_get_all_records(self):
+        # Проверка количества созданных объектов модели CarWashRequestCall в бд
+        requests_calls = CarWashRequestCall.objects.all()
+        self.assertEqual(len(requests_calls), 3)
 
