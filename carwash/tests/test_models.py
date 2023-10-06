@@ -4,7 +4,6 @@ from carwash.models import *
 
 
 class CarWashServiceModelTestCase(TestCase):
-
     def setUp(self):
         self.service = CarWashService.objects.create(name='Мойка (верх, ковры, сушка)', process_time=60,
                                                      price_standart=450, price_crossover=550, price_offroad=650)
