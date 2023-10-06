@@ -281,11 +281,10 @@ class UserRegistrationsCancelView(Common, View):
         needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
         needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.carwash_reg.pk)
         total_time = needed_staff_registration.total_time
-        temp = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
+        time_without_sec = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
 
         # создаём список времён от времени регистрации user_registration.time_reg и все времена после
-        formatted_key1 = list(dropwhile(lambda el: el != temp,
-                                        self.FORMATTED_KEY.copy()))
+        formatted_key1 = list(dropwhile(lambda el: el != time_without_sec, self.FORMATTED_KEY.copy()))
 
         # определяем начальный атрибут (time_....) необходимого объекта WorkWay удаляемой "Записи"
         attr_first_time = 'time_' + formatted_key1.pop(0).replace(':', '')
@@ -305,8 +304,8 @@ class UserRegistrationsCancelView(Common, View):
                         None)  # поле соотвествующего времени делаем None по умолчанию
             needed_workday.save()
 
-            # удаляем "Запись пользователя"
-            user_registration.delete()
+        # удаляем "Запись пользователя"
+        user_registration.delete()
 
         redirect_url = reverse('carwash:user_registrations')
 
