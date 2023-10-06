@@ -3,7 +3,7 @@
         <td>
             <input id="id_service_1" type="radio" name="service_1" value="1"
                    data-price="{{services.1.price_offroad}}" data-process-time="{{services.1.process_time}}"
-                   onclick="WashDis(1, 6)" checked>
+                   onclick="WashDis(1, 6)">
             <label for="id_service_1">{{services.1}}</label>
         </td>
         <td>{{services.1.price_offroad}}</td>
@@ -75,3 +75,7 @@
 <!--                        <button id="calculate" onclick="calculate(); this.onclick=null">Показать доступное время</button>-->
 <p class="services__p" id="overal-time">Общее время работ: 0 мин.</p>
 <p class="services__p" id="total-cost">Общая стоимость услуг: 0 р.</p>
+
+<script>
+    document.getElementById("id_service_1").click();
+</script>
