@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -46,7 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(max_length=255, verbose_name="Логин", unique=True, db_index=True)
     fio = models.CharField(max_length=255, blank=True, verbose_name='ФИО')
-    phone_number = models.CharField(max_length=15, blank=True, verbose_name='телефон')
+    phone_number = models.CharField(max_length=11, blank=True, verbose_name='телефон')
     car_type = models.CharField(max_length=40, choices=MODEL_CHOICES, default=STANDART, verbose_name='тип автомобиля')
     car_model = models.CharField(max_length=150, blank=True, verbose_name='марка и модель автомобиля')
     discount = models.SmallIntegerField(default=0, verbose_name='дисконт')

@@ -16,7 +16,7 @@ from carwash.forms import CarWashRequestCallForm
 from common.views import Common, create_week_workday
 
 
-# menu = ['Главная', 'Посмотреть доступное время', 'Услуги и цены', 'Контакты и адрес']
+# menu = ['Главная', 'Доступное время', 'Услуги и цены', 'Контакты и адрес']
 
 
 class IndexListView(Common, ListView):
@@ -219,7 +219,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 
 
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
-    """Представление - обработчик события 'отмена (удаление) сотрудником записи клиента'"""
+    """Обработчик события 'отмена (удаление)' сотрудником записи клиента"""
 
     permission_required = "carwash.view_workday"
 
@@ -244,7 +244,7 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 
 
 class RequestCallProcessingView(View):
-    """Представление - обработчик события 'обработка звонка'"""
+    """Обработчик события 'обработка звонка'"""
 
     permission_required = "carwash.view_workday"
 
@@ -281,6 +281,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
 
+        # проверка что пользователь удаляет свою запись
         if user_registration.client != request.user:
             raise Http404
 
@@ -319,10 +320,11 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
 
 
 class RequestCallFormView(Common, FormView):
-    """Представление для запроса звонка клиенту"""
+    """Представление для заказа звонка клиенту"""
 
     form_class = CarWashRequestCallForm
     template_name = 'carwash/request-call.html'
+    title = 'Заказ звонка'
     menu = (0, 1)
 
     def form_valid(self, form):

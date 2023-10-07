@@ -6,7 +6,7 @@ from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
 
-from carwash.models import CarWashService, CarWashRegistration, CarWashUserRegistration
+from carwash.models import CarWashService, CarWashRegistration, CarWashUserRegistration, CarWashRequestCall
 from users.models import User
 
 
@@ -125,6 +125,7 @@ class UserRegistrationsListViewTestCase(TestCase):
 
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
                                          phone_number='+79445555555', car_model='Kia Sportage')
+        self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
         self.registration1.services.set([self.services[0], self.services[6]])
@@ -134,22 +135,58 @@ class UserRegistrationsListViewTestCase(TestCase):
 
         CarWashUserRegistration.objects.create(
             client=self.user1,
-            date_reg=date(2023, 10, 7),
+            date_reg=date.today(),
             time_reg=time(12, 00),
             carwash_reg=self.registration1,
         )
 
         CarWashUserRegistration.objects.create(
             client=self.user1,
-            date_reg=date(2023, 10, 9),
+            date_reg=date.today(),
             time_reg=time(10, 00),
             carwash_reg=self.registration2,
         )
 
+    def test_view(self):
+        self.client.force_login(self.user1)
+        response = self.client.get(self.path)
 
-class UserRegistrationsCancelViewTestCase(TestCase):
-    pass
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context_data['title'], 'Мои записи')
+        self.assertTemplateUsed(response, 'carwash/user-registrations.html')
+
+    def test_display_user1_registrations(self):
+        # Проверка корректного отображения всех записей пользователя user1 на странице
+        self.client.force_login(self.user1)
+        response = self.client.get(self.path)
+
+        self.assertEqual(len(response.context_data['object_list']), 2)
+
+    def test_display_user2_registrations(self):
+        # Проверка корректного отображения всех записей пользователя user2 на странице
+        self.client.force_login(self.user2)
+        response = self.client.get(self.path)
+
+        self.assertEqual(len(response.context_data['object_list']), 0)
 
 
 class RequestCallFormViewTestCase(TestCase):
-    pass
+    def setUp(self):
+        self.path = reverse('carwash:call_me')
+
+    def test_view_for_not_logged_user(self):
+        # Проверка представления страницы заказа звонка
+        response = self.client.get(self.path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context_data['title'], 'Заказ звонка')
+        self.assertTemplateUsed(response, 'carwash/request-call.html')
+
+    # def test_request_call_post_success(self):
+    #     tel_number = '89991999999'
+    #
+    #     response = self.client.post(self.path, tel_number)
+    #
+    #     self.assertEqual(response.status_code, HTTPStatus.OK)
+    #     self.assertRedirects(response, reverse('carwash:request_call_done'))
+    #     self.assertTrue(CarWashRequestCall.objects.all().exists())
