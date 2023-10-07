@@ -35,7 +35,7 @@ class WorkDayAdmin(admin.ModelAdmin):
 @admin.register(CarWashUserRegistration)
 class CarWashUserRegistrationAdmin(admin.ModelAdmin):
 
-    list_display = ('date_reg', 'time_reg', 'client', 'carwash_reg')
+    list_display = ('id', 'date_reg', 'time_reg', 'client', 'carwash_reg')
     fields = ('client', ('date_reg', 'time_reg',), 'carwash_reg')
     readonly_fields = ('client', 'date_reg', 'time_reg', 'carwash_reg')
     ordering = ('-date_reg', '-time_reg',)

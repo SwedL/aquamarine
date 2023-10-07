@@ -16,7 +16,7 @@ urlpatterns = [
     path('staff/<int:days_delta>/', StaffDetailView.as_view(), name='staff'),
     path('cancel/<int:days_delta>/<int:registration_pk>/<str:registration_time>/',
          StaffCancelRegistrationView.as_view(), name='cancel'),
-    path('user-registrations/', login_required(UserRegistrationsListView.as_view()), name='user_registrations'),
-    path('user-reg-cancel/<int:registration_pk>/', login_required(UserRegistrationsCancelView.as_view()),
+    path('user-registrations/', UserRegistrationsListView.as_view(), name='user_registrations'),
+    path('user-reg-cancel/<int:registration_pk>/', UserRegistrationsCancelView.as_view(),
          name='user_reg_cancel'),
 ]

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -19,13 +20,13 @@ from users.models import User
 class UserLoginView(Common, LoginView):
     """Представление для авторизации пользователя"""
 
-    template_name = 'users/login.html'
     form_class = UserLoginForm
+    template_name = 'users/login.html'
     title = 'Авторизация'
     menu = (0, )
 
 
-class UserProfileView(Common, UpdateView):
+class UserProfileView(LoginRequiredMixin, Common, UpdateView):
     """Представление отображения профиля пользователя"""
 
     model = User
@@ -34,8 +35,8 @@ class UserProfileView(Common, UpdateView):
     title = 'Настройка профиля'
     menu = (0, 1, )
 
-    def get_success_url(self):
-        return reverse('users:profile', args=(self.object.id,))
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class UserPasswordChangeView(Common, PasswordChangeView):

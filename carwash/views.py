@@ -1,4 +1,5 @@
-from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect
+
+from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from datetime import date, time, datetime, timedelta
 from django.utils import timezone
@@ -255,7 +256,7 @@ class RequestCallProcessingView(View):
         return HttpResponseRedirect(redirect_url)
 
 
-class UserRegistrationsListView(Common, ListView):
+class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
     """Представление для показа пользователю его записей на оказание услуг автомойки"""
 
     model = CarWashUserRegistration
@@ -272,11 +273,14 @@ class UserRegistrationsListView(Common, ListView):
         return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
 
 
-class UserRegistrationsCancelView(Common, View):
-    """Представление для отмены (удаления) пользователем своей записи"""
+class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
+    """Обработчик события 'отмены (удаления)' пользователем своей записи"""
 
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
+
+        if user_registration.client != request.user:
+            raise Http404
 
         needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
         needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.carwash_reg.pk)
@@ -321,7 +325,6 @@ class RequestCallFormView(Common, FormView):
 
     def form_valid(self, form):
         call_me = CarWashRequestCall(phone_number=form.cleaned_data['phone_number'])
-        # CarWashRequestCall.objects.all().delete()
         call_me.save()
         return HttpResponseRedirect(reverse('carwash:request_call_done'))
 

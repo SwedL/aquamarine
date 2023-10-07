@@ -20,7 +20,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <form action="{% url 'users:profile' user.id %}" method="post" enctype="multipart/form-data">
+                <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="profile-data__item">
                         <label class="profile-data__label" for="{{ form.email.id_for_label }}">Логин</label>

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--=w^i2289$wclooo-l$-%z#rpg2&vyc_07yis@ju8y@2sg(nn!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -135,11 +135,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Users
 
 AUTH_USER_MODEL = "users.User"
-LOGIN_URL = "/users/login/"
+# LOGIN_URL = "/users/login/"
+LOGIN_URL = "/"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 

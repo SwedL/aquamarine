@@ -64,7 +64,7 @@
                               <ul class="dropdown-menu">
                                 <li class="dropdown-item dropdown-item__email" style="hover:none">{{user}}</li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'users:profile' user.id %}">Профиль</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
                                 <li><a class="dropdown-item" href="{% url 'carwash:user_registrations' %}">Мои записи</a></li>
                                   {% if staff %}
                                     <li><a class="dropdown-item" href="{% url 'carwash:staff' days_delta=0 %}">Сотрудник</a></li>

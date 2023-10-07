@@ -1,11 +1,12 @@
 from http import HTTPStatus
-
 from bs4 import BeautifulSoup
+from datetime import date, time
+
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
 
-from carwash.models import CarWashService
+from carwash.models import CarWashService, CarWashRegistration, CarWashUserRegistration
 from users.models import User
 
 
@@ -18,7 +19,7 @@ class IndexListViewTestCase(TestCase):
         self.permission = Permission.objects.get(codename='view_workday')
         self.path = reverse('carwash:home')
 
-    def test_view(self):
+    def test_view_for_not_logged_user(self):
         # Проверка представления главной страницы и меню для неавторизованных пользователей
         response = self.client.get(self.path)
 
@@ -75,11 +76,11 @@ class RegistrationAutoViewTestCase(TestCase):
         self.assertTemplateUsed(response, 'carwash/registration.html')
         self.assertEqual(list(response.context['services']), list(self.services))
 
-    def test_display_submit_button_if_unregistered_user(self):
+    def test_display_submit_button_for_not_logged_user(self):
         # Проверка отображения кнопки формы для неавторизованного пользователя
         self.assertEqual(self._common_tests('call-me__button'), 'Заказать звонок')
 
-    def test_display_submit_button_if_logged_user(self):
+    def test_display_submit_button_for_logged_user(self):
         # Проверка отображения кнопки формы для авторизованного пользователя
         self.client.force_login(self.user)
         self.assertEqual(self._common_tests('registration__button'), 'Записаться')
@@ -113,3 +114,42 @@ class StaffDetailViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context['title'], 'Сотрудник')
         self.assertTemplateUsed(response, 'carwash/staff.html')
+
+
+class UserRegistrationsListViewTestCase(TestCase):
+    fixtures = {'services.json'}
+
+    def setUp(self):
+        self.path = reverse('carwash:user_registrations')
+        self.services = CarWashService.objects.all()
+
+        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
+                                         phone_number='+79445555555', car_model='Kia Sportage')
+
+        self.registration1 = CarWashRegistration.objects.create(client=self.user1)
+        self.registration1.services.set([self.services[0], self.services[6]])
+
+        self.registration2 = CarWashRegistration.objects.create(client=self.user1)
+        self.registration2.services.set([self.services[1], self.services[2], self.services[3]])
+
+        CarWashUserRegistration.objects.create(
+            client=self.user1,
+            date_reg=date(2023, 10, 7),
+            time_reg=time(12, 00),
+            carwash_reg=self.registration1,
+        )
+
+        CarWashUserRegistration.objects.create(
+            client=self.user1,
+            date_reg=date(2023, 10, 9),
+            time_reg=time(10, 00),
+            carwash_reg=self.registration2,
+        )
+
+
+class UserRegistrationsCancelViewTestCase(TestCase):
+    pass
+
+
+class RequestCallFormViewTestCase(TestCase):
+    pass
