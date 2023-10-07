@@ -104,12 +104,4 @@ class UserSetNewPasswordForm(SetPasswordForm):
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "off", 'class': 'form-control'}),
     )
-    # def __init__(self, *args, **kwargs):
-    #     """Обновление стилей формы"""
-    #
-    #     super().__init__(*args, **kwargs)
-    #     for field in self.fields:
-    #         self.fields[field].widget.attrs.update({
-    #             'class': 'form-control password-data__form',
-    #             'autocomplete': 'off'
-    #         })
+

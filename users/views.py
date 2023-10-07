@@ -10,7 +10,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 
-
 from users.forms import *
 from datetime import date, datetime, timedelta
 from common.views import Common
@@ -23,7 +22,7 @@ class UserLoginView(Common, LoginView):
     form_class = UserLoginForm
     template_name = 'users/login.html'
     title = 'Авторизация'
-    menu = (0, )
+    menu = (0,)
 
 
 class UserProfileView(LoginRequiredMixin, Common, UpdateView):
@@ -33,7 +32,7 @@ class UserProfileView(LoginRequiredMixin, Common, UpdateView):
     form_class = UserProfileForm
     template_name = 'users/profile.html'
     title = 'Настройка профиля'
-    menu = (0, 1, )
+    menu = (0, 1,)
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -46,7 +45,7 @@ class UserPasswordChangeView(Common, PasswordChangeView):
     form_class = MyPasswordChangeForm
     template_name = 'users/password-change.html'
     title = 'Смена пароля'
-    menu = (0, 1, )
+    menu = (0, 1,)
 
     def get_success_url(self):
         return reverse('users:password_change_done')
@@ -61,7 +60,7 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     subject_template_name = 'email/password_subject_reset_mail.txt'
     email_template_name = 'email/password_reset_mail.html'
     title = 'Запрос на восстановление пароля'
-    menu = (0, 1, )
+    menu = (0, 1,)
 
 
 class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetConfirmView):
@@ -72,7 +71,7 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     success_url = reverse_lazy('users:login')
     success_message = 'Пароль успешно изменен.\nМожете авторизоваться на сайте.'
     title = 'Установить новый пароль'
-    menu = (0, 1, )
+    menu = (0, 1,)
 
 
 class PasswordChangeDoneTemplateView(Common, TemplateView):
@@ -80,4 +79,3 @@ class PasswordChangeDoneTemplateView(Common, TemplateView):
 
     template_name = 'users/password-change-done.html'
     menu = (0, 1,)
-

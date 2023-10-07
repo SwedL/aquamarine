@@ -38,7 +38,6 @@ class RegistrationAutoView(Common, View):
     а также записи клиентов на оказание услуг автомойки
     """
 
-    login_url = reverse_lazy('carwash:home')
     title = 'Запись автомобиля'
 
     def get(self, request):
@@ -149,6 +148,9 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
     permission_required = "carwash.view_workday"
 
     def get(self, request, days_delta=0):
+        if days_delta > 2:
+            raise Http404
+
         # создаём список дат на неделю вперёд и проверяем наличие объектов WorkDay на неделю вперёд
         create_week_workday()
 
