@@ -11,49 +11,31 @@ class UserModelTestCase(TestCase):
         User.objects.create(email='testuser2@mail.ru', password='12345qwerty')
         User.objects.create(email='testuser3@mail.ru', password='12345qwerty')
         User.objects.create(email='testuser4@mail.ru', password='12345qwerty')
-        self.get_user = User.objects.get(id=1)
 
-    def test_email_label(self):
-        field_label = self.get_user._meta.get_field('email').verbose_name
-        max_length = self.get_user._meta.get_field('email').max_length
-        self.assertEquals(field_label, 'Логин')
-        self.assertEquals(max_length, 255)
+    def test_fields(self):
+        user = User.objects.all().first()
+        field_email = user._meta.get_field('email')
+        field_fio = user._meta.get_field('fio')
+        field_phone_number = user._meta.get_field('phone_number')
+        field_car_type = user._meta.get_field('car_type')
+        field_car_model = user._meta.get_field('car_model')
+        field_discount = user._meta.get_field('discount')
+        field_user_creation_date = user._meta.get_field('user_creation_date')
 
-    def test_fio_label(self):
-        field_label = self.get_user._meta.get_field('fio').verbose_name
-        max_length = self.get_user._meta.get_field('email').max_length
-        self.assertEquals(field_label, 'ФИО')
-        self.assertEquals(max_length, 255)
-
-    def test_phone_number_label(self):
-        field_label = self.get_user._meta.get_field('phone_number').verbose_name
-        max_length = self.get_user._meta.get_field('phone_number').max_length
-        self.assertEquals(field_label, 'телефон')
-        self.assertEquals(max_length, 11)
-
-    def test_car_type_label(self):
-        field_label = self.get_user._meta.get_field('car_type').verbose_name
-        max_length = self.get_user._meta.get_field('car_type').max_length
-        self.assertEquals(field_label, 'тип автомобиля')
-        self.assertEquals(max_length, 40)
-
-    def test_car_model_label(self):
-        field_label = self.get_user._meta.get_field('car_model').verbose_name
-        max_length = self.get_user._meta.get_field('car_model').max_length
-        self.assertEquals(field_label, 'марка и модель автомобиля')
-        self.assertEquals(max_length, 150)
-
-    def test_discount_label(self):
-        field_label = self.get_user._meta.get_field('discount').verbose_name
-        default_value = self.get_user._meta.get_field('discount').default
-        self.assertEquals(field_label, 'дисконт')
-        self.assertEquals(default_value, 0)
-
-    def test_user_creation_date_label(self):
-        field_label = self.get_user._meta.get_field('user_creation_date').verbose_name
-        add_field = self.get_user._meta.get_field('user_creation_date').auto_now_add
-        self.assertEquals(field_label, 'дата регистрации пользователя')
-        self.assertTrue(add_field)
+        self.assertEquals(field_email.verbose_name, 'Логин')
+        self.assertEquals(field_email.max_length, 255)
+        self.assertEquals(field_fio.verbose_name, 'ФИО')
+        self.assertEquals(field_fio.max_length, 255)
+        self.assertEquals(field_phone_number.verbose_name, 'телефон')
+        self.assertEquals(field_phone_number.max_length, 11)
+        self.assertEquals(field_car_type.verbose_name, 'тип автомобиля')
+        self.assertEquals(field_car_type.max_length, 40)
+        self.assertEquals(field_car_model.verbose_name, 'марка и модель автомобиля')
+        self.assertEquals(field_car_model.max_length, 150)
+        self.assertEquals(field_discount.verbose_name, 'дисконт')
+        self.assertEquals(field_discount.default, 0)
+        self.assertEquals(field_user_creation_date.verbose_name, 'дата регистрации пользователя')
+        self.assertTrue(field_user_creation_date.auto_now_add)
 
     def test_user_creation(self):
         # Проверка создания объекта User

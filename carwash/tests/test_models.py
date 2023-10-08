@@ -12,6 +12,26 @@ class CarWashServiceModelTestCase(TestCase):
         CarWashService.objects.create(name='Экспресс-мойка с шампунем', process_time=30, price_standart=250,
                                       price_crossover=250, price_offroad=300)
 
+    def test_fields(self):
+        # Проверка полей
+        service = CarWashService.objects.all().first()
+        field_name = service._meta.get_field('name')
+        field_process_time = service._meta.get_field('process_time')
+        field_price_standart = service._meta.get_field('price_standart')
+        field_price_crossover = service._meta.get_field('price_crossover')
+        field_price_offroad = service._meta.get_field('price_offroad')
+
+        self.assertEqual(field_name.verbose_name, 'название')
+        self.assertEqual(field_name.max_length, 200)
+        self.assertEqual(field_process_time.verbose_name, 'длительность')
+        self.assertEqual(field_process_time.default, 0)
+        self.assertEqual(field_price_standart.verbose_name, 'седан, хетчбэк')
+        self.assertEqual(field_price_standart.default, 0)
+        self.assertEqual(field_price_crossover.verbose_name, 'кроссовер')
+        self.assertEqual(field_price_crossover.default, 0)
+        self.assertEqual(field_price_offroad.verbose_name, 'внедорожник')
+        self.assertEqual(field_price_offroad.default, 0)
+
     def test_service_creation(self):
         # Проверка создания объекта CarWashService
         self.assertEqual(self.service.name, 'Мойка (верх, ковры, сушка)')
@@ -62,6 +82,19 @@ class CarWashRegistrationModelTestCase(TestCase):
 
         self.registration789 = CarWashRegistration.objects.create(client=self.user2)
         self.registration789.services.set([self.services[3], self.services[6], self.services[7], self.services[8]])
+
+    def test_fields(self):
+        # Проверка полей
+        registration = CarWashRegistration.objects.all().first()
+        field_client = registration._meta.get_field('client')
+        field_services = registration._meta.get_field('services')
+
+        self.assertEqual(field_client.verbose_name, 'клиент')
+        self.assertTrue(field_client.many_to_one)
+        self.assertIs(field_client.model, CarWashRegistration)
+        self.assertEqual(field_services.verbose_name, 'услуги')
+        self.assertTrue(field_services.many_to_many)
+        self.assertIs(field_services.model, CarWashRegistration)
 
     def test_registration_creation(self):
         # Проверка создания объекта CarWashRegistration
@@ -176,6 +209,20 @@ class CarWashUserRegistrationModelTestCase(TestCase):
             carwash_reg=self.registration2,
         )
 
+    def test_fields(self):
+        # Проверка полей
+        user_registrations = CarWashUserRegistration.objects.all().first()
+        field_client = user_registrations._meta.get_field('client').verbose_name
+        field_date_reg = user_registrations._meta.get_field('date_reg').verbose_name
+        field_time_reg = user_registrations._meta.get_field('time_reg').verbose_name
+        field_carwash_reg = user_registrations._meta.get_field('carwash_reg')
+        self.assertEqual(field_client, 'клиент')
+        self.assertEqual(field_date_reg, 'дата записи')
+        self.assertEqual(field_time_reg, 'время записи')
+        self.assertTrue(field_carwash_reg.many_to_one)
+        self.assertIs(field_carwash_reg.model, CarWashUserRegistration)
+
+
     def test_registration_get_all_records(self):
         # Проверка количества созданных объектов модели CarWashUserRegistration в бд
         user_registrations = CarWashUserRegistration.objects.all()
@@ -189,9 +236,11 @@ class CarWashRequestCallModelTestCase(TestCase):
         CarWashRequestCall.objects.create(phone_number='81111111111')
         CarWashRequestCall.objects.create(phone_number='82222222222')
 
-    def test_phone_number_max_length(self):
-        # Проверка максимальной длины поля phone_number
+    def test_fields(self):
+        # Проверка полей
+        filed_label = self.request_call._meta.get_field('phone_number').verbose_name
         max_length = self.request_call._meta.get_field('phone_number').max_length
+        self.assertEquals(filed_label, 'номер телефона')
         self.assertEquals(max_length, 11)
 
     def test_request_call_get_all_records(self):
