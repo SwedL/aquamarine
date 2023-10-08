@@ -59,7 +59,7 @@ class UserForgotPasswordView(Common, SuccessMessageMixin, PasswordResetView):
     success_url = reverse_lazy('carwash:home')
     subject_template_name = 'email/password_subject_reset_mail.txt'
     email_template_name = 'email/password_reset_mail.html'
-    title = 'Запрос на восстановление пароля'
+    title = 'Запрос на сброс пароля'
     menu = (0, 1,)
 
 
@@ -70,7 +70,7 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     template_name = 'users/user-password-set-new.html'
     success_url = reverse_lazy('users:login')
     success_message = 'Пароль успешно изменен.\nМожете авторизоваться на сайте.'
-    title = 'Установить новый пароль'
+    title = 'Установка нового пароля'
     menu = (0, 1,)
 
 
