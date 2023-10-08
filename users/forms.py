@@ -45,7 +45,7 @@ class UserProfileForm(UserChangeForm):
     #                              widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
     car_model = forms.CharField(label='Марка и модель автомобиля',
                                 widget=forms.TextInput(attrs={'class': 'form-control'}))
-    discount = forms.IntegerField(label='Дисконт',
+    discount = forms.IntegerField(label='Дисконт', min_value=0, max_value=50,
                                   widget=forms.TextInput(attrs={'class': 'readonly', 'readonly': 'True'}))
 
     class Meta:
