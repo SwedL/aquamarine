@@ -47,6 +47,7 @@ class UserProfileFormTestCase(TestCase):
             'discount': 0,
             }
         form = UserProfileForm(data=form_data)
+
         self.assertTrue(form.is_valid())
 
     def test_form_is_not_valid_email_value(self):
@@ -159,8 +160,8 @@ class UserSetNewPasswordFormTestCase(TestCase):
     def test_form_is_valid_value(self):
         # Проверка на валидность вводимых значений в форму
         form_data = {
-            'new_password1': 'k1Rw0-2t',
-            'new_password2': 'k1Rw0-2t',
+            'new_password1': '123k10-2t',
+            'new_password2': '123k10-2t',
         }
         form = UserSetNewPasswordForm(self.user1, data=form_data)
 

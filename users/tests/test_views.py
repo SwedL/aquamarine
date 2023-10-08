@@ -7,9 +7,9 @@ from users.models import User
 
 
 class UserLoginViewTestCase(TestCase):
+    """Тест представления страницы авторизации пользователя"""
 
     def test_view(self):
-        # Проверка представления страницы авторизации пользователя
         path = reverse('users:login')
         response = self.client.get(path)
 
@@ -19,13 +19,13 @@ class UserLoginViewTestCase(TestCase):
 
 
 class UserProfileViewTestCase(TestCase):
+    """Тест представления страницы профиля пользователя"""
 
     def setUp(self):
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
                                          phone_number='+79445555555', car_model='Kia Sportage')
 
     def test_view(self):
-        # Проверка представления страницы профиля пользователя
         path = reverse('users:profile')
         self.client.force_login(self.user1)
         response = self.client.get(path)
@@ -36,13 +36,13 @@ class UserProfileViewTestCase(TestCase):
 
 
 class UserPasswordChangeViewTestCase(TestCase):
+    """Тест представления страницы смены пароля пользователем"""
 
     def setUp(self):
         self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
                                          phone_number='+79445555555', car_model='Kia Sportage')
 
     def test_view(self):
-        # Проверка представления страницы смены пароля пользователем
         path = reverse('users:password_change')
         self.client.force_login(self.user1)
         response = self.client.get(path)
@@ -53,9 +53,9 @@ class UserPasswordChangeViewTestCase(TestCase):
 
 
 class UserForgotPasswordViewTestCase(TestCase):
+    """Тест представления страницы для сброса пароля пользователем"""
 
     def test_view(self):
-        # Проверка представления страницы для сброса пароля пользователем
         path = reverse('users:password_reset')
         response = self.client.get(path)
 
@@ -65,9 +65,9 @@ class UserForgotPasswordViewTestCase(TestCase):
 
 
 class PasswordChangeDoneTemplateViewTestCase(TestCase):
+    """Тест представления страницы для подтверждения успешной смены пароля пользователем"""
 
     def test_view(self):
-        # Проверка представления для подтверждения успешной смены пароля пользователем
         path = reverse('users:password_change_done')
         response = self.client.get(path)
 

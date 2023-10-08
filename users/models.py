@@ -34,6 +34,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    """
+    Модель Пользователь.
+    Поля: email (login), ФИО, номер телефона,
+    тип автомобиля, марка и модель, дисконт, DateTime создания
+    """
+
     STANDART = 'price_standart'
     CROSSOVER = 'price_crossover'
     OFFROAD = 'price_offroad'

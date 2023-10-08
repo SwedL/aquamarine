@@ -2,12 +2,16 @@ from django.core.validators import RegexValidator
 from django.db import models
 from datetime import date, time, datetime, timedelta
 from django.utils import timezone
-from django.conf import settings
 
 from users.models import User
 
 
 class CarWashService(models.Model):
+    """
+    Модель Услуга. Поля: название, время необходимое на оказание услуги,
+    цена стандарт, цена для кроссоверов, цена для внедорожников
+    """
+
     name = models.CharField(max_length=200, verbose_name='название', unique=True, db_index=True)
     process_time = models.SmallIntegerField(default=0, verbose_name='длительность')
     price_standart = models.IntegerField(default=0, verbose_name='седан, хетчбэк')
@@ -24,11 +28,14 @@ class CarWashService(models.Model):
 
 
 class CarWashRegistration(models.Model):
+    """Модель Регистрация. Поля: пользователь, выбранные услуги"""
+
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
     services = models.ManyToManyField(to=CarWashService, verbose_name="услуги")
 
     def total_time_reg(self):
-        "Возвращает суммарное время работ регистрации"
+        """Возвращает суммарное время работ регистрации"""
+
         choice_services = self.services.all()
         time789 = sum([x.pk for x in choice_services if
                        x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну
@@ -54,6 +61,8 @@ class CarWashRegistration(models.Model):
 
 
 class WorkDay(models.Model):
+    """Модель Рабочий день. Поля: дата, остальные поля (время) связь с Регистрация или Null"""
+
     FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                      '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
@@ -92,6 +101,7 @@ class WorkDay(models.Model):
 
     def formatted_dict(self):
         """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
+
         # получаем список значений словаря WorkDay только дата и времена
         workday_values = list(self.__dict__.values())[2:]
         res_dict = {}
@@ -109,6 +119,12 @@ class WorkDay(models.Model):
 
 
 class CarWashUserRegistration(models.Model):
+    """
+    Модель РегистрацияПользователя для отображения записи на странице 'Мои Записи'.
+    Поля: пользователь, дата регистрации, время регистрации, связь с Регистрация
+
+    """
+
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
     date_reg = models.DateField(verbose_name='дата записи')
     time_reg = models.TimeField(verbose_name='время записи')
@@ -120,6 +136,8 @@ class CarWashUserRegistration(models.Model):
 
 
 class CarWashRequestCall(models.Model):
+    """Модель Запроса Звонка. Поля: номер телефона, обработан или нет, DateTime создания"""
+
     phone_regex = RegexValidator(regex=r'8\d{10}$',
                                  message="Номер телефона должен быть в формате: '89999999999'")
 
@@ -134,4 +152,4 @@ class CarWashRequestCall(models.Model):
     def __str__(self):
         return f'{str(self.created.time())[0:5]} --- {self.phone_number}'
 
-# manage.py shell
+# python manage.py shell

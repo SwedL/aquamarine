@@ -4,6 +4,7 @@ from users.models import User
 
 
 class UserModelTestCase(TestCase):
+    """Тест модели Пользователь"""
 
     def setUp(self):
         self.user = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
@@ -13,6 +14,7 @@ class UserModelTestCase(TestCase):
         User.objects.create(email='testuser4@mail.ru', password='12345qwerty')
 
     def test_fields(self):
+        # Проверка полей модели на названия и default значения
         user = User.objects.all().first()
         field_email = user._meta.get_field('email')
         field_fio = user._meta.get_field('fio')
@@ -55,10 +57,9 @@ class UserModelTestCase(TestCase):
     def test_user_get_all_records(self):
         # Проверка получения всех записей из бд
         users = User.objects.all()
+
         self.assertEqual(len(users), 4)
 
     def test_user_str(self):
         # Проверка метода __str__()
-        expected_str = 'testuser@mail.ru'
-        self.assertEqual(str(self.user), expected_str)
-
+        self.assertEqual(str(self.user), 'testuser@mail.ru')

@@ -11,6 +11,8 @@ from users.models import User
 
 
 class IndexListViewTestCase(TestCase):
+    """Тест представления главной страницы"""
+
     fixtures = {'services.json'}
 
     def setUp(self):
@@ -20,7 +22,7 @@ class IndexListViewTestCase(TestCase):
         self.path = reverse('carwash:home')
 
     def test_view_for_not_logged_user(self):
-        # Проверка представления главной страницы и меню для неавторизованных пользователей
+        # Проверка меню для неавторизованных пользователей
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -60,6 +62,8 @@ class IndexListViewTestCase(TestCase):
 
 
 class RegistrationAutoViewTestCase(TestCase):
+    """Тест представления страницы записи автомобиля на автомоечный комплекс"""
+
     fixtures = {'services.json'}
 
     def setUp(self):
@@ -68,7 +72,6 @@ class RegistrationAutoViewTestCase(TestCase):
         self.path = reverse('carwash:registration')
 
     def test_view(self):
-        # Проверка представления страницы записи автомобиля на автомоечный комплекс
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -93,6 +96,10 @@ class RegistrationAutoViewTestCase(TestCase):
 
 
 class StaffDetailViewTestCase(TestCase):
+    """
+    Тест представления страницы показа сотруднику всех записей клиентов
+    на оказание услуг автомойки. На сегодня, завтра и послезавтра.
+    """
 
     def setUp(self):
         self.user = User.objects.create(email='test@mail.ru', password='test')
@@ -117,6 +124,8 @@ class StaffDetailViewTestCase(TestCase):
 
 
 class UserRegistrationsListViewTestCase(TestCase):
+    """Тест представления показа пользователю его записей на оказание услуг автомойки"""
+
     fixtures = {'services.json'}
 
     def setUp(self):
@@ -171,6 +180,8 @@ class UserRegistrationsListViewTestCase(TestCase):
 
 
 class RequestCallFormViewTestCase(TestCase):
+    """"Тест представления заказа звонка клиенту"""
+
     def setUp(self):
         self.path = reverse('carwash:call_me')
 
@@ -181,12 +192,3 @@ class RequestCallFormViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Заказ звонка')
         self.assertTemplateUsed(response, 'carwash/request-call.html')
-
-    # def test_request_call_post_success(self):
-    #     tel_number = '89991999999'
-    #
-    #     response = self.client.post(self.path, tel_number)
-    #
-    #     self.assertEqual(response.status_code, HTTPStatus.OK)
-    #     self.assertRedirects(response, reverse('carwash:request_call_done'))
-    #     self.assertTrue(CarWashRequestCall.objects.all().exists())

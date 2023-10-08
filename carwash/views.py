@@ -141,7 +141,7 @@ class RegistrationAutoView(Common, View):
 class StaffDetailView(Common, PermissionRequiredMixin, View):
     """
     Представление для показа сотруднику всех записей клиентов
-    на оказание услуг автомойки
+    на оказание услуг автомойки. На сегодня, завтра и послезавтра.
     """
 
     title = 'Сотрудник'

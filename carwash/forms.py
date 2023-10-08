@@ -4,7 +4,7 @@ from captcha.fields import CaptchaField
 
 
 class CarWashRequestCallForm(forms.Form):
-    """Создание объекта модели RequestCall (заказать звонок)"""
+    """Форма RequestCall (заказать звонок)"""
 
     phone_regex = RegexValidator(regex=r'8\d{10}',
                                  message="Номер телефона должен быть в формате: '89999999999'")
