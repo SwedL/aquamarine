@@ -8,20 +8,40 @@ $color-dark-grey: #474747
 // $color-white: #ddd
 $color-white: #ececec
 
+.section
+    overflow: hidden
+
+.carousel-item
+    position: relative
+    img
+        height: 770px
+        object-fit: cover
+
+.overlay
+    position: absolute
+    height: 100%
+    width: 100%
+    background: black
+    opacity: 0.3
+
 .first-section
-    min-height: 766px
-    background: $color-main    
-    &__content        
-        max-width: 1140px
-        margin: 0 auto
-        display: flex
-        flex-direction: column
-    &__title
-        font-size: 55px
+    height: 870px
+    background: $color-main
+    &__superstructure
+        // height: 50px
+    &__content
+        max-width: 800px        
+        position: absolute
+        left: 13%
+        bottom: 7%
+        font-size: 22px
         color: white
-        text-align: center
-        margin-top: 35px
-        margin-bottom: 35px
+        z-index: 1    
+    &__content-title
+        max-width: 800px 
+        bottom: 7%
+        // font-size: 26px
+    
 
 .second-section
     min-height: 480px
@@ -76,6 +96,7 @@ $color-white: #ececec
     background: $color-dark-blue
 
 .services-section
+    overflow: hidden
     position: relative        
     min-height: 1120px
     background: $color-main  
@@ -90,7 +111,7 @@ $color-white: #ececec
     &__price
         position: absolute
         top: 119px
-        left: 370px
+        left: 20%
         min-height: 755px
         width: 1140px
         border-radius: 16px
@@ -141,4 +162,7 @@ tr:nth-child(even)
     background-color: $color-dark-grey
 
     
-
+@media (max-width: 1199px)
+    .section 
+        width: 960px
+    

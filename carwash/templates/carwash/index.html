@@ -11,85 +11,55 @@
 {% block content %}
     <main>
         <section class="first-section section">
-            <!-- <hr class="first-section__hr">  -->
-            <div class="first-section__content">
-                <p class="first-section__title">
-                    Aquamarine - салон красоты вашего
-                    <br>автомобиля</p>
-                <div class="first-section__image image">
-                    <img src="{% static 'carwash/images/auto.png' %}" alt="">
+            <div class="first-section__superstructure"></div>
+            <div class="first-section__carousel">
+            <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div>
-            </div>
-        </section>
-
-        <!-- 3 карточки с преимуществами компании -->
-        <section class="second-section section">            
-            <div class="second-section__cards-box">
-                <div class="second-section__cards-item cards-item cards-item_red">
-                    <!-- 4 болта внутри карточки -->
-                    <div class="cards-item__bolts-box">
-                        <div class="cards-item__bolts_y">
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                        </div>
-                        <div class="cards-item__bolts_y">
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                        </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <div class="first-section__content first-section__content-title">
+                    <h1>
+                        Aquamarine - салон красоты вашего автомобиля
+                    </h1>
                     </div>
-                    <!-- title и description внутри карточки -->
-                    <div class="cards-item__content">
-                        <img class="cards-item__logo" src="{% static 'carwash/icons/logo sertificate.svg' %}" alt="sertificat">
-                        <p class="cards-item__title text">Гарантия качества</p>
-                        <p class="cards-item__description text">В нашей работе мы используем только
-                             самые качественные материалы и химию от производителей из Европы и Америки</p>
-                    </div>                    
-                </div>
-
-                <div class="second-section__cards-item cards-item cards-item_green">
-                    <!-- 4 болта внутри карточки -->
-                    <div class="cards-item__bolts-box">
-                        <div class="cards-item__bolts_y">
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                        </div>
-                        <div class="cards-item__bolts_y">
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                        </div>
+                    <div class="overlay"></div>
+                    <img src="{% static 'carwash/images/image21.jpg' %}" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <div class="first-section__content">
+                        <h1>Гарантия качества</h1>
+                        <p>В нашей работе мы используем только
+                            самые качественные материалы и химию от производителей из Европы и Америки</p>
                     </div>
-                    <!-- title и description внутри карточки -->
-                    <div class="cards-item__content">
-                        <img class="cards-item__logo" src="{% static 'carwash/icons/logo profi.svg' %}" alt="sertificat">
-                        <p class="cards-item__title text">Опытные мастера</p>
-                        <p class="cards-item__description text">Специалисты автокомплекса 
+                    <div class="overlay"></div>
+                    <img src="{% static 'carwash/images/image22.jpg' %}" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <div class="first-section__content">
+                        <h1>Опытные мастера</h1>
+                        <p>Специалисты автокомплекса 
                             имеют богатый опыт и знают все тонкости своего дела</p>
                     </div>
+                    <div class="overlay"></div>
+                    <img src="{% static 'carwash/images/image23.jpg' %}" class="d-block w-100" alt="...">
+                  </div>
                 </div>
-
-                <div class="second-section__cards-item cards-item cards-item_blue">
-                    <!-- 4 болта внутри карточки -->
-                    <div class="cards-item__bolts-box">
-                        <div class="cards-item__bolts_y">
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                        </div>
-                        <div class="cards-item__bolts_y">
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                            <div class="cards-item__bolts_x"><img src="{% static 'carwash/icons/bolt.svg' %}" alt="болт"></div>
-                        </div>
-                    </div>
-                    <!-- title и description внутри карточки -->
-                    <div class="cards-item__content">
-                        <img class="cards-item__logo" src="{% static 'carwash/icons/logo restroom.svg' %}" alt="sertificat">
-                        <p class="cards-item__title text">Комната отдыха</p>
-                        <p class="cards-item__description text">Для комфортного ожидания готовности автомобиля, предусмотрена комната отдыха для клиентов</p>
-                    </div>
-                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Предыдущий</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Следующий</span>
+                </button>
+              </div>
             </div>
-            <div id="services_price"></div>
-        </section>
-
+        </section>        
+        <div id="services_price"></div>
         <!-- услуги и цены -->
         <section class="services-section section">            
             <div class="services-section__image">
@@ -125,6 +95,5 @@
         <section class="third-section section">
             <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa64d4379f74e00b64d9c0065b99679d09692495de3253e4dbe99f3096e9395cb&amp;source=constructor" width="100%" height="500" frameborder="0"></iframe>
         </section>
-
     </main>
 {% endblock %}
