@@ -225,11 +225,4 @@ tr:nth-child(even) {
   background-color: #474747;
 }
 
-@media (max-width: 1199px) {
-  /* line 166, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/index.sass */
-  .section {
-    width: 960px;
-  }
-}
-
 /*# sourceMappingURL=index.css.map */

@@ -66,10 +66,9 @@ html
     margin: 0 auto  //где находится контейнер (по середине)
     
 .text
-    color: white
+    color: #e3e3e3
 
 .header
-    // overflow: hidden
     position: sticky
     top: 0
     min-height: 100px
@@ -77,11 +76,12 @@ html
     padding-top: 25px
     z-index: 5        
     &__logo-box
-        margin-left: 30px         
+        margin-left: 30px 
+        width: 400px        
         filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 1))            
     &__contacts-nav
         justify-content: space-between
-      
+
 .nav-menu
     display: flex
     align-items: center
@@ -141,8 +141,8 @@ html
 .footer
     // overflow: hidden
     background: black 
-    &__text 
-        color: #e3e3e3  
+    // &__text 
+    //     color:   
     &__container
         min-height: 110px        
     &__logo-box        
@@ -151,21 +151,56 @@ html
         display: flex
         flex-direction: row     
         font-size: 18px
-
-.contacts    
     &__item
         margin-right: 50px
-    &__title
+    &__contacts-title
         margin-bottom: 5px
 
 @media (max-width: 1199px)
     .container
         width: 960px
+    .header
+        &__logo-box
+            width: 300px
+    .nav-menu
+        width: 550px
+        &__list-item
+            margin-right: 20px
+            font-size: 16px
+    
+    .footer
+        &__logo-box
+            width: 250px
+        &__contacts-box
+            font-size: 14px
+
 
 @media (max-width: 991px)
     .container 
         width: 720px
+    .header
+        &__logo-box
+            width: 250px
+    .nav-menu
+        width: 350px
+        &__list-item
+            width: 90px
+            margin-right: 15px
+            font-size: 14px
+    
+    .footer
+        &__logo-box
+            width: 200px
+            margin-left: 40px
+        &__contacts-box
+            font-size: 12px
+        &__item
+            margin-right: 30px
+            &:last-child
+                margin-right: 0px
 
+    
+// сейчас
 @media (max-width: 767px)
     .container 
         width: 540px
