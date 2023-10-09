@@ -115,18 +115,17 @@ function Calculate() {
             period = period + 30;
         } 
     }
-
+    
     /* Выключаем кнопки времён которые не подходят под общее время услуг */
     for(let k in res_dict) {
-    //    console.log(k, res_dict[k], overal_time);
         let [r, g] = res_dict[k];
         if(g < overal_time) {
             r.checked = false;
             r.disabled = true;
         }
     }
-    console.log(overal_time)
-    CheckChoice()   /* Включаем или отключаем кнопку записи */
+    // console.log(overal_time)
+    // CheckChoice()   /* Включаем или отключаем кнопку записи */
     TotalCost(list_services, overal_time)
 
 }
@@ -136,7 +135,7 @@ function TotalCost(list_services, overal_time) {
 
     list_services.forEach(item => {
         if(item.checked) {
-            console.log(item.dataset.price)
+            // console.log(item.dataset.price)
             total_cost += Number(item.dataset.price);
         }
     });

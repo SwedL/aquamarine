@@ -155,21 +155,21 @@ body {
 .busy {
   height: auto;
   background: #646464;
-  color: #fefefe;
+  color: #d8d8d8;
   box-shadow: 1px 1px 2px #272727 inset;
   line-height: 22px;
 }
 
 /* line 121, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .client-free {
-  width: 150px;
+  width: 250px;
   text-align: center;
 }
 
 /* line 124, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .client-busy {
   padding: 0px 0px 0px 5px;
-  width: 150px;
+  width: 250px;
 }
 
 /* line 128, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
@@ -196,7 +196,7 @@ body {
 
 /* line 138, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__services {
-  width: 1100px;
+  width: 1000px;
   padding-left: 7px;
   height: auto;
 }

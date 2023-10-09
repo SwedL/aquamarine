@@ -67,8 +67,8 @@
                     <div class="data-box__item time-workday__time {% if time_workday.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{time_workday.time}}</div>
                     {% if time_workday.registration %}
                     <div class="data-box__item busy client-busy">
-                        {{time_workday.registration.client}}
-                        {{time_workday.registration.client.phone_number}}
+                        {{time_workday.registration.client}}<br>
+                        {{time_workday.registration.client.phone_number}}<br>
                         {{time_workday.registration.client.car_model}}
                     </div>
                     <div class="data-box__item busy time-workday__services">{{time_workday.registration.all_services}}</div>
