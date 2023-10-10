@@ -141,7 +141,6 @@ tr:hover {
 .day__border input:checked + label {
   background: #ffb11f;
   color: #09172b;
-  box-shadow: 1px 1px 3px #000000 inset;
 }
 
 /* line 112, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */

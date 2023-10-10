@@ -6,6 +6,7 @@ $color-menu: #656565
 $color-menu-blue: #043b6f
 $color-red: #ff5151
 $color-menu-hover: #9ae7ff
+$color-white: #e3e3e3
 
     
 *
@@ -291,6 +292,24 @@ html
             width: 100%
         &__logo-box
             width: 180px
+        &__contacts-nav
+            display: none
+    
+    .hamburger
+        height: 14px
+        width: 30px
+        position: absolute
+        top: 35px
+        right: 40px
+        span
+            height: 2px
+            width: 100%
+            display: block
+            background-color: $color-white
+            margin-bottom: 4px
+            &:last-child
+                margin-bottom: 0px
+
     .footer
         &__logo-box
             width: 10px

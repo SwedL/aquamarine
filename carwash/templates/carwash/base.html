@@ -21,13 +21,17 @@
         <!-- Base CSS -->
         <link rel="stylesheet" href="{% static 'carwash/css/base.css' %}" xmlns="http://www.w3.org/1999/html">
 
+        <!-- Base JS -->
+        <script src="{% static 'carwash/js/script.js' %}"></script>
+
         <!-- Custom styles for this template -->
         {% block css %} {% endblock %}
+
 
         <title>
             {{title}}
         </title>
-        {% block staff %} {% endblock %}
+        <!-- {% block staff %} {% endblock %} -->
     </head>
 
     <body>
@@ -38,10 +42,13 @@
             <!-- Логотип Aquamarine-->
             <a href="{% url 'carwash:home' %}"><img class="header__logo-box" src="{% static 'carwash/icons/logo.svg' %}"
                                                     alt="logo"></a>
-
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <!-- Блок контактов и навигационного меню -->
             <div class="header__contacts-nav">
-
                 <!-- Блок навигации -->
                 <div class="header__nav-box nav-menu">
                     <div class="nav-menu__left">

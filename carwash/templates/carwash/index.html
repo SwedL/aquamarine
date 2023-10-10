@@ -25,9 +25,10 @@
                     <h1>
                         Aquamarine - салон красоты вашего автомобиля
                     </h1>
+                    <a href="{% url 'carwash:call_me' %}"><button class="btn btn-primary" type="button">Заказать звонок</button></a>
                     </div>
                     <div class="overlay"></div>
-                    <img src="{% static 'carwash/images/image21.jpg' %}" class="d-block w-100" alt="...">
+                    <img src="{% static 'carwash/images/zulfahmi1.jpg' %}" class="d-block w-100" alt="...">
                   </div>
                   <div class="carousel-item">
                     <div class="first-section__content">
@@ -83,7 +84,6 @@
                         {% endfor %}
                     </table>
                 </div>
-
                 <a class="services-section__link-freepik"
                    href="https://ru.freepik.com/free-photo/beautiful-car-at-interior-clean-up-service_21139153.htm#page=4&query=%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B9%D0%BA%D0%B0&position=1&from_view=search&track=sph"
                    target="_blank">www.Freepik.com
@@ -93,7 +93,7 @@
 
         <!-- адрес (карта) -->
         <section class="third-section section">
-            <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa64d4379f74e00b64d9c0065b99679d09692495de3253e4dbe99f3096e9395cb&amp;source=constructor" width="100%" height="500" frameborder="0"></iframe>
-        </section>
+          <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aa64d4379f74e00b64d9c0065b99679d09692495de3253e4dbe99f3096e9395cb&amp;source=constructor" width="100%" height="500" frameborder="0"></iframe>
+      </section>
     </main>
 {% endblock %}
