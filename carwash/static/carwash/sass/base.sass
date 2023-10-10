@@ -61,9 +61,8 @@ html
     display: flex
     flex-direction: row
     justify-content: space-between
-    width: 1140px
     align-items: center
-    margin: 0 auto  //где находится контейнер (по середине)
+    // margin: 0 auto  //где находится контейнер (по середине)
     
 .text
     color: #e3e3e3
@@ -74,10 +73,13 @@ html
     min-height: 100px
     background: #043b6f
     padding-top: 25px
-    z-index: 5        
+    z-index: 5
+    &__container
+        width: 1100px
+        margin: 0 auto
     &__logo-box
-        margin-left: 30px 
-        width: 400px        
+        margin-left: 35px
+        width: 350px        
         filter: drop-shadow(8px 4px 4px rgba(0, 0, 0, 1))            
     &__contacts-nav
         justify-content: space-between
@@ -87,30 +89,38 @@ html
     align-items: center
     justify-content: space-between  //расстояние между основными кнопками меню и Войти
     width: 600px
-    height: 35px 
+    height: 35px
+    &__right
+        margin-right: 35px 
     &__list
         display: flex
         flex-direction: row
-        margin-left: 0px
+        // margin-left: 0px
         text-align: center
         a
             cursor: default
     &__list-item
-        margin-right: 30px
+        margin-right: 25px
         font-size: 18px
-        &:last-child
-            margin-right: 20px // margin Войти
+    &__login
+        font-size: 18px
     &__text        
         text-decoration: none
         color: white
     &__text:hover
         color: $color-menu-hover
 
-
+.fa-solid
+    font-size: 14px
 .dropdown-menu
+    // --bs-dropdown-min-width: 0px
+    --bs-dropdown-item-padding-x: 0.7rem
+    --bs-dropdown-padding-y: 0.2rem
+    --bs-dropdown-divider-margin-y: 0.2rem
     background: #e7e7e7
-    &__user
-        text-align: center
+    
+    // &__user
+    //     text-align: center
     
 
 .dropdown-item
@@ -139,59 +149,92 @@ html
 
 
 .footer
-    // overflow: hidden
     background: black 
-    // &__text 
-    //     color:   
     &__container
-        min-height: 110px        
+        min-height: 110px
+        width: 1000px
+        margin: 0 auto        
     &__logo-box        
-        margin-left: 50px
+        width: 300px
     &__contacts-box
         display: flex
         flex-direction: row     
         font-size: 18px
     &__item
         margin-right: 50px
+        &:last-child
+            margin-right: 0px
     &__contacts-title
         margin-bottom: 5px
 
-@media (max-width: 1199px)
-    .container
-        width: 960px
+
+@media (max-width: 1199px)    
     .header
+        &__container
+            width: 880px
         &__logo-box
             width: 300px
+
     .nav-menu
-        width: 550px
+        width: 450px
         &__list-item
+            width: 90px
             margin-right: 20px
             font-size: 16px
+        &__list-login
+            font-size: 16px
+
+    .fa-solid
+        font-size: 14px
+    .dropdown-menu
+        --bs-dropdown-min-width: 0px
+        --bs-dropdown-item-padding-x: 0.7rem
+        --bs-dropdown-padding-y: 0.2rem
+        --bs-dropdown-divider-margin-y: 0.2rem
+    .dropdown-item
+        font-size: 14px
     
     .footer
+        &__container
+            width: 850px 
         &__logo-box
             width: 250px
         &__contacts-box
             font-size: 14px
 
 
-@media (max-width: 991px)
-    .container 
-        width: 720px
+@media (max-width: 991px)    
     .header
+        &__container
+            width: 720px
         &__logo-box
             width: 250px
+
     .nav-menu
-        width: 350px
+        width: 400px
         &__list-item
             width: 90px
             margin-right: 15px
             font-size: 14px
+        &__list-login
+            font-size: 14px
+    
+    .fa-solid
+        font-size: 14px
+    .dropdown-menu
+        // --bs-dropdown-min-width: 0px
+        --bs-dropdown-item-padding-x: 0.7rem
+        --bs-dropdown-padding-y: 0.2rem
+        --bs-dropdown-divider-margin-y: 0.2rem
+    .dropdown-item
+        // padding: 3px 4px 3px 4px
+        font-size: 14px
     
     .footer
+        &__container
+            width: 690px
         &__logo-box
             width: 200px
-            margin-left: 40px
         &__contacts-box
             font-size: 12px
         &__item
@@ -200,11 +243,64 @@ html
                 margin-right: 0px
 
     
-// сейчас
 @media (max-width: 767px)
-    .container 
-        width: 540px
+    .header
+        min-height: 80px
+        &__container
+            width: 540px
+        &__logo-box
+            width: 150px
+
+    .nav-menu
+        width: 310px
+        &__list-item
+            width: 70px
+            margin-right: 10px
+            font-size: 12px
+        &__list-login
+            font-size: 12px
+
+    .fa-solid
+        font-size: 12px
+    .dropdown-menu
+        --bs-dropdown-min-width: 0px
+        --bs-dropdown-item-padding-x: 0.3rem
+        --bs-dropdown-padding-y: 0.0rem
+        --bs-dropdown-divider-margin-y: 0.1rem
+    .dropdown-item
+        font-size: 12px
     
+    .footer
+        &__logo-box
+            width: 10px
+            display: none
+        &__container
+            min-height: 80px
+            width: 690px
+        &__contacts-box
+            font-size: 12px
+        &__item
+            margin-right: 55px
+            &:last-child
+                margin-right: 25px
+
+// сейчас
 @media (max-width: 575px)
-    .container 
-        width: 100%
+    .header
+        &__container
+            width: 100%
+        &__logo-box
+            width: 180px
+    .footer
+        &__logo-box
+            width: 10px
+            display: none
+        &__container
+            min-height: 80px
+            width: 400px
+        &__contacts-box
+            font-size: 10px
+        &__item
+            margin-right: 15px
+            &:last-child
+                margin-right: 15px
