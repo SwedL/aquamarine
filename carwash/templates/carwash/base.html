@@ -68,49 +68,46 @@
                 <span></span>
                 <span></span>
             </div>
-            <!-- Блок контактов и навигационного меню -->
-            <div class="header__contacts-nav">
                 <!-- Блок навигации -->
-                <div class="header__nav-box nav-menu">
-                    <div class="nav-menu__left">
-                        <ul class="nav-menu__list">
-                            {% for m in menu %}
-                            <li class="nav-menu__list-item text"><a class="nav-menu__text"
-                                    href="{% if m.url_name %} {% url m.url_name %} {% else %} {{ m.anchor }} {% endif %}">{{m.title|linebreaksbr}}</a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="nav-menu__right">
-                        <ul class="nav-menu__list">
-                        {% if user.is_authenticated %}
-                            <div class="dropdown-center">
-                              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i>
-                              </a>
+            <div class="header__nav-box nav-menu nav-menu_active">
+                <div class="nav-menu__left">
+                    <ul class="nav-menu__list">
+                        {% for m in menu %}
+                        <li class="nav-menu__list-item text"><a class="nav-menu__text"
+                                href="{% if m.url_name %} {% url m.url_name %} {% else %} {{ m.anchor }} {% endif %}">{{m.title|linebreaksbr}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="nav-menu__right">
+                    <ul class="nav-menu__list nav-menu__user">
+                    {% if user.is_authenticated %}
+                        <div class="dropdown-center">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                            </a>
 
-                              <ul class="dropdown-menu">
-                                <li class="dropdown-item dropdown-item__email" style="hover:none">{{user}}</li>
+                            <ul class="dropdown-menu">
+                            <li class="dropdown-item dropdown-item__email" style="hover:none">{{user}}</li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+                            <li><a class="dropdown-item" href="{% url 'carwash:user_registrations' %}">Мои записи</a></li>
+                                {% if staff %}
+                                <li><a class="dropdown-item" href="{% url 'carwash:staff' days_delta=0 %}">Сотрудник</a></li>
+                                {% endif %}
+                                {% if user.is_superuser or user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+                                {% endif %}
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
-                                <li><a class="dropdown-item" href="{% url 'carwash:user_registrations' %}">Мои записи</a></li>
-                                  {% if staff %}
-                                    <li><a class="dropdown-item" href="{% url 'carwash:staff' days_delta=0 %}">Сотрудник</a></li>
-                                  {% endif %}
-                                  {% if user.is_superuser or user.is_staff %}
-                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
-                                  {% endif %}
-                                  <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
-                              </ul>
-                            </div>
-                        {% else %}
-                            <li class="nav-menu__list-login text">
-                                <a class="nav-menu__text" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
-                            </li>
-                        {% endif %}
-                        </ul>
-                    </div>
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <li class="nav-menu__list-login text">
+                            <a class="nav-menu__text" href="{% url 'users:login' %}">Войти <i class="fas fa-sign-in-alt"></i></a>
+                        </li>
+                    {% endif %}
+                    </ul>
                 </div>
             </div>
         </div>
