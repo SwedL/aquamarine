@@ -27,14 +27,12 @@
         <!-- Custom styles for this template -->
         {% block css %} {% endblock %}
 
-
         <title>
             {{title}}
         </title>
         <!-- {% block staff %} {% endblock %} -->
 
         <!-- Fav-icon -->
-<!--        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">-->
         <link rel="apple-touch-icon" sizes="57x57" href="{% static 'carwash/icons/favicons/apple-icon-57x57.png' %}">
         <link rel="apple-touch-icon" sizes="60x60" href="{% static 'carwash/icons/favicons/apple-icon-60x60.png' %}">
         <link rel="apple-touch-icon" sizes="72x72" href="{% static 'carwash/icons/favicons/apple-icon-72x72.png' %}">
@@ -52,7 +50,6 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
-
     </head>
 
     <body>
@@ -69,8 +66,9 @@
                 <span></span>
             </div>
                 <!-- Блок навигации -->
-            <div class="header__nav-box nav-menu nav-menu_active">
+            <div class="header__nav-box nav-menu">
                 <div class="nav-menu__left">
+                    <div class="nav-menu__superstructure"></div>
                     <ul class="nav-menu__list">
                         {% for m in menu %}
                         <li class="nav-menu__list-item text"><a class="nav-menu__text"
@@ -86,7 +84,6 @@
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user"></i>
                             </a>
-
                             <ul class="dropdown-menu">
                             <li class="dropdown-item dropdown-item__email" style="hover:none">{{user}}</li>
                             <li><hr class="dropdown-divider"></li>
@@ -140,10 +137,10 @@
                     <div class="footer__contacts-text text">Пн - Вс: 9:00 - 20:00</div>
                 </div>
             </div>
-
         </div>
     </footer>
-
-
+    
+    <!-- Script for menu -->
+    <script src="{% static 'carwash/js/script-menu.js' %}"></script>
     </body>
 </html>

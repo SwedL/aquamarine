@@ -245,7 +245,7 @@ html
             &:last-child
                 margin-right: 25px
 
-// сейчас
+
 @media (max-width: 575px)
     .header
         &__container
@@ -254,15 +254,16 @@ html
             width: 180px
             
     .nav-menu
-        display: none
         position: fixed
         top: 0
-        right: 0
+        right: -100%
         height: 100vh
         width: 50%
         background: #0073a1
+        transition: 0.6s all
+        display: block
         &__left
-            height: 55%
+            height: 60%
         &__right
             margin: 0
         &__list
@@ -271,37 +272,32 @@ html
             justify-content: space-evenly
             height: 100%
             align-items: center
-        
         &__list-item
             width: 90px
             font-size: 16px
         &__list-login
             font-size: 16px
-        // &__user
-        //     margin-right: 30%
 
     .fa-solid
         font-size: 14px
     .dropdown-menu
-        // --bs-dropdown-min-width: 0px
         --bs-dropdown-item-padding-x: 0.7rem
         --bs-dropdown-padding-y: 0.2rem
         --bs-dropdown-divider-margin-y: 0.2rem
     .dropdown-item
-        // padding: 3px 4px 3px 4px
         font-size: 14px
         
-            
-
     .nav-menu_active
         display: block
+        right: 0
 
     .hamburger
         height: 14px
-        width: 30px
+        width: 25px
         position: absolute
         top: 35px
-        right: 40px
+        right: 30px
+        z-index: 10
         span
             height: 2px
             width: 100%
@@ -312,6 +308,7 @@ html
             &:last-child
                 margin-bottom: 0px
     .hamburger_active
+        z-index: 10
         span
             margin-bottom: -2px
             &:nth-child(1)
@@ -321,8 +318,6 @@ html
             &:nth-child(3)
                 transform: translateY(3px) rotate(45deg)
     
-
-
     .footer
         &__logo-box
             width: 10px
@@ -336,3 +331,54 @@ html
             margin-right: 15px
             &:last-child
                 margin-right: 15px
+
+@media (max-width: 460px)
+    .header
+        min-height: 70px
+        &__container
+            width: 100%
+        &__logo-box
+            width: 120px
+
+    .nav-menu
+        &__superstructure
+            height: 30px
+        &__left
+            height: 50%
+            margin-bottom: 15px
+
+    .footer
+        &__container
+            min-height: 60px
+            width: 300px
+        &__contacts-box
+            font-size: 8px
+        &__item
+            margin-right: 10px
+            &:last-child
+                margin-right: 0
+
+// сейчас
+@media (max-width: 319px)
+    .header
+        overflow: hidden
+
+    .nav-menu
+        &__left
+            margin-bottom: 5px
+        &__user
+            width: 100%
+
+    // .fa-solid
+    //     font-size: 12px
+    // .dropdown-menu
+    //     inset: auto auto auto 0px
+    //     --bs-dropdown-item-padding-x: 0.2rem
+    //     --bs-dropdown-padding-y: 0.0rem
+    //     --bs-dropdown-divider-margin-y: 0.0rem
+    // .dropdown-item
+    //     font-size: 12px
+
+    .footer
+        overflow: hidden
+
