@@ -1,15 +1,10 @@
 $color-main: #0056A9
-$color-red: #C23349
-$color-green: #5CAB5F
 $color-dark-blue: #32449F
 $color-grey: #656565
 $color-dark-grey: #474747
 
 // $color-white: #ddd
 $color-white: #ececec
-
-.section
-    overflow: hidden
 
 .carousel-item
     position: relative
@@ -27,8 +22,6 @@ $color-white: #ececec
 .first-section
     height: 870px
     background: $color-main
-    &__superstructure
-        // height: 50px
     &__content
         max-width: 800px        
         position: absolute
@@ -40,63 +33,8 @@ $color-white: #ececec
     &__content-title
         max-width: 800px 
         bottom: 7%
-        // font-size: 26px
-    
-
-// .second-section
-//     min-height: 480px
-//     background: $color-main
-//     &__cards-box
-//         max-width: 1140px
-//         margin: 0 auto
-//         display: flex
-//         flex-direction: row
-//         margin-bottom: 80px
-   
-// .cards-item
-//     position: relative
-//     display: flex
-//     justify-content: center
-//     align-items: center
-//     height: 360px
-//     width: 360px
-//     border-radius: 20px   
-//     margin-right: 30px
-//     border: 2px solid $color-white
-//     box-shadow: 8px 4px 4px 0px rgba(0, 0, 0, 0.25)
-//     &:last-child
-//         margin-right: 0
-//     &__bolts-box
-//         width: 322px
-//         height: 322px
-//     &__bolts_y        
-//         display: flex
-//         flex-direction: row
-//         justify-content: space-between
-//         margin-bottom: 289px
-//     &__content
-//         width: 290px
-//         position: absolute
-//         top: 30px
-//         text-align: center        
-//     &__title        
-//         font-size: 32px
-//         margin-bottom: 15px
-//     &__description
-//         font-size: 22px
-//         text-align: left    
-
-// .cards-item_red
-//     background: $color-red
-
-// .cards-item_green
-//     background: $color-grey
-
-// .cards-item_blue
-//     background: $color-dark-blue
 
 .services-section
-    overflow: hidden
     position: relative        
     min-height: 1120px
     background: $color-main  
@@ -111,8 +49,8 @@ $color-white: #ececec
     &__price
         position: absolute
         top: 119px
-        left: 20%
-        min-height: 755px
+        left: 19vw
+        height: calc(78%)
         width: 1140px
         border-radius: 16px
         border: 3px solid $color-white
@@ -125,9 +63,10 @@ $color-white: #ececec
     &__link-freepik
         position: absolute
         color: #3304dd
+        font-size: 10px
         text-align: right
         margin-right: 20px
-        top: 965px
+        top: calc(100% - 30px)
         right: 18px
     &__th1
         font-size: 32px        
@@ -137,32 +76,106 @@ $color-white: #ececec
 table, td, th
     margin: 0 auto    
     color: white
-
 table
     margin-top: 10px    
-    
-
 th  
-    margin: 0
+    text-align: center
     padding: 27px
     font-size: 18px
     border-bottom: 1px solid #ddd
     vertical-align: bottom
 td  
-    padding: 9px
+    padding: 10px
     font-size: 16px
     text-align: center
-    border-bottom: 1px solid #ddd
-    
+    border-bottom: 1px solid #ddd    
 tr:nth-child(even)
     background-color: $color-dark-grey
-
 .third-section
-    min-height: 600px
+    overflow: hidden
+    min-height: 530px
     background: $color-main
 
+@media (max-width: 1449px)
+    .first-section
+        height: 670px
+    .carousel-item
+        img
+            height: 600px
+    .services-section
+        min-height: 1030px
+        &__image
+            height: 950px
+        &__price
+            top: 90px
+            left: 11vw
+            width: calc(80% + 20px)
+    td  
+        padding: 8px
+    .third-section
+        min-height: 500px
 
-// @media (max-width: 1199px)
-//     .section 
-//         width: 960px
+@media (max-width: 991px)    
+    .services-section
+        min-height: 770px
+        &__image
+            height: 700px
+        &__price
+            top: 70px
+        &__th1
+            font-size: 20px
+    th
+        padding: 10px 10px 5px 0px
+        font-size: 14px
+    td  
+        padding: 5px
+        font-size: 14px
+    .third-section
+        min-height: 370px
+    iframe
+        height: 300px    
+    
+@media (max-width: 767px)
+    .services-section
+        min-height: 720px
+        &__image
+            height: 650px
+        &__th1
+            font-size: 16px
+    th  
+        font-size: 12px    
+    td  
+        font-size: 12px
+
+@media (max-width: 592px)
+    .services-section
+        min-height: 650px
+        &__image
+            height: 590px
+        &__th1
+            font-size: 16px
+    th
+        font-size: 10px    
+    td  
+        font-size: 10px
+    .third-section
+        min-height: 355px    
+
+@media (max-width: 460px)
+    .services-section
+        min-height: 610px
+        &__image
+            height: 560px
+        &__th1
+            font-size: 12px
+    th
+        &:nth-child(3)
+            display: none
+        &:nth-child(4)
+            display: none
+    td  
+        &:nth-child(3)
+            display: none
+        &:nth-child(4)
+            display: none
     
