@@ -34,7 +34,6 @@ html
     flex-direction: row
     justify-content: space-between
     align-items: center
-    // margin: 0 auto  //где находится контейнер (по середине)
     
 .text
     color: #e3e3e3
@@ -82,7 +81,6 @@ html
 .fa-solid
     font-size: 14px
 .dropdown-menu
-    // --bs-dropdown-min-width: 0px
     --bs-dropdown-item-padding-x: 0.7rem
     --bs-dropdown-padding-y: 0.2rem
     --bs-dropdown-divider-margin-y: 0.2rem
@@ -238,27 +236,24 @@ html
         background: #0073a1
         transition: 0.6s all
         display: block
-        &__left
-            height: 60%
+        &__superstructure
+            height: 70px
         &__right
-            margin: 0
+            margin: 0        
         &__list
             display: flex
             flex-direction: column
-            justify-content: space-evenly
+            justify-content: flex-start
             height: 100%
             align-items: center
         &__list-item
             width: 90px
             font-size: 16px
+            margin-bottom: 15px
         &__list-login
             font-size: 16px
     .fa-solid
         font-size: 14px
-    .dropdown-menu
-        --bs-dropdown-item-padding-x: 0.7rem
-        --bs-dropdown-padding-y: 0.2rem
-        --bs-dropdown-divider-margin-y: 0.2rem
     .dropdown-item
         font-size: 14px        
     .nav-menu_active
@@ -309,12 +304,6 @@ html
         min-height: 70px
         &__logo-box
             width: 120px
-    .nav-menu
-        &__superstructure
-            height: 30px
-        &__left
-            height: 50%
-            margin-bottom: 15px
     .footer
         &__container
             min-height: 60px

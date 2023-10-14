@@ -68,8 +68,9 @@
                 <!-- Блок навигации -->
             <div class="header__nav-box nav-menu">
                 <div class="nav-menu__left">
-                    <div class="nav-menu__superstructure"></div>
+                    <!-- <div class="nav-menu__superstructure"></div> -->
                     <ul class="nav-menu__list">
+                        <div class="nav-menu__superstructure"></div>
                         {% for m in menu %}
                         <li class="nav-menu__list-item text"><a class="nav-menu__text"
                                 href="{% if m.url_name %} {% url m.url_name %} {% else %} {{ m.anchor }} {% endif %}">{{m.title|linebreaksbr}}</a>

@@ -13,10 +13,10 @@
             <!-- <div class="registration__title">Запись авто на мойку</div> -->
             <form class="registration__form" method="post">
                 {% csrf_token %}
-                <div class="registration__without-button">                    
+                <div class="registration__without-button">
                     <div class="registration__box-services services">
                         <div class="services__border">
-                        <h2 class="services__title">Выберите услуги:</h2>
+                        <h2 class="services__title">Выберите услуги, дату и время</h2>
                         {% if user.car_type == 'price_crossover' %}
                             {% include 'carwash/serv-choice-price-crossover.html' %}
                         {% elif user.car_type == 'price_offroad' %}

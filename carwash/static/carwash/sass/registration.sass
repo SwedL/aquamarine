@@ -20,18 +20,16 @@ body
     &__form
         display: flex
         flex-direction: column
-        align-items: center            
+        align-items: center
     &__without-button
+        flex-direction: row
+        justify-content: space-between 
         height: 612px
         width: 1340px
-        // margin: 0 auto
         margin-top: 20px
         margin-bottom: 20px
         color: $color-white
         display: flex
-        flex-direction: row
-        align-items: center
-        justify-content: space-between        
     &__box-services
         height: 612px
         width: 640px
@@ -62,7 +60,7 @@ body
         border-radius: 6px
     &__p
         padding: 5px
-        line-height: 15px
+        // line-height: 25px
         text-indent: 13px
 
 
@@ -126,3 +124,122 @@ tr:hover
             margin-bottom: 5px /* отодвигаем кнопки время вниз друг от друга */
         label:hover
             color: #ff1616
+
+@media (max-width: 1449px)
+    .registration
+        &__without-button
+            height: 612px
+            width: 1260px
+        &__box-services
+            height: 585px
+            width: 640px
+    .services
+        &__title
+            font-size: 22px
+        &__border
+            height: 565px
+            width: 620px
+    td
+        font-size: 14px
+    .services_p
+        font-size: 16px
+    .day
+        font-size: 14px
+        width: 80px
+        height: 585px
+        &__border
+            label
+                padding: 0px 5px 0px 5px
+                margin-bottom: 3px
+        &__date
+            font-size: 14px
+            margin: 0 0 5px 0
+
+@media (max-width: 1349px)
+    .registration
+        background-size: 100% 100%
+        &__form
+            height: 1300px
+        &__without-button
+            display: flex
+            flex-direction: column
+            align-items: center            
+            height: auto
+            width: 100%
+        &__box-services
+            margin-bottom: 15px
+
+@media (max-width: 991px)
+    .registration
+        &__form
+            min-height: 750px
+        &__without-button
+            display: flex
+            flex-direction: column
+            align-items: center            
+        &__without-button
+
+@media (max-width: 767px)
+    .registration
+        &__form
+            height: 1240px
+        &__box-services
+            height: 535px
+            width: 88%
+    .services
+        &__title
+            font-size: 18px
+            margin: 15px 0px 0px 0px
+        &__border
+            height: 515px
+            width: calc(100% - 14px)
+    td
+        font-size: 12px
+        
+    .services__p
+        font-size: 14px
+        padding: 0
+        margin-bottom: 5px
+    .day
+        font-size: 14px
+        width: 75px
+        height: 585px
+        &:nth-child(6)
+            display: none
+        &:nth-child(7)
+            display: none
+        &__border
+            label
+                padding: 0px 5px 0px 5px
+                margin-bottom: 3px
+        &__date
+            font-size: 14px
+            margin: 0 0 5px 0
+
+@media (max-width: 659px)
+    .services
+        &__title
+            font-size: 18px
+    td
+        font-size: 12px
+    .services__p
+        font-size: 14px
+
+@media (max-width: 587px)
+    .services
+        &__title
+            font-size: 16px
+    td
+        font-size: 10px
+    .services__p
+        font-size: 12px
+
+@media (max-width: 455px)
+    .day
+        &:nth-child(5)
+            display: none
+
+@media (max-width: 365px)
+    .day
+        &:nth-child(4)
+            display: none
