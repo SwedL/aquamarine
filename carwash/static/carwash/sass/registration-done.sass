@@ -15,33 +15,93 @@ body
     background: url("../images/193.png"), $color-main 50% 
     background-repeat: no-repeat
     background-blend-mode: screen    
-    height: 700px
     display: flex
     align-items: center
     &__container
         min-height: 200px
         width: 500px
         margin: 0 auto        
-        background: $color-grey
-        border-style: solid
-        border-width: 3px
-        border-color: #a2a2a2 #262626 #262626 #a2a2a2
-        border-radius: 5px
+        background: rgb(172, 172, 172)
+        background-color: rgb(246, 246, 246)
+        border-radius: 6px
         box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)
     &__message
         padding: 30px 
-        color: $color-white
-        font-size: 18px
-        line-height: 25px
+        color: #495057
+        font-size: 20px
         span            
             margin-left: 20px
     &__title
-        font-size: 30px
+        font-size: 26px
         text-align: center
-    &__data
+    &__date
         text-align: center
     &__services
         font-size: 22px
         
+@media (max-width: 1199px)
+    .main-section
+        min-height: 650px
+        &__container
+            width: 400px
+        &__message
+            span
+                font-size: 18px
+        &__title
+            font-size: 22px
+        &__date
+            font-size: 20px
+        &__services
+            font-size: 20px
+            
+@media (max-width: 991px)
+    .main-section
+        min-height: 570px
+        &__container
+            width: 300px
+        &__message
+            font-size: 18px
+            padding: 15px
+            span
+                font-size: 16px
+        &__title
+            font-size: 20px
+        &__date
+            font-size: 18px
+        &__services
+            font-size: 18px
 
+@media (max-width: 767px)
+    .main-section
+        // min-height: 460px
+        &__container
+            width: 250px
+        &__message
+            font-size: 16px
+            span
+                font-size: 16px
+        &__title
+            font-size: 20px
+        &__date
+            font-size: 18px
+        &__services
+            font-size: 16px
 
+@media (max-width: 575px)
+    .main-section
+        &__container
+            width: 220px
+        &__message
+            font-size: 14px
+            span
+                font-size: 14px
+        &__title
+            font-size: 18px
+        &__date
+            font-size: 16px
+        &__services
+            font-size: 14px
+
+// @media (max-width: 460px)
+
+// @media (max-width: 319px)
