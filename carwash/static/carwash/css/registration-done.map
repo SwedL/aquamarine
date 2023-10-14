@@ -1,8 +1,8 @@
 {
 	"version": 3,
-	"file": "done.css",
+	"file": "registration-done.css",
 	"sources": [
-		"../sass/done.sass"
+		"../sass/registration-done.sass"
 	],
 	"sourcesContent": [
 		"$color-main: #0056A9;\n$color-red: #C23349;\n$color-green: #5CAB5F;\n$color-dark-blue: #32449F;\n$color-grey: #525252;\n$color-dark-grey: #474747;\n$color-white: #ececec;\n\n\nbody {\n    background: black; }\n\n.main-section {\n    min-height: 750px;\n    background: url(\"../images/193.png\"), $color-main 50%;\n    background-repeat: no-repeat;\n    background-blend-mode: screen;\n    height: 700px;\n    display: flex;\n    align-items: center;\n    &__container {\n        min-height: 200px;\n        width: 500px;\n        margin: 0 auto;\n        background: $color-grey;\n        border-style: solid;\n        border-width: 3px;\n        border-color: #a2a2a2 #262626 #262626 #a2a2a2;\n        border-radius: 5px;\n        box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25); }\n    &__message {\n        padding: 30px;\n        color: $color-white;\n        font-size: 18px;\n        line-height: 25px;\n        span {\n            margin-left: 20px; } }\n    &__title {\n        font-size: 30px;\n        text-align: center; }\n    &__data {\n        text-align: center; }\n    &__services {\n        font-size: 22px; } }\n\n\n\n"

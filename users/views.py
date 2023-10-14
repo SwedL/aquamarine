@@ -77,5 +77,5 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
 class PasswordChangeDoneTemplateView(Common, TemplateView):
     """Представление для подтверждения успешной смены пароля пользователя"""
 
-    template_name = 'users/password-change-done.html'
+    template_name = 'users/password-change-registration-done.html'
     menu = (0, 1,)

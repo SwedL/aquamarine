@@ -73,5 +73,5 @@ class PasswordChangeDoneTemplateViewTestCase(TestCase):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Aquamarine')
-        self.assertTemplateUsed(response, 'users/password-change-done.html')
+        self.assertTemplateUsed(response, 'users/password-change-registration-done.html')
 

@@ -135,7 +135,7 @@ class RegistrationAutoView(Common, View):
             'total_cost': f'{total_cost} р.',
         }
 
-        return render(request, 'carwash/done.html', context=context)
+        return render(request, 'carwash/registration-done.html', context=context)
 
 
 class StaffDetailView(Common, PermissionRequiredMixin, View):
@@ -336,7 +336,7 @@ class RequestCallFormView(Common, FormView):
 class RequestCallDoneTemplateView(Common, TemplateView):
     """Представление информирование клиенту о принятии его запроса звонка"""
 
-    template_name = 'carwash/request-call-done.html'
+    template_name = 'carwash/request-call-registration-done.html'
     menu = (0, 1)
 
 
