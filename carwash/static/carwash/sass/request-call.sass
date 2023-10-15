@@ -4,47 +4,106 @@ body
     background: black
 
 .space_background
-    min-height: 740px    
+    height: calc(90vh - 80px)
+    min-height: 370px
     background: url("../images/193.png"), $color-main 50% 
     background-repeat: no-repeat
     background-blend-mode: screen
-
 .col-lg-5
     flex: 0 0 auto
     width: 54.666667%
-
 .login-data
     display: flex
     &__content
         width: 810px
         margin: 0 auto
-        margin-top: 200px
-
+        margin-top: 15vh
 .card
     border-radius: 6px
     box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)
 .card-header
     font-size: 28px
     background-color: #dddddd
-
 .form-error
     color: #d52e2e
     &__phone
         color: #d52e2e
         margin-bottom: 15px
-
 .form-group
     &__phone
         margin-bottom: 15px
-
 .py-4
     padding-top: 1rem!important
     padding-bottom: 1rem!important
-
 .message-box
     &__text
         font-size: 24px
-
 .alert
     --bs-alert-margin-bottom: 0
-    border-radius: 0//var(--bs-alert-border-radius)
+    border-radius: 0
+
+@media (max-width: 1199px)
+    .card-header
+        font-size: 24px
+    .login-data__content
+        width: 700px
+        // margin-top: 175px 
+            
+@media (max-width: 991px)
+    // .login-data__content
+    //     margin-top: 125px
+    .my-4
+        margin-top: 1rem!important
+        margin-bottom: 1rem!important
+    .py-4 
+        padding-top: 0.5rem !important
+        padding-bottom: 0.5rem !important
+
+@media (max-width: 767px)
+    .card-header
+        font-size: 20px
+    .btn
+        font-size: 14px
+    // .login-data__content
+    //     margin-top: 85px
+    .my-4
+        margin-top: 1rem!important
+        margin-bottom: 1rem!important
+    .py-4 
+        padding-top: 0.5rem !important
+        padding-bottom: 0.5rem !important
+
+@media (max-width: 575px)
+    .card-header
+        font-size: 18px
+    .my-4
+        margin-top: 0.5rem!important
+        margin-bottom: 0.5rem!important
+    .py-4
+        font-size: 16px 
+        padding-top: 0.2rem !important
+        padding-bottom: 0.2rem !important
+
+@media (max-width: 460px)
+    .login-data__content
+        width: 90%
+    .col-lg-5
+        width: 64%
+    .card-body
+        padding: 0px 10px 10px 10px
+    .captcha
+        img
+            height: 25px
+    .btn
+        font-size: 12px
+    .form-group__phone
+        margin-bottom: 10px
+        input
+            width: 100%
+    .py-4
+        font-size: 12px 
+    .my-4
+        margin-top: 0.2rem!important
+        margin-bottom: 0.2rem!important
+        padding-top: 0
+        padding-bottom: 0
