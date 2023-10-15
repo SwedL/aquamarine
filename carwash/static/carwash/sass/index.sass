@@ -11,33 +11,29 @@ $color-white: #ececec
     img
         height: 770px
         object-fit: cover
-
 .overlay
     position: absolute
     height: 100%
     width: 100%
     background: black
     opacity: 0.5
-
 .first-section
     height: calc(93vh - 80px)
     background: $color-main
+    &__content-title
+        max-width: 800px 
+        bottom: 7%
     &__content
-        max-width: 800px        
+        width: 80vw        
         position: absolute
         left: 13%
         bottom: 7%
         font-size: 22px
         color: white
-        z-index: 1    
-    &__content-title
-        max-width: 800px 
-        bottom: 7%
-
+        z-index: 1
 .carousel-item
     img
         height: calc(83vh - 70px)
-
 .services-section
     display: fles
     min-height: 1120px
@@ -110,7 +106,11 @@ tr:nth-child(even)
     .third-section
         min-height: 500px
 
-@media (max-width: 991px)    
+@media (max-width: 991px)
+    .first-section__content-title
+        font-size: 18px
+    .first-section__content
+        font-size: 16px
     .services-section
         min-height: 770px
         &__image
@@ -131,6 +131,12 @@ tr:nth-child(even)
         height: 300px    
     
 @media (max-width: 767px)
+    .first-section__content-title
+        font-size: 16px
+    .first-section__content
+        font-size: 14px
+    .btn
+        font-size: 14px
     .services-section
         min-height: 720px
         &__image
@@ -163,8 +169,6 @@ tr:nth-child(even)
 @media (max-width: 465px)
     .services-section
         min-height: 610px
-        // &__image
-        //     height: 560px
         &__th1
             font-size: 12px
     th
