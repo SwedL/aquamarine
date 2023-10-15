@@ -20,7 +20,7 @@ $color-white: #ececec
     opacity: 0.5
 
 .first-section
-    height: 870px
+    height: calc(93vh - 80px)
     background: $color-main
     &__content
         max-width: 800px        
@@ -34,23 +34,25 @@ $color-white: #ececec
         max-width: 800px 
         bottom: 7%
 
+.carousel-item
+    img
+        height: calc(83vh - 70px)
+
 .services-section
-    position: relative        
+    display: fles
     min-height: 1120px
     background: $color-main  
     &__image
-        position: relative
-        height: 1000px
-        margin: 0 auto
+        display: flex
+        height: 950px
         background: url("/static/carwash/images/car-service.png"), $color-main 50% 
         background-repeat: no-repeat
         background-blend-mode: screen
-        margin-bottom: 60px
+        margin-bottom: 10vh
     &__price
-        position: absolute
-        top: 119px
-        left: 19vw
-        height: calc(78%)
+        margin: 0 auto
+        margin-top: 10vh
+        height: calc(80%)
         width: 1140px
         border-radius: 16px
         border: 3px solid $color-white
@@ -97,18 +99,11 @@ tr:nth-child(even)
     background: $color-main
 
 @media (max-width: 1449px)
-    .first-section
-        height: 670px
-    .carousel-item
-        img
-            height: 600px
     .services-section
         min-height: 1030px
         &__image
-            height: 950px
+            height: 900px
         &__price
-            top: 90px
-            left: 11vw
             width: calc(80% + 20px)
     td  
         padding: 8px
@@ -121,7 +116,7 @@ tr:nth-child(even)
         &__image
             height: 700px
         &__price
-            top: 70px
+            height: 540px
         &__th1
             font-size: 20px
     th
@@ -140,6 +135,8 @@ tr:nth-child(even)
         min-height: 720px
         &__image
             height: 650px
+        &__price
+            height: 500px
         &__th1
             font-size: 16px
     th  
@@ -152,6 +149,8 @@ tr:nth-child(even)
         min-height: 650px
         &__image
             height: 590px
+        &__price
+            height: 450px
         &__th1
             font-size: 16px
     th
@@ -161,11 +160,11 @@ tr:nth-child(even)
     .third-section
         min-height: 355px    
 
-@media (max-width: 460px)
+@media (max-width: 465px)
     .services-section
         min-height: 610px
-        &__image
-            height: 560px
+        // &__image
+        //     height: 560px
         &__th1
             font-size: 12px
     th
