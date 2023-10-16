@@ -327,6 +327,7 @@ class RequestCallFormView(Common, FormView):
     title = 'Заказ звонка'
     menu = (0, 1)
 
+    # TODO убрать RequestCallDone как registration-done
     def form_valid(self, form):
         call_me = CarWashRequestCall(phone_number=form.cleaned_data['phone_number'])
         call_me.save()
@@ -336,7 +337,7 @@ class RequestCallFormView(Common, FormView):
 class RequestCallDoneTemplateView(Common, TemplateView):
     """Представление информирование клиенту о принятии его запроса звонка"""
 
-    template_name = 'carwash/request-call-registration-done.html'
+    template_name = 'carwash/request-call-done.html'
     menu = (0, 1)
 
 
