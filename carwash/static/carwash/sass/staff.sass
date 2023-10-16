@@ -3,17 +3,16 @@ $color-red: #C23349
 $color-green: #5CAB5F
 $color-dark-blue: #32449F
 $color-menu-hover: #9ae7ff
-
-// $color-white: #ddd
 $color-white: #ececec
     
 body
     background: black
 
-
 .space_background
-    min-height: 750px
+    height: 145vh
+    min-height: 1000px
     background: url("../images/193.png"), $color-main 50% 
+    background-size: 100% 100%
     background-repeat: no-repeat
     background-blend-mode: screen
     display: flex
@@ -22,37 +21,34 @@ body
 .workday-page
     margin: 0 auto
     margin-top: 20px
+    width: 79vw
     display: flex
-    flex-direction: row
-    margin-bottom: 20px
-    &__button
-        margin-right: 130px
-        &:last-child
-            margin-right: 0     
+    justify-content: space-evenly
+    margin-bottom: 20px 
     button
-        width: 200px
+        width: 18vw
         padding: 5px 5px
         color: $color-white
-        background: #002cf2
+        background-color: #00167981
         border-style: solid
         border-width: 2px
         border-color: #4b6af5 #545454 #545454 #4b6af5
         border-radius: 5px
     button:hover
-        background: #0028db
+        background-color: #002cf2
     button:active
-        background: #0025c8
+        background-color: #0028db
     button:disabled
-        color: #000 // #cbcaca
-        background: #21b9ff
-        border-color: #56caff #545454 #545454 #56caff
+        color: $color-white
+        background-color: #022eee
+        border-color: #4b6af5 #545454 #545454 #4b6af5
 
 .data-box
     margin: 0 auto
     margin-bottom: 20px
     padding: 15px
     min-height: 50px
-    width: 1480px
+    width: 77vw
     background-color: #8e8e8e
     border-style: solid
     border-width: 2px
@@ -60,34 +56,34 @@ body
     border-radius: 6px        
     &__item
         margin-right: 10px
-        height: 24px
+        padding: 3px
+        line-height: 20px
+        // height: 24px
         margin-bottom: 3px //* отодвигаем строки вниз друг от друга */
         border: 1px solid #8a8a8a
         border-radius: 3px
         user-select: none
 
 .request-call-box
-    width: 500px
+    width: 40vw
+    height: 24px
     margin: 0 auto
-    margin-bottom: 10px
-    &__button
-        width: 500px
-        padding: 1px
-        height: auto
+    margin-bottom: 15px
+    button
+        width: 100%
+        height: 30px
         color: $color-white
-        background: #7a2000 
+        background: #7c2201 
         border-style: solid
         border-width: 2px
         border-color: #b66c51 #505050 #505050 #b66c51
         border-radius: 5px
-    &__button:hover
+    button:hover
         color: $color-white
-        background: #7c2201
+        background: #9c2a00
         border-color: #b66c51 #505050 #505050 #b66c51
-    &__button.show
-        color: $color-white
-        background: #7c2201
-        border-color: #b66c51 #505050 #505050 #b66c51
+    button:active
+        background-color: #7c2201
 
 @keyframes myfirst
     50%   
@@ -98,46 +94,52 @@ body
     --bs-dropdown-link-active-bg: $color-white
     a
         text-decoration: none
-        
-    
 .dropdown-item
-    //width: 250px
     span
         margin-right: 20px
-
 .free
+    height: 26px
     background: #e1e1e1
     color: #000000
-    padding: 0 auto
-    line-height: 25px
+    // padding: 0 auto
+    line-height: 16px
     box-shadow: 1px 1px 2px #272727 inset
 .busy
     height: auto
     background: #646464
     color: #d8d8d8
+    // padding: 8px 5px 5px 5px
+    // line-height: 22px
     box-shadow: 1px 1px 2px #272727 inset
-    line-height: 22px
+    
 
 .client-free
     width: 250px
+    min-width: 155px
     text-align: center
+    // padding: 0px 0px 0px 5px
 .client-busy
-    padding: 0px 0px 0px 5px
     width: 250px
+    min-width: 155px
+    // padding: 0px 0px 0px 5px
+    
 
 .time-workday
     display: flex
     flex-direction: row
+    justify-content: space-between
     &__time
         width: 65px
+        min-width: 50px
         text-align: center
     &__time-free
-        line-height: 22px
+        // line-height: 22px
     &__time-busy
-        line-height: 22px
+        // line-height: 22px
     &__services
         width: 1000px
-        padding-left: 7px
+        padding-left: 5px
+        padding-right: 5px
         height: auto
     &__cancel-button
         width: 100px
@@ -145,15 +147,19 @@ body
         padding: 1px
         text-align: center
         color: $color-white
-        background: #bd3402
+        background-color: #a32b00
         border-style: solid
         border-width: 2px
         border-color: #b66c51 #505050 #505050 #b66c51
         border-radius: 5px
     &__cancel-button:hover
-        background: #7c2201
+        background-color: #bd3402
     &__cancel-button:active
-        background: #b02f00
+        background-color: #a32b00
+    &__fake_button
+        width: 100px
+        min-width: 100px
+        height: 24px
 
 .modal
     --bs-modal-width: 350px
@@ -164,4 +170,155 @@ body
         color: $color-white
         font-size: 22px
         text-align: center 
-    
+
+@media (max-width: 1199px)
+    .workday-page    
+        button
+            font-size: 14px
+    .data-box
+        padding: 10px
+        &__item
+            font-size: 14px
+            line-height: 16px
+            padding: 3px
+            margin-right: 5px
+        button
+            font-size: 14px
+    .time-workday
+        &__cancel-button
+            width: 90px
+        &__fake_button
+            width: 90px
+            min-width: 90px
+    .free
+        height: auto
+            
+// @media (max-width: 991px)
+    // .workday-page    
+    //     button
+    //         font-size: 14px
+    // .data-box
+    //     &__item
+    //         font-size: 14px
+    //         line-height: 16px
+    //         padding: 3px
+    //         margin-right: 5px
+    //     button
+    //         font-size: 14px
+    // .time-workday
+    //     &__cancel-button
+    //         width: 90px
+    //     &__fake_button
+    //         width: 90px
+    //         min-width: 90px
+    // .free
+    //     height: auto
+
+@media (max-width: 767px)
+    .space_background
+        height: 125vh
+    .workday-page    
+        button
+            font-size: 12px
+    .data-box
+        padding: 7px
+        &__item
+            font-size: 12px
+            line-height: 14px
+            padding: 2px
+            margin-right: 3px
+        button
+            font-size: 12px
+    .client-free
+        min-width: 125px
+    .client-busy
+        min-width: 125px
+    .time-workday
+        &__cancel-button
+            padding: 0
+            width: 70px
+        &__fake_button
+            min-width: 70px
+        &__time
+            min-width: 40px
+
+@media (max-width: 615px)
+    // .space_background
+    //     height: 145vh
+    //     background-size: 100% 100%
+
+@media (max-width: 575px)
+    .workday-page    
+        button
+            font-size: 10px
+    .data-box
+        &__item
+            font-size: 10px
+            line-height: 12px
+            padding: 2px
+            margin-right: 3px
+        button
+            font-size: 10px
+    .client-free
+        min-width: 110px
+    .client-busy
+        min-width: 110px
+    .time-workday
+        &__cancel-button
+            height: 20px
+            width: 60px
+        &__fake_button
+            min-width: 60px
+        &__time
+            min-width: 35px
+
+@media (max-width: 460px)
+    .workday-page    
+        button
+            font-size: 8px
+    .time-workday
+        &__button
+            button
+                font-size: 0px
+        &__cancel-button
+            height: 20px
+            width: 35px
+        &__fake_button
+            min-width: 35px
+        &__time
+            min-width: 35px
+
+@media (max-width: 391px)
+    .space_background
+        height: 135vh
+    .data-box
+        &__item
+            font-size: 8px
+            line-height: 10px
+            padding: 2px
+            margin-right: 3px
+    .time-workday
+        &__button
+            button
+                font-size: 0px
+
+@media (max-width: 344px)
+    .space_background
+        height: 135vh
+    .data-box
+        &__item
+            font-size: 7px
+            line-height: 8px
+            padding: 2px
+            margin-right: 3px
+    .time-workday
+        &__button
+            button
+                font-size: 0px
+        &__cancel-button
+            height: 20px
+            width: 30px
+        &__fake_button
+            min-width: 30px
+        &__time
+            min-width: 30px

@@ -1,74 +1,67 @@
 @charset "UTF-8";
-/* line 10, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 8, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 body {
   background: black;
 }
 
-/* line 14, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 11, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .space_background {
-  min-height: 750px;
+  height: 145vh;
+  min-height: 1000px;
   background: url("../images/193.png"), #0056A9 50%;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: screen;
   display: flex;
   flex-direction: column;
 }
 
-/* line 22, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 21, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .workday-page {
   margin: 0 auto;
   margin-top: 20px;
+  width: 79vw;
   display: flex;
-  flex-direction: row;
+  justify-content: space-evenly;
   margin-bottom: 20px;
 }
 
 /* line 28, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.workday-page__button {
-  margin-right: 130px;
-}
-
-/* line 30, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.workday-page__button:last-child {
-  margin-right: 0;
-}
-
-/* line 32, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .workday-page button {
-  width: 200px;
+  width: 18vw;
   padding: 5px 5px;
   color: #ececec;
-  background: #002cf2;
+  background-color: #00167981;
   border-style: solid;
   border-width: 2px;
   border-color: #4b6af5 #545454 #545454 #4b6af5;
   border-radius: 5px;
 }
 
-/* line 41, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 37, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .workday-page button:hover {
-  background: #0028db;
+  background-color: #002cf2;
 }
 
-/* line 43, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 39, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .workday-page button:active {
-  background: #0025c8;
+  background-color: #0028db;
 }
 
-/* line 45, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 41, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .workday-page button:disabled {
-  color: #000;
-  background: #21b9ff;
-  border-color: #56caff #545454 #545454 #56caff;
+  color: #ececec;
+  background-color: #022eee;
+  border-color: #4b6af5 #545454 #545454 #4b6af5;
 }
 
-/* line 50, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 46, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .data-box {
   margin: 0 auto;
   margin-bottom: 20px;
   padding: 15px;
   min-height: 50px;
-  width: 1480px;
+  width: 77vw;
   background-color: #8e8e8e;
   border-style: solid;
   border-width: 2px;
@@ -76,48 +69,47 @@ body {
   border-radius: 6px;
 }
 
-/* line 61, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 57, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .data-box__item {
   margin-right: 10px;
-  height: 24px;
+  padding: 3px;
+  line-height: 20px;
   margin-bottom: 3px;
   border: 1px solid #8a8a8a;
   border-radius: 3px;
   user-select: none;
 }
 
-/* line 69, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 67, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .request-call-box {
-  width: 500px;
+  width: 40vw;
+  height: 24px;
   margin: 0 auto;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-/* line 73, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.request-call-box__button {
-  width: 500px;
-  padding: 1px;
-  height: auto;
+/* line 72, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.request-call-box button {
+  width: 100%;
+  height: 30px;
   color: #ececec;
-  background: #7a2000;
+  background: #7c2201;
   border-style: solid;
   border-width: 2px;
   border-color: #b66c51 #505050 #505050 #b66c51;
   border-radius: 5px;
 }
 
-/* line 83, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.request-call-box__button:hover {
+/* line 81, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.request-call-box button:hover {
   color: #ececec;
-  background: #7c2201;
+  background: #9c2a00;
   border-color: #b66c51 #505050 #505050 #b66c51;
 }
 
-/* line 87, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.request-call-box__button.show {
-  color: #ececec;
-  background: #7c2201;
-  border-color: #b66c51 #505050 #505050 #b66c51;
+/* line 85, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.request-call-box button:active {
+  background-color: #7c2201;
 }
 
 @keyframes myfirst {
@@ -126,120 +118,314 @@ body {
   }
 }
 
-/* line 96, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 92, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .dropdown-menu {
   --bs-dropdown-link-active-color: black;
   --bs-dropdown-link-active-bg: $color-white;
 }
 
-/* line 99, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 95, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .dropdown-menu a {
   text-decoration: none;
 }
 
-/* line 105, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 98, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .dropdown-item span {
   margin-right: 20px;
 }
 
-/* line 108, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 100, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .free {
+  height: 26px;
   background: #e1e1e1;
   color: #000000;
-  padding: 0 auto;
-  line-height: 25px;
+  line-height: 16px;
   box-shadow: 1px 1px 2px #272727 inset;
 }
 
-/* line 114, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 107, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .busy {
   height: auto;
   background: #646464;
   color: #d8d8d8;
   box-shadow: 1px 1px 2px #272727 inset;
-  line-height: 22px;
 }
 
-/* line 121, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 116, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .client-free {
   width: 250px;
+  min-width: 155px;
   text-align: center;
 }
 
-/* line 124, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 121, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .client-busy {
-  padding: 0px 0px 0px 5px;
   width: 250px;
+  min-width: 155px;
 }
 
-/* line 128, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 127, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 /* line 131, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__time {
   width: 65px;
+  min-width: 50px;
   text-align: center;
 }
 
-/* line 134, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.time-workday__time-free {
-  line-height: 22px;
-}
-
-/* line 136, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.time-workday__time-busy {
-  line-height: 22px;
-}
-
-/* line 138, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 139, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__services {
   width: 1000px;
-  padding-left: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
   height: auto;
 }
 
-/* line 142, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 144, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .time-workday__cancel-button {
   width: 100px;
   height: 24px;
   padding: 1px;
   text-align: center;
   color: #ececec;
-  background: #bd3402;
+  background-color: #a32b00;
   border-style: solid;
   border-width: 2px;
   border-color: #b66c51 #505050 #505050 #b66c51;
   border-radius: 5px;
 }
 
-/* line 153, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.time-workday__cancel-button:hover {
-  background: #7c2201;
-}
-
 /* line 155, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
-.time-workday__cancel-button:active {
-  background: #b02f00;
+.time-workday__cancel-button:hover {
+  background-color: #bd3402;
 }
 
-/* line 158, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 157, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.time-workday__cancel-button:active {
+  background-color: #a32b00;
+}
+
+/* line 159, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+.time-workday__fake_button {
+  width: 100px;
+  min-width: 100px;
+  height: 24px;
+}
+
+/* line 164, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal {
   --bs-modal-width: 350px;
 }
 
-/* line 161, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 167, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal-content {
   background-color: #4a4a4a;
 }
 
-/* line 163, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+/* line 169, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
 .modal-content__body-text {
   color: #ececec;
   font-size: 22px;
   text-align: center;
+}
+
+@media (max-width: 1199px) {
+  /* line 176, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .workday-page button {
+    font-size: 14px;
+  }
+  /* line 178, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box {
+    padding: 10px;
+  }
+  /* line 180, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box__item {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 3px;
+    margin-right: 5px;
+  }
+  /* line 185, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box button {
+    font-size: 14px;
+  }
+  /* line 188, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__cancel-button {
+    width: 90px;
+  }
+  /* line 190, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__fake_button {
+    width: 90px;
+    min-width: 90px;
+  }
+  /* line 193, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .free {
+    height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 218, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .space_background {
+    height: 125vh;
+  }
+  /* line 221, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .workday-page button {
+    font-size: 12px;
+  }
+  /* line 223, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box {
+    padding: 7px;
+  }
+  /* line 225, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box__item {
+    font-size: 12px;
+    line-height: 14px;
+    padding: 2px;
+    margin-right: 3px;
+  }
+  /* line 230, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box button {
+    font-size: 12px;
+  }
+  /* line 232, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .client-free {
+    min-width: 125px;
+  }
+  /* line 234, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .client-busy {
+    min-width: 125px;
+  }
+  /* line 237, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__cancel-button {
+    padding: 0;
+    width: 70px;
+  }
+  /* line 240, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__fake_button {
+    min-width: 70px;
+  }
+  /* line 242, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__time {
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 575px) {
+  /* line 252, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .workday-page button {
+    font-size: 10px;
+  }
+  /* line 255, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box__item {
+    font-size: 10px;
+    line-height: 12px;
+    padding: 2px;
+    margin-right: 3px;
+  }
+  /* line 260, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box button {
+    font-size: 10px;
+  }
+  /* line 262, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .client-free {
+    min-width: 110px;
+  }
+  /* line 264, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .client-busy {
+    min-width: 110px;
+  }
+  /* line 267, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__cancel-button {
+    height: 20px;
+    width: 60px;
+  }
+  /* line 270, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__fake_button {
+    min-width: 60px;
+  }
+  /* line 272, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__time {
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 460px) {
+  /* line 277, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .workday-page button {
+    font-size: 8px;
+  }
+  /* line 281, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__button button {
+    font-size: 0px;
+  }
+  /* line 283, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__cancel-button {
+    height: 20px;
+    width: 35px;
+  }
+  /* line 286, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__fake_button {
+    min-width: 35px;
+  }
+  /* line 288, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__time {
+    min-width: 35px;
+  }
+}
+
+@media (max-width: 391px) {
+  /* line 292, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .space_background {
+    height: 135vh;
+  }
+  /* line 295, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box__item {
+    font-size: 8px;
+    line-height: 10px;
+    padding: 2px;
+    margin-right: 3px;
+  }
+  /* line 302, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__button button {
+    font-size: 0px;
+  }
+}
+
+@media (max-width: 344px) {
+  /* line 306, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .space_background {
+    height: 135vh;
+  }
+  /* line 309, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .data-box__item {
+    font-size: 7px;
+    line-height: 8px;
+    padding: 2px;
+    margin-right: 3px;
+  }
+  /* line 316, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__button button {
+    font-size: 0px;
+  }
+  /* line 318, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__cancel-button {
+    height: 20px;
+    width: 30px;
+  }
+  /* line 321, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__fake_button {
+    min-width: 30px;
+  }
+  /* line 323, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/staff.sass */
+  .time-workday__time {
+    min-width: 30px;
+  }
 }
 
 /*# sourceMappingURL=staff.css.map */

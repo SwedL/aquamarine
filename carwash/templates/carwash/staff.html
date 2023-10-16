@@ -8,14 +8,6 @@
     <script src="{% static 'carwash/js/script.js' %}"></script>
 {% endblock %}
 
-{% block staff %}
-    <script>
-        setTimeout(function(){
-        location.reload();
-        }, 300000);
-    </script>
-{% endblock %}
-
 {% block content %}
     <main>
         <div class="space_background">
@@ -23,30 +15,30 @@
                 <div class="workday-page__button">
                     <a href="{% url 'carwash:staff' days_delta=0 %}">
                         <button id="page1" type="submit" style="cursor:default" {% if days_delta == 0 %} disabled {% endif %}>
-                            Сегодня<br>{{button_date.today}}
+                            Сегодня<br>{{button_date.today|date:"d. m. Y"}}
                         </button>
                     </a>
                 </div>
                 <div class="workday-page__button">
                     <a href="{% url 'carwash:staff' days_delta=1 %}">
                         <button id="page2" type="submit" style="cursor:default" {% if days_delta == 1 %} disabled {% endif %}>
-                            Завтра<br>{{button_date.tomorrow}}
+                            Завтра<br>{{button_date.tomorrow|date:"d. m. Y"}}
                         </button>
                     </a>
                 </div>
                 <div class="workday-page__button">
                     <a href="{% url 'carwash:staff' days_delta=2 %}">
                         <button id="page3" type="submit" style="cursor:default" {% if days_delta == 2 %} disabled {% endif %}>
-                            Послезавтра<br>{{button_date.after_tomorrow}}
+                            Послезавтра<br>{{button_date.after_tomorrow|date:"d. m. Y"}}
                         </button>
                     </a>
                 </div>
             </div>
             <div class="data-box">
-                <div class="request-call-box dropdown-center">
-                    <botton class="btn request-call-box__button" {% if attention %} style="animation:myfirst 1s infinite;" {% endif %} role="button" id="dropdownMenuLink" {% if request_calls %} data-bs-toggle="dropdown" {% endif %}>
+                <div class="dropdown-center request-call-box">
+                    <button class="request-call-box__button" {% if attention %} style="animation:myfirst 1s infinite;" {% endif %} role="button" id="dropdownMenuLink" {% if request_calls %} data-bs-toggle="dropdown" {% endif %}>
                         запросы звонка
-                    </botton>
+                    </button>
                     <ul class="dropdown-menu">
                         {% for call in request_calls %}
                             <li class="dropdown-item"><span>{{call}}</span>
@@ -100,10 +92,16 @@
                     {% else %}
                     <div class="data-box__item {% if time_workday.free %} free client-free {% else %} busy client-busy {% endif %}">{{time_workday.client}}</div>
                     <div class="data-box__item time-workday__services {% if time_workday.free %} free {% else %} busy {% endif %}"></div>
+                    <div class="time-workday__fake_button"></div>
                     {% endif %}
                 </div>
                 {% endfor %}
             </div>
         </div>
     </main>
+    <script>
+        setTimeout(function(){
+        location.reload();
+        }, 600000);
+    </script>
 {% endblock %}
