@@ -7,7 +7,7 @@ body {
 /* line 6, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/request-call.sass */
 .space_background {
   height: calc(90vh - 80px);
-  min-height: 370px;
+  min-height: 500px;
   background: url("../images/193.png"), #0056A9 50%;
   background-repeat: no-repeat;
   background-blend-mode: screen;
