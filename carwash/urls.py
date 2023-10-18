@@ -1,7 +1,6 @@
 """Определяет схемы URL для carwash"""
 
 from django.urls import path
-from django.contrib.auth.decorators import login_required, permission_required
 from carwash.views import *
 
 app_name = 'carwash'
@@ -10,7 +9,6 @@ urlpatterns = [
     path('', IndexListView.as_view(), name='home'),
     path('registration/', RegistrationAutoView.as_view(), name='registration'),
     path('request-call-me/', RequestCallFormView.as_view(), name='call_me'),
-    path('request-call-done/', RequestCallDoneTemplateView.as_view(), name='request_call_done'),
     path(
         'request-call-processing/<int:days_delta>/<int:call_pk>/',
         RequestCallProcessingView.as_view(),

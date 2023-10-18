@@ -41,7 +41,7 @@
                     </button>
                     <ul class="dropdown-menu">
                         {% for call in request_calls %}
-                            <li class="dropdown-item"><span>{{call}}</span>
+                            <li class="dropdown-item telephone"><span>{{call}}</span>
 
                                 {% if not call.processed %}
                                 <a type="button" class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.pk %}">
