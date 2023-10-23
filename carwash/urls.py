@@ -8,7 +8,7 @@ app_name = 'carwash'
 urlpatterns = [
     path('', IndexListView.as_view(), name='home'),
     path('registration/', RegistrationAutoView.as_view(), name='registration'),
-    path('request-call-me/', RequestCallFormView.as_view(), name='call_me'),
+    path('request-call/', RequestCallFormView.as_view(), name='call_me'),
     path(
         'request-call-processing/<int:days_delta>/<int:call_pk>/',
         RequestCallProcessingView.as_view(),

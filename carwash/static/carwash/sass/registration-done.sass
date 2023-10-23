@@ -1,26 +1,23 @@
 $color-main: #0056A9
-$color-red: #C23349
-$color-green: #5CAB5F
-$color-dark-blue: #32449F
-$color-grey: #525252
-$color-dark-grey: #474747
-$color-white: #ececec
 
 
 body
     background: black
     
 .main-section
-    min-height: 750px
+    height: calc(85vh - 80px)
+    min-height: 500px
     background: url("../images/193.png"), $color-main 50% 
+    background-size: 100% 100%
     background-repeat: no-repeat
     background-blend-mode: screen    
     display: flex
-    align-items: center
+    align-items: start
     &__container
         width: 500px
-        margin: 0 auto        
-        background-color: #043b6f//rgb(131, 131, 131)
+        margin: 0 auto 
+        margin-top: 15vh       
+        background-color: #043b6f
         border-radius: 6px
         box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)
     &__message
@@ -39,7 +36,6 @@ body
         
 @media (max-width: 1199px)
     .main-section
-        min-height: 650px
         &__container
             width: 400px
         &__message
@@ -54,7 +50,6 @@ body
             
 @media (max-width: 991px)
     .main-section
-        min-height: 570px
         &__container
             width: 300px
         &__message
@@ -71,7 +66,6 @@ body
 
 @media (max-width: 767px)
     .main-section
-        // min-height: 460px
         &__container
             width: 250px
         &__message
