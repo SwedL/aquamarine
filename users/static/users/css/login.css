@@ -80,7 +80,7 @@ body {
     margin-top: 0.9rem !important;
     margin-bottom: 0.9rem !important;
   }
-  /* line 59, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 56, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .py-4 {
     padding-top: 0.75rem !important;
     padding-bottom: 0.75rem !important;
@@ -88,105 +88,105 @@ body {
 }
 
 @media (max-width: 767px) {
-  /* line 64, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 61, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .col-lg-5 {
     width: 350px;
   }
-  /* line 66, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 63, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .card-header {
     height: 70px;
     font-size: 22px;
   }
-  /* line 69, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 66, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .errorlist {
     font-size: 14px;
   }
-  /* line 71, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 68, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .my-4 {
     margin-top: 0.9rem !important;
     margin-bottom: 0.9rem !important;
   }
-  /* line 74, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 71, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .py-4 {
     padding-top: 0.5rem !important;
     padding-bottom: 0.5rem !important;
   }
-  /* line 77, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 74, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .form-control {
     font-size: 0.8rem;
   }
-  /* line 79, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 76, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .small {
     font-size: 0.75em;
   }
-  /* line 81, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 78, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .btn {
     --bs-btn-font-size: 0.8rem;
   }
 }
 
 @media (max-width: 587px) {
-  /* line 85, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 82, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .col-lg-5 {
     width: 275px;
   }
-  /* line 89, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 84, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .card-header {
     height: 50px;
     font-size: 20px;
   }
-  /* line 94, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 87, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .errorlist {
     font-size: 12px;
   }
-  /* line 96, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 89, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .my-4 {
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
   }
-  /* line 99, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 92, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .small {
     font-size: 0.6em;
   }
-  /* line 101, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 94, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .btn {
     --bs-btn-font-size: 0.6rem;
   }
 }
 
 @media (max-width: 460px) {
-  /* line 105, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 98, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .col-lg-5 {
     width: 235px;
   }
-  /* line 107, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 100, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .card-header {
     height: 40px;
     font-size: 18px;
   }
-  /* line 110, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 103, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .my-4 {
     margin-top: 0.2rem !important;
     margin-bottom: 0.2rem !important;
   }
-  /* line 113, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 106, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .errorlist {
     font-size: 10px;
   }
-  /* line 115, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 108, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .py-4 {
     padding-top: 0.2rem !important;
     padding-bottom: 0.2rem !important;
   }
-  /* line 118, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 111, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .form-control {
     font-size: 0.6rem;
   }
-  /* line 120, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 113, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .small {
     font-size: 0.6em;
   }
-  /* line 122, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
+  /* line 115, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/login.sass */
   .btn {
     --bs-btn-font-size: 0.6rem;
     padding: 3px 6px;
