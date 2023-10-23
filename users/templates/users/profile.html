@@ -43,7 +43,9 @@
 <!--                        <label class="profile-data__label" for="{{ form.car_type.id_for_label }}">Прайс </label>-->
 <!--                        <div class="profile-data__form">{{ form.car_type }}</div>-->
                         <label class="profile-data__label">Прайс </label>
-                        <div class="profile-data__form car_type">{{ user.get_car_type_display }}</div>
+                        <div class="profile-data__form">
+                            <input type="text" value="{{ user.get_car_type_display }}" class="readonly" readonly="True" maxlength="255">
+                        </div>
                     </div>
 
                     <div class="profile-data__item">

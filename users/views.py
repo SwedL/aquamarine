@@ -34,6 +34,9 @@ class UserProfileView(LoginRequiredMixin, Common, UpdateView):
     title = 'Настройка профиля'
     menu = (0, 1,)
 
+    def get_success_url(self):
+        return reverse_lazy('users:profile')
+
     def get_object(self, queryset=None):
         return self.request.user
 

@@ -1,8 +1,4 @@
 $color-main: #0056A9
-$color-red: #C23349
-$color-green: #5CAB5F
-$color-dark-blue: #32449F
-$color-menu-hover: #9ae7ff
 $color-white: #ececec
 
 
@@ -12,19 +8,19 @@ body
 .space_background
     min-height: 750px
     background: url("../images/193.png"), $color-main 50% 
+    background-size: 100% 100%
     background-repeat: no-repeat
     background-blend-mode: screen
     display: flex
     flex-direction: column
 
 .profile-data
-    display: flex
-    flex-direction: column
     margin: 0 auto
     margin-top: 50px
-    min-height: 610px
+    margin-bottom: 25px
+    min-height: 50px
     padding: 15px
-    width: 700px
+    width: 50vw
     background-color: rgb(246, 246, 246)
     border-radius: 6px
     box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25)        
@@ -38,8 +34,6 @@ body
     &__label
         font-size: 14px
         margin-bottom: 4px
-    &__form
-        height: auto
     &__form-error
         font-size: 14px
         color: #d52e2e
@@ -47,26 +41,12 @@ body
         display: flex
         flex-direction: column
 
-.car_type
-    width: 100%
-    height: calc(1.5em + 0.75rem + 10px)
-    text-indent: 12px
-    font-size: 1rem
-    line-height: 2.5
-    color: #495057
-    background-color: #d9d9d9
-    background-clip: padding-box
-    border: 1px solid #ced4da
-    border-radius: 0.25rem
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
-
 .form-control
     display: block
     width: 100%
     height: calc(1.5em + 0.75rem + 2px)
     padding: 1.375rem 0.75rem
     font-size: 1rem
-    line-height: 2.5
     color: #495057
     background-color: #fff
     background-clip: padding-box
@@ -75,16 +55,14 @@ body
 
 .readonly
     width: 100%
-    height: calc(1.5em + 0.75rem + 2px)
+    height: calc(1em + 0.75rem + 2px)
     padding: 1.375rem 0.75rem
     font-size: 1rem
-    line-height: 2.5
     color: #495057
     background-color: #d9d9d9
     background-clip: padding-box
     border: 1px solid #ced4da
     border-radius: 0.25rem
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
     
 .modal
     --bs-modal-width: 350px
@@ -96,3 +74,45 @@ body
         font-size: 22px
         text-align: center
 
+@media (max-width: 767px)
+    .profile-data
+        &__label
+            font-size: 12px
+            margin-bottom: 4px
+        &__item
+            margin-bottom: 7px
+        &__a
+            font-size: 14px
+            margin-bottom: 15px
+        input
+            font-size: 0.9rem
+    .readonly
+        padding: 1.1rem 0.75rem
+    .form-control
+        padding: 1.1rem 0.75rem
+    .errorlist
+        li
+            font-size: 12px
+    .btn
+        --bs-btn-font-size: 0.6rem
+        padding: 3px 6px
+
+
+@media (max-width: 587px)
+    .profile-data
+        &__label
+            font-size: 10px
+            margin-bottom: 4px
+        &__item
+            margin-bottom: 7px
+        &__a
+            font-size: 12px
+        input
+            font-size: 0.8rem
+    .errorlist
+        li
+            font-size: 10px
+
+@media (max-width: 460px)
+    .profile-data
+        width: 215px

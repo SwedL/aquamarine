@@ -38,7 +38,7 @@ class UserProfileForm(UserChangeForm):
     fio = forms.CharField(label='ФИО', max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
     phone_number = forms.CharField(validators=[phone_regex], max_length=11,
                                    widget=forms.TextInput(
-                                       attrs={'class': 'form-control py-4', 'autocomplete': 'on',
+                                       attrs={'class': 'form-control', 'autocomplete': 'on',
                                               'placeholder': 'номер телефона'})
                                    )
     # car_type = forms.ChoiceField(label='Тип автомобиля', choices=MODEL_CHOICES,
