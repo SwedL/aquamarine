@@ -6,7 +6,8 @@ body {
 
 /* line 8, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .space_background {
-  min-height: 750px;
+  height: 78vh;
+  min-height: 700px;
   background: url("../images/193.png"), #0056A9 50%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -15,7 +16,7 @@ body {
   flex-direction: column;
 }
 
-/* line 17, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 18, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data {
   margin: 0 auto;
   margin-top: 50px;
@@ -28,41 +29,41 @@ body {
   box-shadow: 8px 5px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-/* line 27, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 28, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__item {
   margin-bottom: 15px;
 }
 
-/* line 29, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 30, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__d {
   margin-bottom: 20px;
 }
 
-/* line 31, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 32, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__a {
   text-align: right;
   margin-bottom: 30px;
 }
 
-/* line 34, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 35, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__label {
   font-size: 14px;
   margin-bottom: 4px;
 }
 
-/* line 37, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 38, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__form-error {
   font-size: 14px;
   color: #d52e2e;
 }
 
-/* line 40, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 41, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .profile-data__button {
   display: flex;
   flex-direction: column;
 }
 
-/* line 44, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 45, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .form-control {
   display: block;
   width: 100%;
@@ -76,7 +77,7 @@ body {
   border-radius: 0.25rem;
 }
 
-/* line 56, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 57, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .readonly {
   width: 100%;
   height: calc(1em + 0.75rem + 2px);
@@ -89,55 +90,66 @@ body {
   border-radius: 0.25rem;
 }
 
-/* line 67, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 68, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .modal {
   --bs-modal-width: 350px;
 }
 
-/* line 70, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 71, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .modal-content {
   background-color: #4a4a4a;
 }
 
-/* line 72, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+/* line 73, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
 .modal-content__body-text {
   color: #ececec;
   font-size: 22px;
   text-align: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   /* line 79, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  .space_background {
+    min-height: 700px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 83, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  .space_background {
+    min-height: 600px;
+  }
+  /* line 86, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data__label {
     font-size: 12px;
     margin-bottom: 4px;
   }
-  /* line 82, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 89, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data__item {
     margin-bottom: 7px;
   }
-  /* line 84, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 91, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data__a {
     font-size: 14px;
     margin-bottom: 15px;
   }
-  /* line 87, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 94, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data input {
     font-size: 0.9rem;
   }
-  /* line 89, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 96, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .readonly {
     padding: 1.1rem 0.75rem;
   }
-  /* line 91, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 98, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .form-control {
     padding: 1.1rem 0.75rem;
   }
-  /* line 94, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 101, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .errorlist li {
     font-size: 12px;
   }
-  /* line 96, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 103, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .btn {
     --bs-btn-font-size: 0.6rem;
     padding: 3px 6px;
@@ -145,31 +157,43 @@ body {
 }
 
 @media (max-width: 587px) {
-  /* line 103, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 108, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  .space_background {
+    min-height: 550px;
+  }
+  /* line 111, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data__label {
     font-size: 10px;
     margin-bottom: 4px;
   }
-  /* line 106, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 114, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data__item {
     margin-bottom: 7px;
   }
-  /* line 108, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 116, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data__a {
-    font-size: 12px;
+    font-size: 10px;
   }
-  /* line 110, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 118, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data input {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
-  /* line 113, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 120, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  .readonly {
+    padding: 0.9rem 0.75rem;
+  }
+  /* line 122, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  .form-control {
+    padding: 0.9rem 0.75rem;
+  }
+  /* line 125, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .errorlist li {
     font-size: 10px;
   }
 }
 
 @media (max-width: 460px) {
-  /* line 117, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
+  /* line 129, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/users/static/users/sass/profile.sass */
   .profile-data {
     width: 215px;
   }

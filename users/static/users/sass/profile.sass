@@ -6,7 +6,8 @@ body
     background: black
 
 .space_background
-    min-height: 750px
+    height: 78vh
+    min-height: 700px
     background: url("../images/193.png"), $color-main 50% 
     background-size: 100% 100%
     background-repeat: no-repeat
@@ -74,7 +75,13 @@ body
         font-size: 22px
         text-align: center
 
+@media (max-width: 991px)
+    .space_background
+        min-height: 700px
+
 @media (max-width: 767px)
+    .space_background
+        min-height: 600px
     .profile-data
         &__label
             font-size: 12px
@@ -97,8 +104,9 @@ body
         --bs-btn-font-size: 0.6rem
         padding: 3px 6px
 
-
 @media (max-width: 587px)
+    .space_background
+        min-height: 550px
     .profile-data
         &__label
             font-size: 10px
@@ -106,9 +114,13 @@ body
         &__item
             margin-bottom: 7px
         &__a
-            font-size: 12px
+            font-size: 10px
         input
-            font-size: 0.8rem
+            font-size: 0.7rem
+    .readonly
+        padding: 0.9rem 0.75rem
+    .form-control
+        padding: 0.9rem 0.75rem
     .errorlist
         li
             font-size: 10px
