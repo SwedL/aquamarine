@@ -5,7 +5,8 @@ body
 
 .space_background
     min-height: 740px    
-    background: url("../images/193.png"), $color-main 50% 
+    background: url("../images/193.png"), $color-main 50%
+    background-size: 100% 100%
     background-repeat: no-repeat
     background-blend-mode: screen
 
@@ -18,7 +19,7 @@ body
     &__content
         width: 810px
         margin: 0 auto
-        margin-top: 200px
+        margin-top: 15vh
 
 .card
     border-radius: 6px
@@ -42,3 +43,82 @@ body
 .alert
     --bs-alert-margin-bottom: 0
     border-radius: 0//var(--bs-alert-border-radius)
+
+@media (max-width: 1199px)
+    .col-lg-5
+        width: 400px
+    .card-header
+        height: 70px
+        font-size: 24px
+    .my-4 
+        margin-top: 0.9rem!important
+        margin-bottom: 0.9rem!important
+    // .my-4
+    //     padding-top: 1rem !important
+    //     padding-bottom: 1rem !important
+    .py-4
+        padding-top: 0.75rem !important
+        padding-bottom: 0.75rem !important
+
+@media (max-width: 767px)
+    .col-lg-5
+        width: 350px
+    .card-header
+        height: 70px
+        font-size: 22px
+    .errorlist
+        font-size: 14px
+    .my-4 
+        margin-top: 0.9rem!important
+        margin-bottom: 0.9rem!important
+    .py-4
+        padding-top: 0.5rem !important
+        padding-bottom: 0.5rem !important
+    .form-control
+        font-size: 0.8rem
+    .small
+        font-size: 0.75em
+    .btn
+        --bs-btn-font-size: 0.8rem
+
+@media (max-width: 587px)
+    .col-lg-5
+        width: 275px
+    // .card
+    //     height: 400px
+    .card-header
+        height: 50px
+        font-size: 20px
+    // .card-body
+    //     height: 100px
+    .errorlist
+        font-size: 12px
+    .my-4 
+        margin-top: 0.5rem!important
+        margin-bottom: 0.5rem!important
+    .small
+        font-size: 0.6em
+    .btn
+        --bs-btn-font-size: 0.6rem
+
+@media (max-width: 460px)
+    .col-lg-5
+        width: 235px
+    .card-header
+        height: 40px
+        font-size: 18px
+    .my-4 
+        margin-top: 0.2rem!important
+        margin-bottom: 0.2rem!important
+    .errorlist
+        font-size: 10px
+    .py-4
+        padding-top: 0.2rem !important
+        padding-bottom: 0.2rem !important
+    .form-control
+        font-size: 0.6rem
+    .small
+        font-size: 0.6em
+    .btn
+        --bs-btn-font-size: 0.6rem
+        padding: 3px 6px
