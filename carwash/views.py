@@ -47,8 +47,12 @@ class RegistrationAutoView(Common, View):
         # удаляем экземпляры WorkDay если они старше 1 года
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
-        # создаём словарь где ключи это номер услуги, а значение, сама услуга
+        # создаём словарь где ключи это id услуги, а значение, сама услуга
         services = dict([(service.pk, service) for service in CarWashService.objects.all()])
+
+        # получаем список из словарей в которых указана дата и времена с их значениями
+        # {'date': datetime.date(2023, 10, 24), '10:00': 'disable', '10:30': 3, '11:00': 3, ...}
+        # где key - время, value - id регистрации либо 'disabled' если время прошло, None если время актуально
         list_day_dictionaries = [WorkDay.objects.get(date=day).formatted_dict() for day in dates_week]
 
         context = {
@@ -163,13 +167,13 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in
                                  range(22)]
 
-        # создаём список записей рабочего дня list_workday
+        # создаём список записей рабочего дня list_workday, каждый элемент - словарь времени WorkDay
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
         # либо [{'time':'10:00', 'client': 'Свободно', 'free': True},]
         list_registrations_workday = []
-        for t, registration in zip(self.FORMATTED_KEY[1:], registrations_workday):
-            if registration:
-                res = {'time': t, 'registration': registration}
+        for t, time_content in zip(self.FORMATTED_KEY[1:], registrations_workday):
+            if time_content:
+                res = {'time': t, 'registration': time_content}
             else:
                 res = {'time': t, 'client': 'Свободно', 'free': True}
 
@@ -190,9 +194,10 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             full_list_registrations_workday.append(another_time)  # добаваляем в список значение времени WorkDay
             if 'registration' in another_time:
                 total_time_without30 = another_time['registration'].total_time - 30
+                client = another_time['registration'].client
                 for i in range(0, total_time_without30, 30):
                     another_time = next(iterator_list_registrations_workday)
-                    registration_busy = {'time': another_time['time'], 'client': another_time['registration'].client}
+                    registration_busy = {'time': another_time['time'], 'client': client}
                     full_list_registrations_workday.append(registration_busy)
 
         # показываем звонки, заказанные в течении 24 часов
@@ -203,7 +208,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 
         context = {
             'title': self.title,
-            'menu': self.create_menu((0, 1,)),
+            'menu': self.create_menu((0, 1)),
             'full_list_registrations_workday': full_list_registrations_workday,
             'staff': request.user.has_perm('carwash.view_workday'),
             'button_date': {'today': workday_for_button[0].date,
@@ -265,14 +270,16 @@ class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
     template_name = 'carwash/user-registrations.html'
     context_object_name = 'user_registrations'
     title = 'Мои записи'
-    menu = (0, 1,)
+    menu = (0, 1)
 
     def get_queryset(self):
         queryset = super(UserRegistrationsListView, self).get_queryset()
 
         # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
         queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
-        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
+
+        return queryset.filter(date_reg__gte=date.today(), client=self.request.user).prefetch_related(
+            'carwash_reg__services').order_by('date_reg', 'time_reg')
 
 
 class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):

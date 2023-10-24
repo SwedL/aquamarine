@@ -1,7 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.views.generic import UpdateView, TemplateView
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
@@ -11,7 +10,6 @@ from django.conf import settings
 from django.contrib import messages
 
 from users.forms import *
-from datetime import date, datetime, timedelta
 from common.views import Common
 from users.models import User
 

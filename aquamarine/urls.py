@@ -18,12 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 from carwash.views import pageNotFound
 
+from aquamarine import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('', include('carwash.urls', namespace='carwash')),
     path('users/', include('users.urls', namespace='users')),
 ]
+
+if settings.DEBUG:
+    urlpatterns = [
+        path("__debug__/", include("debug_toolbar.urls")),
+    ] + urlpatterns
+
 
 handler404 = pageNotFound
 handler403 = pageNotFound

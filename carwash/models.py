@@ -100,7 +100,10 @@ class WorkDay(models.Model):
         return f'{self.date}'
 
     def formatted_dict(self):
-        """Функция создаёт словарь, где ключи из списка FORMATTED_KEY, а значения - значения полей WorkDay"""
+        """
+        Функция создаёт словарь, где ключи из списка FORMATTED_KEY,
+         а значения - значения полей WorkDay (id CarWashRegistration)
+         """
 
         # получаем список значений словаря WorkDay только дата и времена
         workday_values = list(self.__dict__.values())[2:]

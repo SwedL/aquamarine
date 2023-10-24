@@ -1,5 +1,7 @@
+from django.db.models import Q
 from carwash.models import WorkDay
 from datetime import date, time, datetime, timedelta
+
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Доступное время', 'url_name': 'carwash:registration'},
@@ -11,9 +13,11 @@ menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
 def create_week_workday():
     dates_week = [date.today() + timedelta(days=i) for i in range(7)]
 
-    for day_ in dates_week:  # создаём день (объект WorkDay), если его нет в БД
-        if not WorkDay.objects.filter(date=day_).exists():
-            WorkDay.objects.create(date=day_)
+    check_objects = WorkDay.objects.filter(Q(date__gte=dates_week[0]) & Q(date__lte=dates_week[6]))
+    if len(check_objects) < 7:
+        for day_ in dates_week:  # создаём день (объект WorkDay), если его нет в БД
+            if not WorkDay.objects.filter(date=day_).exists():
+                WorkDay.objects.create(date=day_)
 
     return dates_week
 
