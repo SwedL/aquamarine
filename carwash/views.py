@@ -334,6 +334,7 @@ class RequestCallFormView(Common, FormView):
         context = {
             'title': self.title,
             'menu': self.create_menu((0, 1)),
+            'staff': self.request.user.has_perm('carwash.view_workday'),
         }
 
         return render(self.request, 'carwash/request-call-done.html', context=context)
