@@ -19,7 +19,7 @@ def create_week_workday():
             if not WorkDay.objects.filter(date=day_).exists():
                 WorkDay.objects.create(date=day_)
 
-    return dates_week
+    return check_objects
 
 
 class Common:

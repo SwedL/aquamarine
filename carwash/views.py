@@ -41,8 +41,8 @@ class RegistrationAutoView(Common, View):
     title = 'Запись автомобиля'
 
     def get(self, request):
-        # создаём список дат на неделю вперёд и проверяем наличие объектов WorkDay на неделю вперёд
-        dates_week = create_week_workday()
+        # проверяем наличие объектов WorkDay на неделю вперёд и получаем их из функции
+        objects_week_workday = create_week_workday()
 
         # удаляем экземпляры WorkDay если они старше 1 года
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
@@ -53,7 +53,7 @@ class RegistrationAutoView(Common, View):
         # получаем список из словарей в которых указана дата и времена с их значениями
         # {'date': datetime.date(2023, 10, 24), '10:00': 'disable', '10:30': 3, '11:00': 3, ...}
         # где key - время, value - id регистрации либо 'disabled' если время прошло, None если время актуально
-        list_day_dictionaries = [WorkDay.objects.get(date=day).formatted_dict() for day in dates_week]
+        list_day_dictionaries = list(map(lambda i: i.formatted_dict(), objects_week_workday))
 
         context = {
             'title': self.title,
