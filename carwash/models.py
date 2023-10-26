@@ -56,8 +56,8 @@ class CarWashRegistration(models.Model):
     def all_services(self):
         return ', '.join([str(s) for s in self.services.all()])
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        super(CarWashRegistration, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+    # def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    #     super(CarWashRegistration, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
 
 class WorkDay(models.Model):
@@ -107,9 +107,11 @@ class WorkDay(models.Model):
 
         # получаем список значений словаря WorkDay только дата и времена
         workday_values = list(self.__dict__.values())[2:]
+
+        # создаём словарь и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
+        # {'10:00': 'disable', '10:30': None, '11:00': 9, 'date': 2023-10-26}
         res_dict = {}
 
-        # создаём и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
         if workday_values[0] == date.today():
             for num, k in enumerate(self.FORMATTED_KEY):
                 if num != 0 and not workday_values[num] and time(*map(int, k.split(':'))) < datetime.now().time():

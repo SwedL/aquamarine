@@ -1,12 +1,12 @@
 from http import HTTPStatus
 from bs4 import BeautifulSoup
-from datetime import date, time
+from datetime import date, time, timedelta
 
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
 
-from carwash.models import CarWashService, CarWashRegistration, CarWashUserRegistration, CarWashRequestCall
+from carwash.models import CarWashService, CarWashRegistration, CarWashUserRegistration, WorkDay
 from users.models import User
 
 
@@ -105,6 +105,7 @@ class StaffDetailViewTestCase(TestCase):
         self.user = User.objects.create(email='test@mail.ru', password='test')
         self.permission = Permission.objects.get(codename='view_workday')
         self.path = reverse('carwash:staff', kwargs={'days_delta': 0})
+        [WorkDay.objects.create(date=date.today() + timedelta(days=i)) for i in range(7)]
 
     def test_user_cannot_permission(self):
         # Проверка доступа к странице неавторизованного пользователя

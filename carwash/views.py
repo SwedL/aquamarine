@@ -157,16 +157,15 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             raise Http404
 
         # создаём список дат на неделю вперёд и проверяем наличие объектов WorkDay на неделю вперёд
-        create_week_workday()
-
         # создаём список WorkDay (today, tomorrow, after_tomorrow)
-        workday_for_button = [WorkDay.objects.get(date=date.today() + timedelta(days=i)) for i in range(3)]
+        workday_for_button = create_week_workday()[:3]
         current_workday = workday_for_button[days_delta]  # текущий WorkDay
         formatted_key = self.FORMATTED_KEY[1:].copy()
 
         # получаем список значений всех времен выбранного объекта Workday
-        registrations_workday = [getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in
-                                 range(22)]
+        registrations_workday = [
+            getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)
+        ]
 
         # создаём список записей рабочего дня list_workday, каждый элемент - словарь времени WorkDay
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
