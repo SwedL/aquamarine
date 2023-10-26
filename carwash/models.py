@@ -51,10 +51,11 @@ class CarWashRegistration(models.Model):
 
     def __str__(self):
         lst_services = ', '.join([str(s) for s in self.services.all()])
-        return f'{self.client} || {self.client.car_model} || {lst_services}'
-
-    def all_services(self):
-        return ', '.join([str(s) for s in self.services.all()])
+        return lst_services
+        # return f'{self.client} || {self.client.car_model} || {lst_services}'
+    #
+    # def all_services(self):
+    #     return ', '.join([str(s) for s in self.services.all()])
 
     # def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
     #     super(CarWashRegistration, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
