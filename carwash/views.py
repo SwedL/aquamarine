@@ -69,11 +69,12 @@ class RegistrationAutoView(Common, View):
         choicen_date, choicen_time = request.POST['choice_time'].split(',')
         choicen_services_list_pk = list(
             map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST)))
-        choicen_services = [CarWashService.objects.get(pk=s) for s in choicen_services_list_pk]
+        choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
+
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
         # проверяем если ранее User создавал такую же "Запись" с теми же услугами, то используем её.
-        all_registrations_user = CarWashRegistration.objects.filter(client=request.user)
+        all_registrations_user = CarWashRegistration.objects.filter(client=request.user).prefetch_related('services')
 
         for reg in all_registrations_user:
             if choicen_services == list(reg.services.all()):
