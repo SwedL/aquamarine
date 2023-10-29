@@ -7,8 +7,13 @@ class UserModelTestCase(TestCase):
     """Тест модели Пользователь"""
 
     def setUp(self):
-        self.user = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                        phone_number='+79445555555', car_model='Kia Sportage')
+        self.user = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
         User.objects.create(email='testuser2@mail.ru', password='12345qwerty')
         User.objects.create(email='testuser3@mail.ru', password='12345qwerty')
         User.objects.create(email='testuser4@mail.ru', password='12345qwerty')

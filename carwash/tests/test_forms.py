@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from carwash.forms import CarWashRequestCallForm
 
 
@@ -22,5 +23,5 @@ class RequestCallFormViewTestCase(TestCase):
         # Проверка вспомогательного сообщения формы
         self.assertEqual(
             self.form.fields['phone_number'].validators[0].message,
-            "Номер телефона должен быть в формате: '89999999999'"
+            'Номер телефона должен быть в формате: "89999999999"'
         )

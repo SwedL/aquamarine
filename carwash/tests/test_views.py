@@ -1,12 +1,13 @@
-from http import HTTPStatus
-from bs4 import BeautifulSoup
 from datetime import date, time, timedelta
+from http import HTTPStatus
 
+from bs4 import BeautifulSoup
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
 
-from carwash.models import CarWashService, CarWashRegistration, CarWashUserRegistration, WorkDay
+from carwash.models import (CarWashRegistration, CarWashService,
+                            CarWashUserRegistration, WorkDay)
 from users.models import User
 
 
@@ -32,20 +33,20 @@ class IndexListViewTestCase(TestCase):
         self.assertEqual(self._common_tests(), [])
 
     def test_if_logged_but_cannot_permission(self):
-        # Проверка отображения меню для авторизованного пользователя, но без допуска
+        # Проверка отображения меню для авторизованного пользователя, без permission
         self.client.force_login(self.user)
 
         self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Выйти'])
 
     def test_if_logged_and_can_permission(self):
-        # Проверка отображения меню для авторизованного пользователя с допуском
+        # Проверка отображения меню для авторизованного пользователя с permission
         self.user.user_permissions.add(self.permission)
         self.client.force_login(self.user)
 
         self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Сотрудник', 'Выйти'])
 
     def test_if_logged_and_can_permission_and_is_admin(self):
-        # Проверка отображения меню для авторизованного пользователя, с допуском администратора
+        # Проверка отображения меню для авторизованного пользователя, с правами admin
         self.user.user_permissions.add(self.permission)
         self.user.is_admin = True
         self.user.save()
@@ -133,8 +134,13 @@ class UserRegistrationsListViewTestCase(TestCase):
         self.path = reverse('carwash:user_registrations')
         self.services = CarWashService.objects.all()
 
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Sportage')
+        self.user1 = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
@@ -149,7 +155,6 @@ class UserRegistrationsListViewTestCase(TestCase):
             time_reg=time(12, 00),
             carwash_reg=self.registration1,
         )
-
         CarWashUserRegistration.objects.create(
             client=self.user1,
             date_reg=date.today(),

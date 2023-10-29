@@ -1,20 +1,20 @@
-
-from django.http import HttpResponseNotFound, HttpResponse, HttpResponseRedirect, Http404
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from datetime import date, time, datetime, timedelta
-from django.utils import timezone
-from django.utils.timezone import now
-from django.db.models import Q
-from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
-from django.views import View
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
-
+from datetime import date, time, timedelta
 from itertools import dropwhile
-from carwash.models import *
-from carwash.forms import CarWashRequestCallForm
-from common.views import Common, create_week_workday
 
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+from django.db.models import Q
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+from django.utils import timezone
+from django.views import View
+from django.views.generic import FormView, ListView
+
+from carwash.forms import CarWashRequestCallForm
+from carwash.models import (CarWashRegistration, CarWashRequestCall,
+                            CarWashService, CarWashUserRegistration, WorkDay)
+from common.views import Common, create_week_workday
 
 # menu = ['Главная', 'Доступное время', 'Услуги и цены', 'Контакты и адрес']
 
@@ -68,7 +68,8 @@ class RegistrationAutoView(Common, View):
     def post(self, request):
         choicen_date, choicen_time = request.POST['choice_time'].split(',')
         choicen_services_list_pk = list(
-            map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST)))
+            map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST))
+        )
         choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
 
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
@@ -88,7 +89,7 @@ class RegistrationAutoView(Common, View):
         # вычисляем общее время работ total_time в "Записи" (7,8,9 считается как за одно время 30 мин.)
         total_time = new_reg.total_time
 
-        for_workday_date = date(*map(int, choicen_date.split()))  # дата по которую выбрал клиент
+        for_workday_date = date(*map(int, choicen_date.split()))  # дата которую выбрал клиент
         for_workday_time = time(*map(int, choicen_time.split(':')))  # время которое выбрал клиент
         current_workday = WorkDay.objects.get(date=for_workday_date)
 
@@ -150,7 +151,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
     """
 
     title = 'Сотрудник'
-    permission_required = "carwash.view_workday"
+    permission_required = 'carwash.view_workday'
 
     def get(self, request, days_delta=0):
         if days_delta > 2:
@@ -167,7 +168,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)
         ]
 
-        # создаём список записей рабочего дня list_workday, каждый элемент - словарь времени WorkDay
+        # создаём список list_workday записей WorkDay, каждый элемент - словарь
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
         # либо [{'time':'10:00', 'client': 'Свободно', 'free': True},]
         list_registrations_workday = []
@@ -183,7 +184,8 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},
         #  {'time':'10:30', 'client': CarWashRegistration.client},
         #  {'time':'11:00', 'client': CarWashRegistration.client},
-        #  {'time':'11:30', 'client': 'Свободно', 'free': True}, ...]
+        #  {'time':'11:30', 'client': 'Свободно', 'free': True},
+        #  ...]
         iterator_list_registrations_workday = iter(list_registrations_workday)
         full_list_registrations_workday = []
 
@@ -200,7 +202,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                     registration_busy = {'time': another_time['time'], 'client': client}
                     full_list_registrations_workday.append(registration_busy)
 
-        # показываем звонки, заказанные в течении 24 часов
+        # показываем заказные звонки, в течении 24 часов
         datetime_now = timezone.now()
         time_1_day_ago = datetime_now - timedelta(days=1)
         requests_calls = CarWashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
@@ -226,7 +228,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
     """Обработчик события 'отмена (удаление)' сотрудником записи клиента"""
 
-    permission_required = "carwash.view_workday"
+    permission_required = 'carwash.view_workday'
 
     def get(self, request, days_delta, registration_pk, registration_time):
         current_workday = WorkDay.objects.get(date=date.today() + timedelta(days=days_delta))
@@ -240,7 +242,7 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
         # удаляем записи выбранной регистрации в полях времени, сколько она занимает времен объекта WorkDay
         for _ in range(0, total_time, 30):
             setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
-                    None)  # поле соотвествующего времени делаем None по умолчанию
+                    None)  # значению поля соотвествующего времени присваиваем значение None (как по умолчанию)
         current_workday.save()
 
         redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
@@ -251,7 +253,7 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 class RequestCallProcessingView(View):
     """Обработчик события 'обработка звонка'"""
 
-    permission_required = "carwash.view_workday"
+    permission_required = 'carwash.view_workday'
 
     def get(self, request, days_delta, call_pk):
         processed_call = CarWashRequestCall.objects.get(pk=call_pk)
@@ -288,7 +290,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     def get(self, request, registration_pk):
         user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
 
-        # проверка что пользователь удаляет свою запись
+        # проверка что пользователь удаляет принадлежащую ему запись
         if user_registration.client != request.user:
             raise Http404
 
@@ -304,7 +306,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
         attr_first_time = 'time_' + formatted_key1.pop(0).replace(':', '')
 
         # определяем "Запись" в найденном времени-поля, если она есть
-        first_time_registration = getattr(needed_workday, attr_first_time)
+        first_time_registration = getattr(needed_workday, attr_first_time, None)
 
         # если в поле WorkDay вообще присутствует "Запись"
         # и её клиент соответствует текущему пользователю, то удаляем в этом поле WorkDay "Запись",
@@ -315,7 +317,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
             # сколько она занимает времен объекта WorkDay - 30 т.к. начальное время мы уже удалили выше
             for _ in range(0, total_time - 30, 30):
                 setattr(needed_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
-                        None)  # поле соотвествующего времени делаем None по умолчанию
+                        None)  # значению поля соотвествующего времени присваиваем значение None (как по умолчанию)
             needed_workday.save()
 
         # удаляем "Запись пользователя"

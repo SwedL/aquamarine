@@ -1,16 +1,19 @@
+# from django.conf import settings
+# from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import (LoginView, PasswordChangeView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetView)
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect
-from django.views.generic import UpdateView, TemplateView
-from django.contrib.auth.views import LoginView, PasswordChangeView
-from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
+# from django.core.mail import send_mail
+# from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.core.mail import send_mail
-from django.conf import settings
-from django.contrib import messages
+from django.views.generic import TemplateView, UpdateView
 
-from users.forms import *
 from common.views import Common
+from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
+                         UserLoginForm, UserProfileForm,
+                         UserSetNewPasswordForm)
 from users.models import User
 
 

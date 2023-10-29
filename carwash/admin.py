@@ -1,6 +1,7 @@
 from django.contrib import admin
-from django import forms
-from .models import *
+
+from carwash.models import (CarWashRegistration, CarWashRequestCall,
+                            CarWashService, CarWashUserRegistration, WorkDay)
 
 
 @admin.register(CarWashService)
@@ -46,5 +47,3 @@ class CarWashCallMeAdmin(admin.ModelAdmin):
 
     list_display = ('phone_number', 'processed', 'created',)
     ordering = ('-created',)
-
-# admin.site.register(CarWashUserRegistration)

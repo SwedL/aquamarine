@@ -1,5 +1,6 @@
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 
 
 class UserManager(BaseUserManager):
@@ -9,7 +10,7 @@ class UserManager(BaseUserManager):
         birth and password.
         """
         if not email:
-            raise ValueError("Users must have an email address")
+            raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
@@ -36,8 +37,8 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """
     Модель Пользователь.
-    Поля: email (login), ФИО, номер телефона,
-    тип автомобиля, марка и модель, дисконт, DateTime создания
+    Поля: email (login), ФИО, номер телефона, тип автомобиля,
+    марка и модель, дисконт, DateTime создания пользователя
     """
 
     STANDART = 'price_standart'
@@ -49,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (OFFROAD, 'внедорожник'),
     ]
 
-    email = models.EmailField(max_length=255, verbose_name="Логин", unique=True, db_index=True)
+    email = models.EmailField(max_length=255, verbose_name='Логин', unique=True, db_index=True)
     fio = models.CharField(max_length=255, blank=True, verbose_name='ФИО')
     phone_number = models.CharField(max_length=11, blank=True, verbose_name='телефон')
     car_type = models.CharField(max_length=40, choices=MODEL_CHOICES, default=STANDART, verbose_name='тип автомобиля')
@@ -62,15 +63,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # field required to createsuperuser
 
     def __str__(self):
         return self.email
 
     class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     # def has_perm(self, perm, obj=None):
     #     "Does the user have a specific permission?"
@@ -87,5 +88,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Is the user a member of staff?"""
         # Simplest possible answer: All admins are staff
         return self.is_admin
-
-

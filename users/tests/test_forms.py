@@ -1,7 +1,10 @@
 from django.test import TestCase
 from django.utils.translation import gettext_lazy as _
 
-from users.forms import *
+from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
+                         UserLoginForm, UserProfileForm,
+                         UserSetNewPasswordForm)
+from users.models import User
 
 
 class UserLoginFormTestCase(TestCase):
@@ -10,8 +13,10 @@ class UserLoginFormTestCase(TestCase):
     def test_form_field_label(self):
         # Проверка названий полей формы
         form = UserLoginForm()
-        self.assertTrue(form.fields['username'].label is None or form.fields['username'].label == 'Логин')
-        self.assertTrue(form.fields['password'].label is None or form.fields['password'].label == 'Пароль')
+        self.assertTrue(
+            form.fields['username'].label is None or form.fields['username'].label == 'Логин')
+        self.assertTrue(
+            form.fields['password'].label is None or form.fields['password'].label == 'Пароль')
 
 
 class UserProfileFormTestCase(TestCase):
@@ -22,20 +27,15 @@ class UserProfileFormTestCase(TestCase):
         form = UserProfileForm()
 
         self.assertTrue(
-            form.fields['email'].label is None or form.fields['email'].label == 'Логин'
-        )
+            form.fields['email'].label is None or form.fields['email'].label == 'Логин')
         self.assertTrue(
-            form.fields['fio'].label is None or form.fields['fio'].label == 'ФИО'
-        )
+            form.fields['fio'].label is None or form.fields['fio'].label == 'ФИО')
         self.assertTrue(
-            form.fields['phone_number'].label is None or form.fields['phone_number'].label == 'номер телефона'
-        )
+            form.fields['phone_number'].label is None or form.fields['phone_number'].label == 'номер телефона')
         self.assertTrue(
-            form.fields['car_model'].label is None or form.fields['car_model'].label == 'Марка и модель автомобиля'
-        )
+            form.fields['car_model'].label is None or form.fields['car_model'].label == 'Марка и модель автомобиля')
         self.assertTrue(
-            form.fields['discount'].label is None or form.fields['discount'].label == 'Дисконт'
-        )
+            form.fields['discount'].label is None or form.fields['discount'].label == 'Дисконт')
 
     def test_form_is_valid_value(self):
         # Проверка на валидность вводимых значений в форму

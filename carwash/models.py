@@ -1,6 +1,7 @@
+from datetime import date, datetime, time
+
 from django.core.validators import RegexValidator
 from django.db import models
-from datetime import date, time, datetime, timedelta
 from django.utils import timezone
 
 from users.models import User
@@ -19,8 +20,8 @@ class CarWashService(models.Model):
     price_offroad = models.IntegerField(default=0, verbose_name='внедорожник')
 
     class Meta:
-        verbose_name = "Услугу"
-        verbose_name_plural = "Услуги"
+        verbose_name = 'Услугу'
+        verbose_name_plural = 'Услуги'
         ordering = ['pk']
 
     def __str__(self):
@@ -30,15 +31,15 @@ class CarWashService(models.Model):
 class CarWashRegistration(models.Model):
     """Модель Регистрация. Поля: пользователь, выбранные услуги"""
 
-    client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
-    services = models.ManyToManyField(to=CarWashService, verbose_name="услуги")
+    client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name='клиент')
+    services = models.ManyToManyField(to=CarWashService, verbose_name='услуги')
 
     def total_time_reg(self):
         """Возвращает суммарное время работ регистрации"""
 
         choice_services = self.services.all()
         time789 = sum([x.pk for x in choice_services if
-                       x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну
+                       x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
         overal_time = sum([t.process_time for t in choice_services]) - time789 * 30  # общее время работ
 
         return overal_time
@@ -46,8 +47,8 @@ class CarWashRegistration(models.Model):
     total_time = property(total_time_reg)
 
     class Meta:
-        verbose_name = "Запись"
-        verbose_name_plural = "Записи"
+        verbose_name = 'Запись'
+        verbose_name_plural = 'Записи'
 
     def __str__(self):
         lst_services = ', '.join([str(s) for s in self.services.all()])
@@ -94,8 +95,8 @@ class WorkDay(models.Model):
     time_2030 = models.ForeignKey(to=CarWashRegistration, related_name='time22', on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        verbose_name = "Рабочий день"
-        verbose_name_plural = "Рабочие дни"
+        verbose_name = 'Рабочий день'
+        verbose_name_plural = 'Рабочие дни'
 
     def __str__(self):
         return f'{self.date}'
@@ -131,29 +132,29 @@ class CarWashUserRegistration(models.Model):
 
     """
 
-    client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name="клиент")
+    client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name='клиент')
     date_reg = models.DateField(verbose_name='дата записи')
     time_reg = models.TimeField(verbose_name='время записи')
     carwash_reg = models.ForeignKey(to=CarWashRegistration, on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        verbose_name = "Запись пользователя"
-        verbose_name_plural = "Записи пользователей"
+        verbose_name = 'Запись пользователя'
+        verbose_name_plural = 'Записи пользователей'
 
 
 class CarWashRequestCall(models.Model):
     """Модель Запроса Звонка. Поля: номер телефона, обработан или нет, DateTime создания"""
 
     phone_regex = RegexValidator(regex=r'8\d{10}$',
-                                 message="Номер телефона должен быть в формате: '89999999999'")
+                                 message='Номер телефона должен быть в формате: "89999999999"')
 
     phone_number = models.CharField(validators=[phone_regex], max_length=11, verbose_name='номер телефона')
     processed = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now, verbose_name='создан')
 
     class Meta:
-        verbose_name = "Request Call"
-        verbose_name_plural = "Request Call"
+        verbose_name = 'Request Call'
+        verbose_name_plural = 'Request Call'
 
     def __str__(self):
         return f'{str(self.created.time())[0:5]} --- {self.phone_number}'

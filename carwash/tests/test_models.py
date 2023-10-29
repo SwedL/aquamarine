@@ -1,18 +1,37 @@
+from datetime import date, time, timedelta
+
 from django.test import TestCase
 
-from carwash.models import *
+from carwash.models import (CarWashRegistration, CarWashRequestCall,
+                            CarWashService, CarWashUserRegistration, WorkDay)
+from users.models import User
 
 
 class CarWashServiceModelTestCase(TestCase):
     """Тест модели Услуга"""
 
     def setUp(self):
-        self.service = CarWashService.objects.create(name='Мойка (верх, ковры, сушка)', process_time=60,
-                                                     price_standart=450, price_crossover=550, price_offroad=650)
-        CarWashService.objects.create(name='Экспресс-мойка', process_time=30, price_standart=200, price_crossover=200,
-                                      price_offroad=250)
-        CarWashService.objects.create(name='Экспресс-мойка с шампунем', process_time=30, price_standart=250,
-                                      price_crossover=250, price_offroad=300)
+        self.service = CarWashService.objects.create(
+            name='Мойка (верх, ковры, сушка)',
+            process_time=60,
+            price_standart=450,
+            price_crossover=550,
+            price_offroad=650,
+        )
+        CarWashService.objects.create(
+            name='Экспресс-мойка',
+            process_time=30,
+            price_standart=200,
+            price_crossover=200,
+            price_offroad=250,
+        )
+        CarWashService.objects.create(
+            name='Экспресс-мойка с шампунем',
+            process_time=30,
+            price_standart=250,
+            price_crossover=250,
+            price_offroad=300,
+        )
 
     def test_fields(self):
         # Проверка полей
@@ -74,8 +93,13 @@ class CarWashRegistrationModelTestCase(TestCase):
     fixtures = {'services.json'}
 
     def setUp(self):
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Sportage')
+        self.user1 = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.services = CarWashService.objects.all()
@@ -105,8 +129,7 @@ class CarWashRegistrationModelTestCase(TestCase):
     def test_registration_creation(self):
         # Проверка создания объекта CarWashRegistration
         self.assertEqual(str(self.registration1.client), 'testuser@mail.ru')
-        self.assertEqual(str(self.registration1),
-                         'testuser@mail.ru || Kia Sportage || Мойка (верх, ковры, сушка), Пылесос салона')
+        self.assertEqual(str(self.registration1), 'Мойка (верх, ковры, сушка), Пылесос салона')
 
     def test_registration_get_all_records(self):
         # Проверка количества созданных объектов модели CarWashRegistration в бд
@@ -131,7 +154,7 @@ class CarWashRegistrationModelTestCase(TestCase):
 
     def test_registration_str(self):
         # Проверка метода __str__()
-        expected_str = 'testuser@mail.ru || Kia Sportage || Мойка (верх, ковры, сушка), Пылесос салона'
+        expected_str = 'Мойка (верх, ковры, сушка), Пылесос салона'
 
         self.assertEqual(str(self.registration1), expected_str)
 
@@ -142,14 +165,18 @@ class WorkDayModelTestCase(TestCase):
     fixtures = {'services.json'}
     FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                      '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
-                     '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
-                     ]
+                     '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
 
     def setUp(self):
         self.services = CarWashService.objects.all()
 
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Sportage')
+        self.user1 = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
@@ -202,8 +229,13 @@ class CarWashUserRegistrationModelTestCase(TestCase):
     def setUp(self):
         self.services = CarWashService.objects.all()
 
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Sportage')
+        self.user1 = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
@@ -268,4 +300,3 @@ class CarWashRequestCallModelTestCase(TestCase):
         requests_calls = CarWashRequestCall.objects.all()
 
         self.assertEqual(len(requests_calls), 3)
-

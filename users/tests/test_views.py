@@ -22,8 +22,13 @@ class UserProfileViewTestCase(TestCase):
     """Тест представления страницы профиля пользователя"""
 
     def setUp(self):
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Sportage')
+        self.user1 = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
 
     def test_view(self):
         path = reverse('users:profile')
@@ -39,8 +44,13 @@ class UserPasswordChangeViewTestCase(TestCase):
     """Тест представления страницы смены пароля пользователем"""
 
     def setUp(self):
-        self.user1 = User.objects.create(email='testuser@mail.ru', password='12345qwerty', fio='Иванов Пётр Николаевич',
-                                         phone_number='+79445555555', car_model='Kia Sportage')
+        self.user1 = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='+79445555555',
+            car_model='Kia Sportage',
+        )
 
     def test_view(self):
         path = reverse('users:password_change')
@@ -74,4 +84,3 @@ class PasswordChangeDoneTemplateViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Aquamarine')
         self.assertTemplateUsed(response, 'users/password-change-done.html')
-
