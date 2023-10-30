@@ -33,16 +33,7 @@ class CarWashRegistration(models.Model):
 
     client = models.ForeignKey(to=User, on_delete=models.CASCADE, verbose_name='клиент')
     services = models.ManyToManyField(to=CarWashService, verbose_name='услуги')
-
-    @property
-    def total_time(self):
-        """Возвращает суммарное время работ регистрации"""
-        choice_services = self.services.all()
-        time789 = sum([x.pk for x in choice_services if
-                       x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
-        overal_time = sum([t.process_time for t in choice_services]) - time789 * 30  # общее время работ
-
-        return overal_time
+    total_time = models.PositiveSmallIntegerField(default=0, verbose_name='общее время работ')
 
     class Meta:
         verbose_name = 'Запись'
@@ -51,8 +42,7 @@ class CarWashRegistration(models.Model):
     def __str__(self):
         lst_services = ', '.join([str(s) for s in self.services.all()])
         return lst_services
-        # return f'{self.client} || {self.client.car_model} || {lst_services}'
-    #
+
     # def all_services(self):
     #     return ', '.join([str(s) for s in self.services.all()])
 

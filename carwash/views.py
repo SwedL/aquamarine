@@ -86,7 +86,13 @@ class RegistrationAutoView(Common, View):
             new_reg.save()
             new_reg.services.set(choicen_services)  # добавляем в "Запись" выбранные услуги
 
-        # вычисляем общее время работ total_time в "Записи" (7,8,9 считается как за одно время 30 мин.)
+            # вычисляем общее время работ total_time в "Записи" (7,8,9 считается как за одно время 30 мин.)
+            choice_services = new_reg.services.all()
+            time789 = sum([x.pk for x in choice_services if
+                           x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
+            new_reg.total_time = sum([t.process_time for t in choice_services]) - time789 * 30  # общее время работ
+            new_reg.save()
+
         total_time = new_reg.total_time
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата которую выбрал клиент
