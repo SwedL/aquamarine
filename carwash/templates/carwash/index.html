@@ -1,6 +1,7 @@
 {% extends 'carwash/base.html' %}
 
 {% load static %}
+{% load cache %}
 
 {% block css %} 
     <link rel="stylesheet" href="{% static 'carwash/css/index.css' %}" xmlns="http://www.w3.org/1999/html">
@@ -9,6 +10,7 @@
 
 
 {% block content %}
+    {% cache 60 sidebar %}
     <main>
         <section class="first-section section">
             <div class="first-section__carousel">
@@ -90,4 +92,5 @@
           <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A24e52e0c61134cfd8361ca77f9d9d5a7b66c8020e0c5fbf87791d4cc74d3d08e&amp;source=constructor" width="100%" height="400" frameborder="0"></iframe>
       </section>
     </main>
+    {% endcache %}
 {% endblock %}
