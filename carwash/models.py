@@ -13,7 +13,7 @@ class CarWashService(models.Model):
     цена стандарт, цена для кроссоверов, цена для внедорожников
     """
 
-    name = models.CharField(max_length=200, verbose_name='название', unique=True, db_index=True)
+    name = models.CharField(max_length=200, verbose_name='название', unique=True)
     process_time = models.SmallIntegerField(default=0, verbose_name='длительность')
     price_standart = models.IntegerField(default=0, verbose_name='седан, хетчбэк')
     price_crossover = models.IntegerField(default=0, verbose_name='кроссовер')
@@ -58,7 +58,7 @@ class WorkDay(models.Model):
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
                      ]
 
-    date = models.DateField(verbose_name='дата', unique=True, db_index=True)
+    date = models.DateField(verbose_name='дата', unique=True)
     time_1000 = models.ForeignKey(to=CarWashRegistration, related_name='time1', on_delete=models.SET_NULL, null=True)
     time_1030 = models.ForeignKey(to=CarWashRegistration, related_name='time2', on_delete=models.SET_NULL, null=True)
     time_1100 = models.ForeignKey(to=CarWashRegistration, related_name='time3', on_delete=models.SET_NULL, null=True)

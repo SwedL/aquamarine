@@ -50,7 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         (OFFROAD, 'внедорожник'),
     ]
 
-    email = models.EmailField(max_length=255, verbose_name='Логин', unique=True, db_index=True)
+    email = models.EmailField(max_length=255, verbose_name='Логин', unique=True)
     fio = models.CharField(max_length=255, blank=True, verbose_name='ФИО')
     phone_number = models.CharField(max_length=11, blank=True, verbose_name='телефон')
     car_type = models.CharField(max_length=40, choices=MODEL_CHOICES, default=STANDART, verbose_name='тип автомобиля')

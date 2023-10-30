@@ -6,13 +6,13 @@ from carwash.models import (CarWashRegistration, CarWashRequestCall,
 
 @admin.register(CarWashService)
 class CarWashServiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad',)
+    list_display = ('id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad')
     list_display_links = ('name',)
 
 
 class CarWashRegistrationAdmin(admin.StackedInline):
     model = CarWashRegistration
-    fields = ('id', 'client', )
+    fields = ('id', 'client')
     extra = 0
 
     def has_delete_permission(self, request, obj=None):
