@@ -48,7 +48,7 @@ class RegistrationAutoView(Common, View):
         WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
         # создаём словарь где ключи это id услуги, а значение, сама услуга
-        services = dict([(service.pk, service) for service in CarWashService.objects.all()])
+        services = dict([(service.pk, service) for service in CarWashService.objects.all().order_by('id')])
 
         # получаем список из словарей в которых указана дата и времена с их значениями
         # {'date': datetime.date(2023, 10, 24), '10:00': 'disable', '10:30': 3, '11:00': 3, ...}
