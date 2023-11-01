@@ -69,6 +69,7 @@
                             <th>кроссовер</th>
                             <th>внедорожник</th>
                         </tr>
+                        {% cache 18000 all_services %}
                         {% for s in services %}
                             <tr>
                                 <td class="services-section__description"><span>{{s}}</span></td>
@@ -77,6 +78,7 @@
                                 <td>{{s.price_offroad}}</td>
                             </tr>
                         {% endfor %}
+                        {% endcache %}
                     </table>
                 </div>
                 <a class="services-section__link-freepik"
