@@ -92,12 +92,21 @@ class CarWashRegistrationModelTestCase(TestCase):
 
     fixtures = {'services.json'}
 
+    @staticmethod
+    def calculate_total_time(registration):
+        # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
+        choice_services = registration.services.all()
+        time789 = sum([x.pk for x in choice_services if
+                       x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
+        registration.total_time = sum([t.process_time for t in choice_services]) - time789 * 30
+        registration.save()
+
     def setUp(self):
         self.user1 = User.objects.create(
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='81234567890',
             car_model='Kia Sportage',
         )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
@@ -112,6 +121,8 @@ class CarWashRegistrationModelTestCase(TestCase):
 
         self.registration789 = CarWashRegistration.objects.create(client=self.user2)
         self.registration789.services.set([self.services[3], self.services[6], self.services[7], self.services[8]])
+
+        [self.calculate_total_time(i) for i in [self.registration1, self.registration2, self.registration789]]
 
     def test_fields(self):
         # Проверка полей
@@ -174,7 +185,7 @@ class WorkDayModelTestCase(TestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='81234567890',
             car_model='Kia Sportage',
         )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
@@ -233,7 +244,7 @@ class CarWashUserRegistrationModelTestCase(TestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='81234567890',
             car_model='Kia Sportage',
         )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')

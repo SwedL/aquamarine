@@ -26,7 +26,7 @@ class UserProfileViewTestCase(TestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='89445555555',
             car_model='Kia Sportage',
         )
 
@@ -48,7 +48,7 @@ class UserPasswordChangeViewTestCase(TestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='89445555555',
             car_model='Kia Sportage',
         )
 

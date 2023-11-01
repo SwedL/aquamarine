@@ -11,7 +11,7 @@ class UserModelTestCase(TestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='89445555555',
             car_model='Kia Sportage',
         )
         User.objects.create(email='testuser2@mail.ru', password='12345qwerty')
@@ -48,7 +48,7 @@ class UserModelTestCase(TestCase):
         # Проверка создания объекта User
         self.assertEqual(self.user.email, 'testuser@mail.ru')
         self.assertEqual(self.user.fio, 'Иванов Пётр Николаевич')
-        self.assertEqual(self.user.phone_number, '+79445555555')
+        self.assertEqual(self.user.phone_number, '89445555555')
         self.assertEqual(self.user.car_type, 'price_standart')
         self.assertEqual(self.user.car_model, 'Kia Sportage')
         self.assertEqual(self.user.discount, 0)
