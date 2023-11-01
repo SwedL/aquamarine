@@ -138,7 +138,7 @@ class UserRegistrationsListViewTestCase(TestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
             fio='Иванов Пётр Николаевич',
-            phone_number='+79445555555',
+            phone_number='81234567890',
             car_model='Kia Sportage',
         )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')

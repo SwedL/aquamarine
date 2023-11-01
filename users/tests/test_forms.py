@@ -68,7 +68,7 @@ class UserProfileFormTestCase(TestCase):
         form_data = {
             'email': 'test@mail.ru',
             'fio': 'Иванов Петр Николаевич',
-            'phone_number': '71234567890',
+            'phone_number': '91234567890',
             'car_model': 'Kia Sportage',
             'discount': 0,
             }
