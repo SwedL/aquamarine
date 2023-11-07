@@ -168,7 +168,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         workday_for_button = create_week_workday()[:3]
         current_workday = workday_for_button[days_delta]  # текущий WorkDay
         formatted_key = self.FORMATTED_KEY[1:].copy()
-        
+
         # получаем список значений всех времен выбранного объекта Workday
         registrations_workday = [
             getattr(current_workday, 'time_' + formatted_key.pop(0).replace(':', '')) for _ in range(22)

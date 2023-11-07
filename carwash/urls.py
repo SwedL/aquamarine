@@ -1,7 +1,6 @@
 """Определяет схемы URL для carwash"""
 
 from django.urls import path
-from django.views.decorators.cache import cache_page
 
 from carwash.views import (IndexListView, RegistrationAutoView,
                            RequestCallFormView, RequestCallProcessingView,
