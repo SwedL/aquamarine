@@ -117,11 +117,12 @@ class RegistrationAutoView(Common, View):
             current_workday.save()
 
             # создаём CarWashUserRegistration - запись пользователя для отслеживания в "Мои записи"
-            CarWashUserRegistration.objects.create(client=request.user,
-                                                   date_reg=for_workday_date,
-                                                   time_reg=for_workday_time,
-                                                   carwash_reg=new_reg)
-
+            CarWashUserRegistration.objects.create(
+                client=request.user,
+                date_reg=for_workday_date,
+                time_reg=for_workday_time,
+                carwash_reg=new_reg,
+            )
         else:
             context = {
                 'title': 'Ошибка записи',

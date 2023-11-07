@@ -29,7 +29,6 @@ class Common:
 
     title = 'Aquamarine'
     menu = range(3)
-    # staff = False
 
     @classmethod
     def create_menu(cls, menu):
