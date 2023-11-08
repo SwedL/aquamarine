@@ -191,3 +191,12 @@ EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'aquamarine.srv@yandex.ru'
 
 SITE_ID = 1
+
+# DRF
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}

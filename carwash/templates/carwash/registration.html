@@ -38,7 +38,7 @@
                                                 <input id="{{time}}" type="radio" name="dis" disabled>
                                                 <label for="{{time}}">{{time}}</label>
                                             {% else %}
-                                                <input id="{{dict.date}}-{{time}}" type="radio" onclick="CheckChoice()" name="choice_time" value="{{dict.date|date:'Y m d'}},{{time}}">
+                                                <input id="{{dict.date}}-{{time}}" type="radio" onclick="CheckChoice()" name="choice_date_and_time" value="{{dict.date|date:'Y m d'}},{{time}}">
                                                 <label for="{{dict.date}}-{{time}}">{{time}}</label>
                                             {% endif %}
                                         {% endif %}

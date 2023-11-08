@@ -1,11 +1,17 @@
 """Определяет схемы URL для carwash"""
 
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
-from api.views import CarWashServiceListAPIView
+from api.views import *
 
 app_name = 'api'
 
+router = routers.DefaultRouter()
+router.register(r'carwashuserregistration', CarWashUserRegistrationListAPIView)
+
 urlpatterns = [
-    path('services-list/', CarWashServiceListAPIView.as_view(), name='services_list'),
+    path('v1/service-list/', CarWashServiceListAPIView.as_view(), name='service_list'),
+    path('v1/carwash-request-call/', CarWashRequestCallCreateAPIView.as_view(), name='carwash_request_call'),
+    path('v1/', include(router.urls)),
 ]

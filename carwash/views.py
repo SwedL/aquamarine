@@ -66,12 +66,11 @@ class RegistrationAutoView(Common, View):
         return render(request, 'carwash/registration.html', context=context)
 
     def post(self, request):
-        choicen_date, choicen_time = request.POST['choice_time'].split(',')
+        choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
         choicen_services_list_pk = list(
             map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST))
         )
         choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
-
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
         # проверяем если ранее User создавал такую же CarWashRegistration с теми же услугами, то используем её.
@@ -307,23 +306,23 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
         time_without_sec = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
 
         # создаём список времён от времени регистрации user_registration.time_reg и все времена после
-        formatted_key1 = list(dropwhile(lambda el: el != time_without_sec, self.FORMATTED_KEY.copy()))
+        formatted_key = list(dropwhile(lambda el: el != time_without_sec, self.FORMATTED_KEY.copy()))
 
         # определяем начальный атрибут (time_....) необходимого объекта WorkWay удаляемой "Записи"
-        attr_first_time = 'time_' + formatted_key1.pop(0).replace(':', '')
+        attr_first_time = 'time_' + formatted_key.pop(0).replace(':', '')
 
         # определяем CarWashRegistration в найденном времени-поля, если она есть
         first_time_registration = getattr(needed_workday, attr_first_time, None)
 
         # если в поле WorkDay вообще присутствует CarWashRegistration
         # и её клиент соответствует текущему пользователю, то удаляем в этом поле WorkDay CarWashRegistration,
-        # а затем в следующих полях сколько требовалось времён-полей под услуги CarWashRegistration
+        # а затем, в следующих полях сколько требовалось времён-полей под услуги CarWashRegistration
         if first_time_registration and first_time_registration.client == request.user:
             setattr(needed_workday, attr_first_time, None)
             # удаляем записи выбранной CarWashRegistration в полях времени,
             # сколько она занимает времен объекта WorkDay - 30 т.к. начальное время мы уже удалили выше
             for _ in range(0, total_time - 30, 30):
-                setattr(needed_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
+                setattr(needed_workday, 'time_' + formatted_key.pop(0).replace(':', ''),
                         None)  # значению поля соотвествующего времени присваиваем значение None (как по умолчанию)
             needed_workday.save()
 
