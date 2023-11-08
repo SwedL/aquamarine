@@ -28,3 +28,6 @@ class CarWashRequestCallSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashRequestCall
         fields = ['phone_number']
+
+
+# class TempSerializer(serializers.Serializer):

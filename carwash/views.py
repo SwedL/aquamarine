@@ -14,7 +14,7 @@ from django.views.generic import FormView, ListView
 from carwash.forms import CarWashRequestCallForm
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashUserRegistration, WorkDay)
-from common.views import Common, create_week_workday
+from common.views import Common, create_week_workday, carwash_user_registration_delete
 
 # menu = ['Главная', 'Доступное время', 'Услуги и цены', 'Контакты и адрес']
 
@@ -265,7 +265,6 @@ class RequestCallProcessingView(View):
         processed_call = CarWashRequestCall.objects.get(pk=call_pk)
         processed_call.processed = True
         processed_call.save()
-
         redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)
@@ -294,41 +293,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     """Обработчик события 'отмены (удаления)' пользователем своей записи"""
 
     def get(self, request, registration_pk):
-        user_registration = CarWashUserRegistration.objects.get(pk=registration_pk)
-
-        # проверка что пользователь удаляет принадлежащую ему CarWashUserRegistration
-        if user_registration.client != request.user:
-            raise Http404
-
-        needed_workday = WorkDay.objects.get(date=user_registration.date_reg)
-        needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.carwash_reg.pk)
-        total_time = needed_staff_registration.total_time
-        time_without_sec = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
-
-        # создаём список времён от времени регистрации user_registration.time_reg и все времена после
-        formatted_key = list(dropwhile(lambda el: el != time_without_sec, self.FORMATTED_KEY.copy()))
-
-        # определяем начальный атрибут (time_....) необходимого объекта WorkWay удаляемой "Записи"
-        attr_first_time = 'time_' + formatted_key.pop(0).replace(':', '')
-
-        # определяем CarWashRegistration в найденном времени-поля, если она есть
-        first_time_registration = getattr(needed_workday, attr_first_time, None)
-
-        # если в поле WorkDay вообще присутствует CarWashRegistration
-        # и её клиент соответствует текущему пользователю, то удаляем в этом поле WorkDay CarWashRegistration,
-        # а затем, в следующих полях сколько требовалось времён-полей под услуги CarWashRegistration
-        if first_time_registration and first_time_registration.client == request.user:
-            setattr(needed_workday, attr_first_time, None)
-            # удаляем записи выбранной CarWashRegistration в полях времени,
-            # сколько она занимает времен объекта WorkDay - 30 т.к. начальное время мы уже удалили выше
-            for _ in range(0, total_time - 30, 30):
-                setattr(needed_workday, 'time_' + formatted_key.pop(0).replace(':', ''),
-                        None)  # значению поля соотвествующего времени присваиваем значение None (как по умолчанию)
-            needed_workday.save()
-
-        # удаляем CarWashUserRegistration пользователя
-        user_registration.delete()
-
+        carwash_user_registration_delete(request, registration_pk)
         redirect_url = reverse('carwash:user_registrations')
 
         return HttpResponseRedirect(redirect_url)
