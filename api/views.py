@@ -5,7 +5,8 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import APIView
 from carwash.serializers import *
 from carwash.models import CarWashService
-from common.views import Common, RegistrationMixin, carwash_user_registration_delete, create_and_get_week_workday #carwash_registration_create,
+from carwash.views import RegistrationAutoView
+from common.views import carwash_user_registration_delete, create_and_get_week_workday
 
 
 class CarWashServiceListAPIView(generics.ListAPIView):
@@ -13,7 +14,7 @@ class CarWashServiceListAPIView(generics.ListAPIView):
     serializer_class = CarWashServiceSerializer
 
 
-class CarWashRegistrationAPIView(RegistrationMixin, APIView):
+class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
     def get(self, request):
         c = CarWashService.objects.all()
         w = create_and_get_week_workday()
@@ -22,7 +23,7 @@ class CarWashRegistrationAPIView(RegistrationMixin, APIView):
 
     def post(self, request):
         context = super(CarWashRegistrationAPIView, self).post(request)
-        t = 214
+
         if context['title'] == 'Ошибка записи':
             return Response({'title': 'Ошибка записи',
                              'message': 'Время которые вы выбрали уже занято. Попробуйте выбрать другое время'})

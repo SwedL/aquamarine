@@ -12,9 +12,8 @@ from django.views import View
 from django.views.generic import FormView, ListView
 
 from carwash.forms import CarWashRequestCallForm
-from carwash.models import (CarWashRegistration, CarWashRequestCall,
-                            CarWashService, CarWashUserRegistration, WorkDay)
-from common.views import Common, RegistrationMixin, create_and_get_week_workday, carwash_user_registration_delete #, carwash_registration_create
+from carwash.models import *
+from common.views import *
 
 # menu = ['Главная', 'Доступное время', 'Услуги и цены', 'Контакты и адрес']
 
@@ -32,121 +31,125 @@ class IndexListView(Common, ListView):
     menu = (1, 2, 3)
 
 
-class RegistrationAutoView(RegistrationMixin, View):
+class RegistrationAutoView(Common, View):
     """
     Представление для просмотра доступного времени необходимого дня,
     а также записи клиентов на оказание услуг автомойки
     """
 
-    # def get(self, request):
-    #     # проверяем наличие объектов WorkDay на неделю вперёд и получаем их из функции
-    #     objects_week_workday = create_and_get_week_workday()
-    #
-    #     # удаляем экземпляры WorkDay если они старше 1 года
-    #     WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
-    #
-    #     # создаём словарь где ключи это id услуги, а значение, сама услуга
-    #     services = dict([(service.pk, service) for service in CarWashService.objects.all().order_by('id')])
-    #
-    #     # получаем список из словарей значений WorkDay
-    #     # {'date': datetime.date(2023, 10, 24), '10:00': 'disable', '10:30': 3, '11:00': 3, ...}
-    #     # где key - время, value - CarWashRegistration.id либо 'disabled' если время прошло, None если время актуально
-    #     list_day_dictionaries = list(map(lambda i: i.formatted_dict(), objects_week_workday))
-    #
-    #     context = {
-    #         'title': self.title,
-    #         'menu': self.create_menu((0,)),
-    #         'staff': request.user.has_perm('carwash.view_workday'),
-    #         'services': services,
-    #         'list_day_dictionaries': list_day_dictionaries,
-    #     }
-    #
-    #     return render(request, 'carwash/registration.html', context=context)
+    def get(self, request):
+        # проверяем наличие объектов WorkDay на неделю вперёд и получаем их из функции
+        objects_week_workday = create_and_get_week_workday()
 
-    # def post(self, request):
-    #     return carwash_registration_create(request)
-        # choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
-        # choicen_services_list_pk = list(
-        #     map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST))
-        # )
-        # choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
-        # total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
-        #
-        # # проверяем если ранее User создавал такую же CarWashRegistration с теми же услугами, то используем её.
-        # all_registrations_user = CarWashRegistration.objects.filter(client=request.user).prefetch_related('services')
-        #
-        # for reg in all_registrations_user:
-        #     if choicen_services == list(reg.services.all()):
-        #         new_reg = reg
-        #         break
-        # else:
-        #     new_reg = CarWashRegistration(client=request.user)  # создаём CarWashRegistration от пользователя
-        #     new_reg.save()
-        #     new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
-        #
-        #     # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
-        #     choice_services = new_reg.services.all()
-        #     time789 = sum([x.pk for x in choice_services if
-        #                    x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
-        #     new_reg.total_time = sum([t.process_time for t in choice_services]) - time789 * 30
-        #     new_reg.save()
-        #
-        # total_time = new_reg.total_time
-        #
-        # for_workday_date = date(*map(int, choicen_date.split()))  # дата которую выбрал клиент
-        # for_workday_time = time(*map(int, choicen_time.split(':')))  # время которое выбрал клиент
-        # current_workday = WorkDay.objects.get(date=for_workday_date)
-        #
-        # # записываем столько времён под авто, сколько необходимо под услуги
-        # # из списка времен FORMATTED_KEY выбираем от choicen_time и далее
-        # formatted_key1 = list(dropwhile(lambda el: el != choicen_time, self.FORMATTED_KEY))
-        # formatted_key2 = formatted_key1.copy()
-        #
-        # # Если время выбранное всё ещё свободно пока пользователь делал свой выбор,
-        # # то сохраняем CarWashRegistration, если занято пока проходило оформление,
-        # # то сообщаем "К сожалению, время которые вы выбрали уже занято"
-        # check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in
-        #                     range(0, total_time, 30)]
-        #
-        # if all([x is None for x in check_free_times]):
-        #     for _ in range(0, total_time, 30):
-        #         setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
-        #                 new_reg)  # в поле соответствующего времени сохраняем CarWashRegistration
-        #     current_workday.save()
-        #
-        #     # создаём CarWashUserRegistration - запись пользователя для отслеживания в "Мои записи"
-        #     CarWashUserRegistration.objects.create(
-        #         client=request.user,
-        #         date_reg=for_workday_date,
-        #         time_reg=for_workday_time,
-        #         carwash_reg=new_reg,
-        #     )
-        # else:
-        #     context = {
-        #         'title': 'Ошибка записи',
-        #         'menu': self.create_menu((0, 1)),
-        #         'staff': request.user.has_perm('carwash.view_workday'),
-        #     }
-        #
-        #     return render(request, 'carwash/registration-error.html', context=context)
-        #
-        # normal_format_choicen_date = choicen_date.split()  # создаём список данных из выбранной даты "2023 09 10"
-        # normal_format_choicen_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
-        #
-        # normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
-        #
-        # context = {
-        #     'title': 'Запись зарегистрирована',
-        #     'menu': self.create_menu((0,)),
-        #     'staff': request.user.has_perm('carwash.view_workday'),
-        #     'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
-        #     'choice_time': choicen_time,
-        #     'choice_services': choicen_services,
-        #     'total_time': normal_total_time,
-        #     'total_cost': f'{total_cost} р.',
-        # }
-        #
-        # return render(request, 'carwash/registration-done.html', context=context)
+        # удаляем экземпляры WorkDay если они старше 1 года
+        WorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
+
+        # создаём словарь где ключи это id услуги, а значение, сама услуга
+        services = dict([(service.pk, service) for service in CarWashService.objects.all().order_by('id')])
+
+        # получаем список из словарей значений WorkDay
+        # {'date': datetime.date(2023, 10, 24), '10:00': 'disable', '10:30': 3, '11:00': 3, ...}
+        # где key - время, value - CarWashRegistration.id либо 'disabled' если время прошло, None если время актуально
+        list_day_dictionaries = list(map(lambda i: i.formatted_dict(), objects_week_workday))
+
+        context = {
+            'title': 'Запись автомобиля',
+            'menu': self.create_menu((0,)),
+            'staff': request.user.has_perm('carwash.view_workday'),
+            'services': services,
+            'list_day_dictionaries': list_day_dictionaries,
+        }
+        if 'api' in str(request):
+            return context
+
+        return render(request, 'carwash/registration.html', context=context)
+
+    def post(self, request):
+        choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
+        choicen_services_list_pk = list(
+            map(lambda i: int(i.split('_')[1]), filter(lambda x: x.startswith('service'), request.POST))
+        )
+        choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
+        total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
+
+        # проверяем если ранее User создавал такую же CarWashRegistration с теми же услугами, то используем её.
+        all_registrations_user = CarWashRegistration.objects.filter(client=request.user).prefetch_related('services')
+
+        for reg in all_registrations_user:
+            if choicen_services == list(reg.services.all()):
+                new_reg = reg
+                break
+        else:
+            new_reg = CarWashRegistration(client=request.user)  # создаём CarWashRegistration от пользователя
+            new_reg.save()
+            new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
+
+            # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
+            choice_services = new_reg.services.all()
+            time789 = sum([x.pk for x in choice_services if
+                           x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
+            new_reg.total_time = sum([t.process_time for t in choice_services]) - time789 * 30
+            new_reg.save()
+
+        total_time = new_reg.total_time
+
+        for_workday_date = date(*map(int, choicen_date.split()))  # дата которую выбрал клиент
+        for_workday_time = time(*map(int, choicen_time.split(':')))  # время которое выбрал клиент
+        current_workday = WorkDay.objects.get(date=for_workday_date)
+
+        # записываем столько времён под авто, сколько необходимо под услуги
+        # из списка времен FORMATTED_KEY выбираем от choicen_time и далее
+        formatted_key1 = list(dropwhile(lambda el: el != choicen_time, FORMATTED_KEY))
+        formatted_key2 = formatted_key1.copy()
+
+        # Если время выбранное всё ещё свободно пока пользователь делал свой выбор,
+        # то сохраняем CarWashRegistration, если занято пока проходило оформление,
+        # то сообщаем "К сожалению, время которые вы выбрали уже занято"
+        check_free_times = [getattr(current_workday, 'time_' + formatted_key2.pop(0).replace(':', '')) for _ in
+                            range(0, total_time, 30)]
+
+        if all([x is None for x in check_free_times]):
+            for _ in range(0, total_time, 30):
+                setattr(current_workday, 'time_' + formatted_key1.pop(0).replace(':', ''),
+                        new_reg)  # в поле соответствующего времени сохраняем CarWashRegistration
+            current_workday.save()
+
+            # создаём CarWashUserRegistration - запись пользователя для отслеживания в "Мои записи"
+            CarWashUserRegistration.objects.create(
+                client=request.user,
+                date_reg=for_workday_date,
+                time_reg=for_workday_time,
+                carwash_reg=new_reg,
+            )
+        else:
+            context = {
+                'title': 'Ошибка записи',
+                'menu': self.create_menu((0, 1)),
+                'staff': request.user.has_perm('carwash.view_workday'),
+            }
+            if 'api' in str(request):
+                return context
+
+            return render(request, 'carwash/registration-error.html', context=context)
+
+        normal_format_choicen_date = choicen_date.split()  # создаём список данных из выбранной даты "2023 09 10"
+        normal_format_choicen_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
+
+        normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
+
+        context = {
+            'title': 'Запись зарегистрирована',
+            'menu': self.create_menu((0,)),
+            'staff': request.user.has_perm('carwash.view_workday'),
+            'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
+            'choice_time': choicen_time,
+            'choice_services': choicen_services,
+            'total_time': normal_total_time,
+            'total_cost': f'{total_cost} р.',
+        }
+        if 'api' in str(request):
+            return context
+        return render(request, 'carwash/registration-done.html', context=context)
 
 
 class StaffDetailView(Common, PermissionRequiredMixin, View):
@@ -166,7 +169,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         # создаём список WorkDay (today, tomorrow, after_tomorrow)
         workday_for_button = create_and_get_week_workday()[:3]
         current_workday = workday_for_button[days_delta]  # текущий WorkDay
-        formatted_key = self.FORMATTED_KEY[1:].copy()
+        formatted_key = FORMATTED_KEY[1:].copy()
 
         # получаем список значений всех времен выбранного объекта Workday
         registrations_workday = [
@@ -177,7 +180,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
         # либо [{'time':'10:00', 'client': 'Свободно', 'free': True},]
         list_registrations_workday = []
-        for t, time_content in zip(self.FORMATTED_KEY[1:], registrations_workday):
+        for t, time_content in zip(FORMATTED_KEY[1:], registrations_workday):
             if time_content:
                 res = {'time': t, 'registration': time_content}
             else:
@@ -242,7 +245,7 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 
         # создаём список времён от времени регистрации registration_time и все времена после
         formatted_key1 = list(dropwhile(lambda el: el != registration_time,
-                                        self.FORMATTED_KEY.copy()))
+                                        FORMATTED_KEY.copy()))
 
         # удаляем записи выбранной CarWashRegistration в полях времени, сколько она занимает времен объекта WorkDay
         for _ in range(0, total_time, 30):
