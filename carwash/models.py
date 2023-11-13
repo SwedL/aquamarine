@@ -43,6 +43,10 @@ class CarWashRegistration(models.Model):
         lst_services = ', '.join([str(s) for s in self.services.all()])
         return lst_services
 
+    # def __str__(self):
+    #     lst_services = str(self.client) + ' ' + ', '.join([str(s) for s in self.services.all()])
+    #     return lst_services
+
     # def all_services(self):
     #     return ', '.join([str(s) for s in self.services.all()])
 
