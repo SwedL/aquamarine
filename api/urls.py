@@ -16,5 +16,6 @@ urlpatterns = [
     path('v1/carwash-user-registration-list/', CarWashUserRegistrationAPIView.as_view()),
     path('v1/carwash-user-registration-list/<int:registration_pk>/', CarWashUserRegistrationAPIView.as_view()),
     path('v1/carwash-registration/', CarWashRegistrationAPIView.as_view()),
+    path('v1/users-profile/', UserProfileDetailAPIView.as_view()),
     # path('v1/', include(router.urls)),
 ]

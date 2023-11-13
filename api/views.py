@@ -1,12 +1,12 @@
-from rest_framework import generics, mixins
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
 from rest_framework.views import APIView
 from carwash.serializers import *
 from carwash.models import CarWashService
 from carwash.views import RegistrationAutoView
 from common.views import carwash_user_registration_delete, create_and_get_week_workday
+from users.serializers import UserSerializer
 
 
 class CarWashServiceListAPIView(generics.ListAPIView):
@@ -56,3 +56,13 @@ class CarWashUserRegistrationAPIView(APIView):
 class CarWashRequestCallCreateAPIView(generics.CreateAPIView):
     serializer_class = CarWashRequestCallSerializer
     permission_classes = (IsAuthenticated,)
+
+
+class UserProfileDetailAPIView(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self):
+        return self.request.user
+

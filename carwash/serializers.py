@@ -5,7 +5,7 @@ from carwash.models import *
 class CarWashServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashService
-        fields = ['id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad']
+        fields = ('id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad')
 
 
 class CarWashRegistrationSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class CarWashRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarWashRegistration
-        fields = ['id', 'services', 'total_time']
+        fields = ('id', 'services', 'total_time')
 
 
 class WorkDaySerializer(serializers.ModelSerializer):
@@ -27,12 +27,12 @@ class CarWashUserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarWashUserRegistration
-        fields = ['id', 'client', 'date_reg', 'time_reg', 'carwash_reg']
-        ordering = ['date_reg', 'time_reg']
+        fields = ('id', 'client', 'date_reg', 'time_reg', 'carwash_reg')
+        ordering = ('date_reg', 'time_reg')
 
 
 class CarWashRequestCallSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashRequestCall
-        fields = ['phone_number']
+        fields = ('phone_number',)
 
