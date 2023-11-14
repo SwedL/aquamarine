@@ -70,6 +70,7 @@ class RegistrationAutoViewTestCase(TestCase):
     def setUp(self):
         self.services = dict([(k, v) for k, v in enumerate(CarWashService.objects.all(), start=1)])
         self.user = User.objects.create(email='test@mail.ru', password='test')
+        self.workday = WorkDay.objects.create(date=date.today())
         self.path = reverse('carwash:registration')
 
     def test_view(self):
@@ -88,6 +89,21 @@ class RegistrationAutoViewTestCase(TestCase):
         # Проверка отображения кнопки формы для авторизованного пользователя
         self.client.force_login(self.user)
         self.assertEqual(self._common_tests('registration__button'), 'Записаться')
+
+    def test_registration_auto_at_carwash(self):
+        choice_date = str(date.today()).replace('-', ' ')
+        data = {'choice_date_and_time': f'{choice_date},10:00',
+                'service_1': '1',
+                }
+        self.client.force_login(self.user)
+        response = self.client.post(self.path, data)
+        check_workday = list(WorkDay.objects.filter(date=date.today()).values())[0]
+        id_need_carwashregistration = check_workday.get('time_1000_id', False)
+        check_carwashregistration = CarWashRegistration.objects.filter(id=id_need_carwashregistration).first()
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(check_carwashregistration.total_time, 60)
+        self.assertEqual(str(check_carwashregistration), 'Мойка (верх, ковры, сушка)')
+        self.assertEqual(str(check_carwashregistration.client), 'test@mail.ru')
 
     def _common_tests(self, sample):
         response = self.client.get(self.path)

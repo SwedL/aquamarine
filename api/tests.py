@@ -1,15 +1,13 @@
 # from django.test import TestCase
-import json
+from collections import OrderedDict
 from datetime import date
 
 from django.urls import reverse
-from rest_framework.test import force_authenticate
 
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient, APIRequestFactory
+from rest_framework.test import APITestCase, APIClient
 from carwash.models import CarWashService, WorkDay
 from users.models import User
-from api.views import CarWashRegistrationAPIView
 
 
 class CarWashServiceListAPIViewTests(APITestCase):
@@ -46,18 +44,45 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         self.assertEqual(CarWashService.objects.count(), 17)
         self.assertEqual(WorkDay.objects.count(), 7)
 
-    def test_post_data(self):
-        current_date = str(date.today()).replace('-', ' ')
-        data = {'choice_date_and_time': f'{current_date},10:00',
-                'service_1': '1',
+    def test_registration_auto_at_carwash(self):
+        choice_date = str(date.today()).replace('-', ' ')
+        format_choice_date = choice_date.split()
+        format_choice_date.reverse()
+        choice_time = '10:00'
+        data = {'choice_date_and_time': f'{choice_date},{choice_time}',
                 'service_15': '15',
-                'service_17': '17',
                 }
 
         response = self.client.post(self.url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # self.assertEqual(CarWashService.objects.count(), 17)
-        # self.assertEqual(WorkDay.objects.count(), 7)
+        self.assertEqual(response.data, {
+            'title': 'Запись зарегистрирована',
+            'choice_services': [OrderedDict(
+                [('id', 15),
+                 ('name', 'Удаление стойких загрязнений с кузова'),
+                 ('process_time', 60),
+                 ('price_standart', 450),
+                 ('price_crossover', 500),
+                 ('price_offroad', 500)
+                 ])
+            ],
+            'normal_format_choicen_date': '/'.join(format_choice_date),
+            'choice_time': choice_time,
+            'total_time': '1 ч.  0 мин.',
+            'total_cost': '450 р.',
+        })
+
+    def test_post_data_then_selected_time_is_already_taken(self):
+        choice_date = str(date.today()).replace('-', ' ')
+        data = {'choice_date_and_time': f'{choice_date},10:00',
+                'service_15': '15',
+                }
+        self.client.post(self.url, data, format='multipart')
+        response = self.client.post(self.url, data, format='multipart')
+        self.assertEqual(response.data, {
+            "title": "Ошибка записи",
+            "message": "Время которые вы выбрали уже занято. Попробуйте выбрать другое время"
+        })
 
 
 class CarWashRequestCallCreateAPIViewTestCase(APITestCase):
@@ -91,8 +116,12 @@ class CarWashRequestCallCreateAPIViewTestCase(APITestCase):
         self.assertEqual(response.data, {'phone_number': ['Номер телефона должен быть в формате: "89999999999"']})
 
 
+# class
+
+
 class UserProfileDetailAPIViewTestCase(APITestCase):
     """Тестирование получения данных профиля пользователя и их изменение"""
+
     def setUp(self):
         self.user = User.objects.create(
             email='testuser@mail.ru',
