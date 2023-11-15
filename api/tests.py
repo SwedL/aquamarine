@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
-from carwash.models import CarWashService, WorkDay
+from carwash.models import CarWashService, WorkDay, CarWashUserRegistration
 from users.models import User
 
 
@@ -85,6 +85,80 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         })
 
 
+class CarWashUserRegistrationAPIViewTestCase(APITestCase):
+    """
+    Тестирование представления получения списка записей пользователя
+    на автомоечный комплекс и возможность их отмены (удаления) пользователем
+    """
+
+    fixtures = {'services.json'}
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+        )
+
+    def setUp(self):
+        """
+        Создаём пользователя, создаём 2 записи автомобиля на автомоечный комплекс,
+        автоматически создаются 2 записи в личном кабинете пользователя,
+        которые пользователь может просматривать и удалять
+        """
+
+        self.url = reverse('api:user_registration_list')
+        self.workday = WorkDay.objects.create(date=date.today())
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
+
+    def test_get_user_registration_list(self):
+        # проверяем получения информации о записях автомобиля пользователя CarWashUserRegistration
+        choice_date = str(date.today()).replace('-', ' ')
+        data1 = {'choice_date_and_time': f'{choice_date},10:00',
+                 'service_1': '1',
+                 }
+        data2 = {'choice_date_and_time': f'{choice_date},14:00',
+                 'service_3': '3',
+                 }
+        self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
+        self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
+
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(CarWashUserRegistration.objects.all()), 2)
+        self.assertEqual(response.data, {'user_registrations': [
+            OrderedDict([('id', 5), ('client', 7), ('date_reg', '2023-11-15'),
+                         ('time_reg', '10:00:00'), ('carwash_reg',
+                                                    OrderedDict([
+                                                        ('id', 6),
+                                                        ('services', ['Мойка (верх, ковры, сушка)']),
+                                                        ('total_time', 60)]))]),
+            OrderedDict([('id', 6), ('client', 7), ('date_reg', '2023-11-15'),
+                         ('time_reg', '14:00:00'), ('carwash_reg',
+                                                    OrderedDict([
+                                                        ('id', 7), ('services', ['Экспресс-мойка']),
+                                                        ('total_time', 30)]))])]})
+
+    def test_delete_user_registration(self):
+        # проверяем возможность удаления записи автомобиля пользователя CarWashUserRegistration
+        choice_date = str(date.today()).replace('-', ' ')
+        data1 = {'choice_date_and_time': f'{choice_date},10:00',
+                 'service_1': '1',
+                 }
+        data2 = {'choice_date_and_time': f'{choice_date},14:00',
+                 'service_3': '3',
+                 }
+        self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
+        self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
+        user_registration_all = CarWashUserRegistration.objects.all()
+        need_id = user_registration_all.first().id
+        self.assertEqual(len(user_registration_all), 2)
+        new_reverse = reverse('api:user_registration_delete', kwargs={'registration_pk': need_id})
+        self.client.delete(new_reverse)
+        self.assertEqual(len(CarWashUserRegistration.objects.all()), 1)
+
+
 class CarWashRequestCallCreateAPIViewTestCase(APITestCase):
     """Тест представления заказа звонка авторизованного пользователя"""
 
@@ -113,14 +187,12 @@ class CarWashRequestCallCreateAPIViewTestCase(APITestCase):
         data = {'phone_number': '89111111'}
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data, {'phone_number': ['Номер телефона должен быть в формате: "89999999999"']})
-
-
-# class
+        self.assertEqual(response.data,
+                         {'phone_number': ['Номер телефона должен быть в формате: "89999999999"']})
 
 
 class UserProfileDetailAPIViewTestCase(APITestCase):
-    """Тестирование получения данных профиля пользователя и их изменение"""
+    """Тестирование представления получения данных профиля пользователя и их изменение"""
 
     def setUp(self):
         self.user = User.objects.create(
