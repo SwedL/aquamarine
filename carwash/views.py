@@ -87,9 +87,6 @@ class RegistrationAutoView(Common, View):
                 total_time=total_time,
             )
         new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
-        new_reg.save()
-        print()
-
         current_workday = CarWashWorkDay.objects.filter(date=for_workday_date).first()
 
         # записываем столько времён под авто, сколько необходимо под услуги
@@ -270,33 +267,32 @@ class RequestCallProcessingView(View):
 
 class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
     """Представление для показа пользователю его записей на оказание услуг автомойки"""
-    #
-    # model = CarWashRegistration
-    # template_name = 'carwash/user-registrations.html'
-    # context_object_name = 'user_registrations'
-    # title = 'Мои записи'
-    # menu = (0, 1)
-    #
-    # def get_queryset(self):
-    #     queryset = super(UserRegistrationsListView, self).get_queryset()
-    #
-    #     # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
-    #     queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
-    #
-    #     return queryset.filter(date_reg__gte=date.today(), client=self.request.user).prefetch_related(
-    #         'carwash_reg__services').order_by('date_reg', 'time_reg')
-    pass
+
+    model = CarWashRegistration
+    template_name = 'carwash/user-registrations.html'
+    context_object_name = 'user_registrations'
+    title = 'Мои записи'
+    menu = (0, 1)
+
+    def get_queryset(self):
+        queryset = super(UserRegistrationsListView, self).get_queryset()
+
+        # удаляем экземпляры CarwashUserRegistrations если они уже не актуальны на сегодняшний день
+        queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
+
+        return queryset.filter(date_reg__gte=date.today(), client=self.request.user)
+        # return queryset.filter(date_reg__gte=date.today(), client=self.request.user).prefetch_related(
+        #     'carwash_reg__services').order_by('date_reg', 'time_reg')
 
 
 class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     """Обработчик события 'отмены (удаления)' пользователем своей записи"""
-    #
-    # def get(self, request, registration_pk):
-    #     carwash_user_registration_delete(request, registration_pk)
-    #     redirect_url = reverse('carwash:user_registrations')
-    #
-    #     return HttpResponseRedirect(redirect_url)
-    pass
+
+    def get(self, request, registration_pk):
+        carwash_user_registration_delete(request, registration_pk)
+        redirect_url = reverse('carwash:user_registrations')
+
+        return HttpResponseRedirect(redirect_url)
 
 
 class RequestCallFormView(Common, FormView):

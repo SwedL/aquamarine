@@ -17,8 +17,14 @@
                 {% for reg in user_registrations %}
                     <div class="registration">
                         <div class="registration__title">
-                            <div class="registration__item registration__date">{{reg.date_reg|date:'d.m.Y'}}
-                                <br>{{reg.time_reg}}</div>
+                            <div class="registration__combo">
+                                <div class="registration__item registration__date">{{reg.date_reg|date:'d.m.Y'}}
+                                    <br>{{reg.time_reg}}
+                                </div>
+                                <div class="registration__item registration__total-time">Время работ:
+                                    {{reg.total_time}} мин
+                                </div>
+                            </div>
                             <div class="registration__item registration__button-cancel">
 
                                 <!-- Кнопка-триггер модального окна -->
@@ -44,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="registration__reg">{{reg.carwash_reg}}</div>
+                        <div class="registration__reg">{{reg.get_all_services}}</div>
                     </div>
                 {% empty %}
                     <div class="data-box__registration registration">

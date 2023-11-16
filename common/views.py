@@ -54,17 +54,20 @@ def carwash_user_registration_delete(request, registration_pk):
     Функция для UserRegistrationsCancelView и CarWashUserRegistrationAPIView - обработчик события
     'отмены (удаления)' пользователем своей записи
      """
-    # user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()
-    #
-    # # проверка что пользователь удаляет принадлежащую ему CarWashUserRegistration
-    # if not user_registration or user_registration.client != request.user:
-    #     raise Http404
-    #
-    # needed_workday = CarWashWorkDay.objects.get(date=user_registration.date_reg)
+    user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()
+
+    # проверка что пользователь удаляет принадлежащую ему CarWashUserRegistration
+    if not user_registration or user_registration.client != request.user:
+        raise Http404
+
+    need_workday = CarWashWorkDay.objects.get(date=user_registration.date_reg)
+    need_time_attribute = user_registration.relation_carwashworkday[str(need_workday.id)]
+    [setattr(need_workday, time_attribute, None) for time_attribute in need_time_attribute]
+    need_workday.save()
     # needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.carwash_reg.pk)
     # total_time = needed_staff_registration.total_time
     # time_without_sec = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
-    #
+
     # # создаём список времён от времени регистрации user_registration.time_reg и все времена после
     # formatted_key = list(dropwhile(lambda el: el != time_without_sec, FORMATTED_KEY.copy()))
     #
@@ -85,7 +88,6 @@ def carwash_user_registration_delete(request, registration_pk):
     #         setattr(needed_workday, 'time_' + formatted_key.pop(0).replace(':', ''),
     #                 None)  # значению поля соотвествующего времени присваиваем значение None (как по умолчанию)
     #     needed_workday.save()
-    #
-    # # удаляем CarWashUserRegistration пользователя
-    # user_registration.delete()
-    pass
+
+    # удаляем CarWashUserRegistration пользователя
+    user_registration.delete()
