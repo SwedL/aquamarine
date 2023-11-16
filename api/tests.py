@@ -6,7 +6,7 @@ from django.urls import reverse
 
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
-from carwash.models import CarWashService, WorkDay, CarWashUserRegistration
+from carwash.models import CarWashService, CarWashWorkDay, CarWashRegistration
 from users.models import User
 
 
@@ -33,7 +33,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
         )
-        self.workday = WorkDay.objects.create(date=date.today())
+        self.workday = CarWashWorkDay.objects.create(date=date.today())
         self.url = reverse('api:carwash_registration')
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -42,7 +42,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(CarWashService.objects.count(), 17)
-        self.assertEqual(WorkDay.objects.count(), 7)
+        self.assertEqual(CarWashWorkDay.objects.count(), 7)
 
     def test_registration_auto_at_carwash(self):
         choice_date = str(date.today()).replace('-', ' ')
@@ -108,7 +108,7 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
         """
 
         self.url = reverse('api:user_registration_list')
-        self.workday = WorkDay.objects.create(date=date.today())
+        self.workday = CarWashWorkDay.objects.create(date=date.today())
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
@@ -126,7 +126,7 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
 
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(CarWashUserRegistration.objects.all()), 2)
+        self.assertEqual(len(CarWashRegistration.objects.all()), 2)
         self.assertEqual(response.data, {'user_registrations': [
             OrderedDict([('id', 5), ('client', 7), ('date_reg', '2023-11-15'),
                          ('time_reg', '10:00:00'), ('carwash_reg',
@@ -151,12 +151,12 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
                  }
         self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
         self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
-        user_registration_all = CarWashUserRegistration.objects.all()
+        user_registration_all = CarWashRegistration.objects.all()
         need_id = user_registration_all.first().id
         self.assertEqual(len(user_registration_all), 2)
         new_reverse = reverse('api:user_registration_delete', kwargs={'registration_pk': need_id})
         self.client.delete(new_reverse)
-        self.assertEqual(len(CarWashUserRegistration.objects.all()), 1)
+        self.assertEqual(len(CarWashRegistration.objects.all()), 1)
 
 
 class CarWashRequestCallCreateAPIViewTestCase(APITestCase):

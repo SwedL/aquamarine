@@ -18,7 +18,7 @@ class CarWashRegistrationSerializer(serializers.ModelSerializer):
 
 class WorkDaySerializer(serializers.ModelSerializer):
     class Meta:
-        model = WorkDay
+        model = CarWashWorkDay
         fields = '__all__'
 
 
@@ -26,7 +26,7 @@ class CarWashUserRegistrationSerializer(serializers.ModelSerializer):
     carwash_reg = CarWashRegistrationSerializer()
 
     class Meta:
-        model = CarWashUserRegistration
+        model = CarWashRegistration
         fields = ('id', 'client', 'date_reg', 'time_reg', 'carwash_reg')
         ordering = ('date_reg', 'time_reg')
 

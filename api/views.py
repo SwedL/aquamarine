@@ -42,7 +42,7 @@ class CarWashUserRegistrationAPIView(APIView):
 
     @staticmethod
     def get_response(request):
-        all_user_reg = CarWashUserRegistration.objects.filter(client=request.user)
+        all_user_reg = CarWashRegistration.objects.filter(client=request.user)
         return Response({'user_registrations': CarWashUserRegistrationSerializer(all_user_reg, many=True).data})
 
     def get(self, request):
