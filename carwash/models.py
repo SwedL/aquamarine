@@ -62,7 +62,7 @@ class WorkDay(models.Model):
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
                      ]
 
-    date = models.DateField(verbose_name='дата', unique=True)
+    date = models.DateField(verbose_name='дата', unique_for_date=True)
     time_1000 = models.ForeignKey(to=CarWashRegistration, related_name='time1', on_delete=models.SET_NULL, null=True)
     time_1030 = models.ForeignKey(to=CarWashRegistration, related_name='time2', on_delete=models.SET_NULL, null=True)
     time_1100 = models.ForeignKey(to=CarWashRegistration, related_name='time3', on_delete=models.SET_NULL, null=True)
@@ -85,6 +85,7 @@ class WorkDay(models.Model):
     time_1930 = models.ForeignKey(to=CarWashRegistration, related_name='time20', on_delete=models.SET_NULL, null=True)
     time_2000 = models.ForeignKey(to=CarWashRegistration, related_name='time21', on_delete=models.SET_NULL, null=True)
     time_2030 = models.ForeignKey(to=CarWashRegistration, related_name='time22', on_delete=models.SET_NULL, null=True)
+    # time_2100 = models.
 
     class Meta:
         verbose_name = 'Рабочий день'
