@@ -10,10 +10,6 @@ menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Контакты и адрес', 'anchor': '#footer'},
                    ]
 
-FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
-                 '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
-                 '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
-
 
 def create_and_get_week_workday():
     dates_week = [date.today() + timedelta(days=i) for i in range(7)]
@@ -43,7 +39,7 @@ class Common:
         context = super(Common, self).get_context_data(**kwargs)
         context['title'] = self.title
         context['menu'] = self.create_menu(self.menu)
-        context['staff'] = self.request.user.has_perm('carwash.view_workday')
+        context['staff'] = self.request.user.has_perm('carwash.view_carwashworkday')
 
         return context
 

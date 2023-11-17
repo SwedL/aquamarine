@@ -53,9 +53,10 @@ class CarWashRegistration(models.Model):
     def get_all_services(self):
         return ', '.join(str(i) for i in self.services.all())
 
-    def get_self_data(self):
+    def get_data(self):
         data = {
-            'user': str(self.client),
+            'id': self.id,
+            'client': str(self.client),
             'fio': self.client.fio,
             'phone_number': self.client.phone_number,
             'car_model': self.client.car_model,
