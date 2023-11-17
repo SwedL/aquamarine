@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-from itertools import dropwhile
 
 from django.http import Http404
 
@@ -61,33 +60,8 @@ def carwash_user_registration_delete(request, registration_pk):
         raise Http404
 
     need_workday = CarWashWorkDay.objects.get(date=user_registration.date_reg)
-    need_time_attribute = user_registration.relation_carwashworkday[str(need_workday.id)]
-    [setattr(need_workday, time_attribute, None) for time_attribute in need_time_attribute]
+    time_attributes = user_registration.relation_carwashworkday['time_attributes']
+    [setattr(need_workday, t_a, None) for t_a in time_attributes]
     need_workday.save()
-    # needed_staff_registration = CarWashRegistration.objects.get(pk=user_registration.carwash_reg.pk)
-    # total_time = needed_staff_registration.total_time
-    # time_without_sec = str(user_registration.time_reg)[:-3]  # убираем значения секунд во времени записи '10:00'
-
-    # # создаём список времён от времени регистрации user_registration.time_reg и все времена после
-    # formatted_key = list(dropwhile(lambda el: el != time_without_sec, FORMATTED_KEY.copy()))
-    #
-    # # определяем начальный атрибут (time_....) необходимого объекта WorkWay удаляемой "Записи"
-    # attr_first_time = 'time_' + formatted_key.pop(0).replace(':', '')
-    #
-    # # определяем CarWashRegistration в найденном времени-поля, если она есть
-    # first_time_registration = getattr(needed_workday, attr_first_time, None)
-    #
-    # # если в поле CarWashWorkDay вообще присутствует CarWashRegistration
-    # # и её клиент соответствует текущему пользователю, то удаляем в этом поле CarWashWorkDay CarWashRegistration,
-    # # а затем, в следующих полях сколько требовалось времён-полей под услуги CarWashRegistration
-    # if first_time_registration and first_time_registration.client == request.user:
-    #     setattr(needed_workday, attr_first_time, None)
-    #     # удаляем записи выбранной CarWashRegistration в полях времени,
-    #     # сколько она занимает времен объекта CarWashWorkDay - 30 т.к. начальное время мы уже удалили выше
-    #     for _ in range(0, total_time - 30, 30):
-    #         setattr(needed_workday, 'time_' + formatted_key.pop(0).replace(':', ''),
-    #                 None)  # значению поля соотвествующего времени присваиваем значение None (как по умолчанию)
-    #     needed_workday.save()
-
-    # удаляем CarWashUserRegistration пользователя
     user_registration.delete()
+

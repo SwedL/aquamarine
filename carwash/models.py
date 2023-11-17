@@ -40,6 +40,7 @@ class CarWashRegistration(models.Model):
     date_reg = models.DateField(verbose_name='дата записи')
     time_reg = models.TimeField(verbose_name='время записи')
     total_time = models.PositiveSmallIntegerField(default=0, verbose_name='общее время работ')
+    total_cost = models.PositiveIntegerField(default=0, verbose_name='общяя стоимость')
     relation_carwashworkday = models.JSONField(null=True)
 
     class Meta:
@@ -52,15 +53,17 @@ class CarWashRegistration(models.Model):
     def get_all_services(self):
         return ', '.join(str(i) for i in self.services.all())
 
-    def get_self_content(self):
-        content = {
+    def get_self_data(self):
+        data = {
             'user': str(self.client),
             'fio': self.client.fio,
             'phone_number': self.client.phone_number,
             'car_model': self.client.car_model,
             'services': [str(i) for i in self.services.all()],
+            'total_time': self.total_time,
+            'total_cost': self.total_cost,
         }
-        return content
+        return data
 
 # class CarWashRegistration(models.Model):
 #     """Модель Регистрация. Поля: пользователь, выбранные услуги"""

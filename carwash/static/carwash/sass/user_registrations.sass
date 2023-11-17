@@ -52,7 +52,6 @@ body
     &__total-time
         width: 250px
         font-weight: bold
-        text-align: center
         display: flex
         align-items: center
     &__reg
@@ -85,14 +84,17 @@ body
 
 @media (max-width: 767px)
     .registration
+        &__combo
+            flex-direction: column
         &__item
             font-size: 14px
         &__reg
             font-size: 14px
         &__date
-            margin-right: 15px
-        &__total-time
-            width: 100px
+            margin-right: 0px
+            margin-bottom: 5px
+        // &__total-time
+        //     width: 100px
 
 @media (max-width: 587px)
     .registration
@@ -108,8 +110,9 @@ body
             margin-right: 5px
         &__total-time
             font-size: 10px
+            width: 120px
 
 @media (max-width: 400px)
     .registration
         &__total-time
-            width: 60px
+            // width: 60px
