@@ -63,6 +63,10 @@ class RegistrationAutoView(Common, View):
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
         }
+
+        if request.user.has_perm('carwash.view_carwashworkday'):
+            context.get('menu').append({'title': 'Сотрудник', 'url_name': 'carwash:staff'})
+
         if 'api' in str(request):
             return context
 
@@ -108,6 +112,11 @@ class RegistrationAutoView(Common, View):
         if all([x is None for x in check_free_times]):
             time_attributes = []
             self_data = new_reg.get_data()  # получаем данные CarWashRegistration в виде словаря
+            self_data['car_model'] = request.POST.get('comment_car_model', self_data['car_model'])
+            self_data['phone_number'] = request.POST.get('comment_phone_number', self_data['phone_number'])
+            if request.POST.get('comment_client', None):
+                self_data['client'] = request.POST['comment_client']
+
             for _ in range(0, total_time, 30):
                 time_attribute = 'time_' + time_dict1.pop(0).replace(':', '')
                 time_attributes.append(time_attribute)
@@ -143,6 +152,10 @@ class RegistrationAutoView(Common, View):
             'total_time': normal_total_time,
             'total_cost': f'{total_cost} р.',
         }
+
+        if request.user.has_perm('carwash.view_carwashworkday'):
+            context.get('menu').append({'title': 'Сотрудник', 'url_name': 'carwash:staff'})
+
         if 'api' in str(request):
             return context
         return render(request, 'carwash/registration-done.html', context=context)
@@ -236,10 +249,10 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             full_list_registrations_workday.append(another_time)  # добавляем в список значение времени CarWashWorkDay
             if 'id' in another_time:
                 total_time_without30 = another_time['total_time'] - 30
-                client = another_time['client']
+                car_model = another_time['car_model']
                 for i in range(0, total_time_without30, 30):
                     another_time = next(iterator_list_registrations_workday)
-                    registration_busy = {'time': another_time['time'], 'field': client}
+                    registration_busy = {'time': another_time['time'], 'field': car_model}
                     full_list_registrations_workday.append(registration_busy)
 
         # показываем заказанные звонки, в течении 24 часов

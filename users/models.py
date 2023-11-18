@@ -87,4 +87,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
     def __str__(self):
-        return self.email
+        return self.fio

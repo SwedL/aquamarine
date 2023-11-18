@@ -4,6 +4,8 @@ $color-white: #ececec
     
 body
     background: black
+.colortext
+    background-color: #c5f1ff
 
 .registration
     min-height: 750px
@@ -23,6 +25,15 @@ body
         margin-bottom: 20px
         color: $color-white
         display: flex
+    &__comment
+        width: 600px
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        margin-bottom: 20px            
+        input::placeholder
+            text-align: center
+
     &__box-services
         height: 612px
         width: 640px
