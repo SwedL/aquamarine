@@ -219,115 +219,49 @@ class CarWashWorkDayModelTestCase(TestCase):
 
         self.workday1 = CarWashWorkDay.objects.create(date=date.today())
         self.workday2 = CarWashWorkDay.objects.create(date=date.today() + timedelta(days=1))
-        self.workday2.time_1000 = self.registration1
-        self.workday2.time_1300 = self.registration2
-#
-#     def test_workday_creation(self):
-#         # Проверка создания объекта WorkDay
-#         self.assertEqual(self.workday1.date, date.today())
-#         self.assertEqual(self.workday2.time_1000, self.registration1)
-#         self.assertEqual(self.workday2.time_1300, self.registration2)
-#
-#     def test_workday_get_all_records(self):
-#         # Проверка количества созданных объектов модели WorkDay в бд
-#         workdays = CarWashWorkDay.objects.all()
-#
-#         self.assertEqual(len(workdays), 2)
-#
-#     def test_workday_str(self):
-#         # Проверка метода __str__()
-#         expected_str1 = str(date.today())
-#         expected_str2 = str(date.today() + timedelta(days=1))
-#
-#         self.assertEqual(str(self.workday1), expected_str1)
-#         self.assertEqual(str(self.workday2), expected_str2)
-#
-#     def test_workday_get_formatted_dict(self):
-#         # Проверка корректной работы метода модели WorkDay: formatted_dict
-#         workday_values = list(self.workday2.__dict__.values())[2:]
-#         res_dict = dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, workday_values))
-#         res_dict['10:00'] = self.registration1.pk
-#         res_dict['13:00'] = self.registration2.pk
-#
-#         self.assertEqual(self.workday2.formatted_dict(), res_dict)
-#
-#
-# class CarWashUserRegistrationModelTestCase(TestCase):
-#     """Тест модели CarWashUserRegistration"""
-#
-#     fixtures = {'services.json'}
-#
-#     def setUp(self):
-#         self.services = CarWashService.objects.all()
-#
-#         self.user1 = User.objects.create(
-#             email='testuser@mail.ru',
-#             password='12345qwerty',
-#             fio='Иванов Пётр Николаевич',
-#             phone_number='81234567890',
-#             car_model='Kia Sportage',
-#         )
-#         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
-#
-#         self.registration1 = CarWashRegistration.objects.create(client=self.user1)
-#         self.registration1.services.set([self.services[0], self.services[6]])
-#
-#         self.registration2 = CarWashRegistration.objects.create(client=self.user2)
-#         self.registration2.services.set([self.services[1], self.services[2], self.services[3]])
-#
-#         CarWashRegistration.objects.create(
-#             client=self.user1,
-#             date_reg=date(2023, 10, 7),
-#             time_reg=time(12, 00),
-#             carwash_reg=self.registration1,
-#         )
-#
-#         CarWashRegistration.objects.create(
-#             client=self.user2,
-#             date_reg=date(2023, 10, 7),
-#             time_reg=time(10, 00),
-#             carwash_reg=self.registration2,
-#         )
-#
-#     def test_fields(self):
-#         # Проверка полей
-#         user_registrations = CarWashRegistration.objects.all().first()
-#         field_client = user_registrations._meta.get_field('client').verbose_name
-#         field_date_reg = user_registrations._meta.get_field('date_reg').verbose_name
-#         field_time_reg = user_registrations._meta.get_field('time_reg').verbose_name
-#         field_carwash_reg = user_registrations._meta.get_field('carwash_reg')
-#
-#         self.assertEqual(field_client, 'клиент')
-#         self.assertEqual(field_date_reg, 'дата записи')
-#         self.assertEqual(field_time_reg, 'время записи')
-#         self.assertTrue(field_carwash_reg.many_to_one)
-#         self.assertIs(field_carwash_reg.model, CarWashRegistration)
-#
-#     def test_registration_get_all_records(self):
-#         # Проверка количества созданных объектов модели CarWashUserRegistration в бд
-#         user_registrations = CarWashRegistration.objects.all()
-#
-#         self.assertEqual(len(user_registrations), 2)
-#
-#
-# class CarWashRequestCallModelTestCase(TestCase):
-#     """Тест модели CarWashRequestCall"""
-#
-#     def setUp(self):
-#         self.request_call = CarWashRequestCall.objects.create(phone_number='89999999999')
-#         CarWashRequestCall.objects.create(phone_number='81111111111')
-#         CarWashRequestCall.objects.create(phone_number='82222222222')
-#
-#     def test_fields(self):
-#         # Проверка полей
-#         filed_label = self.request_call._meta.get_field('phone_number').verbose_name
-#         max_length = self.request_call._meta.get_field('phone_number').max_length
-#
-#         self.assertEquals(filed_label, 'номер телефона')
-#         self.assertEquals(max_length, 11)
-#
-#     def test_request_call_get_all_records(self):
-#         # Проверка количества созданных объектов модели CarWashRequestCall в бд
-#         requests_calls = CarWashRequestCall.objects.all()
-#
-#         self.assertEqual(len(requests_calls), 3)
+        self.workday2.time_1000 = self.registration1.get_data()
+        self.workday2.time_1300 = self.registration2.get_data()
+
+    def test_workday_get_all_records(self):
+        # Проверка количества созданных объектов модели WorkDay в бд
+        self.assertEqual(len(CarWashWorkDay.objects.all()), 2)
+
+    def test_workday_str(self):
+        # Проверка метода __str__()
+        expected_str1 = str(date.today())
+        expected_str2 = str(date.today() + timedelta(days=1))
+
+        self.assertEqual(str(self.workday1), expected_str1)
+        self.assertEqual(str(self.workday2), expected_str2)
+
+    def test_workday_get_formatted_dict(self):
+        # Проверка корректной работы метода модели WorkDay: formatted_dict
+        workday_values = list(self.workday2.__dict__.values())[2:]
+        res_dict = dict((workday_time, value) for workday_time, value in zip(self.FORMATTED_KEY, workday_values))
+        res_dict['10:00'] = self.registration1.get_data()
+        res_dict['13:00'] = self.registration2.get_data()
+
+        self.assertEqual(self.workday2.formatted_dict(), res_dict)
+
+
+class CarWashRequestCallModelTestCase(TestCase):
+    """Тест модели CarWashRequestCall"""
+
+    def setUp(self):
+        self.request_call = CarWashRequestCall.objects.create(phone_number='89999999999')
+        CarWashRequestCall.objects.create(phone_number='81111111111')
+        CarWashRequestCall.objects.create(phone_number='82222222222')
+
+    def test_fields(self):
+        # Проверка полей
+        filed_label = self.request_call._meta.get_field('phone_number').verbose_name
+        max_length = self.request_call._meta.get_field('phone_number').max_length
+
+        self.assertEquals(filed_label, 'номер телефона')
+        self.assertEquals(max_length, 11)
+
+    def test_request_call_get_all_records(self):
+        # Проверка количества созданных объектов модели CarWashRequestCall в бд
+        requests_calls = CarWashRequestCall.objects.all()
+
+        self.assertEqual(len(requests_calls), 3)
