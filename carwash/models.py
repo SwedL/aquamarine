@@ -48,7 +48,7 @@ class CarWashRegistration(models.Model):
         verbose_name_plural = 'Записи'
 
     def __str__(self):
-        return f'Клиент: {self.client.fio}, {self.client}'
+        return f'Клиент: {self.client}, {self.client.email}'
 
     def get_all_services(self):
         return ', '.join(str(i) for i in self.services.all())
@@ -57,7 +57,7 @@ class CarWashRegistration(models.Model):
         data = {
             'id': self.id,
             'client': str(self.client),
-            'fio': self.client.fio,
+            'email': self.client.email,
             'phone_number': self.client.phone_number,
             'car_model': self.client.car_model,
             'services': [str(i) for i in self.services.all()],

@@ -67,4 +67,4 @@ class UserModelTestCase(TestCase):
 
     def test_user_str(self):
         # Проверка метода __str__()
-        self.assertEqual(str(self.user), 'testuser@mail.ru')
+        self.assertEqual(str(self.user), 'Иванов Пётр Николаевич')

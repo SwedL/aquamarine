@@ -222,7 +222,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                 res = {'time': t,
                        'id': carwash_registration_data['id'],
                        'client': carwash_registration_data['client'],
-                       'fio': carwash_registration_data['fio'],
+                       'email': carwash_registration_data['email'],
                        'phone_number': carwash_registration_data['phone_number'],
                        'car_model': carwash_registration_data['car_model'],
                        'services': carwash_registration_data['services'],
