@@ -30,9 +30,14 @@ body
         display: flex
         flex-direction: row
         justify-content: space-between
-        margin-bottom: 20px            
+        margin-bottom: 20px
+        input
+            border-style: solid
+            border-radius: 5px
+            border-color: #626262
         input::placeholder
             text-align: center
+            color: #1f1f1f
 
     &__box-services
         height: 612px
@@ -159,6 +164,7 @@ tr:hover
 @media (max-width: 1349px)
     .registration
         background-size: 100% 100%
+        min-height: 1350px
         &__form
             height: 1300px
         &__without-button
@@ -187,6 +193,15 @@ tr:hover
         &__box-services
             height: 535px
             width: 88%
+        &__comment
+            width: 100%
+            flex-direction: column
+            align-items: center
+            input
+                width: 200px
+                margin-bottom: 5px
+            input::placeholder
+                font-size: 14px
     .services
         &__title
             font-size: 18px
