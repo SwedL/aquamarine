@@ -174,7 +174,7 @@ class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
         queryset = super(UserRegistrationsListView, self).get_queryset()
 
         # удаляем экземпляры CarwashRegistrations если они уже не актуальны на сегодняшний день
-        queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
+        # queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
 
         return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
 

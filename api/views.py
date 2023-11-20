@@ -19,7 +19,7 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
         c = CarWashService.objects.all()
         w = create_and_get_week_workday()
         return Response({'services': CarWashServiceSerializer(c, many=True).data,
-                         'wordays_week': WorkDaySerializer(w, many=True).data})
+                         'wordays_week': CarWashWorkDaySerializer(w, many=True).data})
 
     def post(self, request):
         context = super(CarWashRegistrationAPIView, self).post(request)
@@ -37,13 +37,13 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
                          })
 
 
-class CarWashUserRegistrationAPIView(APIView):
+class UserRegistrationListAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @staticmethod
     def get_response(request):
-        all_user_reg = CarWashRegistration.objects.filter(client=request.user)
-        return Response({'user_registrations': CarWashUserRegistrationSerializer(all_user_reg, many=True).data})
+        all_user_reg = CarWashRegistration.objects.filter(date_reg__gte=date.today(), client=request.user)
+        return Response({'user_registrations': CarWashRegistrationSerializer(all_user_reg, many=True).data})
 
     def get(self, request):
         return self.get_response(request)

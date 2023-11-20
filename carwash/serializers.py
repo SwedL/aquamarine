@@ -13,26 +13,17 @@ class CarWashRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarWashRegistration
-        fields = ('id', 'services', 'total_time')
+        fields = ('id', 'client', 'services', 'date_reg', 'time_reg', 'total_time', 'total_cost', 'relation_carwashworkday')
+        ordering = ('date_reg', 'time_reg')
 
 
-class WorkDaySerializer(serializers.ModelSerializer):
+class CarWashWorkDaySerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashWorkDay
         fields = '__all__'
-
-
-class CarWashUserRegistrationSerializer(serializers.ModelSerializer):
-    carwash_reg = CarWashRegistrationSerializer()
-
-    class Meta:
-        model = CarWashRegistration
-        fields = ('id', 'client', 'date_reg', 'time_reg', 'carwash_reg')
-        ordering = ('date_reg', 'time_reg')
 
 
 class CarWashRequestCallSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashRequestCall
         fields = ('phone_number',)
-

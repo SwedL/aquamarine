@@ -100,7 +100,7 @@ class CarWashWorkDay(models.Model):
                      '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30'
                      ]
 
-    date = models.DateField(verbose_name='дата', unique_for_date=True)
+    date = models.DateField(verbose_name='дата', unique=True)
     time_1000 = models.JSONField(default=None, blank=True, null=True)
     time_1030 = models.JSONField(default=None, blank=True, null=True)
     time_1100 = models.JSONField(default=None, blank=True, null=True)
