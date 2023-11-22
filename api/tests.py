@@ -1,4 +1,3 @@
-# from django.test import TestCase
 from collections import OrderedDict
 from datetime import date
 
@@ -49,9 +48,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         format_choice_date = choice_date.split()
         format_choice_date.reverse()
         choice_time = '10:00'
-        data = {'choice_date_and_time': f'{choice_date},{choice_time}',
-                'service_15': '15',
-                }
+        data = {'choice_date_and_time': f'{choice_date},{choice_time}', 'service_15': '15'}
 
         response = self.client.post(self.url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -74,9 +71,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
 
     def test_post_data_then_selected_time_is_already_taken(self):
         choice_date = str(date.today()).replace('-', ' ')
-        data = {'choice_date_and_time': f'{choice_date},10:00',
-                'service_15': '15',
-                }
+        data = {'choice_date_and_time': f'{choice_date},10:00', 'service_15': '15'}
         self.client.post(self.url, data, format='multipart')
         response = self.client.post(self.url, data, format='multipart')
         self.assertEqual(response.data, {
@@ -115,12 +110,8 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
     def test_get_user_registration_list(self):
         # проверяем получения информации о записях автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00',
-                 'service_1': '1',
-                 }
-        data2 = {'choice_date_and_time': f'{choice_date},14:00',
-                 'service_3': '3',
-                 }
+        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'service_1': '1'}
+        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'service_3': '3'}
         self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
         self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
 
@@ -132,7 +123,7 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
                 ('id', 1),
                 ('client', 1),
                 ('services', ['Мойка (верх, ковры, сушка)']),
-                ('date_reg', '2023-11-20'),
+                ('date_reg', str(date.today())),
                 ('time_reg', '10:00:00'),
                 ('total_time', 60),
                 ('total_cost', 450),
@@ -142,7 +133,7 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
                 ('id', 2),
                 ('client', 1),
                 ('services', ['Экспресс-мойка']),
-                ('date_reg', '2023-11-20'),
+                ('date_reg', str(date.today())),
                 ('time_reg', '14:00:00'),
                 ('total_time', 30),
                 ('total_cost', 200),
@@ -153,12 +144,8 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
     def test_delete_user_registration(self):
         # проверяем возможность удаления записи автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00',
-                 'service_1': '1',
-                 }
-        data2 = {'choice_date_and_time': f'{choice_date},14:00',
-                 'service_3': '3',
-                 }
+        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'service_1': '1'}
+        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'service_3': '3'}
         self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
         self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
         user_registration_all = CarWashRegistration.objects.all()
@@ -235,8 +222,7 @@ class UserProfileDetailAPIViewTestCase(APITestCase):
                 'fio': 'Петров Николай Иванович',
                 'phone_number': '89443333333',
                 'car_type': 'price_s',
-                'car_model': 'Kia Venga',
-                }
+                'car_model': 'Kia Venga', }
         response = self.client.put(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'email': 'testuser@mail.ru',

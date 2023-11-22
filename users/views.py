@@ -1,12 +1,8 @@
-# from django.conf import settings
-# from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (LoginView, PasswordChangeView,
                                        PasswordResetConfirmView,
                                        PasswordResetView)
 from django.contrib.messages.views import SuccessMessageMixin
-# from django.core.mail import send_mail
-# from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 

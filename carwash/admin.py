@@ -14,7 +14,7 @@ class CarWashServiceAdmin(admin.ModelAdmin):
 class CarWashWorkDayAdmin(admin.ModelAdmin):
 
     readonly_fields = ('date',)
-    list_display = ('date', 'pk',)
+    list_display = ('date', 'pk')
     search_fields = ('date',)
     ordering = ('-date',)
 
@@ -32,7 +32,7 @@ class CarWashRegistrationAdmin(admin.ModelAdmin):
 @admin.register(CarWashRequestCall)
 class CarWashCallMeAdmin(admin.ModelAdmin):
 
-    list_display = ('phone_number', 'processed', 'created',)
+    list_display = ('phone_number', 'processed', 'created')
     ordering = ('-created',)
 
 

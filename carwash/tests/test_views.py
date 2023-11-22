@@ -24,7 +24,7 @@ class IndexListViewTestCase(TestCase):
         self.path = reverse('carwash:home')
 
     def test_view_for_not_logged_user(self):
-        # Проверка меню для неавторизованных пользователей
+        # Проверка меню для неавторизованого пользователя
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -121,8 +121,8 @@ class RegistrationAutoViewTestCase(TestCase):
 
 class StaffDetailViewTestCase(TestCase):
     """
-    Тест представления страницы показа сотруднику всех записей клиентов
-    на оказание услуг автомойки. На сегодня, завтра и послезавтра.
+    Тест представление для показа сотруднику всех записей клиентов
+    на сегодня, завтра и послезавтра
     """
 
     def setUp(self):
@@ -149,7 +149,10 @@ class StaffDetailViewTestCase(TestCase):
 
 
 class UserRegistrationsListViewTestCase(TestCase):
-    """Тест представления показа пользователю его записей на оказание услуг автомойки"""
+    """
+    Тест представление для показа пользователю его записей
+     на оказание услуг автомоечного комплекса
+    """
 
     fixtures = {'services.json'}
 

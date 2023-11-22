@@ -36,7 +36,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    Модель Пользователь.
+    Модель Пользователь
     Поля: email (login), ФИО, номер телефона, тип автомобиля,
     марка и модель, дисконт, DateTime создания пользователя
     """

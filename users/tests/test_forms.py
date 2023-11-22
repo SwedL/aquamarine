@@ -34,8 +34,6 @@ class UserProfileFormTestCase(TestCase):
             form.fields['phone_number'].label is None or form.fields['phone_number'].label == 'номер телефона')
         self.assertTrue(
             form.fields['car_model'].label is None or form.fields['car_model'].label == 'Марка и модель автомобиля')
-        # self.assertTrue(
-        #     form.fields['discount'].label is None or form.fields['discount'].label == 'Дисконт')
 
     def test_form_is_valid_value(self):
         # Проверка на валидность вводимых значений в форму

@@ -20,7 +20,7 @@ def calculate_total_time_and_total_cost(registration):
 
 
 class CarWashServiceModelTestCase(TestCase):
-    """Тест модели Услуга"""
+    """Тест модели Service"""
 
     def setUp(self):
         self.service = CarWashService.objects.create(
@@ -182,7 +182,7 @@ class CarWashRegistrationModelTestCase(TestCase):
 
 
 class CarWashWorkDayModelTestCase(TestCase):
-    """Тест модели WorkDay"""
+    """Тест модели CarWashWorkDay"""
 
     fixtures = {'services.json'}
     FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
