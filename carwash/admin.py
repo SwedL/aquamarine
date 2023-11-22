@@ -10,20 +10,6 @@ class CarWashServiceAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
 
 
-# class CarWashRegistrationAdmin(admin.StackedInline):
-#     model = CarWashRegistration
-#     fields = ('id', 'client')
-#     extra = 0
-#
-#     def has_delete_permission(self, request, obj=None):
-#         # Disable delete
-#         return False
-#
-#     def has_add_permission(self, request, obj=None):
-#         # Disable add
-#         return False
-
-
 @admin.register(CarWashWorkDay)
 class CarWashWorkDayAdmin(admin.ModelAdmin):
 

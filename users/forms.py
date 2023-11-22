@@ -10,6 +10,7 @@ from users.models import User
 
 class UserLoginForm(AuthenticationForm):
     """Форма авторизация пользователя"""
+
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={
         'class': 'form-control py-4', 'placeholder': 'Электронная почта'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={

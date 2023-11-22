@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from django.http import Http404
 
-from carwash.models import CarWashWorkDay, CarWashRegistration
+from carwash.models import CarWashRegistration, CarWashWorkDay
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Доступное время', 'url_name': 'carwash:registration'},
@@ -47,8 +47,8 @@ class Common:
 def carwash_user_registration_delete(request, registration_pk):
     """
     Функция для UserRegistrationsCancelView и UserRegistrationListAPIView - обработчик события
-    'отмены (удаления)' пользователем своей записи
-     """
+    'отмены (удаления)' пользователем своей записи на автомоечный комплекс
+    """
     user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()
 
     # проверка что пользователь удаляет принадлежащую ему CarWashUserRegistration
@@ -60,4 +60,3 @@ def carwash_user_registration_delete(request, registration_pk):
     [setattr(need_workday, t_a, None) for t_a in time_attributes]
     need_workday.save()
     user_registration.delete()
-

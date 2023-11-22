@@ -1,11 +1,19 @@
+from datetime import date
+
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from carwash.serializers import *
-from carwash.models import CarWashService
+
+from carwash.models import CarWashRegistration, CarWashService
+from carwash.serializers import (CarWashRegistrationSerializer,
+                                 CarWashRequestCallSerializer,
+                                 CarWashServiceSerializer,
+                                 CarWashWorkDaySerializer)
 from carwash.views import RegistrationAutoView
-from common.views import carwash_user_registration_delete, create_and_get_week_workday
+from common.views import (carwash_user_registration_delete,
+                          create_and_get_week_workday)
+from users.models import User
 from users.serializers import UserSerializer
 
 
@@ -65,4 +73,3 @@ class UserProfileDetailAPIView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
-

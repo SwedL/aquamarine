@@ -4,7 +4,7 @@ from itertools import dropwhile
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
 from django.db.models import Q
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -12,10 +12,11 @@ from django.views import View
 from django.views.generic import FormView, ListView
 
 from carwash.forms import CarWashRequestCallForm
-from carwash.models import *
-from common.views import *
+from carwash.models import (CarWashRegistration, CarWashRequestCall,
+                            CarWashService, CarWashWorkDay)
+from common.views import (Common, carwash_user_registration_delete,
+                          create_and_get_week_workday)
 
-# menu = ['Главная', 'Доступное время', 'Услуги и цены', 'Контакты и адрес']
 
 FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                  '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
@@ -25,7 +26,7 @@ FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '
 class IndexListView(Common, ListView):
     """
     Представление для показа главной страницы компании
-    и прейскуранта цен на оказание услуг автомойки
+    и прейскуранта цен на оказание услуг автомоечного комплекса
     """
 
     template_name = 'carwash/index.html'
@@ -37,8 +38,10 @@ class IndexListView(Common, ListView):
 
 class RegistrationAutoView(Common, View):
     """
-    Представление для просмотра доступного времени необходимого дня,
-    а также записи клиентов на оказание услуг автомойки
+    Представление пользователю выбора услуг автомоечного комплекса, дня и времени,
+     для оказания выбранных услуг.
+    Авторизованный пользователь имеет возможность самостоятельной записи автомобиля,
+     а неавторизованный пользователя возможность запросить звонок администратора для записи автомобиля
     """
 
     def get(self, request):
@@ -51,9 +54,6 @@ class RegistrationAutoView(Common, View):
         # создаём словарь где ключи это id услуги, а значение, сама услуга
         services = dict([(service.pk, service) for service in CarWashService.objects.all().order_by('id')])
 
-        # получаем список из словарей значений CarWashWorkDay
-        # {'date': datetime.date(2023, 10, 24), '10:00': 'disable', '10:30': 3, '11:00': 3, ...}
-        # где key - время, value - CarWashRegistration.id либо 'disabled' если время прошло, None если время актуально
         list_day_dictionaries = list(map(lambda i: i.formatted_dict(), objects_week_workday))
 
         context = {
@@ -104,14 +104,16 @@ class RegistrationAutoView(Common, View):
         time_dict2 = time_dict1.copy()
 
         # Если время выбранное всё ещё свободно пока пользователь делал свой выбор,
-        # то сохраняем CarWashRegistration, если занято пока проходило оформление,
-        # то сообщаем "К сожалению, время которые вы выбрали уже занято"
+        # то сохраняем CarWashRegistration, если стало занято, пока проходило оформление,
+        # то сообщаем "К сожалению, время которые вы выбрали уже занято" и отменяем запись
         check_free_times = [getattr(current_workday, 'time_' + time_dict2.pop(0).replace(':', '')) for _ in
                             range(0, total_time, 30)]
 
         if all([x is None for x in check_free_times]):
             time_attributes = []
             self_data = new_reg.get_data()  # получаем данные CarWashRegistration в виде словаря
+
+            # если записывает сотрудник, то берутся данные 'comment_...' если их нет то default
             self_data['car_model'] = request.POST.get('comment_car_model', self_data['car_model'])
             self_data['phone_number'] = request.POST.get('comment_phone_number', self_data['phone_number'])
             if request.POST.get('comment_client', None):
@@ -120,7 +122,7 @@ class RegistrationAutoView(Common, View):
             for _ in range(0, total_time, 30):
                 time_attribute = 'time_' + time_dict1.pop(0).replace(':', '')
                 time_attributes.append(time_attribute)
-                # в поле соответствующего времени сохраняем CarWashRegistration
+                # в поле соответствующего времени сохраняем JSON объект данных CarWashRegistration
                 setattr(current_workday, time_attribute, self_data)
             current_workday.save()
             new_reg.relation_carwashworkday = {'time_attributes': time_attributes}
@@ -162,7 +164,7 @@ class RegistrationAutoView(Common, View):
 
 
 class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
-    """Представление для показа пользователю его записей на оказание услуг автомойки"""
+    """Представление для показа пользователю его записей на оказание услуг автомоечного комплекса"""
 
     model = CarWashRegistration
     template_name = 'carwash/user-registrations.html'
@@ -172,9 +174,6 @@ class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
 
     def get_queryset(self):
         queryset = super(UserRegistrationsListView, self).get_queryset()
-
-        # удаляем экземпляры CarwashRegistrations если они уже не актуальны на сегодняшний день
-        # queryset.filter(date_reg__lt=date.today(), client=self.request.user).delete()
 
         return queryset.filter(date_reg__gte=date.today(), client=self.request.user).order_by('date_reg', 'time_reg')
 
@@ -191,8 +190,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
 
 class StaffDetailView(Common, PermissionRequiredMixin, View):
     """
-    Представление для показа сотруднику всех записей клиентов
-    на оказание услуг автомойки. На сегодня, завтра и послезавтра.
+    Представление для показа сотруднику всех записей клиентов. На сегодня, завтра и послезавтра.
     """
 
     title = 'Сотрудник'
@@ -214,29 +212,23 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         ]
 
         # создаём список list_workday используя значения текущего CarWashWorkDay, где каждый элемент - словарь
-        # [{'time':'10:00', 'registration': CarWashRegistration, 'services': все услуги},]
-        # либо [{'time':'10:00', 'client': 'Свободно', 'free': True},]
+        # [{'time':'10:00', 'id': 1, 'client': 'Elon Musk', ..., 'total_cost': 750},
+        #  {'time':'10:30', 'id': 1, 'client': 'Elon Musk', ..., 'total_cost': 750},
+        #  {'time':'11:00', 'field': 'Свободно', 'free': True},
+        #  ...]
         list_registrations_workday = []
+
         for t, carwash_registration_data in zip(FORMATTED_KEY[1:], registrations_workday):
             if carwash_registration_data:
-                res = {'time': t,
-                       'id': carwash_registration_data['id'],
-                       'client': carwash_registration_data['client'],
-                       'email': carwash_registration_data['email'],
-                       'phone_number': carwash_registration_data['phone_number'],
-                       'car_model': carwash_registration_data['car_model'],
-                       'services': carwash_registration_data['services'],
-                       'total_time': carwash_registration_data['total_time'],
-                       'total_cost': carwash_registration_data['total_cost'],
-                       }
+                res = {'time': t} | carwash_registration_data
             else:
                 res = {'time': t, 'field': 'Свободно', 'free': True}
 
             list_registrations_workday.append(res)
 
         # создаём список full_list_registrations_workday и заполняем времена необходимые клиенту на выбранные услуги
-        # [{'time':'10:00', 'id': 1, 'client': user@mail.ru, ..., 'total_cost': 750},
-        #  {'time':'10:30', 'field': user@mail.ru},
+        # [{'time':'10:00', 'id': 1, 'client': 'Elon Musk', ..., 'total_cost': 750},
+        #  {'time':'10:30', 'field': car_model},
         #  {'time':'11:00', 'field': 'Свободно', 'free': True},
         #  ...]
         iterator_list_registrations_workday = iter(list_registrations_workday)
@@ -247,10 +239,10 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             if another_time == 0:
                 break
             full_list_registrations_workday.append(another_time)  # добавляем в список значение времени CarWashWorkDay
+            # в остальные времена добавляем марку автомобиля если это запись пользователя
             if 'id' in another_time:
-                total_time_without30 = another_time['total_time'] - 30
                 car_model = another_time['car_model']
-                for i in range(0, total_time_without30, 30):
+                for i in range(0, another_time['total_time'] - 30, 30):
                     another_time = next(iterator_list_registrations_workday)
                     registration_busy = {'time': another_time['time'], 'field': car_model}
                     full_list_registrations_workday.append(registration_busy)

@@ -3,10 +3,10 @@ from collections import OrderedDict
 from datetime import date
 
 from django.urls import reverse
-
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from carwash.models import CarWashService, CarWashWorkDay, CarWashRegistration
+from rest_framework.test import APIClient, APITestCase
+
+from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from users.models import User
 
 

@@ -2,10 +2,11 @@
 
 from django.urls import path
 
-from api.views import *
+from .views import (CarWashRegistrationAPIView,
+                    CarWashRequestCallCreateAPIView, CarWashServiceListAPIView,
+                    UserProfileDetailAPIView, UserRegistrationListAPIView)
 
 app_name = 'api'
-
 
 urlpatterns = [
     path('v1/service-list/', CarWashServiceListAPIView.as_view(), name='service_list'),
@@ -16,5 +17,3 @@ urlpatterns = [
     path('v1/carwash-request-call/', CarWashRequestCallCreateAPIView.as_view(), name='carwash_request_call'),
     path('v1/user-profile/', UserProfileDetailAPIView.as_view(), name='user_profile'),
 ]
-
-
