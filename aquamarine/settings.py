@@ -9,27 +9,54 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
+import environ
 import os
+
 from pathlib import Path
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, False),
+    DOMAIN_NAME=(str, False),
+
+    CACHE_FILE=(str, False),
+
+    DATABASE_NAME=(str, False),
+    DATABASE_USER=(str, False),
+    DATABASE_PASSWORD=(str, False),
+    DATABASE_HOST=(str, False),
+    DATABASE_PORT=(str, False),
+
+    EMAIL_HOST=(str, False),
+    EMAIL_PORT=(int, False),
+    EMAIL_HOST_USER=(str, False),
+    EMAIL_HOST_PASSWORD=(str, False),
+    EMAIL_USE_TLS=(bool, False),
+    EMAIL_USE_SSL=(bool, False),
+    DEFAULT_FROM_EMAIL=(str, False),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--=w^i2289$wclooo-l$-%z#rpg2&vyc_07yis@ju8y@2sg(nn!'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
-DOMAIN_NAME = ['http://127.0.0.1:8000']
+DOMAIN_NAME = env('DOMAIN_NAME')
 
 
 # Application definition
@@ -45,6 +72,7 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'captcha',
+    'django_extensions',
 
     'carwash',
     'users',
@@ -88,10 +116,21 @@ WSGI_APPLICATION = 'aquamarine.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
@@ -140,12 +179,16 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 INTERNAL_IPS = [
     '127.0.0.1',
+    'localhost',
 ]
+
+# Caches
+CACHE_FILE = env('CACHE_FILE')
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR,  'aquamarine_cache'),
+        'LOCATION': os.path.join(BASE_DIR, CACHE_FILE),
     }
 }
 # CACHES = {
@@ -174,16 +217,17 @@ CAPTCHA_FONT_SIZE = 26
 
 # Sending emails
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_HOST = env('EMAIL_HOST')
+    EMAIL_PORT = env('EMAIL_PORT')
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+    EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'aquamarine.srv@yandex.ru'
-EMAIL_HOST_PASSWORD = 'cnzvcnifcqflwggc'
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-
-DEFAULT_FROM_EMAIL = 'aquamarine.srv@yandex.ru'
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 SITE_ID = 1
 
