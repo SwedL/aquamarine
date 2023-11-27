@@ -86,15 +86,6 @@ class RegistrationAutoView(Common, View):
         time789 = sum([x.pk for x in choicen_services if
                        x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
         total_time = sum([t.process_time for t in choicen_services]) - time789 * 30
-
-        new_reg = CarWashRegistration.objects.create(
-                client=request.user,
-                date_reg=for_workday_date,
-                time_reg=for_workday_time,
-                total_time=total_time,
-                total_cost=total_cost,
-            )
-        new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
         current_workday = CarWashWorkDay.objects.filter(date=for_workday_date).first()
 
         # записываем столько времён под авто, сколько необходимо под услуги
@@ -109,6 +100,14 @@ class RegistrationAutoView(Common, View):
                             range(0, total_time, 30)]
 
         if all([x is None for x in check_free_times]):
+            new_reg = CarWashRegistration.objects.create(
+                client=request.user,
+                date_reg=for_workday_date,
+                time_reg=for_workday_time,
+                total_time=total_time,
+                total_cost=total_cost,
+            )
+            new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
             time_attributes = []
             self_data = new_reg.get_data()  # получаем данные CarWashRegistration в виде словаря
 
