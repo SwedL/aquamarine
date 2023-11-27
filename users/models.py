@@ -36,7 +36,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    Модель Пользователь.
+    Модель Пользователь
     Поля: email (login), ФИО, номер телефона, тип автомобиля,
     марка и модель, дисконт, DateTime создания пользователя
     """
@@ -66,9 +66,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []  # field required to createsuperuser
 
-    def __str__(self):
-        return self.email
-
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
@@ -88,3 +85,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Is the user a member of staff?"""
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    def __str__(self):
+        return self.fio

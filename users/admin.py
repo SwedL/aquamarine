@@ -6,8 +6,6 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from carwash.admin import CarWashRegistrationAdmin
-
 from .models import User
 
 
@@ -67,7 +65,7 @@ class UserAdmin(BaseUserAdmin):
         (_('Permissions'), {'fields': ['is_admin', 'is_active', 'groups']}),
         # (_('Important dates'), {'fields': ('last_login',)}),
     )
-    inlines = (CarWashRegistrationAdmin,)
+    # inlines = (CarWashRegistrationAdmin,)
 
     add_fieldsets = (
         (None, {

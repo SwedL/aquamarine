@@ -57,21 +57,24 @@
                 {% for time_workday in full_list_registrations_workday %}
                 <div class="time-workday">
                     <div class="data-box__item time-workday__time {% if time_workday.free %} free time-workday__time-free {% else %} busy time-workday__time-busy {% endif %}">{{time_workday.time}}</div>
-                    {% if time_workday.registration %}
+                    {% if time_workday.id %}
                     <div class="data-box__item busy client-busy">
-                        {{time_workday.registration.client}}<br>
-                        {{time_workday.registration.client.phone_number}}<br>
-                        {{time_workday.registration.client.car_model}}
+                        {{time_workday.client}}<br>
+                        {% if not staff %}
+                            {{time_workday.fio}}<br>
+                        {% endif %}
+                        {{time_workday.phone_number}}<br>
+                        {{time_workday.car_model}}
                     </div>
-                    <div class="data-box__item busy time-workday__services">{{time_workday.registration}}</div>
+                    <div class="data-box__item busy time-workday__services">{{time_workday.services}}</div>
                     <div class="time-workday__button">
 
                     <!-- Кнопка-триггер модального окна -->
-                    <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.registration.pk}}{{time_workday.time}}">
+                    <button type="button" class="time-workday__cancel-button" data-bs-toggle="modal" data-bs-target="#{{time_workday.pk}}{{time_workday.time}}">
                         Отменить</button>
 
                         <!-- Модальное окно -->
-                    <div class="modal fade" id="{{time_workday.registration.pk}}{{time_workday.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="{{time_workday.pk}}{{time_workday.time}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header">
@@ -82,14 +85,14 @@
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <a href="{% url 'carwash:cancel' days_delta time_workday.registration.pk time_workday.time %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                            <a href="{% url 'carwash:cancel' days_delta time_workday.id %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
                             </div>
                             </div>
                         </div>
                     </div>
                     </div>
                     {% else %}
-                    <div class="data-box__item {% if time_workday.free %} free client-free {% else %} busy client-busy {% endif %}">{{time_workday.client}}</div>
+                    <div class="data-box__item {% if time_workday.free %} free client-free {% else %} busy client-busy {% endif %}">{{time_workday.field}}</div>
                     <div class="data-box__item time-workday__services {% if time_workday.free %} free {% else %} busy {% endif %}"></div>
                     <div class="time-workday__fake_button"></div>
                     {% endif %}

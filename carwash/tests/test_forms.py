@@ -5,6 +5,7 @@ from carwash.forms import CarWashRequestCallForm
 
 class RequestCallFormViewTestCase(TestCase):
     """Тест формы RequestCall (заказать звонок)"""
+
     def setUp(self):
         self.form = CarWashRequestCallForm()
 

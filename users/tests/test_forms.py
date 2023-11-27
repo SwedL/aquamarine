@@ -34,8 +34,6 @@ class UserProfileFormTestCase(TestCase):
             form.fields['phone_number'].label is None or form.fields['phone_number'].label == 'номер телефона')
         self.assertTrue(
             form.fields['car_model'].label is None or form.fields['car_model'].label == 'Марка и модель автомобиля')
-        self.assertTrue(
-            form.fields['discount'].label is None or form.fields['discount'].label == 'Дисконт')
 
     def test_form_is_valid_value(self):
         # Проверка на валидность вводимых значений в форму
@@ -44,7 +42,6 @@ class UserProfileFormTestCase(TestCase):
             'fio': 'Иванов Петр Николаевич',
             'phone_number': '81234567890',
             'car_model': 'Kia Sportage',
-            'discount': 0,
             }
         form = UserProfileForm(data=form_data)
 
@@ -57,7 +54,6 @@ class UserProfileFormTestCase(TestCase):
             'fio': 'Иванов Петр Николаевич',
             'phone_number': '81234567890',
             'car_model': 'Kia Sportage',
-            'discount': 0,
         }
         form = UserProfileForm(data=form_data)
 
@@ -70,20 +66,6 @@ class UserProfileFormTestCase(TestCase):
             'fio': 'Иванов Петр Николаевич',
             'phone_number': '91234567890',
             'car_model': 'Kia Sportage',
-            'discount': 0,
-            }
-        form = UserProfileForm(data=form_data)
-
-        self.assertFalse(form.is_valid())
-
-    def test_form_is_not_valid_discount_value(self):
-        # Проверка на не валидность значения discount
-        form_data = {
-            'email': 'test@mail.ru',
-            'fio': 'Иванов Петр Николаевич',
-            'phone_number': '81234567890',
-            'car_model': 'Kia Sportage',
-            'discount': -1,
             }
         form = UserProfileForm(data=form_data)
 

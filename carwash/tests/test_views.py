@@ -6,9 +6,10 @@ from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
 
-from carwash.models import (CarWashRegistration, CarWashService,
-                            CarWashUserRegistration, WorkDay)
+from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from users.models import User
+
+from .test_models import calculate_total_time_and_total_cost
 
 
 class IndexListViewTestCase(TestCase):
@@ -19,11 +20,11 @@ class IndexListViewTestCase(TestCase):
     def setUp(self):
         self.services = CarWashService.objects.all()
         self.user = User.objects.create(email='test@mail.ru', password='test')
-        self.permission = Permission.objects.get(codename='view_workday')
+        self.permission = Permission.objects.get(codename='view_carwashworkday')
         self.path = reverse('carwash:home')
 
     def test_view_for_not_logged_user(self):
-        # Проверка меню для неавторизованных пользователей
+        # Проверка меню для неавторизованого пользователя
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
@@ -69,8 +70,14 @@ class RegistrationAutoViewTestCase(TestCase):
 
     def setUp(self):
         self.services = dict([(k, v) for k, v in enumerate(CarWashService.objects.all(), start=1)])
-        self.user = User.objects.create(email='test@mail.ru', password='test')
-        self.workday = WorkDay.objects.create(date=date.today())
+        self.user = User.objects.create(
+            email='testuser@mail.ru',
+            password='12345qwerty',
+            fio='Иванов Пётр Николаевич',
+            phone_number='81234567890',
+            car_model='Kia Sportage',
+        )
+        self.workday = CarWashWorkDay.objects.create(date=date.today())
         self.path = reverse('carwash:registration')
 
     def test_view(self):
@@ -97,13 +104,13 @@ class RegistrationAutoViewTestCase(TestCase):
                 }
         self.client.force_login(self.user)
         response = self.client.post(self.path, data)
-        check_workday = list(WorkDay.objects.filter(date=date.today()).values())[0]
-        id_need_carwashregistration = check_workday.get('time_1000_id', False)
-        check_carwashregistration = CarWashRegistration.objects.filter(id=id_need_carwashregistration).first()
+        check_workday = CarWashWorkDay.objects.filter(date=date.today()).values().first()
+        id_need_carwashregistration = check_workday.get('time_1000', False)
+        check_carwashregistration = CarWashRegistration.objects.filter(id=id_need_carwashregistration['id']).first()
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(check_carwashregistration.total_time, 60)
-        self.assertEqual(str(check_carwashregistration), 'Мойка (верх, ковры, сушка)')
-        self.assertEqual(str(check_carwashregistration.client), 'test@mail.ru')
+        self.assertEqual(str(check_carwashregistration), f'Клиент: {self.user}, {self.user.email}')
+        self.assertEqual(str(check_carwashregistration.client), str(self.user))
 
     def _common_tests(self, sample):
         response = self.client.get(self.path)
@@ -114,15 +121,15 @@ class RegistrationAutoViewTestCase(TestCase):
 
 class StaffDetailViewTestCase(TestCase):
     """
-    Тест представления страницы показа сотруднику всех записей клиентов
-    на оказание услуг автомойки. На сегодня, завтра и послезавтра.
+    Тест представление для показа сотруднику всех записей клиентов
+    на сегодня, завтра и послезавтра
     """
 
     def setUp(self):
         self.user = User.objects.create(email='test@mail.ru', password='test')
-        self.permission = Permission.objects.get(codename='view_workday')
+        self.permission = Permission.objects.get(codename='view_carwashworkday')
         self.path = reverse('carwash:staff', kwargs={'days_delta': 0})
-        [WorkDay.objects.create(date=date.today() + timedelta(days=i)) for i in range(7)]
+        [CarWashWorkDay.objects.create(date=date.today() + timedelta(days=i)) for i in range(7)]
 
     def test_user_cannot_permission(self):
         # Проверка доступа к странице неавторизованного пользователя
@@ -142,7 +149,10 @@ class StaffDetailViewTestCase(TestCase):
 
 
 class UserRegistrationsListViewTestCase(TestCase):
-    """Тест представления показа пользователю его записей на оказание услуг автомойки"""
+    """
+    Тест представление для показа пользователю его записей
+     на оказание услуг автомоечного комплекса
+    """
 
     fixtures = {'services.json'}
 
@@ -159,24 +169,21 @@ class UserRegistrationsListViewTestCase(TestCase):
         )
         self.user2 = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
-        self.registration1 = CarWashRegistration.objects.create(client=self.user1)
-        self.registration1.services.set([self.services[0], self.services[6]])
-
-        self.registration2 = CarWashRegistration.objects.create(client=self.user1)
-        self.registration2.services.set([self.services[1], self.services[2], self.services[3]])
-
-        CarWashUserRegistration.objects.create(
-            client=self.user1,
-            date_reg=date.today(),
-            time_reg=time(12, 00),
-            carwash_reg=self.registration1,
-        )
-        CarWashUserRegistration.objects.create(
+        self.registration1 = CarWashRegistration.objects.create(
             client=self.user1,
             date_reg=date.today(),
             time_reg=time(10, 00),
-            carwash_reg=self.registration2,
         )
+        self.registration1.services.set([self.services[0], self.services[6]])
+        calculate_total_time_and_total_cost(self.registration1)
+
+        self.registration2 = CarWashRegistration.objects.create(
+            client=self.user1,
+            date_reg=date.today(),
+            time_reg=time(13, 00),
+        )
+        self.registration2.services.set([self.services[1], self.services[2], self.services[3]])
+        calculate_total_time_and_total_cost(self.registration2)
 
     def test_view(self):
         self.client.force_login(self.user1)
@@ -206,6 +213,7 @@ class RequestCallFormViewTestCase(TestCase):
 
     def setUp(self):
         self.path = reverse('carwash:call_me')
+        self.user = User.objects.create(email='testuser1@mail.ru', password='12345qwerty')
 
     def test_view_for_not_logged_user(self):
         # Проверка представления страницы заказа звонка

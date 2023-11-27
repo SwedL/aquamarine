@@ -1,11 +1,19 @@
+from datetime import date
+
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from carwash.serializers import *
-from carwash.models import CarWashService
+
+from carwash.models import CarWashRegistration, CarWashService
+from carwash.serializers import (CarWashRegistrationSerializer,
+                                 CarWashRequestCallSerializer,
+                                 CarWashServiceSerializer,
+                                 CarWashWorkDaySerializer)
 from carwash.views import RegistrationAutoView
-from common.views import carwash_user_registration_delete, create_and_get_week_workday
+from common.views import (carwash_user_registration_delete,
+                          create_and_get_week_workday)
+from users.models import User
 from users.serializers import UserSerializer
 
 
@@ -19,7 +27,7 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
         c = CarWashService.objects.all()
         w = create_and_get_week_workday()
         return Response({'services': CarWashServiceSerializer(c, many=True).data,
-                         'wordays_week': WorkDaySerializer(w, many=True).data})
+                         'wordays_week': CarWashWorkDaySerializer(w, many=True).data})
 
     def post(self, request):
         context = super(CarWashRegistrationAPIView, self).post(request)
@@ -37,13 +45,13 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
                          })
 
 
-class CarWashUserRegistrationAPIView(APIView):
+class UserRegistrationListAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @staticmethod
     def get_response(request):
-        all_user_reg = CarWashUserRegistration.objects.filter(client=request.user)
-        return Response({'user_registrations': CarWashUserRegistrationSerializer(all_user_reg, many=True).data})
+        all_user_reg = CarWashRegistration.objects.filter(date_reg__gte=date.today(), client=request.user)
+        return Response({'user_registrations': CarWashRegistrationSerializer(all_user_reg, many=True).data})
 
     def get(self, request):
         return self.get_response(request)
@@ -65,4 +73,3 @@ class UserProfileDetailAPIView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
-

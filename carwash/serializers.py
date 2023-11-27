@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from carwash.models import *
+
+from .models import (CarWashRegistration, CarWashRequestCall, CarWashService,
+                     CarWashWorkDay)
 
 
 class CarWashServiceSerializer(serializers.ModelSerializer):
@@ -13,26 +15,26 @@ class CarWashRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CarWashRegistration
-        fields = ('id', 'services', 'total_time')
-
-
-class WorkDaySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WorkDay
-        fields = '__all__'
-
-
-class CarWashUserRegistrationSerializer(serializers.ModelSerializer):
-    carwash_reg = CarWashRegistrationSerializer()
-
-    class Meta:
-        model = CarWashUserRegistration
-        fields = ('id', 'client', 'date_reg', 'time_reg', 'carwash_reg')
+        fields = (
+            'id',
+            'client',
+            'services',
+            'date_reg',
+            'time_reg',
+            'total_time',
+            'total_cost',
+            'relation_carwashworkday',
+        )
         ordering = ('date_reg', 'time_reg')
+
+
+class CarWashWorkDaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarWashWorkDay
+        fields = '__all__'
 
 
 class CarWashRequestCallSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashRequestCall
         fields = ('phone_number',)
-

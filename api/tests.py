@@ -1,12 +1,11 @@
-# from django.test import TestCase
 from collections import OrderedDict
 from datetime import date
 
 from django.urls import reverse
-
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from carwash.models import CarWashService, WorkDay, CarWashUserRegistration
+from rest_framework.test import APIClient, APITestCase
+
+from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from users.models import User
 
 
@@ -33,7 +32,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
             email='testuser@mail.ru',
             password='12345qwerty',
         )
-        self.workday = WorkDay.objects.create(date=date.today())
+        self.workday = CarWashWorkDay.objects.create(date=date.today())
         self.url = reverse('api:carwash_registration')
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -42,16 +41,14 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(CarWashService.objects.count(), 17)
-        self.assertEqual(WorkDay.objects.count(), 7)
+        self.assertEqual(CarWashWorkDay.objects.count(), 7)
 
     def test_registration_auto_at_carwash(self):
         choice_date = str(date.today()).replace('-', ' ')
         format_choice_date = choice_date.split()
         format_choice_date.reverse()
         choice_time = '10:00'
-        data = {'choice_date_and_time': f'{choice_date},{choice_time}',
-                'service_15': '15',
-                }
+        data = {'choice_date_and_time': f'{choice_date},{choice_time}', 'service_15': '15'}
 
         response = self.client.post(self.url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -74,9 +71,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
 
     def test_post_data_then_selected_time_is_already_taken(self):
         choice_date = str(date.today()).replace('-', ' ')
-        data = {'choice_date_and_time': f'{choice_date},10:00',
-                'service_15': '15',
-                }
+        data = {'choice_date_and_time': f'{choice_date},10:00', 'service_15': '15'}
         self.client.post(self.url, data, format='multipart')
         response = self.client.post(self.url, data, format='multipart')
         self.assertEqual(response.data, {
@@ -108,55 +103,57 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
         """
 
         self.url = reverse('api:user_registration_list')
-        self.workday = WorkDay.objects.create(date=date.today())
+        self.workday = CarWashWorkDay.objects.create(date=date.today())
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
 
     def test_get_user_registration_list(self):
         # проверяем получения информации о записях автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00',
-                 'service_1': '1',
-                 }
-        data2 = {'choice_date_and_time': f'{choice_date},14:00',
-                 'service_3': '3',
-                 }
+        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'service_1': '1'}
+        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'service_3': '3'}
         self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
         self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
 
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(CarWashUserRegistration.objects.all()), 2)
+        self.assertEqual(len(CarWashRegistration.objects.all()), 2)
         self.assertEqual(response.data, {'user_registrations': [
-            OrderedDict([('id', 5), ('client', 7), ('date_reg', '2023-11-15'),
-                         ('time_reg', '10:00:00'), ('carwash_reg',
-                                                    OrderedDict([
-                                                        ('id', 6),
-                                                        ('services', ['Мойка (верх, ковры, сушка)']),
-                                                        ('total_time', 60)]))]),
-            OrderedDict([('id', 6), ('client', 7), ('date_reg', '2023-11-15'),
-                         ('time_reg', '14:00:00'), ('carwash_reg',
-                                                    OrderedDict([
-                                                        ('id', 7), ('services', ['Экспресс-мойка']),
-                                                        ('total_time', 30)]))])]})
+            OrderedDict([
+                ('id', 1),
+                ('client', 1),
+                ('services', ['Мойка (верх, ковры, сушка)']),
+                ('date_reg', str(date.today())),
+                ('time_reg', '10:00:00'),
+                ('total_time', 60),
+                ('total_cost', 450),
+                ('relation_carwashworkday', {'time_attributes': ['time_1000', 'time_1030']})
+            ]),
+            OrderedDict([
+                ('id', 2),
+                ('client', 1),
+                ('services', ['Экспресс-мойка']),
+                ('date_reg', str(date.today())),
+                ('time_reg', '14:00:00'),
+                ('total_time', 30),
+                ('total_cost', 200),
+                ('relation_carwashworkday', {'time_attributes': ['time_1400']})
+            ])
+        ]})
 
     def test_delete_user_registration(self):
         # проверяем возможность удаления записи автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00',
-                 'service_1': '1',
-                 }
-        data2 = {'choice_date_and_time': f'{choice_date},14:00',
-                 'service_3': '3',
-                 }
+        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'service_1': '1'}
+        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'service_3': '3'}
         self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
         self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
-        user_registration_all = CarWashUserRegistration.objects.all()
+        user_registration_all = CarWashRegistration.objects.all()
         need_id = user_registration_all.first().id
         self.assertEqual(len(user_registration_all), 2)
         new_reverse = reverse('api:user_registration_delete', kwargs={'registration_pk': need_id})
         self.client.delete(new_reverse)
-        self.assertEqual(len(CarWashUserRegistration.objects.all()), 1)
+        self.assertEqual(len(CarWashRegistration.objects.all()), 1)
 
 
 class CarWashRequestCallCreateAPIViewTestCase(APITestCase):
@@ -214,7 +211,6 @@ class UserProfileDetailAPIViewTestCase(APITestCase):
                                          'phone_number': '89445555555',
                                          'car_type': 'price_standart',
                                          'car_model': 'Kia Sportage',
-                                         'discount': 0,
                                          })
 
     def test_change_data_user_profile(self):
@@ -226,9 +222,7 @@ class UserProfileDetailAPIViewTestCase(APITestCase):
                 'fio': 'Петров Николай Иванович',
                 'phone_number': '89443333333',
                 'car_type': 'price_s',
-                'car_model': 'Kia Venga',
-                'discount': 50,
-                }
+                'car_model': 'Kia Venga', }
         response = self.client.put(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {'email': 'testuser@mail.ru',
@@ -236,5 +230,4 @@ class UserProfileDetailAPIViewTestCase(APITestCase):
                                          'phone_number': '89443333333',
                                          'car_type': 'price_standart',
                                          'car_model': 'Kia Venga',
-                                         'discount': 0,
                                          })
