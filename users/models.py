@@ -6,11 +6,11 @@ from django.db import models
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Создает и сохраняет пользователя с указанным адресом
+         электронной почты и паролем.
         """
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError('Пользователи должны иметь адрес электронной почты')
 
         user = self.model(
             email=self.normalize_email(email),
@@ -22,8 +22,8 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None):
         """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
+        Создает и сохраняет суперпользователя с указанным адресом
+         электронной почты и паролем.
         """
         user = self.create_user(
             email,
@@ -64,26 +64,26 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []  # field required to createsuperuser
+    REQUIRED_FIELDS = []  # поле, необходимое для создания суперпользователя
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
     # def has_perm(self, perm, obj=None):
-    #     "Does the user have a specific permission?"
-    #     # Simplest possible answer: Yes, always
+    #     "Имеет ли пользователь определенное разрешение?"
+    #     # Самый простой ответ: Да, всегда.
     #     return True
     #
     # def has_module_perms(self, app_label):
-    #     "Does the user have permissions to view the app `app_label`?"
-    #     # Simplest possible answer: Yes, always
+    #     "Есть ли у пользователя разрешения на просмотр приложения app_label?"
+    #     # Самый простой ответ: Да, всегда.
     #     return True
 
     @property
     def is_staff(self):
-        """Is the user a member of staff?"""
-        # Simplest possible answer: All admins are staff
+        """Является ли пользователь сотрудником?"""
+        # Самый простой ответ: все администраторы — сотрудники.
         return self.is_admin
 
     def __str__(self):

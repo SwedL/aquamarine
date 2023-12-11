@@ -64,7 +64,7 @@ class RegistrationAutoView(Common, View):
         }
 
         if request.user.has_perm('carwash.view_carwashworkday'):
-            context.get('menu').append({'title': 'Сотрудник', 'url_name': 'carwash:staff'})
+            context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
         if 'api' in str(request):
             return context
@@ -111,11 +111,12 @@ class RegistrationAutoView(Common, View):
             time_attributes = []
             self_data = new_reg.get_data()  # получаем данные CarWashRegistration в виде словаря
 
-            # если записывает сотрудник, то берутся данные 'comment_...' если их нет то default
-            self_data['car_model'] = request.POST.get('comment_car_model', self_data['car_model'])
-            self_data['phone_number'] = request.POST.get('comment_phone_number', self_data['phone_number'])
-            if request.POST.get('comment_client', None):
-                self_data['client'] = request.POST['comment_client']
+            # если записывает сотрудник, то берутся данные 'comment_...'
+            match request.POST:
+                case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
+                    self_data['car_model'] = car_model
+                    self_data['phone_number'] = phone_number
+                    self_data['client'] = client
 
             for _ in range(0, total_time, 30):
                 time_attribute = 'time_' + time_dict1.pop(0).replace(':', '')
@@ -154,7 +155,7 @@ class RegistrationAutoView(Common, View):
         }
 
         if request.user.has_perm('carwash.view_carwashworkday'):
-            context.get('menu').append({'title': 'Сотрудник', 'url_name': 'carwash:staff'})
+            context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
         if 'api' in str(request):
             return context
@@ -195,7 +196,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
     На сегодня, завтра и послезавтра.
     """
 
-    title = 'Сотрудник'
+    title = 'Менеджер'
     permission_required = 'carwash.view_carwashworkday'
 
     def get(self, request, days_delta=0):
