@@ -3,8 +3,7 @@
 
 <p align="center">
    <img src="https://img.shields.io/badge/Pyhton-3.11-orange)" alt="Python Version">
-   <img src="https://img.shields.io/badge/Django-4.2.7-E86F00
-" alt="Django Version">
+   <img src="https://img.shields.io/badge/Django-4.2.7-E86F00" alt="Django Version">
 </p>
 
 Сайт для онлайн записи клиентов на услуги автомоечного комплекса и администрирования работы компании.
