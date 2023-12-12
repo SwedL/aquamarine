@@ -44,7 +44,7 @@ class IndexListViewTestCase(TestCase):
         self.user.user_permissions.add(self.permission)
         self.client.force_login(self.user)
 
-        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Сотрудник', 'Выйти'])
+        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Выйти'])
 
     def test_if_logged_and_can_permission_and_is_admin(self):
         # Проверка отображения меню для авторизованного пользователя, с правами admin
@@ -53,7 +53,7 @@ class IndexListViewTestCase(TestCase):
         self.user.save()
         self.client.force_login(self.user)
 
-        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Сотрудник', 'Админ-панель', 'Выйти'])
+        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Админ-панель', 'Выйти'])
 
     def _common_tests(self):
         response = self.client.get(self.path)
@@ -144,7 +144,7 @@ class StaffDetailViewTestCase(TestCase):
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.context['title'], 'Сотрудник')
+        self.assertEqual(response.context['title'], 'Менеджер')
         self.assertTemplateUsed(response, 'carwash/staff.html')
 
 
