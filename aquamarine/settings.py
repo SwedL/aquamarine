@@ -18,15 +18,7 @@ from pathlib import Path
 env = environ.Env(
     DEBUG=(bool, False),
     SECRET_KEY=(str, False),
-    DOMAIN_NAME=(str, False),
-
     CACHE_FILE=(str, False),
-
-    DATABASE_NAME=(str, False),
-    DATABASE_USER=(str, False),
-    DATABASE_PASSWORD=(str, False),
-    DATABASE_HOST=(str, False),
-    DATABASE_PORT=(str, False),
 
     EMAIL_HOST=(str, False),
     EMAIL_PORT=(int, False),
@@ -34,7 +26,6 @@ env = environ.Env(
     EMAIL_HOST_PASSWORD=(str, False),
     EMAIL_USE_TLS=(bool, False),
     EMAIL_USE_SSL=(bool, False),
-    DEFAULT_FROM_EMAIL=(str, False),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,9 +44,6 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
-DOMAIN_NAME = env('DOMAIN_NAME')
-
 
 # Application definition
 
