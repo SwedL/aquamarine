@@ -47,7 +47,7 @@ class Common:
 def carwash_user_registration_delete(request, registration_pk):
     """
     Функция для UserRegistrationsCancelView и UserRegistrationListAPIView - обработчик события
-    'отмены (удаления)' пользователем своей записи на автомоечный комплекс
+    'отмены (удаления)' пользователем своей записи на автомоечный комплекс.
     """
     user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()
 
