@@ -23,20 +23,20 @@
 Главная страница сайта, где можно узнать о работе компании и её преимуществах перед конкурентами, заказать звонок от компании. 
 
 
-<a href="https://ibb.co/cYbFHt3"><img src="https://i.ibb.co/0sBMSZ2/2023-12-11-14-45-34.png" alt="2023-12-11-14-45-34" border="0"></a>
+<a href="https://ibb.co/cYbFHt3"><img src="https://i.ibb.co/0sBMSZ2/2023-12-11-14-45-34.png" alt="head" border="0"></a>
 
 Также можно ознакомиться с прайсом услуг компании.<br>
 Цены на услуги в прайс-листе, обновляются с изменениями цен администратором в админ-панели.
 
-<a href="https://ibb.co/zRsYtkY"><img src="https://i.ibb.co/hWsjTqj/2023-12-11-14-44-19.png" alt="2023-12-11-14-44-19" border="0"></a>
+<a href="https://ibb.co/zRsYtkY"><img src="https://i.ibb.co/hWsjTqj/2023-12-11-14-44-19.png" alt="price" border="0"></a>
 
 В нижней части находится интерактивная Яндекс карта с месторасположением автомоечного комплекса и футер с контактными данными. 
 
-<a href="https://ibb.co/XVm8qxs"><img src="https://i.ibb.co/b7pJk5B/2023-12-11-15-12-50.png" alt="2023-12-11-15-12-50" border="0"></a>
+<a href="https://ibb.co/XVm8qxs"><img src="https://i.ibb.co/b7pJk5B/2023-12-11-15-12-50.png" alt="footer"0"></a>
 
 После авторизации пользователя, в зависимости от прав доступа, будет формироваться выпадающее меню
 
-<a href="https://ibb.co/R9GdS4z"><img src="https://i.ibb.co/PNs0Yzw/2023-12-11-16-41-14.png" alt="2023-12-11-16-41-14" border="0"></a>
+<a href="https://ibb.co/R9GdS4z"><img src="https://i.ibb.co/PNs0Yzw/2023-12-11-16-41-14.png" alt="header" border="0"></a>
 <p align="center">
 <img src="https://i.ibb.co/8zBZCK4/menu1.png" alt="menu1" border="0">
 <img src="https://i.ibb.co/ZcskyfV/menu2.png" alt="menu2" border="0">
@@ -46,13 +46,13 @@
 В "**Мои записи**" пользователь может посмотреть информацию о своих записях на автомойку и отменить их в случае необходимости.
 
 <p align="center">
-<img src="https://i.ibb.co/rcGM93Z/2023-12-11-17-26-33.png" alt="2023-12-11-17-26-33" border="0" width="350">
-<img src="https://i.ibb.co/DV7Nv3C/2023-12-11-17-24-56.png" alt="2023-12-11-17-24-56" border="0" width="350">
+<img src="https://i.ibb.co/rcGM93Z/2023-12-11-17-26-33.png" alt="profile" border="0" width="350">
+<img src="https://i.ibb.co/DV7Nv3C/2023-12-11-17-24-56.png" alt="user registrations" border="0" width="350">
 </p>
 
 Предусмотрена возможность восстановления пароля пользователя через электронную почту.
 <p align="center">
-<img src="https://i.ibb.co/4RTXMPM/2023-12-11-17-40-32.png" alt="2023-12-11-17-40-32" border="0" width="350">
+<img src="https://i.ibb.co/4RTXMPM/2023-12-11-17-40-32.png" alt="login" border="0" width="350">
 <img src="https://i.ibb.co/HYN6Dd0/2023-12-11-17-40-01.png" alt="reset password" border="0" width="350">
 </p>
 
@@ -60,30 +60,30 @@
 Цены на услуги отображаются в зависимости от категории автомобиля клиента (седан/хетчбек, кроссовер или внедорожник).<br>
 Время, которое уже прошло, автоматически становится недоступным для записи.
 
-<p><img src="https://i.ibb.co/17fK1R4/2023-12-11-16-09-47.png" alt="2023-12-11-16-09-47" border="0"></p>
+<p><img src="https://i.ibb.co/17fK1R4/2023-12-11-16-09-47.png" alt="page registrations" border="0"></p>
 
 В случае успешной записи будет соответствующее уведомление.<br>
 Но если время, которое выбрал пользователь уже занято, пока он регистрировал запись, то появится уведомление с предложением выбрать другое время.
 
 <p align="center">
-<img src="https://i.ibb.co/89ZgzW0/2023-12-11-17-23-51.png" alt="2023-12-11-17-23-51" border="0" width="350">
-<img src="https://i.ibb.co/z8Ldfn8/2023-12-11-19-15-45.png" alt="2023-12-11-19-15-45" border="0" width="350">
+<img src="https://i.ibb.co/89ZgzW0/2023-12-11-17-23-51.png" alt="registrations done" border="0" width="350">
+<img src="https://i.ibb.co/z8Ldfn8/2023-12-11-19-15-45.png" alt="registrations error" border="0" width="350">
 </p>
 
 У пользователей с правами менеджера или администратора, при записи на услуги, появляются поля для изменения марки и модели автомобиля, телефона и имени. Так как многие клиенты записываются по телефону указывая свои контактные данные.
 Также появляется вкладка "**Менеджер**" для быстрого перехода к администрированию записей
 
-<p><img src="https://i.ibb.co/r4wr00H/2023-12-11-16-16-08.png" alt="2023-12-11-16-16-08" border="0"></p>
+<p><img src="https://i.ibb.co/r4wr00H/2023-12-11-16-16-08.png" alt="manager registration" border="0"></p>
 
 ### Интерфейс менеджера:
 Предназначен для менеджера или администратора. Здесь менеджер получает полную информация на выбранный день (какой автомобиль, какие выбраны услуги и контакты клиента).
 Записи выводятся на текущий день, а также на ближайшие 2 дня.<br>
 Страница автоматически обновляется каждые 5 минут, и менеджер может видеть новые записи.
 
-<p><img src="https://i.ibb.co/VHWbQj3/2023-12-11-17-54-14.png" alt="2023-12-11-17-54-14" border="0"></p>
+<p><img src="https://i.ibb.co/VHWbQj3/2023-12-11-17-54-14.png" alt="manager interface" border="0"></p>
 
 Также на странице отображена кнопка "**Запросы звонка**" которая начинает мигать красным цветом при поступлении запроса звонка от клиента. Кнопка перестаёт мигать, когда все телефонные звонки будут обработаны менеджером.
-<p><img src="https://i.ibb.co/BVvRbxY/2023-12-11-19-38-17.png" alt="2023-12-11-19-38-17" border="0"></p>
+<p><img src="https://i.ibb.co/BVvRbxY/2023-12-11-19-38-17.png" alt="request call widget" border="0"></p>
 
 ### Интерфейс администратора:
 Вкладка **"Админ - панель"** в выпадающем меню пользователя. Сюда имеет доступ только администратор.
@@ -113,7 +113,7 @@ git clone https://github.com/SwedL/aquamarine.git
 - Windows: `python -m venv venv`
 - Linux: `python3 -m venv venv`
 
-Активируйте его. На разных операционных системах это делается разными командами:
+Активируйте его командой:
 
 - Windows: `.\venv\Scripts\activate`
 - Linux: `source venv/bin/activate`
