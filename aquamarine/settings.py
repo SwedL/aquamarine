@@ -20,7 +20,6 @@ env = environ.Env(
     SECRET_KEY=(str, False),
     CACHE_FILE=(str, False),
 
-
     EMAIL_HOST=(str, False),
     EMAIL_PORT=(int, False),
     EMAIL_HOST_USER=(str, False),
