@@ -1,3 +1,4 @@
+import json
 from datetime import date, time, timedelta
 from itertools import dropwhile
 
@@ -16,6 +17,7 @@ from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
 from common.views import (Common, carwash_user_registration_delete,
                           create_and_get_week_workday)
+from . import consumers
 
 FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                  '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
@@ -271,7 +273,6 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         }
 
         return render(request, 'carwash/staff.html', context=context)
-    pass
 
 
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):

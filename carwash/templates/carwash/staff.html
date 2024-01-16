@@ -101,9 +101,24 @@
             </div>
         </div>
     </main>
-    <script>
-        setTimeout(function(){
-        location.reload();
-        }, 300000);
-    </script>
 {% endblock %}
+
+{% block script %}
+    <script>
+        base_url = `${window.location.host}${window.location.pathname}`
+        const chatSocket = new WebSocket(`ws://${base_url}`);
+
+        chatSocket.onopen = function(e) {
+            console.log("connected")
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        chatSocket.onmessage = function (e) {
+            location.reload();
+        };
+
+    </script>
+{% endblock script %}

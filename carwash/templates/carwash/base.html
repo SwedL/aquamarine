@@ -23,7 +23,7 @@
 
         <!-- Base JS -->
         <script src="{% static 'carwash/js/script.js' %}"></script>
-
+        <script src="{% static 'carwash/js/htmx_min.js' %}"></script>
         <!-- Custom styles for this template -->
         {% block css %} {% endblock %}
 
@@ -148,4 +148,5 @@
     <!-- Script for menu -->
     <script src="{% static 'carwash/js/script-menu.js' %}"></script>
     </body>
+    {% block script %} {% endblock script %}
 </html>
