@@ -1,4 +1,3 @@
-import json
 from datetime import date, time, timedelta
 from itertools import dropwhile
 
@@ -17,7 +16,9 @@ from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
 from common.views import (Common, carwash_user_registration_delete,
                           create_and_get_week_workday)
-from . import consumers
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                  '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
@@ -156,6 +157,11 @@ class RegistrationAutoView(Common, View):
             'total_cost': f'{total_cost} р.',
         }
 
+        # После появления новой записи клиента - отправляется сообщение
+        # по протоколу Websocket, на страницу интерфейса сотрудника и она перезагружается
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+
         if request.user.has_perm('carwash.view_carwashworkday'):
             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
@@ -188,6 +194,11 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     def get(self, request, registration_pk):
         carwash_user_registration_delete(request, registration_pk)
         redirect_url = reverse('carwash:user_registrations')
+
+        # После отмены записи клиентом - отправляется сообщение, по протоколу Websocket,
+        # на страницу интерфейса сотрудника и она перезагружается
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
 
         return HttpResponseRedirect(redirect_url)
 
@@ -292,6 +303,12 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 
         redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
 
+        # После отмены записи сотрудником - отправляется сообщение, по протоколу Websocket,
+        # на страницу интерфейса сотрудника и она перезагружается
+        # Сделано для обновления информации на всех компьютерах
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+
         return HttpResponseRedirect(redirect_url)
 
 
@@ -306,6 +323,11 @@ class RequestCallFormView(Common, FormView):
     def form_valid(self, form):
         call_me = CarWashRequestCall(phone_number=form.cleaned_data['phone_number'])
         call_me.save()
+
+        # После появления в БД заявки на звонок - отправляется сообщение
+        # по протоколу Websocket, на страницу интерфейса сотрудника и она перезагружается
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
 
         context = {
             'title': self.title,
@@ -326,6 +348,12 @@ class RequestCallProcessingView(View):
         processed_call.processed = True
         processed_call.save()
         redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
+
+        # После обработки звонка сотрудником - отправляется сообщение, по протоколу Websocket,
+        # на страницу интерфейса сотрудника и она перезагружается
+        # Сделано для обновления информации на всех компьютерах
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
 
         return HttpResponseRedirect(redirect_url)
 

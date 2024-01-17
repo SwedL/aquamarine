@@ -19,7 +19,7 @@ class JoinAndLeave(WebsocketConsumer):
 
 class GroupConsumer(WebsocketConsumer):
     room_group_name = "staff_group"
-    # room_name = 'update_date'
+    # room_name = "update_date"
 
     def connect(self):
         # Join room group
@@ -38,11 +38,11 @@ class GroupConsumer(WebsocketConsumer):
     def receive(self, text_data=None, bytes_data=None):
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name, {"type": "chat_message", "message": 'update_data'}
+            self.room_group_name, {"type": "staff_message", "message": 'update_data'}
         )
 
     # Receive message from room group
-    def chat_message(self, event):
+    def staff_message(self, event):
         message = event["message"]
         # Send message to WebSocket
         self.send(text_data=json.dumps({"message": message}))
