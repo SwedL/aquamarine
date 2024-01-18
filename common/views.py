@@ -3,6 +3,9 @@ from datetime import date, timedelta
 from django.http import Http404
 
 from carwash.models import CarWashRegistration, CarWashWorkDay
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Доступное время', 'url_name': 'carwash:registration'},
@@ -24,6 +27,11 @@ def create_and_get_week_workday():
     return check_objects
 
 
+def send_message_staff_channel():
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+
+
 class Common:
     title = 'Aquamarine'
     menu = range(3)
@@ -36,12 +44,12 @@ class Common:
         return [menu_navigation[i] for i in menu]
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(Common, self).get_context_data(**kwargs)
-        context['title'] = self.title
-        context['menu'] = self.create_menu(self.menu)
-        context['staff'] = self.request.user.has_perm('carwash.view_carwashworkday')
+            context = super(Common, self).get_context_data(**kwargs)
+            context['title'] = self.title
+            context['menu'] = self.create_menu(self.menu)
+            context['staff'] = self.request.user.has_perm('carwash.view_carwashworkday')
 
-        return context
+            return context
 
 
 def carwash_user_registration_delete(request, registration_pk):

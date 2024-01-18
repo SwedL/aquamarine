@@ -14,10 +14,10 @@ from django.views.generic import FormView, ListView
 from carwash.forms import CarWashRequestCallForm
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
-from common.views import (Common, carwash_user_registration_delete,
-                          create_and_get_week_workday)
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
+from common.views import (Common,
+                          carwash_user_registration_delete,
+                          create_and_get_week_workday,
+                          send_message_staff_channel)
 
 
 FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
@@ -159,8 +159,7 @@ class RegistrationAutoView(Common, View):
 
         # После появления новой записи клиента - отправляется сообщение
         # по протоколу Websocket, на страницу интерфейса сотрудника и она перезагружается
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+        send_message_staff_channel()
 
         if request.user.has_perm('carwash.view_carwashworkday'):
             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
@@ -197,8 +196,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
 
         # После отмены записи клиентом - отправляется сообщение, по протоколу Websocket,
         # на страницу интерфейса сотрудника и она перезагружается
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+        send_message_staff_channel()
 
         return HttpResponseRedirect(redirect_url)
 
@@ -305,9 +303,8 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 
         # После отмены записи сотрудником - отправляется сообщение, по протоколу Websocket,
         # на страницу интерфейса сотрудника и она перезагружается
-        # Сделано для обновления информации на всех компьютерах
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+        # Сделано для обновления информации на всех устройствах
+        send_message_staff_channel()
 
         return HttpResponseRedirect(redirect_url)
 
@@ -326,8 +323,7 @@ class RequestCallFormView(Common, FormView):
 
         # После появления в БД заявки на звонок - отправляется сообщение
         # по протоколу Websocket, на страницу интерфейса сотрудника и она перезагружается
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+        send_message_staff_channel()
 
         context = {
             'title': self.title,
@@ -351,9 +347,8 @@ class RequestCallProcessingView(View):
 
         # После обработки звонка сотрудником - отправляется сообщение, по протоколу Websocket,
         # на страницу интерфейса сотрудника и она перезагружается
-        # Сделано для обновления информации на всех компьютерах
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+        # Сделано для обновления информации на всех устройствах
+        send_message_staff_channel()
 
         return HttpResponseRedirect(redirect_url)
 
