@@ -3,8 +3,6 @@ from datetime import date, timedelta
 from django.http import Http404
 
 from carwash.models import CarWashRegistration, CarWashWorkDay
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
@@ -25,11 +23,6 @@ def create_and_get_week_workday():
         check_objects = CarWashWorkDay.objects.filter(date__in=dates_week).order_by('date')
 
     return check_objects
-
-
-def send_message_staff_channel():
-    channel_layer = get_channel_layer()
-    async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
 
 
 class Common:
