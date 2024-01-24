@@ -25,7 +25,7 @@ FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '
 class IndexListView(Common, ListView):
     """
     Представление для показа главной страницы компании
-    и прейскуранта цен на оказание услуг автомоечного комплекса
+    и прейскуранта на оказание услуг автомоечного комплекса
     """
 
     template_name = 'carwash/index.html'
@@ -50,7 +50,7 @@ class RegistrationAutoView(Common, View):
         # удаляем экземпляры CarWashWorkDay если они старше 1 года
         CarWashWorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
 
-        # создаём словарь где ключи это id услуги, а значение, сама услуга
+        # создаём словарь, где ключи это id услуги, а значение, сама услуга
         services = dict([(service.pk, service) for service in CarWashService.objects.all().order_by('id')])
 
         list_day_dictionaries = list(map(lambda i: i.formatted_dict(), objects_week_workday))
@@ -66,7 +66,8 @@ class RegistrationAutoView(Common, View):
         if request.user.has_perm('carwash.view_carwashworkday'):
             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
-        if 'api' in str(request):
+        # Если запрос поступил по API, то возвращаем только данные (context)
+        if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
             return context
 
         return render(request, 'carwash/registration.html', context=context)
@@ -79,8 +80,8 @@ class RegistrationAutoView(Common, View):
         choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
-        for_workday_date = date(*map(int, choicen_date.split()))  # дата которую выбрал клиент
-        for_workday_time = time(*map(int, choicen_time.split(':')))  # время которое выбрал клиент
+        for_workday_date = date(*map(int, choicen_date.split()))  # дата, которую выбрал клиент
+        for_workday_time = time(*map(int, choicen_time.split(':')))  # время, которое выбрал клиент
 
         # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
         time789 = sum([x.pk for x in choicen_services if
@@ -133,7 +134,9 @@ class RegistrationAutoView(Common, View):
                 'menu': self.create_menu((0, 1)),
                 'staff': request.user.has_perm('carwash.view_carwashworkday'),
             }
-            if 'api' in str(request):
+
+            # Если запрос поступил по API, то возвращаем только данные (context)
+            if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
                 return context
 
             return render(request, 'carwash/registration-error.html', context=context)
@@ -157,8 +160,10 @@ class RegistrationAutoView(Common, View):
         if request.user.has_perm('carwash.view_carwashworkday'):
             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
-        if 'api' in str(request):
+        # Если запрос поступил по API, то возвращаем только данные (context)
+        if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
             return context
+
         return render(request, 'carwash/registration-done.html', context=context)
 
 
@@ -271,7 +276,6 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
         }
 
         return render(request, 'carwash/staff.html', context=context)
-    pass
 
 
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):

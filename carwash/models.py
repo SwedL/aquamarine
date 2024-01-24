@@ -1,5 +1,7 @@
 from datetime import date, datetime, time
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
@@ -165,5 +167,17 @@ class CarWashRequestCall(models.Model):
 
     def __str__(self):
         return f'{str(self.created.time())[0:5]} --- {self.phone_number}'
+
+
+def carwash_workday_or_request_call_post_save(sender, instance, signal, *args, **kwargs):
+    # После появления новой записи клиента на услуги автомойки или появления
+    # нового запроса звонка, отправляется сообщение по протоколу Websocket,
+    # на страницу интерфейса сотрудника и она перезагружается
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
+
+
+models.signals.post_save.connect(carwash_workday_or_request_call_post_save, sender=CarWashRequestCall)
+models.signals.post_save.connect(carwash_workday_or_request_call_post_save, sender=CarWashWorkDay)
 
 # python manage.py shell
