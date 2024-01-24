@@ -4,7 +4,6 @@ from django.http import Http404
 
 from carwash.models import CarWashRegistration, CarWashWorkDay
 
-
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Доступное время', 'url_name': 'carwash:registration'},
                    {'title': 'Услуги и цены', 'anchor': '#services_price'},
@@ -37,12 +36,12 @@ class Common:
         return [menu_navigation[i] for i in menu]
 
     def get_context_data(self, *, object_list=None, **kwargs):
-            context = super(Common, self).get_context_data(**kwargs)
-            context['title'] = self.title
-            context['menu'] = self.create_menu(self.menu)
-            context['staff'] = self.request.user.has_perm('carwash.view_carwashworkday')
+        context = super(Common, self).get_context_data(**kwargs)
+        context['title'] = self.title
+        context['menu'] = self.create_menu(self.menu)
+        context['staff'] = self.request.user.has_perm('carwash.view_carwashworkday')
 
-            return context
+        return context
 
 
 def carwash_user_registration_delete(request, registration_pk):

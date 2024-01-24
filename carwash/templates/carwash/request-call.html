@@ -22,7 +22,7 @@
                                         <div class="form-group__phone">{{ field }}</div>
                                     {% endfor %}
                                     <div class="d-grid gap-2">
-                                        <input id="chat-message-submit" class="btn btn-primary" type="submit" value="Заказать Звонок">
+                                        <input class="btn btn-primary" type="submit" value="Заказать Звонок">
                                     </div>
                                 </form>
                             </div>
@@ -32,26 +32,3 @@
             </div>
         </div>
 {% endblock %}
-
-{%block script%}
-    <script>
-        base_url = `${window.location.host}${window.location.pathname}`
-        const chatSocket = new WebSocket(`ws://${base_url}`);
-
-        chatSocket.onopen = function(e) {
-        console.log("connected")
-        };
-
-        chatSocket.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        document.querySelector('#chat-message-submit').onclick = function (e) {
-            chatSocket.send(JSON.stringify({
-                'type': 'text_message',
-                'author': `{{request.user}}`,
-                'message': 'update_date'
-            }));
-        };
-    </script>
-{% endblock script %}

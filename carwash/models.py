@@ -1,12 +1,12 @@
 from datetime import date, datetime, time
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
 
 from users.models import User
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 
 
 class CarWashService(models.Model):

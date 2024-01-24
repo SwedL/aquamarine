@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import environ
 import os
-
 from pathlib import Path
+
+import environ
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -99,7 +99,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'aquamarine.wsgi.application'
-ASGI_APPLICATION = 'aquamarine.asgi.application' # new
+ASGI_APPLICATION = 'aquamarine.asgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
