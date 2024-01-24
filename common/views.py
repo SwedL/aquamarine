@@ -12,6 +12,9 @@ menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
 
 
 def create_and_get_week_workday():
+    """Функция проверяет создание объектов CarWashWorkDay на неделю вперёд
+    и в случае их отсутствия создаёт необходимые экземпляры.
+    Возвращает QuerySet состоящий из этих семи объектов"""
     dates_week = [date.today() + timedelta(days=i) for i in range(7)]
 
     check_objects = CarWashWorkDay.objects.filter(date__in=dates_week).order_by('date')
@@ -29,7 +32,9 @@ class Common:
     menu = range(3)
 
     @classmethod
-    def create_menu(cls, menu):
+    def create_menu(cls, menu: tuple) -> list:
+        """Функция создаёт список вкладок меню в header, в зависимости от предстваления
+         и прав пользователя. Список собирается из элементов полного списка menu"""
         for i in menu:
             assert 0 <= i < len(menu_navigation)
 
@@ -45,13 +50,11 @@ class Common:
 
 
 def carwash_user_registration_delete(request, registration_pk):
-    """
-    Функция для UserRegistrationsCancelView и UserRegistrationListAPIView - обработчик события
-    'отмены (удаления)' пользователем своей записи на автомоечный комплекс.
-    """
+    """Функция для UserRegistrationsCancelView и UserRegistrationListAPIView - обработчик
+     события 'отмены (удаления)' пользователем своей записи на автомоечный комплекс."""
     user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()
 
-    # проверка что пользователь удаляет принадлежащую ему CarWashUserRegistration
+    # проверка, что пользователь удаляет принадлежащую ему CarWashUserRegistration
     if not user_registration or user_registration.client != request.user:
         raise Http404
 
