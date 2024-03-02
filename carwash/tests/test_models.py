@@ -75,14 +75,11 @@ class CarWashServiceModelTestCase(TestCase):
 
     def test_service_get_all_records(self):
         # Проверка количества созданных объектов модели CarWashService в бд
-        services = CarWashService.objects.all()
-
-        self.assertEqual(len(services), 3)
+        self.assertEqual(CarWashService.objects.all().count(), 3)
 
     def test_service_get_record(self):
         # Проверка получения записи из бд
         carwash = CarWashService.objects.get(name='Мойка (верх, ковры, сушка)')
-
         self.assertEqual(carwash.process_time, 60)
 
     def test_service_str(self):
@@ -154,9 +151,7 @@ class CarWashRegistrationModelTestCase(TestCase):
 
     def test_registration_get_all_records(self):
         # Проверка количества созданных объектов модели CarWashRegistration в бд
-        registrations = CarWashRegistration.objects.all()
-
-        self.assertEqual(len(registrations), 3)
+        self.assertEqual(CarWashRegistration.objects.all().count(), 3)
 
     def test_registration_get_total_time(self):
         # Проверка правильного подсчёта полного времени выбранных услуг Записи (услуги 7,8,9 считаются как за одну)
@@ -224,7 +219,7 @@ class CarWashWorkDayModelTestCase(TestCase):
 
     def test_workday_get_all_records(self):
         # Проверка количества созданных объектов модели WorkDay в бд
-        self.assertEqual(len(CarWashWorkDay.objects.all()), 2)
+        self.assertEqual(CarWashWorkDay.objects.all().count(), 2)
 
     def test_workday_str(self):
         # Проверка метода __str__()
@@ -262,6 +257,4 @@ class CarWashRequestCallModelTestCase(TestCase):
 
     def test_request_call_get_all_records(self):
         # Проверка количества созданных объектов модели CarWashRequestCall в бд
-        requests_calls = CarWashRequestCall.objects.all()
-
-        self.assertEqual(len(requests_calls), 3)
+        self.assertEqual(CarWashRequestCall.objects.all().count(), 3)

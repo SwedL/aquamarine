@@ -61,9 +61,7 @@ class UserModelTestCase(TestCase):
 
     def test_user_get_all_records(self):
         # Проверка получения всех записей из бд
-        users = User.objects.all()
-
-        self.assertEqual(len(users), 4)
+        self.assertEqual(User.objects.all().count(), 4)
 
     def test_user_str(self):
         # Проверка метода __str__()

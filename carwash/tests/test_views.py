@@ -26,7 +26,6 @@ class IndexListViewTestCase(TestCase):
     def test_view_for_not_logged_user(self):
         # Проверка меню для неавторизованого пользователя
         response = self.client.get(self.path)
-
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Aquamarine')
         self.assertTemplateUsed(response, 'carwash/index.html')
@@ -36,14 +35,12 @@ class IndexListViewTestCase(TestCase):
     def test_if_logged_but_cannot_permission(self):
         # Проверка отображения меню для авторизованного пользователя, без permission
         self.client.force_login(self.user)
-
         self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Выйти'])
 
     def test_if_logged_and_can_permission(self):
         # Проверка отображения меню для авторизованного пользователя с permission
         self.user.user_permissions.add(self.permission)
         self.client.force_login(self.user)
-
         self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Выйти'])
 
     def test_if_logged_and_can_permission_and_is_admin(self):
@@ -52,12 +49,10 @@ class IndexListViewTestCase(TestCase):
         self.user.is_admin = True
         self.user.save()
         self.client.force_login(self.user)
-
         self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Админ-панель', 'Выйти'])
 
     def _common_tests(self):
         response = self.client.get(self.path)
-
         soup = BeautifulSoup(response.content, 'html.parser')
         result = [r.text for r in soup.find_all('a', class_='dropdown-item')]
         return result
