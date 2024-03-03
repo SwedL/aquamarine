@@ -138,7 +138,7 @@ DEBUG=True
 SECRET_KEY='vu1c-=svhigsn81!1doknfa2zxchlq&^37vdyqgc165a8wswjr'
 CACHE_FILE=aquamarine_cache
 ```
-Установите Redis-server  
+Для обеспечения оптимальной производительности и межпроцессорного обмена сообщениями канальных слоёв необходимо установить Redis  
 https://redis.io/docs/install/install-redis/
 
 Создайте файл базы данных SQLite и проведите миграции моделей командой:
