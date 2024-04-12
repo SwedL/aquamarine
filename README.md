@@ -51,9 +51,10 @@
 </p>
 
 Предусмотрена возможность восстановления пароля пользователя через электронную почту.
+
 <p align="center">
 <img src="https://i.ibb.co/4RTXMPM/2023-12-11-17-40-32.png" alt="login" border="0" width="350">
-<img src="https://i.ibb.co/HYN6Dd0/2023-12-11-17-40-01.png" alt="reset password" border="0" width="350">
+<img src="https://i.ibb.co/HYN6Dd0/2023-12-11-17-40-01.png" alt="reset password" border="0" width="349">
 </p>
 
 Вкладка "Доступное время" показывает свободные дни и время с учётом выбранных услуг, а также общее время работ и их стоимость.<br>
@@ -67,7 +68,7 @@
 
 <p align="center">
 <img src="https://i.ibb.co/89ZgzW0/2023-12-11-17-23-51.png" alt="registrations done" border="0" width="350">
-<img src="https://i.ibb.co/z8Ldfn8/2023-12-11-19-15-45.png" alt="registrations error" border="0" width="350">
+<img src="https://i.ibb.co/z8Ldfn8/2023-12-11-19-15-45.png" alt="registrations error" border="0" width="349">
 </p>
 
 У пользователей с правами менеджера или администратора, при записи на услуги, появляются поля для изменения марки и модели автомобиля, телефона и имени. Так как многие клиенты записываются по телефону указывая свои контактные данные.
