@@ -46,15 +46,15 @@
 В "**Мои записи**" пользователь может посмотреть информацию о своих записях на автомойку и отменить их в случае необходимости.
 
 <p align="center">
-<img src="https://i.ibb.co/rcGM93Z/2023-12-11-17-26-33.png" alt="profile" border="0" width="450">
-<img src="https://i.ibb.co/DV7Nv3C/2023-12-11-17-24-56.png" alt="user registrations" border="0" width="450">
+<img src="https://i.ibb.co/rcGM93Z/2023-12-11-17-26-33.png" alt="profile" border="0" width="350">
+<img src="https://i.ibb.co/DV7Nv3C/2023-12-11-17-24-56.png" alt="user registrations" border="0" width="350">
 </p>
 
 Предусмотрена возможность восстановления пароля пользователя через электронную почту.
 
 <p align="center">
-<img src="https://i.ibb.co/KyXmdrg/2024-04-12-18-43-18.png" alt="login" border="0" width="450"></a>
-<img src="https://i.ibb.co/f29x2CM/2024-04-12-18-38-28.png" alt="reset password" border="0" width="447"></a>
+<img src="https://i.ibb.co/mv0MDL6/2024-04-12-19-05-54.png" alt="login" border="0" width="350"></a>
+<img src="https://i.ibb.co/10p3Jdg/2024-04-12-19-06-19.png" alt="reset password" border="0" width="350"></a>
 </p>
 
 Вкладка "Доступное время" показывает свободные дни и время с учётом выбранных услуг, а также общее время работ и их стоимость.<br>
@@ -67,8 +67,8 @@
 Но если время, которое выбрал пользователь уже занято, пока он регистрировал запись, то появится уведомление с предложением выбрать другое время.
 
 <p align="center">
-<img src="https://i.ibb.co/SwZttC7/2024-04-12-18-37-45.png" alt="registrations done" border="0" width="450"></a>
-<img src="https://i.ibb.co/VCNHbRf/2024-04-12-18-35-40.png" alt="registrations error" border="0" width="454"></a>
+<img src="https://i.ibb.co/LhbLc2z/2023-12-11-17-23-51.png" alt="registrations done" border="0" width="350"></a>
+<img src="https://i.ibb.co/CMSVN82/2023-12-11-19-15-45.png" alt="registrations error" border="0" width="350"></a>
 </p>
 
 У пользователей с правами менеджера или администратора, при записи на услуги, появляются поля для изменения марки и модели автомобиля, телефона и имени. Так как многие клиенты записываются по телефону указывая свои контактные данные.
