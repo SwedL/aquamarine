@@ -27,7 +27,7 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
         c = CarWashService.objects.all()
         w = create_and_get_week_workday()
         return Response({'services': CarWashServiceSerializer(c, many=True).data,
-                         'wordays_week': CarWashWorkDaySerializer(w, many=True).data})
+                         'workdays_week': CarWashWorkDaySerializer(w, many=True).data})
 
     def post(self, request):
         context = super(CarWashRegistrationAPIView, self).post(request)
