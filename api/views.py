@@ -23,6 +23,8 @@ class CarWashServiceListAPIView(generics.ListAPIView):
 
 
 class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
+    permission_classes = (IsAuthenticated, )
+
     def get(self, request):
         c = CarWashService.objects.all()
         w = create_and_get_week_workday()
