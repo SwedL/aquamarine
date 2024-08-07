@@ -15,12 +15,43 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.generic import TemplateView
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 
 from aquamarine import settings
 from carwash.views import pageNotFound
 
+
+schema_view = get_schema_view(  # new
+    openapi.Info(
+        title="Aquamarine API",
+        default_version='v1',
+        description="API для автоматизации автомоечного комплекса",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    # url=f'{settings.APP_URL}/api/v3/',
+    patterns=[path('api/', include('api.urls', namespace='api')), ],
+    public=True,
+    # permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
+    path(  # new
+        'swaggerui-ui/',
+        TemplateView.as_view(
+            template_name='swaggerui/swaggerui.html',
+            extra_context={'schema_url': 'openapi-schema'}
+        ),
+        name='swaggerui-ui'),
+    re_path(  # new
+        r'^swaggerui(?P<format>\.json|\.yaml)$',
+        schema_view.without_ui(cache_timeout=0),
+        name='schema-json'),
     path('admin/', admin.site.urls),
     path('captcha/', include('captcha.urls')),
     path('', include('carwash.urls', namespace='carwash')),
