@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'captcha',
     'django_extensions',
+    'rest_framework',
 
     'carwash',
     'users',
