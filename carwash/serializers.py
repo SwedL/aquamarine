@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.core.validators import RegexValidator
 
 from .models import (CarWashRegistration, CarWashRequestCall, CarWashService,
                      CarWashWorkDay)
@@ -8,6 +9,16 @@ class CarWashServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarWashService
         fields = ('id', 'name', 'process_time', 'price_standart', 'price_crossover', 'price_offroad')
+
+
+class RegistrationSerializer(serializers.Serializer):
+    regex = r'2\d{3}\s\d\d\s\d\d,\d\d:\d\d'
+    choice_date_and_time = serializers.RegexField(regex, max_length=16, min_length=16)
+    services_list = serializers.CharField(min_length=1)
+
+    def is_valid(self, *, raise_exception=False):
+        super().is_valid()
+        return not bool(self.errors)
 
 
 class CarWashRegistrationSerializer(serializers.ModelSerializer):

@@ -73,11 +73,17 @@ class RegistrationAutoView(Common, View):
         return render(request, 'carwash/registration.html', context=context)
 
     def post(self, request):
-        choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
-        choicen_services_list_pk = list(
-            map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
-        )
-        choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
+
+        if request.POST:
+            choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
+            choicen_services_list_pk = list(
+                map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
+            )
+            choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
+        else:
+            choicen_date, choicen_time = request.data['choice_date_and_time'].split(',')
+            choicen_services = CarWashService.objects.filter(pk__in=request.data['services_list'])
+
         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
 
         for_workday_date = date(*map(int, choicen_date.split()))  # дата, которую выбрал клиент

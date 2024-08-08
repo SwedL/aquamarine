@@ -11,10 +11,12 @@ app_name = 'api'
 urlpatterns = [
     path('v1/service-list/', CarWashServiceListAPIView.as_view(), name='service_list'),
     path('v1/carwash-registration/', CarWashRegistrationAPIView.as_view(), name='carwash_registration'),
-    path('v1/carwash-user-registration-list/', UserRegistrationListAPIView.as_view(), name='user_registration_list'),
+    path('v1/carwash-user-registration-list/',
+         UserRegistrationListAPIView.as_view({'get': 'list'}),
+         name='user_registration_list'),
     path(
-        'v1/carwash-user-registration-list/<int:registration_pk>/',
-        UserRegistrationListAPIView.as_view(),
+        'v1/carwash-user-registration-list/<int:pk>/',
+        UserRegistrationListAPIView.as_view({'delete': 'destroy'}),
         name='user_registration_delete',
     ),
     path(

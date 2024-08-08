@@ -1,15 +1,21 @@
 from datetime import date
-
-from rest_framework import generics
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import mixins, generics
+from rest_framework.decorators import action
+from rest_framework.viewsets import GenericViewSet
+
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 from carwash.models import CarWashRegistration, CarWashService
 from carwash.serializers import (CarWashRegistrationSerializer,
                                  CarWashRequestCallSerializer,
                                  CarWashServiceSerializer,
-                                 CarWashWorkDaySerializer)
+                                 CarWashWorkDaySerializer,
+                                 RegistrationSerializer)
 from carwash.views import RegistrationAutoView
 from common.views import (carwash_user_registration_delete,
                           create_and_get_week_workday)
@@ -23,7 +29,7 @@ class CarWashServiceListAPIView(generics.ListAPIView):
 
 
 class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         c = CarWashService.objects.all()
@@ -31,7 +37,21 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
         return Response({'services': CarWashServiceSerializer(c, many=True).data,
                          'workdays_week': CarWashWorkDaySerializer(w, many=True).data})
 
-    def post(self, request):
+    @swagger_auto_schema(method='post', operation_description='Запись автомобиля на выбранные дату, время и id услуг \n'
+                                                              'choice_date_and_time в формате "YYYY MM DD,HH:MM"\n'
+                                                              'services_list в формате "1 2 3"',
+                         request_body=openapi.Schema(properties={
+                             'choice_date_and_time': openapi.Schema(type=openapi.TYPE_STRING,
+                                                                    pattern=r'2\d{3}\s\d\d\s\d\d,\d\d:\d\d'),
+                             'services_list': openapi.Schema(type=openapi.TYPE_STRING,
+                                                             pattern=r'[\d{1,2}\s]{1,17}'),
+                         }, type=openapi.TYPE_OBJECT))
+    @action(methods=['post'], detail=False)
+    def post(self, request, *args, **kwargs):
+        serializer = RegistrationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        request.data['services_list'] = list(map(int, request.data['services_list'].split()))
+
         context = super(CarWashRegistrationAPIView, self).post(request)
 
         if context['title'] == 'Ошибка записи':
@@ -47,20 +67,21 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
                          })
 
 
-class UserRegistrationListAPIView(APIView):
+class UserRegistrationListAPIView(mixins.DestroyModelMixin,
+                                  mixins.ListModelMixin,
+                                  GenericViewSet):
+    serializer_class = CarWashRegistrationSerializer
     permission_classes = (IsAuthenticated,)
 
-    @staticmethod
-    def get_response(request):
-        all_user_reg = CarWashRegistration.objects.filter(date_reg__gte=date.today(), client=request.user)
-        return Response({'user_registrations': CarWashRegistrationSerializer(all_user_reg, many=True).data})
+    def get_queryset(self):
+        queryset = CarWashRegistration.objects.filter(date_reg__gte=date.today(), client=self.request.user)
+        return queryset
 
-    def get(self, request):
-        return self.get_response(request)
-
-    def delete(self, request, registration_pk):
-        carwash_user_registration_delete(request, registration_pk)
-        return self.get_response(request)
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        carwash_user_registration_delete(request, kwargs['pk'])
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CarWashRequestCallCreateAPIView(generics.CreateAPIView):
