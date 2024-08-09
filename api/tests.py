@@ -48,9 +48,9 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         format_choice_date = choice_date.split()
         format_choice_date.reverse()
         choice_time = '10:00'
-        data = {'choice_date_and_time': f'{choice_date},{choice_time}', 'service_15': '15'}
+        data = {'choice_date_and_time': f'{choice_date},{choice_time}', 'services_list': '15'}
 
-        response = self.client.post(self.url, data, format='multipart')
+        response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, {
             'title': 'Запись зарегистрирована',
@@ -71,9 +71,9 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
 
     def test_post_data_then_selected_time_is_already_taken(self):
         choice_date = str(date.today()).replace('-', ' ')
-        data = {'choice_date_and_time': f'{choice_date},10:00', 'service_15': '15'}
-        self.client.post(self.url, data, format='multipart')
-        response = self.client.post(self.url, data, format='multipart')
+        data = {'choice_date_and_time': f'{choice_date},10:00', 'services_list': '15'}
+        self.client.post(self.url, data, format='json')
+        response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.data, {
             "title": "Ошибка записи",
             "message": "Время которые вы выбрали уже занято. Попробуйте выбрать другое время"
@@ -110,15 +110,15 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
     def test_get_user_registration_list(self):
         # проверяем получения информации о записях автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'service_1': '1'}
-        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'service_3': '3'}
-        self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
-        self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
+        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'services_list': '1'}
+        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'services_list': '3'}
+        self.client.post(reverse('api:carwash_registration'), data1, format='json')
+        self.client.post(reverse('api:carwash_registration'), data2, format='json')
 
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(CarWashRegistration.objects.all()), 2)
-        self.assertEqual(response.data, {'user_registrations': [
+        self.assertEqual(response.data, [
             OrderedDict([
                 ('id', 1),
                 ('client', 1),
@@ -139,19 +139,19 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
                 ('total_cost', 200),
                 ('relation_carwashworkday', {'time_attributes': ['time_1400']})
             ])
-        ]})
+        ])
 
     def test_delete_user_registration(self):
         # проверяем возможность удаления записи автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'service_1': '1'}
-        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'service_3': '3'}
-        self.client.post(reverse('api:carwash_registration'), data1, format='multipart')
-        self.client.post(reverse('api:carwash_registration'), data2, format='multipart')
+        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'services_list': '1'}
+        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'services_list': '3'}
+        self.client.post(reverse('api:carwash_registration'), data1, format='json')
+        self.client.post(reverse('api:carwash_registration'), data2, format='json')
         user_registration_all = CarWashRegistration.objects.all()
         need_id = user_registration_all.first().id
         self.assertEqual(len(user_registration_all), 2)
-        new_reverse = reverse('api:user_registration_delete', kwargs={'registration_pk': need_id})
+        new_reverse = reverse('api:user_registration_delete', kwargs={'pk': need_id})
         self.client.delete(new_reverse)
         self.assertEqual(len(CarWashRegistration.objects.all()), 1)
 
