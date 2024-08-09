@@ -24,6 +24,7 @@ from users.serializers import UserSerializer
 
 
 class CarWashServiceListAPIView(generics.ListAPIView):
+    """ Представление для получения списка доступных услуг компании. """
     queryset = CarWashService.objects.all()
     serializer_class = CarWashServiceSerializer
 
@@ -31,21 +32,26 @@ class CarWashServiceListAPIView(generics.ListAPIView):
 class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
     permission_classes = (IsAuthenticated,)
 
+    @swagger_auto_schema(operation_description='Получение списка всех услуг компании, \n'
+                                               'а также информации доступных дней и времени.')
     def get(self, request):
         c = CarWashService.objects.all()
         w = create_and_get_week_workday()
         return Response({'services': CarWashServiceSerializer(c, many=True).data,
                          'workdays_week': CarWashWorkDaySerializer(w, many=True).data})
 
-    @swagger_auto_schema(method='post', operation_description='Запись автомобиля на выбранные дату, время и id услуг \n'
-                                                              'choice_date_and_time в формате "YYYY MM DD,HH:MM"\n'
-                                                              'services_list в формате "1 2 3"',
+    @swagger_auto_schema(method='post',
+                         operation_description='Запись автомобиля на выбранные дату, время и id услуг \n'
+                                               '"choice_date_and_time" формат "YYYY MM DD,HH:MM"\n'
+                                               '"services_list" формат "1 2 3"',
                          request_body=openapi.Schema(properties={
                              'choice_date_and_time': openapi.Schema(type=openapi.TYPE_STRING,
                                                                     pattern=r'2\d{3}\s\d\d\s\d\d,\d\d:\d\d'),
                              'services_list': openapi.Schema(type=openapi.TYPE_STRING,
                                                              pattern=r'[\d{1,2}\s]{1,17}'),
-                         }, type=openapi.TYPE_OBJECT))
+                         },
+                         type=openapi.TYPE_OBJECT)
+                         )
     @action(methods=['post'], detail=False)
     def post(self, request, *args, **kwargs):
         serializer = RegistrationSerializer(data=request.data)
@@ -70,6 +76,11 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
 class UserRegistrationListAPIView(mixins.DestroyModelMixin,
                                   mixins.ListModelMixin,
                                   GenericViewSet):
+    """
+    Представление получения всех записей пользователя на автомойку.
+    Удаление записи пользователя на автомойку по id записи.
+    """
+
     serializer_class = CarWashRegistrationSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -85,11 +96,15 @@ class UserRegistrationListAPIView(mixins.DestroyModelMixin,
 
 
 class CarWashRequestCallCreateAPIView(generics.CreateAPIView):
+    """ Представление для запроса звонка пользователю """
+
     serializer_class = CarWashRequestCallSerializer
     permission_classes = (IsAuthenticated,)
 
 
 class UserProfileDetailAPIView(generics.RetrieveUpdateAPIView):
+    """ Представление получения и изменения данных пользователя """
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)

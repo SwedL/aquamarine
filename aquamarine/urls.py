@@ -19,7 +19,6 @@ from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from rest_framework import permissions
 
 from aquamarine import settings
 from carwash.views import pageNotFound
@@ -29,19 +28,18 @@ schema_view = get_schema_view(  # new
     openapi.Info(
         title="Aquamarine API",
         default_version='v1',
-        description="API для автоматизации автомоечного комплекса",
+        description="API автомоечного комплекса Aquamarine",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@snippets.local"),
         license=openapi.License(name="BSD License"),
     ),
     patterns=[path('api/', include('api.urls', namespace='api')), ],
     public=True,
-    # permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
     path(  # new
-        'swaggerui-ui/',
+        'swaggerui/',
         TemplateView.as_view(
             template_name='swaggerui/swaggerui.html',
             extra_context={'schema_url': 'openapi-schema'}
