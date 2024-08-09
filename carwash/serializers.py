@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.core.validators import RegexValidator
 
 from .models import (CarWashRegistration, CarWashRequestCall, CarWashService,
                      CarWashWorkDay)

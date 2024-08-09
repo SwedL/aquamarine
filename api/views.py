@@ -1,14 +1,13 @@
 from datetime import date
-from rest_framework import status
+
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import generics, mixins, status
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import mixins, generics
-from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
-
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
 from carwash.models import CarWashRegistration, CarWashService
 from carwash.serializers import (CarWashRegistrationSerializer,
@@ -50,7 +49,7 @@ class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
                              'services_list': openapi.Schema(type=openapi.TYPE_STRING,
                                                              pattern=r'[\d{1,2}\s]{1,17}'),
                          },
-                         type=openapi.TYPE_OBJECT)
+                             type=openapi.TYPE_OBJECT)
                          )
     @action(methods=['post'], detail=False)
     def post(self, request, *args, **kwargs):
