@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
+from api.carwash.use_cases.api_registration_auto_use_cases import APIRegistrationAutoGetUseCase
 from carwash.models import CarWashRegistration, CarWashService
 from carwash.serializers import (CarWashRegistrationSerializer,
                              CarWashRequestCallSerializer,
@@ -30,14 +31,13 @@ class CarWashServiceListAPIView(generics.ListAPIView):
 
 class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
     permission_classes = (IsAuthenticated,)
+    api_registration_auto_get_use_cases = APIRegistrationAutoGetUseCase()
 
     @swagger_auto_schema(operation_description='Получение списка всех услуг компании, \n'
                                                'а также информации доступных дней и времени.')
     def get(self, request):
-        c = CarWashService.objects.all()
-        w = create_and_get_week_workday()
-        return Response({'services': CarWashServiceSerializer(c, many=True).data,
-                         'workdays_week': CarWashWorkDaySerializer(w, many=True).data})
+        context = self.api_registration_auto_get_use_cases.execute()
+        return Response(context)
 
     @swagger_auto_schema(method='post',
                          operation_description='Запись автомобиля на выбранные дату, время и id услуг \n'

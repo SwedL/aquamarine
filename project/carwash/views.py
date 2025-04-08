@@ -17,6 +17,9 @@ from carwash.models import (CarWashRegistration, CarWashRequestCall,
 from common.views import (Common, carwash_user_registration_delete,
                           create_and_get_week_workday)
 
+from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase
+
+
 FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
                  '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
                  '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
@@ -42,38 +45,13 @@ class RegistrationAutoView(Common, View):
     Авторизованный пользователь имеет возможность самостоятельной записи автомобиля,
      а неавторизованный пользователя возможность запросить звонок администратора для записи автомобиля
     """
+    registration_auto_get_use_case = RegistrationAutoGetUseCase()
 
     def get(self, request):
-        # проверяем наличие объектов CarWashWorkDay на неделю вперёд и получаем их из функции
-        objects_week_workday = create_and_get_week_workday()
-
-        # удаляем экземпляры CarWashWorkDay если они старше 1 года
-        CarWashWorkDay.objects.filter(date__lt=date.today() - timedelta(days=365)).delete()
-
-        # создаём словарь, где ключи это id услуги, а значение, сама услуга
-        services = dict([(service.pk, service) for service in CarWashService.objects.all().order_by('id')])
-
-        list_day_dictionaries = list(map(lambda i: i.formatted_dict(), objects_week_workday))
-
-        context = {
-            'title': 'Запись автомобиля',
-            'menu': self.create_menu((0,)),
-            'staff': request.user.has_perm('carwash.view_carwashworkday'),
-            'services': services,
-            'list_day_dictionaries': list_day_dictionaries,
-        }
-
-        if request.user.has_perm('carwash.view_carwashworkday'):
-            context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
-
-        # Если запрос поступил по API, то возвращаем только данные (context)
-        if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
-            return context
-
+        context = self.registration_auto_get_use_case.execute(request=request)
         return render(request, 'carwash/registration.html', context=context)
 
     def post(self, request):
-
         if request.POST:
             choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
             choicen_services_list_pk = list(

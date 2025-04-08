@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from dotenv import load_dotenv
+load_dotenv()
 import os
 from pathlib import Path
 
@@ -92,7 +94,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [('redis', 6379)],
+            "hosts": [('localhost', 6379)],
         },
     },
 }
@@ -107,22 +109,22 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": environ.get("DATABASE_NAME"),
-        "USER": environ.get("DATABASE_USER"),
-        "PASSWORD": environ.get("DATABASE_PASSWORD"),
-        "HOST": environ.get("DATABASE_HOST"),
-        "PORT": environ.get("DATABASE_PORT"),
-    }
-}
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / 'db.sqlite3',
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": environ.get("DATABASE_NAME"),
+#         "USER": environ.get("DATABASE_USER"),
+#         "PASSWORD": environ.get("DATABASE_PASSWORD"),
+#         "HOST": environ.get("DATABASE_HOST"),
+#         "PORT": environ.get("DATABASE_PORT"),
 #     }
 # }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
