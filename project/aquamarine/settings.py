@@ -13,37 +13,22 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
-import environ
+from os import environ
 
-env = environ.Env(
-    DEBUG=(bool, False),
-    SECRET_KEY=(str, False),
-    CACHE_FILE=(str, False),
-
-    EMAIL_HOST=(str, False),
-    EMAIL_PORT=(int, False),
-    EMAIL_HOST_USER=(str, False),
-    EMAIL_HOST_PASSWORD=(str, False),
-    EMAIL_USE_TLS=(bool, False),
-    EMAIL_USE_SSL=(bool, False),
-)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = environ.get('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -107,7 +92,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": ['redis://127.0.0.1:6379',],
+            "hosts": [('redis', 6379)],
         },
     },
 }
@@ -121,12 +106,23 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": environ.get("DATABASE_NAME"),
+        "USER": environ.get("DATABASE_USER"),
+        "PASSWORD": environ.get("DATABASE_PASSWORD"),
+        "HOST": environ.get("DATABASE_HOST"),
+        "PORT": environ.get("DATABASE_PORT"),
     }
 }
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -162,9 +158,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = []
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -175,7 +173,7 @@ INTERNAL_IPS = [
 ]
 
 # Caches
-CACHE_FILE = env('CACHE_FILE')
+CACHE_FILE = environ.get('CACHE_FILE')
 
 CACHES = {
     'default': {
@@ -206,12 +204,12 @@ CAPTCHA_FONT_SIZE = 26
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    EMAIL_HOST = env('EMAIL_HOST')
-    EMAIL_PORT = env('EMAIL_PORT')
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-    EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+    EMAIL_HOST = environ.get('EMAIL_HOST')
+    EMAIL_PORT = environ.get('EMAIL_PORT')
+    EMAIL_HOST_USER = environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = environ.get('EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = environ.get('EMAIL_USE_TLS')
+    EMAIL_USE_SSL = environ.get('EMAIL_USE_SSL')
     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
     SERVER_EMAIL = EMAIL_HOST_USER
     EMAIL_ADMIN = EMAIL_HOST_USER

@@ -1,4 +1,8 @@
-.idea/
-.vscode/
+*.idea
+.vscode
 .env
 /.flake8
+.venv
+*/db.sqlite3
+*/aquamarine_cache
+*/__pycache__

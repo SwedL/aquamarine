@@ -8,8 +8,8 @@ from django.views.generic import TemplateView, UpdateView
 
 from common.views import Common
 from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
-                         UserLoginForm, UserProfileForm,
-                         UserSetNewPasswordForm)
+                           UserLoginForm, UserProfileForm,
+                           UserSetNewPasswordForm)
 from users.models import User
 
 

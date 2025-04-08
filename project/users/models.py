@@ -70,15 +70,15 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
-    # def has_perm(self, perm, obj=None):
-    #     "Имеет ли пользователь определенное разрешение?"
-    #     # Самый простой ответ: Да, всегда.
-    #     return True
-    #
-    # def has_module_perms(self, app_label):
-    #     "Есть ли у пользователя разрешения на просмотр приложения app_label?"
-    #     # Самый простой ответ: Да, всегда.
-    #     return True
+    def has_perm(self, perm, obj=None):
+        "Имеет ли пользователь определенное разрешение?"
+        # Самый простой ответ: Да, всегда.
+        return True
+
+    def has_module_perms(self, app_label):
+        "Есть ли у пользователя разрешения на просмотр приложения app_label?"
+        # Самый простой ответ: Да, всегда.
+        return True
 
     @property
     def is_staff(self):

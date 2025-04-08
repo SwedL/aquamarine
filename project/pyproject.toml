@@ -1,0 +1,31 @@
+[project]
+name = "project"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "osminin",email = "osminin555@bk.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django (>=5.2,<6.0)",
+    "environs (>=14.1.1,<15.0.0)",
+    "channels (>=4.2.2,<5.0.0)",
+    "daphne (>=4.1.2,<5.0.0)",
+    "djangorestframework (>=3.16.0,<4.0.0)",
+    "drf-yasg (>=1.21.10,<2.0.0)",
+    "django-debug-toolbar (>=5.1.0,<6.0.0)",
+    "django-simple-captcha (>=0.6.2,<0.7.0)",
+    "django-extensions (>=3.2.3,<4.0.0)",
+    "channels-redis (>=4.2.1,<5.0.0)",
+    "beautifulsoup4 (>=4.13.3,<5.0.0)",
+    "gevent (>=24.11.1,<25.0.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+    "redis (>=5.2.1,<6.0.0)",
+    "django-redis (>=5.4.0,<6.0.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

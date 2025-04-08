@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
-                         UserLoginForm, UserProfileForm,
-                         UserSetNewPasswordForm)
+                           UserLoginForm, UserProfileForm,
+                           UserSetNewPasswordForm)
 from users.models import User
 
 

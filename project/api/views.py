@@ -11,10 +11,10 @@ from rest_framework.viewsets import GenericViewSet
 
 from carwash.models import CarWashRegistration, CarWashService
 from carwash.serializers import (CarWashRegistrationSerializer,
-                                 CarWashRequestCallSerializer,
-                                 CarWashServiceSerializer,
-                                 CarWashWorkDaySerializer,
-                                 RegistrationSerializer)
+                             CarWashRequestCallSerializer,
+                             CarWashServiceSerializer,
+                             CarWashWorkDaySerializer,
+                             RegistrationSerializer)
 from carwash.views import RegistrationAutoView
 from common.views import (carwash_user_registration_delete,
                           create_and_get_week_workday)
