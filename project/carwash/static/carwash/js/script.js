@@ -8,7 +8,7 @@ function WashDis(el, t) {
         }
     }
 
-    /* имитируем поведение RadioButtun "первых четырех услуг"- отключаем другие кнопки кроме выбранной */
+    /* имитируем поведение RadioButton "первых четырех услуг"- отключаем другие кнопки кроме выбранной */
     for(let i=1; i < 5; ++i) {
         if(i!=el) document.getElementById("id_service_"+i).checked = false;
     }
@@ -23,7 +23,7 @@ function WashEn() {
 }
 
 function WashEngine(el) {
-    /* имитируем поведение RadioButtun "мойка двигателя" - отключаем другие кнопки кроме выбранной */
+    /* имитируем поведение RadioButton "мойка двигателя" - отключаем другие кнопки кроме выбранной */
     for(let i=16; i < 18; ++i) {
         if(i!=el) document.getElementById("id_service_"+i).checked = false;
     }
@@ -52,7 +52,7 @@ function CheckChoice() {
 function Calculate() {
     
     let list_services = document.querySelectorAll("div.services__border > table > tbody > tr > td > input"); /* получаем список всех choice-input */
-    let overal_time = 0; /* общее время работ с автомобилем */
+    let overall_time = 0; /* общее время работ с автомобилем */
     let flag = true;  /* флаг для определения выбраны ли уже услуги 7,8,9 */
 
     /* подсчёт общего времени выбранных услуг / если больше одной услуги из диапазона 7-9, то время берётся только за одну услугу */
@@ -60,12 +60,12 @@ function Calculate() {
         if(item.checked) {
             if(["id_service_7", "id_service_8", "id_service_9"].includes(item.id)) {
                 if(flag) {
-                    overal_time += Number(item.dataset.processTime);
+                    overall_time += Number(item.dataset.processTime);
                     flag = false
                 }
             }
             else {
-                overal_time += Number(item.dataset.processTime);
+                overall_time += Number(item.dataset.processTime);
             }
         }
     });
@@ -119,18 +119,18 @@ function Calculate() {
     /* Выключаем кнопки времён которые не подходят под общее время услуг */
     for(let k in res_dict) {
         let [r, g] = res_dict[k];
-        if(g < overal_time) {
+        if(g < overall_time) {
             r.checked = false;
             r.disabled = true;
         }
     }
-    // console.log(overal_time)
+    // console.log(overall_time)
     // CheckChoice()   /* Включаем или отключаем кнопку записи */
-    TotalCost(list_services, overal_time)
+    TotalCost(list_services, overall_time)
 
 }
 
-function TotalCost(list_services, overal_time) {
+function TotalCost(list_services, overall_time) {
     let total_cost = 0;
 
     list_services.forEach(item => {
@@ -140,7 +140,7 @@ function TotalCost(list_services, overal_time) {
         }
     });
 
-    document.getElementById("overal-time").innerHTML = "Общее время работ: " + overal_time + " мин.";
+    document.getElementById("overal-time").innerHTML = "Общее время работ: " + overall_time + " мин.";
     document.getElementById("total-cost").innerHTML = "Общая стоимость услуг: " + total_cost + " р.";
 }
 
