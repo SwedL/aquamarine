@@ -1,8 +1,9 @@
-from django.core.handlers.asgi import ASGIRequest
+from rest_framework.request import Request
 
 from api.carwash.services.api_registration_auto_get_services import APIRegistrationAutoGetService
+from api.carwash.services.api_registration_auto_post_services import APIRegistrationAutoPostService
+from carwash.serializers import RegistrationSerializer
 from carwash.services.registration_auto_get_services import CreateWeekWorkdayService
-from carwash.services.registration_auto_post_services import RegistrationAutoPostService
 
 
 class APIRegistrationAutoGetUseCase:
@@ -18,10 +19,13 @@ class APIRegistrationAutoGetUseCase:
         return context
 
 
-class RegistrationAutoPostUseCase:
-    registration_auto_post_service = RegistrationAutoPostService()
+class APIRegistrationAutoPostUseCase:
+    api_registration_auto_post_service = APIRegistrationAutoPostService()
+    registration_serializer = RegistrationSerializer
 
-    def execute(self, request: ASGIRequest) -> dict:
-        context = self.registration_auto_post_service.get_context()
+    def execute(self, request: Request) -> dict:
+        serializer = self.registration_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        context = self.api_registration_auto_post_service.create_registration(request=request)
 
         return context

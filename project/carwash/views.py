@@ -54,10 +54,10 @@ class RegistrationAutoView(Common, View):
     def post(self, request):
         if request.POST:
             choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
-            choicen_services_list_pk = list(
+            choicen_services_ids = list(
                 map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
             )
-            choicen_services = CarWashService.objects.filter(pk__in=choicen_services_list_pk)
+            choicen_services = CarWashService.objects.filter(pk__in=choicen_services_ids)
         else:
             choicen_date, choicen_time = request.data['choice_date_and_time'].split(',')
             choicen_services = CarWashService.objects.filter(pk__in=request.data['services_list'])
@@ -69,7 +69,7 @@ class RegistrationAutoView(Common, View):
 
         # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
         time789 = sum([x.pk for x in choicen_services if
-                       x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
+                       x.pk in [7, 8, 9]]) // 10  # если выбраны услуги, то время берётся как за одну услугу
         total_time = sum([t.process_time for t in choicen_services]) - time789 * 30
         current_workday = CarWashWorkDay.objects.filter(date=for_workday_date).first()
 
