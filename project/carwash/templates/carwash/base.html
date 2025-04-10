@@ -96,7 +96,7 @@
                                 {% if staff %}
                                 <li><a class="dropdown-item" href="{% url 'carwash:staff' days_delta=0 %}">Менеджер</a></li>
                                 {% endif %}
-                                {% if user.is_superuser or user.is_staff %}
+                                {% if user.is_superuser or user.is_admin %}
                                 <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
                                 {% endif %}
                                 <li><hr class="dropdown-divider"></li>

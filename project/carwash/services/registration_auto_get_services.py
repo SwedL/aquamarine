@@ -3,7 +3,6 @@ from django.db.models import QuerySet
 from carwash.models import CarWashService
 from users.models import User
 from common.utils import Common
-from users.permissions import staff_permission
 
 
 class RegistrationAutoGetService(Common):
@@ -18,12 +17,12 @@ class RegistrationAutoGetService(Common):
         context = {
             'title': 'Запись автомобиля',
             'menu': self.create_menu((0,)),
-            'staff': user.has_perm(staff_permission),
+            'staff': user.is_staff,
             'services': services,
             'list_day_dictionaries': list_day_dictionaries,
         }
 
-        if user.has_perm(staff_permission):
+        if user.is_staff:
             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
         return self.template_name, context

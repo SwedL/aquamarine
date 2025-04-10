@@ -150,7 +150,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             'title': self.title,
             'menu': self.create_menu((0, 1)),
             'full_list_registrations_workday': full_list_registrations_workday,
-            'staff': request.user.has_perm(staff_permission),
+            'staff': request.user.is_staff,
             'button_date': {'today': workday_for_button[0].date,
                             'tomorrow': workday_for_button[1].date,
                             'after_tomorrow': workday_for_button[2].date,
@@ -198,7 +198,7 @@ class RequestCallFormView(Common, FormView):
         context = {
             'title': self.title,
             'menu': self.create_menu((0, 1)),
-            'staff': self.request.user.has_perm(staff_permission),
+            'staff': self.request.user.is_staff,
         }
 
         return render(self.request, 'carwash/request-call-done.html', context=context)

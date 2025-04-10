@@ -1,6 +1,7 @@
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
+from users.permissions import staff_permission
 
 
 class UserManager(BaseUserManager):
@@ -88,7 +89,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         """Является ли пользователь сотрудником?"""
         # Самый простой ответ: все администраторы — сотрудники.
-        return self.is_admin
+        if self.is_admin:
+            return True
+        return super(AbstractBaseUser, self).has_perm(staff_permission)
 
     def __str__(self):
         return self.fio
