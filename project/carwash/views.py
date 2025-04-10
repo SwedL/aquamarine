@@ -1,5 +1,4 @@
-from datetime import date, time, timedelta
-from itertools import dropwhile
+from datetime import date, timedelta
 
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
@@ -14,15 +13,10 @@ from django.views.generic import FormView, ListView
 from carwash.forms import CarWashRequestCallForm
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
-from common.views import (Common, carwash_user_registration_delete,
-                          create_and_get_week_workday)
+from common.utils import (Common, carwash_user_registration_delete,
+                          prepare_workdays, FORMATTED_KEY)
 
-from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase
-
-
-FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
-                 '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
-                 '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
+from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase, RegistrationAutoPostUseCase
 
 
 class IndexListView(Common, ListView):
@@ -35,10 +29,10 @@ class IndexListView(Common, ListView):
     model = CarWashService
     context_object_name = 'services'
     title = 'Aquamarine'
-    menu = (1, 2, 3)
+    # menu_tabs = (1, 2, 3)
 
 
-class RegistrationAutoView(Common, View):
+class RegistrationAutoView(View):
     """
     Представление пользователю выбора услуг автомоечного комплекса, дня и времени,
      для оказания выбранных услуг.
@@ -46,109 +40,15 @@ class RegistrationAutoView(Common, View):
      а неавторизованный пользователя возможность запросить звонок администратора для записи автомобиля
     """
     registration_auto_get_use_case = RegistrationAutoGetUseCase()
+    registration_auto_post_use_case = RegistrationAutoPostUseCase()
 
     def get(self, request):
-        context = self.registration_auto_get_use_case.execute(request=request)
-        return render(request, 'carwash/registration.html', context=context)
+        template_name, context = self.registration_auto_get_use_case.execute(request=request)
+        return render(request, template_name=template_name, context=context)
 
     def post(self, request):
-        if request.POST:
-            choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
-            choicen_services_ids = list(
-                map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
-            )
-            choicen_services = CarWashService.objects.filter(pk__in=choicen_services_ids)
-        else:
-            choicen_date, choicen_time = request.data['choice_date_and_time'].split(',')
-            choicen_services = CarWashService.objects.filter(pk__in=request.data['services_list'])
-
-        total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
-
-        for_workday_date = date(*map(int, choicen_date.split()))  # дата, которую выбрал клиент
-        for_workday_time = time(*map(int, choicen_time.split(':')))  # время, которое выбрал клиент
-
-        # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
-        time789 = sum([x.pk for x in choicen_services if
-                       x.pk in [7, 8, 9]]) // 10  # если выбраны услуги, то время берётся как за одну услугу
-        total_time = sum([t.process_time for t in choicen_services]) - time789 * 30
-        current_workday = CarWashWorkDay.objects.filter(date=for_workday_date).first()
-
-        # записываем столько времён под авто, сколько необходимо под услуги
-        # из списка времен FORMATTED_KEY выбираем от choicen_time и далее
-        time_dict1 = list(dropwhile(lambda el: el != choicen_time, FORMATTED_KEY))
-        time_dict2 = time_dict1.copy()
-
-        # Если время выбранное всё ещё свободно пока пользователь делал свой выбор,
-        # то сохраняем CarWashRegistration, если стало занято, пока проходило оформление,
-        # то сообщаем "К сожалению, время которые вы выбрали уже занято" и отменяем запись
-        check_free_times = [getattr(current_workday, 'time_' + time_dict2.pop(0).replace(':', '')) for _ in
-                            range(0, total_time, 30)]
-
-        if all([x is None for x in check_free_times]):
-            new_reg = CarWashRegistration.objects.create(
-                client=request.user,
-                date_reg=for_workday_date,
-                time_reg=for_workday_time,
-                total_time=total_time,
-                total_cost=total_cost,
-            )
-            new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
-            time_attributes = []
-            self_data = new_reg.get_data()  # получаем данные CarWashRegistration в виде словаря
-
-            # если записывает сотрудник, то берутся данные 'comment_...'
-            match request.POST:
-                case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
-                    self_data['car_model'] = car_model
-                    self_data['phone_number'] = phone_number
-                    self_data['client'] = client
-
-            for _ in range(0, total_time, 30):
-                time_attribute = 'time_' + time_dict1.pop(0).replace(':', '')
-                time_attributes.append(time_attribute)
-                # в поле соответствующего времени сохраняем JSON объект данных CarWashRegistration
-                setattr(current_workday, time_attribute, self_data)
-            current_workday.save()
-            new_reg.relation_carwashworkday = {'time_attributes': time_attributes}
-            new_reg.save()
-
-        else:
-            context = {
-                'title': 'Ошибка записи',
-                'menu': self.create_menu((0, 1)),
-                'staff': request.user.has_perm('carwash.view_carwashworkday'),
-            }
-
-            # Если запрос поступил по API, то возвращаем только данные (context)
-            if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
-                return context
-
-            return render(request, 'carwash/registration-error.html', context=context)
-
-        normal_format_choicen_date = choicen_date.split()  # создаём список данных из выбранной даты "2023 09 10"
-        normal_format_choicen_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
-
-        normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
-
-        context = {
-            'title': 'Запись зарегистрирована',
-            'menu': self.create_menu((0,)),
-            'staff': request.user.has_perm('carwash.view_carwashworkday'),
-            'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
-            'choice_time': choicen_time,
-            'choice_services': choicen_services,
-            'total_time': normal_total_time,
-            'total_cost': f'{total_cost} р.',
-        }
-
-        if request.user.has_perm('carwash.view_carwashworkday'):
-            context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
-
-        # Если запрос поступил по API, то возвращаем только данные (context)
-        if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
-            return context
-
-        return render(request, 'carwash/registration-done.html', context=context)
+        template_name, context = self.registration_auto_post_use_case.execute(request=request)
+        return render(request, template_name=template_name, context=context)
 
 
 class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
@@ -161,7 +61,7 @@ class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
     template_name = 'carwash/user-registrations.html'
     context_object_name = 'user_registrations'
     title = 'Мои записи'
-    menu = (0, 1)
+    menu_tabs = (0, 1)
 
     def get_queryset(self):
         queryset = super(UserRegistrationsListView, self).get_queryset()
@@ -194,7 +94,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 
         # проверяем наличие объектов CarWashWorkDay на неделю вперёд, если их нет, то создаём и возвращаем списком
         # создаём список CarWashWorkDay (today, tomorrow, after_tomorrow)
-        workday_for_button = create_and_get_week_workday()[:3]
+        workday_for_button = prepare_workdays()[:3]
         current_workday = workday_for_button[days_delta]  # текущий CarWashWorkDay
         time_dict = FORMATTED_KEY[1:].copy()
 
@@ -288,7 +188,7 @@ class RequestCallFormView(Common, FormView):
     form_class = CarWashRequestCallForm
     template_name = 'carwash/request-call.html'
     title = 'Заказ звонка'
-    menu = (0, 1)
+    menu_tabs = (0, 1)
 
     def form_valid(self, form):
         call_me = CarWashRequestCall(phone_number=form.cleaned_data['phone_number'])

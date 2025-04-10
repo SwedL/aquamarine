@@ -1,30 +1,14 @@
 from datetime import date, time
 from itertools import dropwhile
-from typing import Any
 
 from django.db import transaction
 from rest_framework.request import Request
 
-from api.carwash.exceptions.exceptions import TimeAlreadyTakenException
+from carwash.exceptions.exceptions import TimeAlreadyTakenException
 from carwash.models import CarWashService, CarWashRegistration, CarWashWorkDay
 from carwash.serializers import CarWashServiceSerializer
-
-FORMATTED_KEY = ['date', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '13:00',
-                 '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00',
-                 '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30']
-
-class FreeTimeCarWashWorkDayValidatorService:
-    @staticmethod
-    def validate(attributes: dict[str, Any]) -> None:
-        """Проверяем свободно ли ещё время пока пользователь делал свой выбор"""
-
-        workday = CarWashWorkDay.objects.filter(date=attributes['date']).first()
-        process_times = attributes['process_times']
-        total_time = attributes['total_time']
-        check_free_times = [getattr(workday, 'time_' + process_times.pop(0).replace(':', '')) for _ in
-                            range(0, total_time, 30)]
-        if any([x for x in check_free_times]):
-            raise TimeAlreadyTakenException()
+from common.utils import FORMATTED_KEY
+from carwash.services.validators import FreeTimeCarWashWorkDayValidatorService
 
 
 class APIRegistrationAutoPostService:
@@ -55,7 +39,6 @@ class APIRegistrationAutoPostService:
                     total_cost=total_cost,
                 )
                 new_registration.services.set(selected_services)  # добавляем в CarWashRegistration выбранные услуги
-
                 new_registration_data = new_registration.get_data()  # получаем данные CarWashRegistration в виде словаря
                 selected_workday = CarWashWorkDay.objects.select_for_update().filter(date=select_workday_date).first()
 
@@ -75,15 +58,15 @@ class APIRegistrationAutoPostService:
                 new_registration.relation_carwashworkday = {'time_attributes': time_attributes}
                 new_registration.save()
 
-            context = {'title': 'Запись зарегистрирована',
-             'selected_services': CarWashServiceSerializer(selected_services, many=True).data,
-             'selected_date': selected_date,
-             'selected_time': selected_time,
-             'total_time': total_time,
-             'total_cost': f'{total_cost} р.',
-             }
+                context = {'title': 'Запись зарегистрирована',
+                 'selected_services': CarWashServiceSerializer(selected_services, many=True).data,
+                 'selected_date': selected_date,
+                 'selected_time': selected_time,
+                 'total_time': total_time,
+                 'total_cost': f'{total_cost} р.',
+                 }
 
-            return context
+                return context
         except TimeAlreadyTakenException as e:
             return e.message
 

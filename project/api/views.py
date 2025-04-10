@@ -15,7 +15,7 @@ from carwash.serializers import (CarWashRegistrationSerializer,
                              CarWashRequestCallSerializer,
                              CarWashServiceSerializer)
 from carwash.views import RegistrationAutoView
-from common.views import carwash_user_registration_delete
+from common.utils import carwash_user_registration_delete
 from users.models import User
 from users.serializers import UserSerializer
 

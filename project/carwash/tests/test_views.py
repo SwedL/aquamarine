@@ -35,13 +35,13 @@ class IndexListViewTestCase(TestCase):
     def test_if_logged_but_cannot_permission(self):
         # Проверка отображения меню для авторизованного пользователя, без permission
         self.client.force_login(self.user)
-        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Выйти'])
+        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи'])
 
     def test_if_logged_and_can_permission(self):
         # Проверка отображения меню для авторизованного пользователя с permission
         self.user.user_permissions.add(self.permission)
         self.client.force_login(self.user)
-        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Выйти'])
+        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер'])
 
     def test_if_logged_and_can_permission_and_is_admin(self):
         # Проверка отображения меню для авторизованного пользователя, с правами admin
@@ -49,7 +49,7 @@ class IndexListViewTestCase(TestCase):
         self.user.is_admin = True
         self.user.save()
         self.client.force_login(self.user)
-        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Админ-панель', 'Выйти'])
+        self.assertEqual(self._common_tests(), ['Профиль', 'Мои записи', 'Менеджер', 'Админ-панель'])
 
     def _common_tests(self):
         response = self.client.get(self.path)

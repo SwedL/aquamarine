@@ -44,34 +44,32 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         self.assertEqual(CarWashWorkDay.objects.count(), 7)
 
     def test_registration_auto_at_carwash(self):
-        choice_date = str(date.today()).replace('-', ' ')
-        format_choice_date = choice_date.split()
-        format_choice_date.reverse()
-        choice_time = '10:00'
-        data = {'choice_date_and_time': f'{choice_date},{choice_time}', 'services_list': '15'}
+        selected_date = str(date.today()).replace('-', ' ')
+        selected_time = '10:00'
+        data = {'selected_date_and_time': f'{selected_date},{selected_time}', 'services_ids': '15'}
 
         response = self.client.post(self.url, data, format='json')
+        response_json = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, {
-            'title': 'Запись зарегистрирована',
-            'choice_services': [OrderedDict(
-                [('id', 15),
-                 ('name', 'Удаление стойких загрязнений с кузова'),
-                 ('process_time', 60),
-                 ('price_standart', 450),
-                 ('price_crossover', 500),
-                 ('price_offroad', 500)
-                 ])
-            ],
-            'normal_format_choicen_date': '/'.join(format_choice_date),
-            'choice_time': choice_time,
-            'total_time': '1 ч.  0 мин.',
-            'total_cost': '450 р.',
-        })
+        self.assertEqual(response_json['title'],'Запись зарегистрирована')
+        self.assertEqual(response_json['selected_services'],
+                         [{
+                             'id': 15,
+                             'name': 'Удаление стойких загрязнений с кузова',
+                             'process_time': 60,
+                             'price_standart': 450,
+                             'price_crossover': 500,
+                             'price_offroad': 500,
+                         }]
+                         )
+        self.assertEqual(response_json['selected_date'], selected_date)
+        self.assertEqual(response_json['selected_time'], selected_time)
+        self.assertEqual(response_json['total_time'], 60)
+        self.assertEqual(response_json['total_cost'], '450 р.')
 
     def test_post_data_then_selected_time_is_already_taken(self):
         choice_date = str(date.today()).replace('-', ' ')
-        data = {'choice_date_and_time': f'{choice_date},10:00', 'services_list': '15'}
+        data = {'selected_date_and_time': f'{choice_date},10:00', 'services_ids': '15'}
         self.client.post(self.url, data, format='json')
         response = self.client.post(self.url, data, format='json')
         self.assertEqual(response.data, {
@@ -110,8 +108,8 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
     def test_get_user_registration_list(self):
         # проверяем получения информации о записях автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'services_list': '1'}
-        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'services_list': '3'}
+        data1 = {'selected_date_and_time': f'{choice_date},10:00', 'services_ids': '1'}
+        data2 = {'selected_date_and_time': f'{choice_date},14:00', 'services_ids': '3'}
         self.client.post(reverse('api:carwash_registration'), data1, format='json')
         self.client.post(reverse('api:carwash_registration'), data2, format='json')
 
@@ -144,8 +142,8 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
     def test_delete_user_registration(self):
         # проверяем возможность удаления записи автомобиля пользователя CarWashUserRegistration
         choice_date = str(date.today()).replace('-', ' ')
-        data1 = {'choice_date_and_time': f'{choice_date},10:00', 'services_list': '1'}
-        data2 = {'choice_date_and_time': f'{choice_date},14:00', 'services_list': '3'}
+        data1 = {'selected_date_and_time': f'{choice_date},10:00', 'services_ids': '1'}
+        data2 = {'selected_date_and_time': f'{choice_date},14:00', 'services_ids': '3'}
         self.client.post(reverse('api:carwash_registration'), data1, format='json')
         self.client.post(reverse('api:carwash_registration'), data2, format='json')
         user_registration_all = CarWashRegistration.objects.all()

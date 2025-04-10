@@ -1,104 +1,107 @@
-# from datetime import date, time, timedelta
-# from itertools import dropwhile
-#
-# from django.contrib.auth.mixins import (LoginRequiredMixin,
-#                                         PermissionRequiredMixin)
-# from carwash.models import CarWashService
-#
-# class RegistrationAutoPostService:
-#     def get_context(self):
-#         if request.POST:
-#             choicen_date, choicen_time = request.POST['choice_date_and_time'].split(',')
-#             choicen_services_ids = list(
-#                 map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
-#             )
-#             choicen_services = CarWashService.objects.filter(pk__in=choicen_services_ids)
-#         else:
-#             choicen_date, choicen_time = request.data['choice_date_and_time'].split(',')
-#             choicen_services = CarWashService.objects.filter(pk__in=request.data['services_list'])
-#
-#         total_cost = sum(getattr(x, request.user.car_type) for x in choicen_services)
-#
-#         for_workday_date = date(*map(int, choicen_date.split()))  # дата, которую выбрал клиент
-#         for_workday_time = time(*map(int, choicen_time.split(':')))  # время, которое выбрал клиент
-#
-#         # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
-#         time789 = sum([x.pk for x in choicen_services if
-#                        x.pk in [7, 8, 9]]) // 10  # если выбраны услуги, то время берётся как за одну услугу
-#         total_time = sum([t.process_time for t in choicen_services]) - time789 * 30
-#         current_workday = CarWashWorkDay.objects.filter(date=for_workday_date).first()
-#
-#         # записываем столько времён под авто, сколько необходимо под услуги
-#         # из списка времен FORMATTED_KEY выбираем от choicen_time и далее
-#         time_dict1 = list(dropwhile(lambda el: el != choicen_time, FORMATTED_KEY))
-#         time_dict2 = time_dict1.copy()
-#
-#         # Если время выбранное всё ещё свободно пока пользователь делал свой выбор,
-#         # то сохраняем CarWashRegistration, если стало занято, пока проходило оформление,
-#         # то сообщаем "К сожалению, время которые вы выбрали уже занято" и отменяем запись
-#         check_free_times = [getattr(current_workday, 'time_' + time_dict2.pop(0).replace(':', '')) for _ in
-#                             range(0, total_time, 30)]
-#
-#         if all([x is None for x in check_free_times]):
-#             new_reg = CarWashRegistration.objects.create(
-#                 client=request.user,
-#                 date_reg=for_workday_date,
-#                 time_reg=for_workday_time,
-#                 total_time=total_time,
-#                 total_cost=total_cost,
-#             )
-#             new_reg.services.set(choicen_services)  # добавляем в CarWashRegistration выбранные услуги
-#             time_attributes = []
-#             self_data = new_reg.get_data()  # получаем данные CarWashRegistration в виде словаря
-#
-#             # если записывает сотрудник, то берутся данные 'comment_...'
-#             match request.POST:
-#                 case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
-#                     self_data['car_model'] = car_model
-#                     self_data['phone_number'] = phone_number
-#                     self_data['client'] = client
-#
-#             for _ in range(0, total_time, 30):
-#                 time_attribute = 'time_' + time_dict1.pop(0).replace(':', '')
-#                 time_attributes.append(time_attribute)
-#                 # в поле соответствующего времени сохраняем JSON объект данных CarWashRegistration
-#                 setattr(current_workday, time_attribute, self_data)
-#             current_workday.save()
-#             new_reg.relation_carwashworkday = {'time_attributes': time_attributes}
-#             new_reg.save()
-#
-#         else:
-#             context = {
-#                 'title': 'Ошибка записи',
-#                 'menu': self.create_menu((0, 1)),
-#                 'staff': request.user.has_perm('carwash.view_carwashworkday'),
-#             }
-#
-#             # Если запрос поступил по API, то возвращаем только данные (context)
-#             if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
-#                 return context
-#
-#             return render(request, 'carwash/registration-error.html', context=context)
-#
-#         normal_format_choicen_date = choicen_date.split()  # создаём список данных из выбранной даты "2023 09 10"
-#         normal_format_choicen_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
-#
-#         normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
-#
-#         context = {
-#             'title': 'Запись зарегистрирована',
-#             'menu': self.create_menu((0,)),
-#             'staff': request.user.has_perm('carwash.view_carwashworkday'),
-#             'normal_format_choicen_date': '/'.join(normal_format_choicen_date),
-#             'choice_time': choicen_time,
-#             'choice_services': choicen_services,
-#             'total_time': normal_total_time,
-#             'total_cost': f'{total_cost} р.',
-#         }
-#
-#         if request.user.has_perm('carwash.view_carwashworkday'):
-#             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
-#
-#         # Если запрос поступил по API, то возвращаем только данные (context)
-#         if self.request.META.get('PATH_INFO', '/registration/') == '/api/v1/carwash-registration/':
-#             return context
+from datetime import date, time
+from itertools import dropwhile
+
+from django.core.handlers.asgi import ASGIRequest
+from django.db import transaction
+
+from carwash.exceptions.exceptions import TimeAlreadyTakenException
+from carwash.models import CarWashService, CarWashWorkDay, CarWashRegistration
+from common.utils import Common, FORMATTED_KEY
+from carwash.services.validators import FreeTimeCarWashWorkDayValidatorService
+
+
+class RegistrationAutoPostService(Common):
+    free_time_validator = FreeTimeCarWashWorkDayValidatorService
+    template_name_done = 'carwash/registration-done.html'
+    template_name_error = 'carwash/registration-error.html'
+
+    def create_registration(self, request: ASGIRequest):
+        selected_date, selected_time = request.POST['choice_date_and_time'].split(',')
+        selected_service_ids = list(
+            map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
+        )
+        selected_services = CarWashService.objects.filter(pk__in=selected_service_ids)
+
+        total_cost = sum(getattr(x, request.user.car_type) for x in selected_services)
+
+        select_workday_date = date(*map(int, selected_date.split()))  # дата, которую выбрал клиент
+        select_workday_time = time(*map(int, selected_time.split(':')))  # время, которое выбрал клиент
+
+        # записываем столько времён под авто, сколько необходимо под услуги
+        # из списка времен FORMATTED_KEY выбираем от selected_time и далее
+        process_times = list(dropwhile(lambda el: el != selected_time, FORMATTED_KEY))
+        total_time = self.get_total_time(selected_services=selected_services)
+
+        try:
+            with transaction.atomic():
+                new_registration = CarWashRegistration.objects.create(
+                    client=request.user,
+                    date_reg=select_workday_date,
+                    time_reg=select_workday_time,
+                    total_time=total_time,
+                    total_cost=total_cost,
+                )
+                new_registration.services.set(selected_services)  # добавляем в CarWashRegistration выбранные услуги
+                new_registration_data = new_registration.get_data()  # получаем данные CarWashRegistration в виде словаря
+                selected_workday = CarWashWorkDay.objects.select_for_update().filter(date=select_workday_date).first()
+
+                self.free_time_validator.validate(attributes={
+                    'date': select_workday_date,
+                    'process_times': process_times.copy(),
+                    'total_time': total_time,
+                })
+                # если записывает сотрудник, то берутся данные 'comment_...'
+                match request.POST:
+                    case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
+                        new_registration_data['car_model'] = car_model
+                        new_registration_data['phone_number'] = phone_number
+                        new_registration_data['client'] = client
+
+                time_attributes = []
+                for _ in range(0, total_time, 30):
+                    time_attribute = 'time_' + process_times.pop(0).replace(':', '')
+                    time_attributes.append(time_attribute)
+                    # в поле соответствующего времени сохраняем JSON объект данных CarWashRegistration
+                    setattr(selected_workday, time_attribute, new_registration_data)
+
+                selected_workday.save()
+                new_registration.relation_carwashworkday = {'time_attributes': time_attributes}
+                new_registration.save()
+
+                normal_format_selected_date = selected_date.split()  # создаём список данных из выбранной даты "2023 09 10"
+                normal_format_selected_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
+
+                normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
+
+                context = {
+                    'title': 'Запись зарегистрирована',
+                    'menu': self.create_menu((0,)),
+                    'staff': request.user.has_perm('carwash.view_carwashworkday'),
+                    'normal_format_selected_date': '/'.join(normal_format_selected_date),
+                    'choice_time': selected_time,
+                    'choice_services': selected_services,
+                    'total_time': normal_total_time,
+                    'total_cost': f'{total_cost} р.',
+                }
+
+                if request.user.has_perm('carwash.view_carwashworkday'):
+                    context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
+
+                return self.template_name_done, context
+
+        except TimeAlreadyTakenException:
+            context = {
+                'title': 'Ошибка записи',
+                'menu': self.create_menu((0, 1)),
+                'staff': request.user.has_perm('carwash.view_carwashworkday'),
+            }
+            return self.template_name_error, context
+
+    def get_total_time(self, selected_services):
+        """
+        Вычисляем общее время работ total_time в CarWashRegistration
+         (id работ [7,8,9] считается как за одно время 30 мин.)
+        """
+        time789 = sum([x.pk for x in selected_services if x.pk in [7, 8, 9]]) // 10
+        total_time = sum([t.process_time for t in selected_services]) - time789 * 30
+        return total_time
