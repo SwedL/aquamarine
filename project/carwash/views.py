@@ -17,6 +17,7 @@ from common.utils import (Common, carwash_user_registration_delete,
                           prepare_workdays, FORMATTED_KEY)
 
 from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase, RegistrationAutoPostUseCase
+from users.permissions import staff_permission
 
 
 class IndexListView(Common, ListView):
@@ -86,7 +87,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
     """
 
     title = 'Менеджер'
-    permission_required = 'carwash.view_carwashworkday'
+    permission_required = staff_permission
 
     def get(self, request, days_delta=0):
         if days_delta > 2:
@@ -149,7 +150,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
             'title': self.title,
             'menu': self.create_menu((0, 1)),
             'full_list_registrations_workday': full_list_registrations_workday,
-            'staff': request.user.has_perm('carwash.view_carwashworkday'),
+            'staff': request.user.has_perm(staff_permission),
             'button_date': {'today': workday_for_button[0].date,
                             'tomorrow': workday_for_button[1].date,
                             'after_tomorrow': workday_for_button[2].date,
@@ -165,7 +166,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
     """Обработчик события 'отмена (удаление)' сотрудником записи клиента"""
 
-    permission_required = 'carwash.view_carwashworkday'
+    permission_required = staff_permission
 
     def get(self, request, days_delta, registration_id):
         need_carwash_registration = CarWashRegistration.objects.filter(id=registration_id).first()
@@ -197,7 +198,7 @@ class RequestCallFormView(Common, FormView):
         context = {
             'title': self.title,
             'menu': self.create_menu((0, 1)),
-            'staff': self.request.user.has_perm('carwash.view_carwashworkday'),
+            'staff': self.request.user.has_perm(staff_permission),
         }
 
         return render(self.request, 'carwash/request-call-done.html', context=context)
@@ -206,7 +207,7 @@ class RequestCallFormView(Common, FormView):
 class RequestCallProcessingView(View):
     """Обработчик события 'обработка звонка'"""
 
-    permission_required = 'carwash.view_carwashworkday'
+    permission_required = staff_permission
 
     def get(self, request, days_delta, call_pk):
         processed_call = CarWashRequestCall.objects.get(pk=call_pk)

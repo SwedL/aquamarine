@@ -8,6 +8,7 @@ from carwash.exceptions.exceptions import TimeAlreadyTakenException
 from carwash.models import CarWashService, CarWashWorkDay, CarWashRegistration
 from common.utils import Common, FORMATTED_KEY
 from carwash.services.validators import FreeTimeCarWashWorkDayValidatorService
+from users.permissions import staff_permission
 
 
 class RegistrationAutoPostService(Common):
@@ -76,7 +77,7 @@ class RegistrationAutoPostService(Common):
                 context = {
                     'title': 'Запись зарегистрирована',
                     'menu': self.create_menu((0,)),
-                    'staff': request.user.has_perm('carwash.view_carwashworkday'),
+                    'staff': request.user.has_perm(staff_permission),
                     'normal_format_selected_date': '/'.join(normal_format_selected_date),
                     'choice_time': selected_time,
                     'choice_services': selected_services,
@@ -84,7 +85,7 @@ class RegistrationAutoPostService(Common):
                     'total_cost': f'{total_cost} р.',
                 }
 
-                if request.user.has_perm('carwash.view_carwashworkday'):
+                if request.user.has_perm(staff_permission):
                     context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
                 return self.template_name_done, context
@@ -93,7 +94,7 @@ class RegistrationAutoPostService(Common):
             context = {
                 'title': 'Ошибка записи',
                 'menu': self.create_menu((0, 1)),
-                'staff': request.user.has_perm('carwash.view_carwashworkday'),
+                'staff': request.user.has_perm(staff_permission),
             }
             return self.template_name_error, context
 

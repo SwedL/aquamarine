@@ -45,7 +45,7 @@ class CarWashRegistration(models.Model):
     date_reg = models.DateField(verbose_name='дата записи')
     time_reg = models.TimeField(verbose_name='время записи')
     total_time = models.PositiveSmallIntegerField(default=0, verbose_name='общее время работ')
-    total_cost = models.PositiveIntegerField(default=0, verbose_name='общяя стоимость')
+    total_cost = models.PositiveIntegerField(default=0, verbose_name='общая стоимость')
     relation_carwashworkday = models.JSONField(null=True)
 
     class Meta:

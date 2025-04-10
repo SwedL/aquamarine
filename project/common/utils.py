@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from django.http import Http404
 
 from carwash.models import CarWashRegistration, CarWashWorkDay
+from users.permissions import staff_permission
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Доступное время', 'url_name': 'carwash:registration'},
@@ -53,7 +54,7 @@ class Common:
         context = super(Common, self).get_context_data(**kwargs)
         context['title'] = self.title
         context['menu'] = self.create_menu(self.menu_tabs)
-        context['staff'] = self.request.user.has_perm('carwash.view_carwashworkday')
+        context['staff'] = self.request.user.has_perm(staff_permission)
 
         return context
 

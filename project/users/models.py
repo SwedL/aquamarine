@@ -73,12 +73,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     def has_perm(self, perm, obj=None):
         "Имеет ли пользователь определенное разрешение?"
         # Самый простой ответ: Да, всегда.
-        return True
+        # return True
+        if self.is_admin:
+            return True
+        return super(AbstractBaseUser, self).has_perm(perm)
 
     def has_module_perms(self, app_label):
         "Есть ли у пользователя разрешения на просмотр приложения app_label?"
         # Самый простой ответ: Да, всегда.
-        return True
+        # return True
+        return self.is_admin
 
     @property
     def is_staff(self):
