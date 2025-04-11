@@ -29,11 +29,11 @@
                             <div class="registration__item registration__button-cancel">
 
                                 <!-- Кнопка-триггер модального окна -->
-                                <a class="registration__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.pk}}">
+                                <a class="registration__cancel-button" data-bs-toggle="modal" data-bs-target="#{{reg.id}}">
                                     Отменить</a>
 
                                 <!-- Модальное окно -->
-                                <div class="modal fade" id="{{reg.pk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="{{reg.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -44,7 +44,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                <a href="{% url 'carwash:user_reg_cancel' reg.pk %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
+                                                <a href="{% url 'carwash:user_reg_cancel' reg.id %}"><button type="button" class="btn btn-primary">Подтвердить</button></a>
                                             </div>
                                         </div>
                                     </div>

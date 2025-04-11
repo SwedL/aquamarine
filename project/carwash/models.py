@@ -119,13 +119,14 @@ class CarWashWorkDay(models.Model):
         """
         Функция создаёт словарь, где ключи из списка FORMATTED_KEY,
         а значения - значения полей экземпляра модели CarWAshWorkDay
-           ('disable' - если время уже не актуально либо None либо JSON объект данных CarWashRegistration)
+           ('disable' - если время уже не актуально,
+           либо None, либо JSON объект данных CarWashRegistration)
         """
 
         # получаем список значений экземпляра WorkDay только дата и времена
         workday_values = list(self.__dict__.values())[2:]
 
-        # создаём словарь и заменяем не занятые времена, сегодняшнего дня, время которых прошло, на значения "disabled"
+        # создаём словарь и заменяем не занятые времена, текущего дня, время которых прошло, на значения "disabled"
         # {
         #  '10:00': 'disable',
         #  '10:30': None,
@@ -170,9 +171,11 @@ class CarWashRequestCall(models.Model):
 
 
 def carwash_workday_or_request_call_post_save(sender, instance, signal, *args, **kwargs):
-    # После появления новой записи клиента на услуги автомойки или появления
-    # нового запроса звонка, отправляется сообщение по протоколу Websocket,
-    # на страницу интерфейса сотрудника и она перезагружается
+    """
+    После появления новой записи клиента на услуги автомойки
+    или появления нового запроса звонка,
+    с использованием соединения Websocket отправляется сообщение,
+    на страницу интерфейса сотрудника"""
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)("staff_group", {"type": "staff_message", "message": 'update_data'})
 

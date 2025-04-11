@@ -1,11 +1,13 @@
+from django.core.handlers.asgi import ASGIRequest
+
 from carwash.models import CarWashRegistration, CarWashWorkDay
 from django.http import Http404
 
 
-def user_registration_cancel(request, registration_pk):
+def user_registration_cancel(request: ASGIRequest, registration_id: int) -> None:
     """Функция для UserRegistrationsCancelView и UserRegistrationListAPIView - обработчик
      события 'отмены (удаления)' пользователем своей записи на автомоечный комплекс."""
-    user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()
+    user_registration = CarWashRegistration.objects.filter(id=registration_id).first()
 
     # проверка, что пользователь удаляет принадлежащую ему CarWashUserRegistration
     if not user_registration or user_registration.client != request.user:

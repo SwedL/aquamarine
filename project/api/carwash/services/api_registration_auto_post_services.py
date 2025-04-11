@@ -2,6 +2,7 @@ from datetime import date, time
 from itertools import dropwhile
 
 from django.db import transaction
+from django.db.models import QuerySet
 from rest_framework.request import Request
 
 from carwash.exceptions.exceptions import TimeAlreadyTakenException
@@ -70,7 +71,7 @@ class APIRegistrationAutoPostService:
         except TimeAlreadyTakenException as e:
             return e.message
 
-    def get_total_time(self, selected_services):
+    def get_total_time(self, selected_services: QuerySet) -> int:
         """
         Вычисляем общее время работ total_time в CarWashRegistration
          (id работ [7,8,9] считается как за одно время 30 мин.)

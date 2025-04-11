@@ -2,6 +2,7 @@ from datetime import date
 
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
+from django.core.handlers.asgi import ASGIRequest
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -10,8 +11,9 @@ from django.views import View
 from django.views.generic import FormView, ListView
 
 from carwash.forms import CarWashRequestCallForm
-from carwash.models import (CarWashRegistration, CarWashRequestCall,
-                            CarWashService, CarWashWorkDay)
+from carwash.models import CarWashRegistration, CarWashRequestCall, CarWashService
+from carwash.services.request_call_processing_service import request_call_processing
+from carwash.services.staff_registration_cancel_service import staff_registration_cancel
 from carwash.use_cases.staff_detail_view_use_case import StaffDetailViewUseCase
 from common.utils import Common
 
@@ -30,7 +32,7 @@ class IndexListView(Common, ListView):
     model = CarWashService
     context_object_name = 'services'
     title = 'Aquamarine'
-    # menu_tabs = (1, 2, 3)
+    menu_tabs = (1, 2, 3)
 
 
 class RegistrationAutoView(View):
@@ -43,12 +45,12 @@ class RegistrationAutoView(View):
     registration_auto_get_use_case = RegistrationAutoGetUseCase()
     registration_auto_post_use_case = RegistrationAutoPostUseCase()
 
-    def get(self, request):
+    def get(self, request: ASGIRequest):
         template_name, context = self.registration_auto_get_use_case.execute(request=request)
 
         return render(request, template_name=template_name, context=context)
 
-    def post(self, request):
+    def post(self, request: ASGIRequest):
         template_name, context = self.registration_auto_post_use_case.execute(request=request)
 
         return render(request, template_name=template_name, context=context)
@@ -75,8 +77,8 @@ class UserRegistrationsListView(LoginRequiredMixin, Common, ListView):
 class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     """Обработчик события 'отмены (удаления)' пользователем своей записи"""
 
-    def get(self, request, registration_pk):
-        user_registration_cancel(request, registration_pk)
+    def get(self, request: ASGIRequest, registration_id: int):
+        user_registration_cancel(request=request, registration_id=registration_id)
         redirect_url = reverse('carwash:user_registrations')
 
         return HttpResponseRedirect(redirect_url)
@@ -93,7 +95,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
     staff_detail_view_use_case = StaffDetailViewUseCase()
     template_name = 'carwash/staff.html'
 
-    def get(self, request, days_delta: int=0):
+    def get(self, request: ASGIRequest, days_delta: int=0):
         context = self.staff_detail_view_use_case.execute(request=request, days_delta=days_delta)
         context.update({'title': self.title})
 
@@ -105,16 +107,8 @@ class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):
 
     permission_required = staff_permission
 
-    def get(self, request, days_delta, registration_id):
-        need_carwash_registration = CarWashRegistration.objects.filter(id=registration_id).first()
-        need_workday = CarWashWorkDay.objects.get(date=need_carwash_registration.date_reg)
-        time_attributes = need_carwash_registration.relation_carwashworkday['time_attributes']
-
-        # удаляем записи выбранной CarWashRegistration в полях времени CarWashWorkDay,
-        # значению поля соответствующего времени присваиваем значение None (как по умолчанию)
-        [setattr(need_workday, t_a, None) for t_a in time_attributes]
-        need_workday.save()
-
+    def get(self, request: ASGIRequest, days_delta: int, registration_id: int):
+        staff_registration_cancel(registration_id=registration_id)
         redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)
@@ -128,7 +122,7 @@ class RequestCallFormView(Common, FormView):
     title = 'Заказ звонка'
     menu_tabs = (0, 1)
 
-    def form_valid(self, form):
+    def form_valid(self, form: CarWashRequestCallForm):
         call_me = CarWashRequestCall(phone_number=form.cleaned_data['phone_number'])
         call_me.save()
 
@@ -146,10 +140,8 @@ class RequestCallProcessingView(View):
 
     permission_required = staff_permission
 
-    def get(self, request, days_delta, call_pk):
-        processed_call = CarWashRequestCall.objects.get(pk=call_pk)
-        processed_call.processed = True
-        processed_call.save()
+    def get(self, request: ASGIRequest, days_delta: int, call_id: int):
+        request_call_processing(call_id=call_id)
         redirect_url = reverse('carwash:staff', kwargs={'days_delta': days_delta})
 
         return HttpResponseRedirect(redirect_url)

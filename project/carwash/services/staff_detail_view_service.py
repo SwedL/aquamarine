@@ -10,7 +10,7 @@ from users.models import User
 
 
 class StaffDetailViewService(Common):
-    def get_context(self, user: User, days_delta: int, week_workday_objects: QuerySet):
+    def get_context(self, user: User, days_delta: int, week_workday_objects: QuerySet) -> dict:
         if days_delta > 2:
             raise Http404
 

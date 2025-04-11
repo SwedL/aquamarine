@@ -3,6 +3,7 @@ from itertools import dropwhile
 
 from django.core.handlers.asgi import ASGIRequest
 from django.db import transaction
+from django.db.models import QuerySet
 
 from carwash.exceptions.exceptions import TimeAlreadyTakenException
 from carwash.models import CarWashService, CarWashWorkDay, CarWashRegistration
@@ -15,7 +16,7 @@ class RegistrationAutoPostService(Common):
     template_name_done = 'carwash/registration-done.html'
     template_name_error = 'carwash/registration-error.html'
 
-    def create_registration(self, request: ASGIRequest):
+    def create_registration(self, request: ASGIRequest) -> tuple[str, dict]:
         selected_date, selected_time = request.POST['choice_date_and_time'].split(',')
         selected_service_ids = list(
             map(lambda i: int(request.POST[i]), filter(lambda x: x.startswith('service'), request.POST))
@@ -98,7 +99,7 @@ class RegistrationAutoPostService(Common):
             }
             return self.template_name_error, context
 
-    def get_total_time(self, selected_services):
+    def get_total_time(self, selected_services: QuerySet) -> int:
         """
         Вычисляем общее время работ total_time в CarWashRegistration
          (id работ [7,8,9] считается как за одно время 30 мин.)

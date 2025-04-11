@@ -44,7 +44,7 @@
                             <li class="dropdown-item telephone"><span>{{call}}</span>
 
                                 {% if not call.processed %}
-                                <a type="button" class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.pk %}">
+                                <a type="button" class="time-workday__cancel-button" href="{% url 'carwash:request_call_processing' days_delta call.id %}">
                                     обработать</a>
                                 {% endif %}
                             </li>

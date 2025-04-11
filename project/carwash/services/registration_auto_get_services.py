@@ -26,6 +26,3 @@ class RegistrationAutoGetService(Common):
             context.get('menu').append({'title': 'Менеджер', 'url_name': 'carwash:staff'})
 
         return self.template_name, context
-
-
-
