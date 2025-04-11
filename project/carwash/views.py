@@ -1,21 +1,21 @@
-from datetime import date, timedelta
+from datetime import date
 
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
-from django.db.models import Q
-from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils import timezone
+
 from django.views import View
 from django.views.generic import FormView, ListView
 
 from carwash.forms import CarWashRequestCallForm
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
-from common.utils import Common, prepare_workdays, FORMATTED_KEY
+from carwash.use_cases.staff_detail_view_use_case import StaffDetailViewUseCase
+from common.utils import Common
 
-from carwash.services.carwash_user_registration_delete_service import carwash_user_registration_delete
+from carwash.services.user_registration_cancel_service import user_registration_cancel
 from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase, RegistrationAutoPostUseCase
 from users.permissions import staff_permission
 
@@ -45,10 +45,12 @@ class RegistrationAutoView(View):
 
     def get(self, request):
         template_name, context = self.registration_auto_get_use_case.execute(request=request)
+
         return render(request, template_name=template_name, context=context)
 
     def post(self, request):
         template_name, context = self.registration_auto_post_use_case.execute(request=request)
+
         return render(request, template_name=template_name, context=context)
 
 
@@ -74,7 +76,7 @@ class UserRegistrationsCancelView(LoginRequiredMixin, Common, View):
     """Обработчик события 'отмены (удаления)' пользователем своей записи"""
 
     def get(self, request, registration_pk):
-        carwash_user_registration_delete(request, registration_pk)
+        user_registration_cancel(request, registration_pk)
         redirect_url = reverse('carwash:user_registrations')
 
         return HttpResponseRedirect(redirect_url)
@@ -88,79 +90,14 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
 
     title = 'Менеджер'
     permission_required = staff_permission
+    staff_detail_view_use_case = StaffDetailViewUseCase()
+    template_name = 'carwash/staff.html'
 
-    def get(self, request, days_delta=0):
-        if days_delta > 2:
-            raise Http404
+    def get(self, request, days_delta: int=0):
+        context = self.staff_detail_view_use_case.execute(request=request, days_delta=days_delta)
+        context.update({'title': self.title})
 
-        # проверяем наличие объектов CarWashWorkDay на неделю вперёд, если их нет, то создаём и возвращаем списком
-        # создаём список CarWashWorkDay (today, tomorrow, after_tomorrow)
-        workday_for_button = prepare_workdays()[:3]
-        current_workday = workday_for_button[days_delta]  # текущий CarWashWorkDay
-        time_dict = FORMATTED_KEY[1:].copy()
-
-        # получаем список значений всех времен выбранного объекта CarWashWorkDay
-        registrations_workday = [
-            getattr(current_workday, 'time_' + time_dict.pop(0).replace(':', '')) for _ in range(22)
-        ]
-
-        # создаём список list_workday используя значения текущего CarWashWorkDay, где каждый элемент - словарь
-        # [{'time':'10:00', 'id': 1, 'client': 'Elon Musk', ..., 'total_cost': 750},
-        #  {'time':'10:30', 'id': 1, 'client': 'Elon Musk', ..., 'total_cost': 750},
-        #  {'time':'11:00', 'field': 'Свободно', 'free': True},
-        #  ...]
-        list_registrations_workday = []
-
-        for t, carwash_registration_data in zip(FORMATTED_KEY[1:], registrations_workday):
-            if carwash_registration_data:
-                res = {'time': t} | carwash_registration_data
-            else:
-                res = {'time': t, 'field': 'Свободно', 'free': True}
-
-            list_registrations_workday.append(res)
-
-        # создаём список full_list_registrations_workday и заполняем времена необходимые клиенту на выбранные услуги
-        # [{'time':'10:00', 'id': 1, 'client': 'Elon Musk', ..., 'total_cost': 750},
-        #  {'time':'10:30', 'field': car_model},
-        #  {'time':'11:00', 'field': 'Свободно', 'free': True},
-        #  ...]
-        iterator_list_registrations_workday = iter(list_registrations_workday)
-        full_list_registrations_workday = []
-
-        while iterator_list_registrations_workday:
-            another_time = next(iterator_list_registrations_workday, 0)
-            if another_time == 0:
-                break
-            full_list_registrations_workday.append(another_time)  # добавляем в список значение времени CarWashWorkDay
-            # в остальные времена добавляем марку автомобиля если это запись пользователя
-            if 'id' in another_time:
-                car_model = another_time['car_model']
-                for i in range(0, another_time['total_time'] - 30, 30):
-                    another_time = next(iterator_list_registrations_workday)
-                    registration_busy = {'time': another_time['time'], 'field': car_model}
-                    full_list_registrations_workday.append(registration_busy)
-
-        # показываем заказанные звонки, в течение 24 часов
-        datetime_now = timezone.now()
-        time_1_day_ago = datetime_now - timedelta(days=1)
-        requests_calls = CarWashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
-        attention = requests_calls.filter(processed=False)  # переменная указывающая на необработанные звонки
-
-        context = {
-            'title': self.title,
-            'menu': self.create_menu((0, 1)),
-            'full_list_registrations_workday': full_list_registrations_workday,
-            'staff': request.user.is_staff,
-            'button_date': {'today': workday_for_button[0].date,
-                            'tomorrow': workday_for_button[1].date,
-                            'after_tomorrow': workday_for_button[2].date,
-                            },
-            'days_delta': days_delta,
-            'request_calls': requests_calls,
-            'attention': attention,
-        }
-
-        return render(request, 'carwash/staff.html', context=context)
+        return render(request, template_name=self.template_name, context=context)
 
 
 class StaffCancelRegistrationView(Common, PermissionRequiredMixin, View):

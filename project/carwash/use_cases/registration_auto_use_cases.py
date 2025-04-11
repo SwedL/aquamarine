@@ -9,7 +9,6 @@ class RegistrationAutoGetUseCase:
     registration_auto_get_service = RegistrationAutoGetService()
 
     def execute(self, request: ASGIRequest) -> tuple[str, dict]:
-        # проверяем наличие объектов CarWashWorkDay на неделю вперёд и получаем их из функции
         week_workday_objects = prepare_workdays()
         template_name, context = self.registration_auto_get_service.get_context(
             user=request.user,

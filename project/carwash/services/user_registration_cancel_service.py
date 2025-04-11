@@ -2,7 +2,7 @@ from carwash.models import CarWashRegistration, CarWashWorkDay
 from django.http import Http404
 
 
-def carwash_user_registration_delete(request, registration_pk):
+def user_registration_cancel(request, registration_pk):
     """Функция для UserRegistrationsCancelView и UserRegistrationListAPIView - обработчик
      события 'отмены (удаления)' пользователем своей записи на автомоечный комплекс."""
     user_registration = CarWashRegistration.objects.filter(pk=registration_pk).first()

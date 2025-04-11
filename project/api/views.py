@@ -15,7 +15,7 @@ from carwash.serializers import (CarWashRegistrationSerializer,
                              CarWashRequestCallSerializer,
                              CarWashServiceSerializer)
 from carwash.views import RegistrationAutoView
-from carwash.services.carwash_user_registration_delete_service import carwash_user_registration_delete
+from carwash.services.user_registration_cancel_service import user_registration_cancel
 from users.models import User
 from users.serializers import UserSerializer
 
@@ -72,7 +72,7 @@ class UserRegistrationListAPIView(mixins.DestroyModelMixin,
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        carwash_user_registration_delete(request, kwargs['pk'])
+        user_registration_cancel(request, kwargs['pk'])
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
