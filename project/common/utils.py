@@ -57,6 +57,3 @@ class Common:
         context['staff'] = self.request.user.is_staff
 
         return context
-
-
-
