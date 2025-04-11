@@ -43,6 +43,13 @@ class RegistrationAutoPostService(Common):
                 )
                 new_registration.services.set(selected_services)  # добавляем в CarWashRegistration выбранные услуги
                 new_registration_data = new_registration.get_data()  # получаем данные CarWashRegistration в виде словаря
+                # если записывает сотрудник, то берутся данные 'comment_...'
+                match request.POST:
+                    case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
+                        new_registration_data['car_model'] = car_model
+                        new_registration_data['phone_number'] = phone_number
+                        new_registration_data['client'] = client
+
                 selected_workday = CarWashWorkDay.objects.select_for_update().filter(date=select_workday_date).first()
 
                 self.free_time_validator.validate(attributes={
@@ -50,12 +57,6 @@ class RegistrationAutoPostService(Common):
                     'process_times': process_times.copy(),
                     'total_time': total_time,
                 })
-                # если записывает сотрудник, то берутся данные 'comment_...'
-                match request.POST:
-                    case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
-                        new_registration_data['car_model'] = car_model
-                        new_registration_data['phone_number'] = phone_number
-                        new_registration_data['client'] = client
 
                 time_attributes = []
                 for _ in range(0, total_time, 30):

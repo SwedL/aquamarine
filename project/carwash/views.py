@@ -13,9 +13,9 @@ from django.views.generic import FormView, ListView
 from carwash.forms import CarWashRequestCallForm
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
-from common.utils import (Common, carwash_user_registration_delete,
-                          prepare_workdays, FORMATTED_KEY)
+from common.utils import Common, prepare_workdays, FORMATTED_KEY
 
+from carwash.services.carwash_user_registration_delete_service import carwash_user_registration_delete
 from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase, RegistrationAutoPostUseCase
 from users.permissions import staff_permission
 
@@ -140,7 +140,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
                     registration_busy = {'time': another_time['time'], 'field': car_model}
                     full_list_registrations_workday.append(registration_busy)
 
-        # показываем заказанные звонки, в течении 24 часов
+        # показываем заказанные звонки, в течение 24 часов
         datetime_now = timezone.now()
         time_1_day_ago = datetime_now - timedelta(days=1)
         requests_calls = CarWashRequestCall.objects.filter(Q(created__gt=time_1_day_ago) & Q(created__lte=datetime_now))
