@@ -1,7 +1,8 @@
 from django.db.models import QuerySet
 
 from carwash.models import CarWashService
-from carwash.serializers import CarWashServiceSerializer, CarWashWorkDaySerializer
+from carwash.serializers import (CarWashServiceSerializer,
+                                 CarWashWorkDaySerializer)
 
 
 class APIRegistrationAutoGetService:

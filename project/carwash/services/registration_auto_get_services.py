@@ -1,8 +1,8 @@
 from django.db.models import QuerySet
 
 from carwash.models import CarWashService
-from users.models import User
 from common.utils import Common
+from users.models import User
 
 
 class RegistrationAutoGetService(Common):

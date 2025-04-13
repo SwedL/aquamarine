@@ -1,7 +1,9 @@
 from rest_framework.request import Request
 
-from api.carwash.services.api_registration_auto_get_services import APIRegistrationAutoGetService
-from api.carwash.services.api_registration_auto_post_services import APIRegistrationAutoPostService
+from api.carwash.services.api_registration_auto_get_services import \
+    APIRegistrationAutoGetService
+from api.carwash.services.api_registration_auto_post_services import \
+    APIRegistrationAutoPostService
 from carwash.serializers import RegistrationSerializer
 from common.utils import prepare_workdays
 

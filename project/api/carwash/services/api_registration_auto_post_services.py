@@ -6,10 +6,10 @@ from django.db.models import QuerySet
 from rest_framework.request import Request
 
 from carwash.exceptions.exceptions import TimeAlreadyTakenException
-from carwash.models import CarWashService, CarWashRegistration, CarWashWorkDay
+from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from carwash.serializers import CarWashServiceSerializer
-from common.utils import FORMATTED_KEY
 from carwash.services.validators import FreeTimeCarWashWorkDayValidatorService
+from common.utils import FORMATTED_KEY
 
 
 class APIRegistrationAutoPostService:
@@ -39,8 +39,10 @@ class APIRegistrationAutoPostService:
                     total_time=total_time,
                     total_cost=total_cost,
                 )
-                new_registration.services.set(selected_services)  # добавляем в CarWashRegistration выбранные услуги
-                new_registration_data = new_registration.get_data()  # получаем данные CarWashRegistration в виде словаря
+                # добавляем в CarWashRegistration выбранные услуги
+                new_registration.services.set(selected_services)
+                # получаем данные CarWashRegistration в виде словаря
+                new_registration_data = new_registration.get_data()
                 selected_workday = CarWashWorkDay.objects.select_for_update().filter(date=select_workday_date).first()
 
                 self.free_time_validator.validate(attributes={
@@ -60,12 +62,12 @@ class APIRegistrationAutoPostService:
                 new_registration.save()
 
                 context = {'title': 'Запись зарегистрирована',
-                 'selected_services': CarWashServiceSerializer(selected_services, many=True).data,
-                 'selected_date': selected_date,
-                 'selected_time': selected_time,
-                 'total_time': total_time,
-                 'total_cost': f'{total_cost} р.',
-                 }
+                           'selected_services': CarWashServiceSerializer(selected_services, many=True).data,
+                           'selected_date': selected_date,
+                           'selected_time': selected_time,
+                           'total_time': total_time,
+                           'total_cost': f'{total_cost} р.',
+                           }
 
                 return context
         except TimeAlreadyTakenException as e:

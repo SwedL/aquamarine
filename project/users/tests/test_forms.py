@@ -2,8 +2,8 @@ from django.test import TestCase
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
-                           UserLoginForm, UserProfileForm,
-                           UserSetNewPasswordForm)
+                         UserLoginForm, UserProfileForm,
+                         UserSetNewPasswordForm)
 from users.models import User
 
 
@@ -42,7 +42,7 @@ class UserProfileFormTestCase(TestCase):
             'fio': 'Иванов Петр Николаевич',
             'phone_number': '81234567890',
             'car_model': 'Kia Sportage',
-            }
+        }
         form = UserProfileForm(data=form_data)
 
         self.assertTrue(form.is_valid())
@@ -66,7 +66,7 @@ class UserProfileFormTestCase(TestCase):
             'fio': 'Иванов Петр Николаевич',
             'phone_number': '91234567890',
             'car_model': 'Kia Sportage',
-            }
+        }
         form = UserProfileForm(data=form_data)
 
         self.assertFalse(form.is_valid())

@@ -3,6 +3,7 @@ from typing import Any
 from carwash.exceptions.exceptions import TimeAlreadyTakenException
 from carwash.models import CarWashWorkDay
 
+
 class FreeTimeCarWashWorkDayValidatorService:
     @staticmethod
     def validate(attributes: dict[str, Any]) -> None:

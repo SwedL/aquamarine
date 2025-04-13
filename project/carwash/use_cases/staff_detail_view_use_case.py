@@ -1,7 +1,7 @@
 from django.core.handlers.asgi import ASGIRequest
 
 from carwash.services.staff_detail_view_service import StaffDetailViewService
-from common.utils import prepare_workdays, delete_old_record
+from common.utils import delete_old_record, prepare_workdays
 
 
 class StaffDetailViewUseCase:

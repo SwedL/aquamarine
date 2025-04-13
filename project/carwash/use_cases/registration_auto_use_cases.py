@@ -1,7 +1,9 @@
 from django.core.handlers.asgi import ASGIRequest
 
-from carwash.services.registration_auto_get_services import RegistrationAutoGetService
-from carwash.services.registration_auto_post_services import RegistrationAutoPostService
+from carwash.services.registration_auto_get_services import \
+    RegistrationAutoGetService
+from carwash.services.registration_auto_post_services import \
+    RegistrationAutoPostService
 from common.utils import prepare_workdays
 
 

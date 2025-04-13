@@ -1,7 +1,7 @@
 from django.core.handlers.asgi import ASGIRequest
+from django.http import Http404
 
 from carwash.models import CarWashRegistration, CarWashWorkDay
-from django.http import Http404
 
 
 def user_registration_cancel(request: ASGIRequest, registration_id: int) -> None:

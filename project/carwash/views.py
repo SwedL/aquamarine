@@ -6,19 +6,22 @@ from django.core.handlers.asgi import ASGIRequest
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
 from django.views import View
 from django.views.generic import FormView, ListView
 
 from carwash.forms import CarWashRequestCallForm
-from carwash.models import CarWashRegistration, CarWashRequestCall, CarWashService
-from carwash.services.request_call_processing_service import request_call_processing
-from carwash.services.staff_registration_cancel_service import staff_registration_cancel
+from carwash.models import (CarWashRegistration, CarWashRequestCall,
+                            CarWashService)
+from carwash.services.request_call_processing_service import \
+    request_call_processing
+from carwash.services.staff_registration_cancel_service import \
+    staff_registration_cancel
+from carwash.services.user_registration_cancel_service import \
+    user_registration_cancel
+from carwash.use_cases.registration_auto_use_cases import (
+    RegistrationAutoGetUseCase, RegistrationAutoPostUseCase)
 from carwash.use_cases.staff_detail_view_use_case import StaffDetailViewUseCase
 from common.utils import Common
-
-from carwash.services.user_registration_cancel_service import user_registration_cancel
-from carwash.use_cases.registration_auto_use_cases import RegistrationAutoGetUseCase, RegistrationAutoPostUseCase
 from users.permissions import staff_permission
 
 
@@ -95,7 +98,7 @@ class StaffDetailView(Common, PermissionRequiredMixin, View):
     staff_detail_view_use_case = StaffDetailViewUseCase()
     template_name = 'carwash/staff.html'
 
-    def get(self, request: ASGIRequest, days_delta: int=0):
+    def get(self, request: ASGIRequest, days_delta: int = 0):
         context = self.staff_detail_view_use_case.execute(request=request, days_delta=days_delta)
         context.update({'title': self.title})
 

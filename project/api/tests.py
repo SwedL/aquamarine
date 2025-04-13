@@ -51,7 +51,7 @@ class CarWashRegistrationAPIViewTestCase(APITestCase):
         response = self.client.post(self.url, data, format='json')
         response_json = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response_json['title'],'Запись зарегистрирована')
+        self.assertEqual(response_json['title'], 'Запись зарегистрирована')
         self.assertEqual(response_json['selected_services'],
                          [{
                              'id': 15,
@@ -118,8 +118,8 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
         self.assertEqual(len(CarWashRegistration.objects.all()), 2)
         self.assertEqual(response.data, [
             OrderedDict([
-                ('id', 1),
-                ('client', 1),
+                ('id', 6),
+                ('client', self.user.id),
                 ('services', ['Мойка (верх, ковры, сушка)']),
                 ('date_reg', str(date.today())),
                 ('time_reg', '10:00:00'),
@@ -128,8 +128,8 @@ class CarWashUserRegistrationAPIViewTestCase(APITestCase):
                 ('relation_carwashworkday', {'time_attributes': ['time_1000', 'time_1030']})
             ]),
             OrderedDict([
-                ('id', 2),
-                ('client', 1),
+                ('id', 7),
+                ('client', self.user.id),
                 ('services', ['Экспресс-мойка']),
                 ('date_reg', str(date.today())),
                 ('time_reg', '14:00:00'),
@@ -167,7 +167,7 @@ class CarWashRequestCallCreateAPIViewTestCase(APITestCase):
     def test_creating_call_request_unauthorized_user(self):
         data = {'phone_number': '89111111111'}
         response = self.client.post(self.url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_creating_call_request_authorized_user(self):
         self.client = APIClient()

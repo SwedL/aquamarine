@@ -6,9 +6,9 @@ from django.db import transaction
 from django.db.models import QuerySet
 
 from carwash.exceptions.exceptions import TimeAlreadyTakenException
-from carwash.models import CarWashService, CarWashWorkDay, CarWashRegistration
-from common.utils import Common, FORMATTED_KEY
+from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from carwash.services.validators import FreeTimeCarWashWorkDayValidatorService
+from common.utils import FORMATTED_KEY, Common
 
 
 class RegistrationAutoPostService(Common):
@@ -42,11 +42,17 @@ class RegistrationAutoPostService(Common):
                     total_time=total_time,
                     total_cost=total_cost,
                 )
-                new_registration.services.set(selected_services)  # добавляем в CarWashRegistration выбранные услуги
-                new_registration_data = new_registration.get_data()  # получаем данные CarWashRegistration в виде словаря
+                # добавляем в CarWashRegistration выбранные услуги
+                new_registration.services.set(selected_services)
+                # получаем данные CarWashRegistration в виде словаря
+                new_registration_data = new_registration.get_data()
                 # если записывает сотрудник, то берутся данные 'comment_...'
                 match request.POST:
-                    case {'comment_car_model': car_model, 'comment_phone_number': phone_number, 'comment_client': client}:
+                    case {
+                        'comment_car_model': car_model,
+                        'comment_phone_number': phone_number,
+                        'comment_client': client,
+                    }:
                         new_registration_data['car_model'] = car_model
                         new_registration_data['phone_number'] = phone_number
                         new_registration_data['client'] = client
@@ -70,8 +76,10 @@ class RegistrationAutoPostService(Common):
                 new_registration.relation_carwashworkday = {'time_attributes': time_attributes}
                 new_registration.save()
 
-                normal_format_selected_date = selected_date.split()  # создаём список данных из выбранной даты "2023 09 10"
-                normal_format_selected_date.reverse()  # разворачиваем список для удобного вывода информации пользователю
+                # создаём список данных из выбранной даты "2023 09 10"
+                normal_format_selected_date = selected_date.split()
+                # разворачиваем список для удобного вывода информации пользователю
+                normal_format_selected_date.reverse()
 
                 normal_total_time = f'{total_time // 60} ч.  {total_time - total_time // 60 * 60} мин.'
 

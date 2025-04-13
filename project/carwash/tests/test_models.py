@@ -3,7 +3,7 @@ from datetime import date, time, timedelta
 from django.test import TestCase
 
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
-                             CarWashService, CarWashWorkDay)
+                            CarWashService, CarWashWorkDay)
 from users.models import User
 
 
