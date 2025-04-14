@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
-                             CarWashService, CarWashWorkDay)
+                            CarWashService, CarWashWorkDay)
 
 
 @admin.register(CarWashService)
@@ -12,7 +12,6 @@ class CarWashServiceAdmin(admin.ModelAdmin):
 
 @admin.register(CarWashWorkDay)
 class CarWashWorkDayAdmin(admin.ModelAdmin):
-
     readonly_fields = ('date',)
     list_display = ('date', 'pk')
     search_fields = ('date',)
@@ -21,7 +20,6 @@ class CarWashWorkDayAdmin(admin.ModelAdmin):
 
 @admin.register(CarWashRegistration)
 class CarWashRegistrationAdmin(admin.ModelAdmin):
-
     list_display = ('id', 'client', 'date_reg', 'time_reg')
     fields = (('date_reg', 'time_reg',), 'services', 'relation_carwashworkday')
     readonly_fields = ('client', 'date_reg', 'time_reg', 'services')
@@ -31,7 +29,6 @@ class CarWashRegistrationAdmin(admin.ModelAdmin):
 
 @admin.register(CarWashRequestCall)
 class CarWashCallMeAdmin(admin.ModelAdmin):
-
     list_display = ('phone_number', 'processed', 'created')
     ordering = ('-created',)
 

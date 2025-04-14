@@ -55,7 +55,7 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', 'fio', 'car_type', 'phone_number', 'is_admin')
+    list_display = ('email', 'fio', 'car_type', 'phone_number', 'is_admin', 'is_staff')
     list_filter = ('is_admin',)
     readonly_fields = ('user_creation_date', 'last_login')
     fieldsets = (
@@ -83,4 +83,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
-admin.site.unregister(Group)
+# admin.site.unregister(Group)

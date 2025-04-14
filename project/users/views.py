@@ -6,10 +6,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
 
-from common.views import Common
+from common.utils import Common
 from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
-                           UserLoginForm, UserProfileForm,
-                           UserSetNewPasswordForm)
+                         UserLoginForm, UserProfileForm,
+                         UserSetNewPasswordForm)
 from users.models import User
 
 
@@ -19,7 +19,7 @@ class UserLoginView(Common, LoginView):
     form_class = UserLoginForm
     template_name = 'users/login.html'
     title = 'Авторизация'
-    menu = (0,)
+    menu_tabs = (0,)
 
 
 class UserProfileView(LoginRequiredMixin, Common, UpdateView):
@@ -29,7 +29,7 @@ class UserProfileView(LoginRequiredMixin, Common, UpdateView):
     form_class = UserProfileForm
     template_name = 'users/profile.html'
     title = 'Настройка профиля'
-    menu = (0, 1)
+    menu_tabs = (0, 1)
 
     def get_success_url(self):
         return reverse_lazy('users:profile')
@@ -45,7 +45,7 @@ class UserPasswordChangeView(Common, PasswordChangeView):
     form_class = MyPasswordChangeForm
     template_name = 'users/password-change.html'
     title = 'Смена пароля'
-    menu = (0, 1)
+    menu_tabs = (0, 1)
 
     def get_success_url(self):
         return reverse('users:password_change_done')
@@ -71,11 +71,11 @@ class UserPasswordResetConfirmView(Common, SuccessMessageMixin, PasswordResetCon
     success_url = reverse_lazy('users:login')
     success_message = 'Пароль успешно изменен.\nМожете авторизоваться на сайте.'
     title = 'Установка нового пароля'
-    menu = (0, 1)
+    menu_tabs = (0, 1)
 
 
 class PasswordChangeDoneTemplateView(Common, TemplateView):
     """Представление для подтверждения успешной смены пароля пользователя"""
 
     template_name = 'users/password-change-done.html'
-    menu = (0, 1)
+    menu_tabs = (0, 1)

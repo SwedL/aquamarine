@@ -3,7 +3,7 @@ from datetime import date, time, timedelta
 from django.test import TestCase
 
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
-                             CarWashService, CarWashWorkDay)
+                            CarWashService, CarWashWorkDay)
 from users.models import User
 
 
@@ -252,8 +252,8 @@ class CarWashRequestCallModelTestCase(TestCase):
         filed_label = self.request_call._meta.get_field('phone_number').verbose_name
         max_length = self.request_call._meta.get_field('phone_number').max_length
 
-        self.assertEquals(filed_label, 'номер телефона')
-        self.assertEquals(max_length, 11)
+        self.assertEqual(filed_label, 'номер телефона')
+        self.assertEqual(max_length, 11)
 
     def test_request_call_get_all_records(self):
         # Проверка количества созданных объектов модели CarWashRequestCall в бд

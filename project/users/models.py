@@ -2,6 +2,8 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
 
+from users.permissions import staff_permission
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -71,20 +73,24 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Пользователи'
 
     def has_perm(self, perm, obj=None):
-        "Имеет ли пользователь определенное разрешение?"
+        """Имеет ли пользователь определенное разрешение?"""
         # Самый простой ответ: Да, всегда.
-        return True
+        if self.is_admin:
+            return True
+        return super(AbstractBaseUser, self).has_perm(perm)
 
     def has_module_perms(self, app_label):
-        "Есть ли у пользователя разрешения на просмотр приложения app_label?"
+        """Есть ли у пользователя разрешения на просмотр приложения app_label?"""
         # Самый простой ответ: Да, всегда.
-        return True
+        return self.is_admin
 
     @property
     def is_staff(self):
         """Является ли пользователь сотрудником?"""
         # Самый простой ответ: все администраторы — сотрудники.
-        return self.is_admin
+        if self.is_admin:
+            return True
+        return super(AbstractBaseUser, self).has_perm(staff_permission)
 
     def __str__(self):
         return self.fio

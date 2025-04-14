@@ -5,4 +5,4 @@
 .venv
 */db.sqlite3
 */aquamarine_cache
-*/__pycache__
+__pycache__

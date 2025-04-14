@@ -3,14 +3,15 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'carwash/css/request-call-done.css' %}" xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="{% static 'carwash/css/registration-done.css' %}">
 {% endblock %}
 
 {% block content %}
-    <div class="space_background">
-        <div class="messages-container">                
-            <div class="messages-container__text">Спасибо за обращение.
-                    <br>Администратор свяжется с вами в ближайшее время
+    <div class="main-section">
+        <div class="main-section__container">
+            <div class="main-section__message">
+                <p class="main-section__title">Спасибо за обращение</p><br>
+                <p class="main-section__date">Администратор свяжется с вами в ближайшее время</p>
             </div>
         </div>
     </div>

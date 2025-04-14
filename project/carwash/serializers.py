@@ -12,8 +12,8 @@ class CarWashServiceSerializer(serializers.ModelSerializer):
 
 class RegistrationSerializer(serializers.Serializer):
     regex = r'2\d{3}\s\d\d\s\d\d,\d\d:\d\d'
-    choice_date_and_time = serializers.RegexField(regex, max_length=16, min_length=16)
-    services_list = serializers.CharField(min_length=1)
+    selected_date_and_time = serializers.RegexField(regex, max_length=16, min_length=16)
+    services_ids = serializers.ListField(child=serializers.IntegerField(min_value=0, max_value=100), allow_empty=False)
 
     def is_valid(self, *, raise_exception=False):
         super().is_valid()

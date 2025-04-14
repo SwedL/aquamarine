@@ -5,19 +5,20 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, mixins, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
+from api.carwash.use_cases.api_registration_auto_use_cases import (
+    APIRegistrationAutoGetUseCase, APIRegistrationAutoPostUseCase)
 from carwash.models import CarWashRegistration, CarWashService
 from carwash.serializers import (CarWashRegistrationSerializer,
-                             CarWashRequestCallSerializer,
-                             CarWashServiceSerializer,
-                             CarWashWorkDaySerializer,
-                             RegistrationSerializer)
+                                 CarWashRequestCallSerializer,
+                                 CarWashServiceSerializer)
+from carwash.services.user_registration_cancel_service import \
+    user_registration_cancel
 from carwash.views import RegistrationAutoView
-from common.views import (carwash_user_registration_delete,
-                          create_and_get_week_workday)
 from users.models import User
 from users.serializers import UserSerializer
 
@@ -30,46 +31,31 @@ class CarWashServiceListAPIView(generics.ListAPIView):
 
 class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
     permission_classes = (IsAuthenticated,)
+    api_registration_auto_get_use_cases = APIRegistrationAutoGetUseCase()
+    api_registration_auto_post_use_cases = APIRegistrationAutoPostUseCase()
 
     @swagger_auto_schema(operation_description='Получение списка всех услуг компании, \n'
                                                'а также информации доступных дней и времени.')
     def get(self, request):
-        c = CarWashService.objects.all()
-        w = create_and_get_week_workday()
-        return Response({'services': CarWashServiceSerializer(c, many=True).data,
-                         'workdays_week': CarWashWorkDaySerializer(w, many=True).data})
+        context = self.api_registration_auto_get_use_cases.execute()
+        return Response(context)
 
     @swagger_auto_schema(method='post',
                          operation_description='Запись автомобиля на выбранные дату, время и id услуг \n'
-                                               '"choice_date_and_time" формат "YYYY MM DD,HH:MM"\n'
-                                               '"services_list" формат "1 2 3"',
+                                               '"selected_date_and_time" формат "YYYY MM DD,HH:MM"\n'
+                                               '"services_ids" формат "1 2 3"',
                          request_body=openapi.Schema(properties={
-                             'choice_date_and_time': openapi.Schema(type=openapi.TYPE_STRING,
-                                                                    pattern=r'2\d{3}\s\d\d\s\d\d,\d\d:\d\d'),
-                             'services_list': openapi.Schema(type=openapi.TYPE_STRING,
-                                                             pattern=r'[\d{1,2}\s]{1,17}'),
+                             'selected_date_and_time': openapi.Schema(type=openapi.TYPE_STRING,
+                                                                      pattern=r'2\d{3}\s\d\d\s\d\d,\d\d:\d\d'),
+                             'services_ids': openapi.Schema(type=openapi.TYPE_STRING,
+                                                            pattern=r'[\d{1,2}\s]{1,17}'),
                          },
                              type=openapi.TYPE_OBJECT)
                          )
     @action(methods=['post'], detail=False)
-    def post(self, request, *args, **kwargs):
-        serializer = RegistrationSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        request.data['services_list'] = list(map(int, request.data['services_list'].split()))
-
-        context = super(CarWashRegistrationAPIView, self).post(request)
-
-        if context['title'] == 'Ошибка записи':
-            return Response({'title': 'Ошибка записи',
-                             'message': 'Время которые вы выбрали уже занято. Попробуйте выбрать другое время'})
-
-        return Response({'title': 'Запись зарегистрирована',
-                         'choice_services': CarWashServiceSerializer(context['choice_services'], many=True).data,
-                         'normal_format_choicen_date': context['normal_format_choicen_date'],
-                         'choice_time': context['choice_time'],
-                         'total_time': context['total_time'],
-                         'total_cost': context['total_cost'],
-                         })
+    def post(self, request: Request, *args, **kwargs):
+        context = self.api_registration_auto_post_use_cases.execute(request=request)
+        return Response(context)
 
 
 class UserRegistrationListAPIView(mixins.DestroyModelMixin,
@@ -89,7 +75,7 @@ class UserRegistrationListAPIView(mixins.DestroyModelMixin,
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        carwash_user_registration_delete(request, kwargs['pk'])
+        user_registration_cancel(request, kwargs['pk'])
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
