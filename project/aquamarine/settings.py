@@ -95,11 +95,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'aquamarine.wsgi.application'
 ASGI_APPLICATION = 'aquamarine.asgi.application'
 
+REDIS_HOST = environ.get('REDIS_HOST')
+REDIS_PORT = environ.get('REDIS_PORT')
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [('localhost', 6379)],
+            "hosts": [(REDIS_HOST, REDIS_PORT)],
         },
     },
 }
