@@ -96,8 +96,10 @@
 {% endblock %}
 {% block script %}
     <script>
+        protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
         base_url = `${window.location.hostname}:${window.location.port}`
-        const websocket = new WebSocket(`ws://${base_url}`)
+        const websocket = new WebSocket(`${protocol}://${base_url}`);
+
         websocket.onopen = function (event) {
             console.log('client says connection opened')
             websocket.send("Client sends Welcome")

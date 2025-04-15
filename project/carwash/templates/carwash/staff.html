@@ -105,8 +105,9 @@
 
 {% block script %}
     <script>
+        protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
         base_url = `${window.location.host}${window.location.pathname}`
-        const chatSocket = new WebSocket(`ws://${base_url}`);
+        const chatSocket = new WebSocket(`${protocol}://${base_url}`);
 
         chatSocket.onopen = function(e) {
             console.log("connected")
