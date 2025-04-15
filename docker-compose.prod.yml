@@ -12,6 +12,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - backend
+    restart: always
 
   project:
     build:
@@ -40,26 +41,40 @@ services:
     depends_on:
       - postgres
       - redis
+    restart: always
 
   nginx:
-    build: ./nginx/dev
+    build: ./nginx/prod
     container_name: nginx-server
-    restart: always
     networks:
       - backend
     expose:
       - 8088
+      - 443
     volumes:
       - static:/app/static
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     ports:
       - "80:8088"
+      - "443:443"
     depends_on:
       - project
+    restart: always
 
   redis:
     image: redis:latest
     networks:
       - backend
+
+  certbot:
+      image: certbot/certbot
+      volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+      command: certonly --webroot --webroot-path=/var/www/certbot/ --email ваш@email --agree-tos --no-eff-email -d имя_вашего_домена ->
+      depends_on:
+      - nginx
 
 networks:
   backend:
