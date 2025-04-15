@@ -1,15 +1,15 @@
 <p align="center"><img src="https://i.ibb.co/xz62C9w/Main-logo.png" alt="Main-logo" border="0" width="300"></p>
 
 <p align="center">
-   <img src="https://img.shields.io/badge/Pyhton-3.11-orange)" alt="Python Version">
-   <img src="https://img.shields.io/badge/Django-4.2.6-E86F00" alt="Django Version">
-   <img src="https://img.shields.io/badge/DRF-3.14.0-blue"
+   <img src="https://img.shields.io/badge/Pyhton-3.12-orange)" alt="Python Version">
+   <img src="https://img.shields.io/badge/Django-5.2-E86F00" alt="Django Version">
+   <img src="https://img.shields.io/badge/DRF-3.16.0-blue"
    alt="DRF">
 </p>
 
 <p>Web-приложение обеспечивающее возможность онлайн записи клиентов на услуги автомоечного комплекса и администрирования работы компании.</p>
 
-Рабочую версию сайта вы можете посмотреть по ссылке [aqua-marine.pro](https://aqua-marine.pro)
+Рабочую версию сайта вы можете посмотреть по ссылке [https://aquamarine-pro.ru](https://aquamarine-pro.ru)
 
 ## Описание работы приложения
 Сайт состоит из четырёх независимых интерфейсов. 
@@ -93,77 +93,120 @@
 
 В связи с пожеланием заказчика сайта, регистрация новых пользователей возможна только непосредственно администратором.
 
-## Установка
+## Запуск сервера:
 
-Предварительно создайте директорию для приложения (some directory)<br>
-Клонируйте код репозитория в созданную директорию (в some directory):
-```sh
+### Локально в Docker контейнере 
+
+- Склонируйте репозиторий:
+```
 git clone https://github.com/SwedL/aquamarine.git
 ```
-Также в каталоге проекта (some directory) создайте виртуальное окружение, выполнив команду:
-
-- Windows: `python -m venv venv`
-- Linux: `python3 -m venv venv`
-
-Активируйте его командой:
-
-- Windows: `.\venv\Scripts\activate`
-- Linux: `source venv/bin/activate`
-
-
-Перейдите в каталог aquamarine и установите зависимости в виртуальное окружение:
-```sh
+ - Перейдите в каталог проекта
+```
 cd aquamarine
 ```
-```sh
-pip install -r requirements.txt
+- Установите переменные окружения. Создайте файл .env и скопируйте содержимое из .env.dev.example, подставьте свои значения.
+- Запустите контейнеры.
+```
+docker compose up --build
+```
+Создайте модель суперпользователя
+- Войдите в терминал контейнера с помощью команды:
+```
+docker exec -it project bash
+```
+- Создайте суперпользователя (<ins>login: эл.почта</ins>):
+```
+python3 manage.py createsuperuser
 ```
 
-Создайте файл `.env` в каталоге
-`aquamarine/` и положите туда такой код:
+### На удалённом сервере в Docker контейнере 
 
-!** Важно**: SECRET_KEY замените на свой
-```sh
-DEBUG=True
-SECRET_KEY='vu1c-=svhigsn81!1doknfa2zxchlq&^37vdyqgc165a8wswjr'
-CACHE_FILE=aquamarine_cache
+- Склонируйте репозиторий в директорию /home:
 ```
-Для обеспечения оптимальной производительности и межпроцессорного обмена сообщениями канальных слоёв необходимо установить Redis  
-https://redis.io/docs/install/install-redis/
-
-Создайте файл базы данных SQLite и проведите миграции моделей командой:
-```sh
-python manage.py migrate
+git clone https://github.com/SwedL/aquamarine.git
+```
+ - Перейдите в каталог проекта
+```
+cd aquamarine
+```
+- Установите переменные окружения. Создайте файл .env и скопируйте содержимое из .env.prod.example, подставьте свои значения.
+- Создайте директории для certbot, выполнив:
+```
+mkdir -p certbot/conf
+mkdir certbot/www
+```
+- Измените в docker-compose.prod.yml в строке 75 ваш <ins>email</ins> и <ins>ваш домен</ins>, для получения SSL-сертификата от Let's Encrypt
+- Перейдите в директорию nginx/prod/default.conf и в строках 4, 17, 19, 20 установите значение <ins>вашего домена</ins>
+- Запустите контейнеры.
+```
+docker compose -f docker-compose.prod.yml up --build
+```
+Создайте модель суперпользователя
+- Войдите в терминал контейнера с помощью команды:
+```
+docker exec -it project bash
+```
+- Создайте суперпользователя (<ins>login: эл.почта</ins>):
+```
+python3 manage.py createsuperuser
 ```
 
-Для наполнения базы данных начальным списком услуг, загрузите фикстуру командой:
+## Структура проекта
+Проект организован в соответствии с принципами слоистой архитектуры. Архитектура проекта:
 
-- Windows: `python manage.py loaddata carwash\fixtures\services.json`
-- Linux: `python manage.py loaddata carwash/fixtures/services.json`
-
-Создайте модель суперпользователя (<ins>login: эл.почта</ins>) командой:
-```sh
-python manage.py createsuperuser
+```
+aquamarine/
+├── nginx/               # Директория конфигурационных файлов обратного прокси сервера           
+│   └── ...   
+└── project/             # Директория Django проекта
+    ├── api/             # API endpoints
+    │   └── carwash/   
+    │       ├── services/  # Сервисы API - выполняют операции над данными    
+    │       ├── use_cases/ # Юзкейсы API - бизнес-логика на уровне сценариев использования   
+    │       └── ...   
+    ├── aquamarine/      # Django проект aquamarine
+    │   └── ... 
+    ├── carwash/         # Приложение carwash
+    │   ├── exceptions   # Исключения
+    │   ├── fixtures/    # Начальные данные для заполнения БД
+    │   ├── services/    # Сервисы - выполняют операции над данными
+    │   ├── tests/       # Тесты шаблонов, форм, представлений
+    │   ├── use_cases/   # Юзкейсы - бизнес-логика на уровне сценариев использования
+    │   ├── consumers.py # Обработка асинхронных событий websocket соединений
+    │   ├── models.py    # Модели приложения
+    │   ├── routing.py   # Маршрутизация асинхронных событий websocket соединений
+    │   ├── serializers.py # Сериализаторы моделей приложения и входных данных API
+    │   └── ...
+    ├── common/          # Общие классы, методы, объекты
+    │   └── utils.py     
+    ├── templates/       # Шаблоны для собственной настройки интерфейса администратора
+    ├── users/           # Приложение users
+    │   ├── permissions/ # Разрешения для пользователей
+    │   ├── tests        # Тесты шаблонов, форм, представлений
+    │   ├── models.py    # Модели приложения
+    │   ├── serializers.py # Сериализаторы моделей приложения
+    │   └── ...
+    ├── Dockerfile    
+    ├── manage.py    
+    └── pyproject.toml   # Конфигурация Poetry    
 ```
 
-Запустите сервер:
-```sh
-python manage.py runserver
-```
-
-### REST API:
-Реализован с использованием Django Rest Framework. <br>
-С документацией API, можно подробно ознакомится по адресу URL:
-http://localhost:8000/swaggerui/
+### Документация:
+Документация API доступна по адресу: http://localhost:8000/swaggerui/
 
 ### Тестирование
 
 Проект покрыт различными тестами, которые проверяют его работоспособность.<br>
-Тесты запускаются командой:
-```sh
+При локальном запуске тесты запускаются командой:
+```
 python manage.py test
 ```
+При запуске в Docker контейнере предварительно войдите в терминал контейнера:
+```
+docker exec -it project bash
+```
+
 ## Автор проекта
 
 * **Осминин Алексей** - [SwedL](https://github.com/SwedL)
-
