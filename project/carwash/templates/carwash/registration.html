@@ -3,8 +3,11 @@
 {% load static %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'carwash/css/registration.css' %}">
-
+    {% if staff %}
+        <link rel="stylesheet" href="{% static 'carwash/css/registration-staff.css' %}">
+    {% else %}
+        <link rel="stylesheet" href="{% static 'carwash/css/registration.css' %}">
+    {% endif %}
 {% endblock %}
 
 {% block content %}    

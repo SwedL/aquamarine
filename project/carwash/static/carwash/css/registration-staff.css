@@ -244,7 +244,7 @@ tr:hover {
   /* line 165, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
   .registration {
     background-size: 100% 100%;
-    min-height: 1280px;
+    min-height: 1385px;
   }
   /* line 168, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
   .registration__form {
@@ -387,7 +387,7 @@ tr:hover {
 
 @media (max-width: 365px) {
   /* line 260, ../../Users/Алексей/PycharmProjects/aquamarine-server/aquamarine/carwash/static/carwash/sass/registration.sass */
-   .registration__box-services {
+  .registration__box-services {
     height: 575px;
   }
   .services__border {
