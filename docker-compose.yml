@@ -12,6 +12,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - backend
+    restart: always
 
   project:
     build:
@@ -40,11 +41,11 @@ services:
     depends_on:
       - postgres
       - redis
+    restart: always
 
   nginx:
     build: ./nginx/dev
     container_name: nginx-server
-    restart: always
     networks:
       - backend
     expose:
@@ -55,11 +56,13 @@ services:
       - "80:8088"
     depends_on:
       - project
+    restart: always
 
   redis:
     image: redis:latest
     networks:
       - backend
+    restart: always
 
 networks:
   backend:

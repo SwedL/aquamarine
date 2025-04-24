@@ -66,6 +66,7 @@ services:
     image: redis:latest
     networks:
       - backend
+    restart: always
 
   certbot:
       image: certbot/certbot

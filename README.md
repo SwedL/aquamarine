@@ -136,7 +136,7 @@ cd aquamarine
 mkdir -p certbot/conf
 mkdir certbot/www
 ```
-- Измените в docker-compose.prod.yml в строке 75 ваш <ins>email</ins> и <ins>ваш домен</ins>, для получения SSL-сертификата от Let's Encrypt
+- Измените в docker-compose.prod.yml в строке 76 ваш <ins>email</ins> и <ins>ваш домен</ins>, для получения SSL-сертификата от Let's Encrypt
 - Перейдите в директорию nginx/prod/default.conf и в строках 4, 17, 19, 20 установите значение <ins>вашего домена</ins>
 - Запустите контейнеры.
 ```
