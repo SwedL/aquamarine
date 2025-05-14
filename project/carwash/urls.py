@@ -1,12 +1,11 @@
 """Определяет схемы URL для carwash"""
 
-from django.urls import path
-
 from carwash.views import (IndexListView, RegistrationAutoView,
                            RequestCallFormView, RequestCallProcessingView,
                            StaffCancelRegistrationView, StaffDetailView,
                            UserRegistrationsCancelView,
                            UserRegistrationsListView)
+from django.urls import path
 
 app_name = 'carwash'
 

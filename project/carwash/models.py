@@ -5,7 +5,6 @@ from channels.layers import get_channel_layer
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
-
 from users.models import User
 
 

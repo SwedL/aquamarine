@@ -2,11 +2,10 @@ from datetime import date, time, timedelta
 from http import HTTPStatus
 
 from bs4 import BeautifulSoup
+from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 from django.urls import reverse
-
-from carwash.models import CarWashRegistration, CarWashService, CarWashWorkDay
 from users.models import User
 
 from .test_models import calculate_total_time_and_total_cost

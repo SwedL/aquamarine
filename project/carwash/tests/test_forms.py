@@ -1,6 +1,5 @@
-from django.test import TestCase
-
 from carwash.forms import CarWashRequestCallForm
+from django.test import TestCase
 
 
 class RequestCallFormViewTestCase(TestCase):

@@ -2,7 +2,6 @@
 
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-
 from users.views import (PasswordChangeDoneTemplateView,
                          UserForgotPasswordView, UserLoginView,
                          UserPasswordChangeView, UserPasswordResetConfirmView,

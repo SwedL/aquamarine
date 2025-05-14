@@ -4,7 +4,6 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        UserChangeForm, password_validation)
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
-
 from users.models import User
 
 

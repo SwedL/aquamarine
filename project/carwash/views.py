@@ -1,14 +1,5 @@
 from datetime import date
 
-from django.contrib.auth.mixins import (LoginRequiredMixin,
-                                        PermissionRequiredMixin)
-from django.core.handlers.asgi import ASGIRequest
-from django.http import HttpResponseNotFound, HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-from django.views import View
-from django.views.generic import FormView, ListView
-
 from carwash.forms import CarWashRequestCallForm
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService)
@@ -22,6 +13,14 @@ from carwash.use_cases.registration_auto_use_cases import (
     RegistrationAutoGetUseCase, RegistrationAutoPostUseCase)
 from carwash.use_cases.staff_detail_view_use_case import StaffDetailViewUseCase
 from common.utils import Common
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+from django.core.handlers.asgi import ASGIRequest
+from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+from django.views import View
+from django.views.generic import FormView, ListView
 from users.permissions import staff_permission
 
 

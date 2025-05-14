@@ -1,8 +1,7 @@
 from datetime import date, timedelta
 
-from django.db.models import QuerySet
-
 from carwash.models import CarWashWorkDay
+from django.db.models import QuerySet
 
 menu_navigation = [{'title': 'Главная', 'url_name': 'carwash:home'},
                    {'title': 'Доступное время', 'url_name': 'carwash:registration'},

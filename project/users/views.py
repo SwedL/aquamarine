@@ -1,3 +1,4 @@
+from common.utils import Common
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (LoginView, PasswordChangeView,
                                        PasswordResetConfirmView,
@@ -5,8 +6,6 @@ from django.contrib.auth.views import (LoginView, PasswordChangeView,
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import TemplateView, UpdateView
-
-from common.utils import Common
 from users.forms import (MyPasswordChangeForm, UserForgotPasswordForm,
                          UserLoginForm, UserProfileForm,
                          UserSetNewPasswordForm)

@@ -54,7 +54,7 @@
                 {% if staff %}
                 <div class="registration__comment">
                     <input type="text" class="colortext" name="comment_car_model" maxlength="30" placeholder="машина (обязательно)" required>
-                    <input type="tel" class="colortext" name="comment_phone_number" maxlength="14" placeholder="телефон (обязательно)" required>
+                    <input type="tel" class="colortext" id="phone" name="comment_phone_number" maxlength="14" placeholder="телефон (обязательно)" required>
                     <input type="text" class="colortext" name="comment_client" maxlength="30" placeholder="имя клиента">
                 </div>
                 {% endif %}
@@ -70,8 +70,12 @@
             </form>
         </div>
     </main>
-
+{% block script %}
 <script>
     document.getElementById("id_service_1").click();
+    IMask(document.getElementById('phone'), {
+        mask: '+{7}0000000000',
+    })
 </script>
+{% endblock script %}
 {% endblock %}

@@ -1,7 +1,6 @@
-from django.db.models import QuerySet
-
 from carwash.models import CarWashService
 from common.utils import Common
+from django.db.models import QuerySet
 from users.models import User
 
 

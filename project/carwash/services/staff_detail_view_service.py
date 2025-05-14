@@ -1,11 +1,10 @@
 from datetime import timedelta
 
+from carwash.models import CarWashRequestCall
+from common.utils import FORMATTED_KEY, Common
 from django.db.models import Q, QuerySet
 from django.http import Http404
 from django.utils import timezone
-
-from carwash.models import CarWashRequestCall
-from common.utils import FORMATTED_KEY, Common
 from users.models import User
 
 

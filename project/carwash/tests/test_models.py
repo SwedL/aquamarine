@@ -1,9 +1,8 @@
 from datetime import date, time, timedelta
 
-from django.test import TestCase
-
 from carwash.models import (CarWashRegistration, CarWashRequestCall,
                             CarWashService, CarWashWorkDay)
+from django.test import TestCase
 from users.models import User
 
 

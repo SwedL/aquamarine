@@ -32,3 +32,10 @@
             </div>
         </div>
 {% endblock %}
+{% block script %}
+<script>
+    IMask(document.getElementById('phone'), {
+        mask: '{8}0000000000',
+    })
+</script>
+{% endblock script %}

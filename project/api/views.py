@@ -1,5 +1,13 @@
 from datetime import date
 
+from api.carwash.use_cases.api_registration_auto_use_cases import (
+    APIRegistrationAutoGetUseCase, APIRegistrationAutoPostUseCase)
+from carwash.models import CarWashRegistration, CarWashService
+from carwash.serializers import (CarWashRegistrationSerializer,
+                                 CarWashRequestCallSerializer,
+                                 CarWashServiceSerializer)
+from carwash.services.user_registration_cancel_service import \
+    user_registration_cancel
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, mixins, status
@@ -9,16 +17,6 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
-
-from api.carwash.use_cases.api_registration_auto_use_cases import (
-    APIRegistrationAutoGetUseCase, APIRegistrationAutoPostUseCase)
-from carwash.models import CarWashRegistration, CarWashService
-from carwash.serializers import (CarWashRegistrationSerializer,
-                                 CarWashRequestCallSerializer,
-                                 CarWashServiceSerializer)
-from carwash.services.user_registration_cancel_service import \
-    user_registration_cancel
-from carwash.views import RegistrationAutoView
 from users.models import User
 from users.serializers import UserSerializer
 
@@ -29,7 +27,7 @@ class CarWashServiceListAPIView(generics.ListAPIView):
     serializer_class = CarWashServiceSerializer
 
 
-class CarWashRegistrationAPIView(RegistrationAutoView, APIView):
+class CarWashRegistrationAPIView(APIView):
     permission_classes = (IsAuthenticated,)
     api_registration_auto_get_use_cases = APIRegistrationAutoGetUseCase()
     api_registration_auto_post_use_cases = APIRegistrationAutoPostUseCase()

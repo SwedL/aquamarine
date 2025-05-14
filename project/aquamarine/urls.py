@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from carwash.views import pageNotFound
 from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.generic import TemplateView
@@ -22,7 +23,6 @@ from drf_yasg.views import get_schema_view
 from rest_framework.authtoken import views
 
 from aquamarine import settings
-from carwash.views import pageNotFound
 
 schema_view = get_schema_view(  # new
     openapi.Info(
