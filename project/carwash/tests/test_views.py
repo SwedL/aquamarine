@@ -23,7 +23,7 @@ class IndexListViewTestCase(TestCase):
         self.path = reverse('carwash:home')
 
     def test_view_for_not_logged_user(self):
-        # Проверка меню для неавторизованого пользователя
+        # Проверка меню для неавторизованного пользователя
         response = self.client.get(self.path)
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Aquamarine')

@@ -10,7 +10,7 @@ def calculate_total_time_and_total_cost(registration):
     # вычисляем общее время работ total_time в CarWashRegistration (7,8,9 считается как за одно время 30 мин.)
     choice_services = registration.services.all()
     time789 = sum([x.pk for x in choice_services if
-                   x.pk in [7, 8, 9]]) // 10  # если выбраны улуги, то время берётся как за одну услугу
+                   x.pk in [7, 8, 9]]) // 10  # если выбраны услуги, то время берётся как за одну услугу
     lst_reg_serv = list(registration.services.all())
     registration.total_time = sum([t.process_time for t in lst_reg_serv]) - time789 * 30
     registration.save()
